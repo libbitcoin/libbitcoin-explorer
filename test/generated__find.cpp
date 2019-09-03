@@ -343,14 +343,14 @@ BOOST_AUTO_TEST_CASE(generated__find__input_validate__returns_object)
     BOOST_REQUIRE(find("input-validate") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__match_basic_filter_address__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__match_neutrino_filter_address__returns_object)
 {
-    BOOST_REQUIRE(find("match-basic-filter-address") != nullptr);
+    BOOST_REQUIRE(find("match-neutrino-filter-address") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__match_basic_filter_script__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__match_neutrino_filter_script__returns_object)
 {
-    BOOST_REQUIRE(find("match-basic-filter-script") != nullptr);
+    BOOST_REQUIRE(find("match-neutrino-filter-script") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__message_sign__returns_object)

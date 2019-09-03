@@ -19,7 +19,7 @@
 
 // Sponsored in part by Digital Contract Design, LLC
 
-#include <bitcoin/explorer/commands/match-basic-filter-address.hpp>
+#include <bitcoin/explorer/commands/match-neutrino-filter-address.hpp>
 
 #include <iostream>
 #include <cstdint>
@@ -35,24 +35,23 @@ using namespace bc::explorer::config;
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result match_basic_filter_address::invoke(std::ostream& output,
+console_result match_neutrino_filter_address::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
     const chain::compact_filter& filter = get_filter_argument();
     const auto& address = get_address_argument();
 
-    if (filter.filter_type() == basic_filter_type)
+    if (filter.filter_type() == neutrino_filter_type)
     {
-        chain::basic_compact_filter basic_filter(filter);
-        const auto message =  basic_filter.match(address) ?
+        const auto message =  chain::match_neutrino_filter(filter, address) ?
             BX_FILTER_MATCH_ADDRESS_SUCCESS : BX_FILTER_MATCH_ADDRESS_FAILURE;
 
         output << message << std::endl;
     }
     else
     {
-        output << BX_FILTER_TYPE_NOT_BASIC << std::endl;
+        output << BX_FILTER_TYPE_UNRECOGNIZED << std::endl;
     }
 
     return console_result::okay;

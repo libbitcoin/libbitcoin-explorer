@@ -343,14 +343,14 @@ BOOST_AUTO_TEST_CASE(generated__symbol__input_validate__returns_expected_value)
     BOOST_REQUIRE_EQUAL(input_validate::symbol(), "input-validate");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__match_basic_filter_address__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__match_neutrino_filter_address__returns_expected_value)
 {
-    BOOST_REQUIRE_EQUAL(match_basic_filter_address::symbol(), "match-basic-filter-address");
+    BOOST_REQUIRE_EQUAL(match_neutrino_filter_address::symbol(), "match-neutrino-filter-address");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__match_basic_filter_script__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__match_neutrino_filter_script__returns_expected_value)
 {
-    BOOST_REQUIRE_EQUAL(match_basic_filter_script::symbol(), "match-basic-filter-script");
+    BOOST_REQUIRE_EQUAL(match_neutrino_filter_script::symbol(), "match-neutrino-filter-script");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__message_sign__returns_expected_value)

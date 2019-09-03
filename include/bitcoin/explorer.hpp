@@ -89,8 +89,8 @@
 #include <bitcoin/explorer/commands/input-set.hpp>
 #include <bitcoin/explorer/commands/input-sign.hpp>
 #include <bitcoin/explorer/commands/input-validate.hpp>
-#include <bitcoin/explorer/commands/match-basic-filter-address.hpp>
-#include <bitcoin/explorer/commands/match-basic-filter-script.hpp>
+#include <bitcoin/explorer/commands/match-neutrino-filter-address.hpp>
+#include <bitcoin/explorer/commands/match-neutrino-filter-script.hpp>
 #include <bitcoin/explorer/commands/message-sign.hpp>
 #include <bitcoin/explorer/commands/message-validate.hpp>
 #include <bitcoin/explorer/commands/mnemonic-decode.hpp>

@@ -137,8 +137,8 @@
     <ClCompile Include="..\..\..\..\src\commands\input-set.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\input-sign.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\input-validate.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\match-basic-filter-address.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\match-basic-filter-script.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\match-neutrino-filter-address.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\match-neutrino-filter-script.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\message-sign.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\message-validate.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-decode.cpp" />
@@ -273,8 +273,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\input-set.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\input-sign.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\input-validate.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\match-basic-filter-address.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\match-basic-filter-script.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\match-neutrino-filter-address.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\match-neutrino-filter-script.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\message-sign.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\message-validate.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-decode.hpp" />

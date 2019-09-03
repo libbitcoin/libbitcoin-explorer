@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_MATCH_BASIC_FILTER_SCRIPT_HPP
-#define BX_MATCH_BASIC_FILTER_SCRIPT_HPP
+#ifndef BX_MATCH_NEUTRINO_FILTER_SCRIPT_HPP
+#define BX_MATCH_NEUTRINO_FILTER_SCRIPT_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -55,7 +55,7 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FILTER_TYPE_NOT_BASIC \
+#define BX_FILTER_TYPE_UNRECOGNIZED \
     "The filter provided contains an unrecognized type."
 #define BX_FILTER_MATCH_SCRIPT_SUCCESS \
     "Script matched filter."
@@ -63,9 +63,9 @@ namespace commands {
     "Script did not match filter."
 
 /**
- * Class to implement the match-basic-filter-script command.
+ * Class to implement the match-neutrino-filter-script command.
  */
-class BCX_API match_basic_filter_script
+class BCX_API match_neutrino_filter_script
   : public command
 {
 public:
@@ -75,7 +75,7 @@ public:
      */
     static const char* symbol()
     {
-        return "match-basic-filter-script";
+        return "match-neutrino-filter-script";
     }
 
 
@@ -84,7 +84,7 @@ public:
      */
     virtual const char* name()
     {
-        return match_basic_filter_script::symbol();
+        return match_neutrino_filter_script::symbol();
     }
 
     /**
@@ -148,7 +148,7 @@ public:
         (
             "FILTER",
             value<system::config::compact_filter>(&argument_.filter)->required(),
-            "The basic compact filter to be evaluated."
+            "The neutrino filter to be evaluated."
         )
         (
             "SCRIPT",

@@ -465,18 +465,18 @@
     <define name="BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT" value="The endorsement is not valid." />
   </command>
 
-  <command symbol="match-basic-filter-address" output="bool" category="MATH" description="Determine whether the provided filter probabilistically matches the provided payment address.">
-    <argument name="FILTER" type="compact_filter" required="true" description="The basic compact filter to be evaluated." />
+  <command symbol="match-neutrino-filter-address" output="bool" category="MATH" description="Determine whether the provided filter probabilistically matches the provided payment address.">
+    <argument name="FILTER" type="compact_filter" required="true" description="The neutrino filter to be evaluated." />
     <argument name="ADDRESS" type="payment_address" description="The payment address whose membership is in question." />
-    <define name="BX_FILTER_TYPE_NOT_BASIC" value="The filter provided contains an unrecognized type." />
+    <define name="BX_FILTER_TYPE_UNRECOGNIZED" value="The filter provided contains an unrecognized type." />
     <define name="BX_FILTER_MATCH_ADDRESS_SUCCESS" value="Address matched filter." />
     <define name="BX_FILTER_MATCH_ADDRESS_FAILURE" value="Address did not match filter." />
   </command>
 
-  <command symbol="match-basic-filter-script" output="bool" category="MATH" description="Determine whether the provided filter probabilistically matches the provided script.">
-    <argument name="FILTER" type="compact_filter" required="true" description="The basic compact filter to be evaluated." />
+  <command symbol="match-neutrino-filter-script" output="bool" category="MATH" description="Determine whether the provided filter probabilistically matches the provided script.">
+    <argument name="FILTER" type="compact_filter" required="true" description="The neutrino filter to be evaluated." />
     <argument name="SCRIPT" type="script" description="The script whose membership is in question." />
-    <define name="BX_FILTER_TYPE_NOT_BASIC" value="The filter provided contains an unrecognized type." />
+    <define name="BX_FILTER_TYPE_UNRECOGNIZED" value="The filter provided contains an unrecognized type." />
     <define name="BX_FILTER_MATCH_SCRIPT_SUCCESS" value="Script matched filter." />
     <define name="BX_FILTER_MATCH_SCRIPT_FAILURE" value="Script did not match filter." />
   </command>

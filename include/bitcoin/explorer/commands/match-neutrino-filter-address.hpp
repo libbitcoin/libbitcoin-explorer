@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_MATCH_BASIC_FILTER_ADDRESS_HPP
-#define BX_MATCH_BASIC_FILTER_ADDRESS_HPP
+#ifndef BX_MATCH_NEUTRINO_FILTER_ADDRESS_HPP
+#define BX_MATCH_NEUTRINO_FILTER_ADDRESS_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -55,7 +55,7 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FILTER_TYPE_NOT_BASIC \
+#define BX_FILTER_TYPE_UNRECOGNIZED \
     "The filter provided contains an unrecognized type."
 #define BX_FILTER_MATCH_ADDRESS_SUCCESS \
     "Address matched filter."
@@ -63,9 +63,9 @@ namespace commands {
     "Address did not match filter."
 
 /**
- * Class to implement the match-basic-filter-address command.
+ * Class to implement the match-neutrino-filter-address command.
  */
-class BCX_API match_basic_filter_address
+class BCX_API match_neutrino_filter_address
   : public command
 {
 public:
@@ -75,7 +75,7 @@ public:
      */
     static const char* symbol()
     {
-        return "match-basic-filter-address";
+        return "match-neutrino-filter-address";
     }
 
 
@@ -84,7 +84,7 @@ public:
      */
     virtual const char* name()
     {
-        return match_basic_filter_address::symbol();
+        return match_neutrino_filter_address::symbol();
     }
 
     /**
@@ -148,7 +148,7 @@ public:
         (
             "FILTER",
             value<system::config::compact_filter>(&argument_.filter)->required(),
-            "The basic compact filter to be evaluated."
+            "The neutrino filter to be evaluated."
         )
         (
             "ADDRESS",

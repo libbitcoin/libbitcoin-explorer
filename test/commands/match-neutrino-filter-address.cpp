@@ -17,16 +17,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// Sponsored in part by Digital Contract Design, LLC
+
 #include "command.hpp"
 
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(match_basic_filter_address__invoke)
+BOOST_AUTO_TEST_SUITE(match_neutrino_filter_address__invoke)
 
-BOOST_AUTO_TEST_CASE(match_basic_filter_address__invoke__match)
+BOOST_AUTO_TEST_CASE(match_neutrino_filter_address__invoke__match)
 {
-    BX_DECLARE_COMMAND(match_basic_filter_address);
+    BX_DECLARE_COMMAND(match_neutrino_filter_address);
     const std::string filter(
         "006a368420a2ea3451d21bd68edc9e6176ccfdc785a707"
         "ff0424eb3cfd00000000230db414c859a07e8205876354"
@@ -39,9 +41,9 @@ BOOST_AUTO_TEST_CASE(match_basic_filter_address__invoke__match)
     BX_REQUIRE_OUTPUT("Address matched filter.\n");
 }
 
-BOOST_AUTO_TEST_CASE(match_basic_filter_address__invoke__no_match)
+BOOST_AUTO_TEST_CASE(match_neutrino_filter_address__invoke__no_match)
 {
-    BX_DECLARE_COMMAND(match_basic_filter_address);
+    BX_DECLARE_COMMAND(match_neutrino_filter_address);
     const std::string filter(
         "006a368420a2ea3451d21bd68edc9e6176ccfdc785a707"
         "ff0424eb3cfd00000000230db414c859a07e8205876354"
@@ -54,9 +56,9 @@ BOOST_AUTO_TEST_CASE(match_basic_filter_address__invoke__no_match)
     BX_REQUIRE_OUTPUT("Address did not match filter.\n");
 }
 
-BOOST_AUTO_TEST_CASE(match_basic_filter_address__invoke__invalid_filter_type)
+BOOST_AUTO_TEST_CASE(match_neutrino_filter_address__invoke__invalid_filter_type)
 {
-    BX_DECLARE_COMMAND(match_basic_filter_address);
+    BX_DECLARE_COMMAND(match_neutrino_filter_address);
     const std::string filter(
         "016a368420a2ea3451d21bd68edc9e6176ccfdc785a707"
         "ff0424eb3cfd00000000230db414c859a07e8205876354"
