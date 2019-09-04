@@ -39,12 +39,12 @@ console_result match_neutrino_filter_script::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const chain::compact_filter& filter = get_filter_argument();
+    const message::compact_filter& filter = get_filter_argument();
     const auto& script = get_script_argument();
 
     if (filter.filter_type() == neutrino_filter_type)
     {
-        const auto message =  chain::match_neutrino_filter(filter, script) ?
+        const auto message =  neutrino::match_filter(filter, script) ?
             BX_FILTER_MATCH_SCRIPT_SUCCESS : BX_FILTER_MATCH_SCRIPT_FAILURE;
 
         output << message << std::endl;
