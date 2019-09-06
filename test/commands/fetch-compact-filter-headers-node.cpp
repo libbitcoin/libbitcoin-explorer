@@ -40,7 +40,9 @@ BOOST_AUTO_TEST_CASE(fetch_compact_filter_headers_node__invoke__mainnet__success
     command.set_hash_argument({ BLOCK_49291_HASH });
     command.set_height_argument(49250);
     command.set_type_argument(0);
-    BX_REQUIRE_OKAY(command.invoke(output, error));
+
+    // Currently expecting failure due to service bit absence
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
