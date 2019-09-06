@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE(match_neutrino_filter_address__invoke__no_match)
     command.set_filter_argument({ filter });
     const std::string address("mfXcDNV1r9SPmNVEba34DG7CWrLEaRzKm3");
     command.set_address_argument({ address });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_INVALID(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("Address did not match filter.\n");
 }
 
@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE(match_neutrino_filter_address__invoke__invalid_filter_type)
     command.set_filter_argument({ filter });
     const std::string address("mfXcDNV1r9SPmNVEba34DG7CWrLEaRzKm3");
     command.set_address_argument({ address });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("The filter provided contains an unrecognized type.\n");
 }
 

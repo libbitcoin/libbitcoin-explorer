@@ -42,17 +42,20 @@ console_result match_neutrino_filter_address::invoke(std::ostream& output,
     const message::compact_filter& filter = get_filter_argument();
     const auto& address = get_address_argument();
 
-    if (filter.filter_type() == neutrino_filter_type)
-    {
-        const auto message =  neutrino::match_filter(filter, address) ?
-            BX_FILTER_MATCH_ADDRESS_SUCCESS : BX_FILTER_MATCH_ADDRESS_FAILURE;
-
-        output << message << std::endl;
-    }
-    else
+    if (filter.filter_type() != neutrino_filter_type)
     {
         output << BX_FILTER_TYPE_UNRECOGNIZED << std::endl;
+        return console_result::failure;
     }
+
+    if (!neutrino::match_filter(filter, address))
+    {
+        output << BX_FILTER_MATCH_ADDRESS_FAILURE << std::endl;
+        return console_result::invalid;
+    }
+
+    output << BX_FILTER_MATCH_ADDRESS_SUCCESS << std::endl;
+    return console_result::okay;
 
     return console_result::okay;
 }

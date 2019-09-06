@@ -60,7 +60,8 @@ static void handle_stop(int)
     stop(error::service_stopped);
 }
 
-console_result fetch_compact_filter_headers_node::invoke(std::ostream& output, std::ostream& error)
+console_result fetch_compact_filter_headers_node::invoke(std::ostream& output,
+    std::ostream& error)
 {
     // Bound parameters.
     const auto& host = get_host_option();
@@ -117,11 +118,10 @@ console_result fetch_compact_filter_headers_node::invoke(std::ostream& output, s
     auto receive_handler = [&state, json](const code& ec,
         std::shared_ptr<const message::compact_filter_headers> response)
     {
-        if (state.succeeded(ec) && response)
+        if (state.succeeded(ec))
             state.output(property_tree(*response, json));
 
         stop(ec);
-
         return false;
     };
 
@@ -131,29 +131,27 @@ console_result fetch_compact_filter_headers_node::invoke(std::ostream& output, s
             stop(ec);
     };
 
-    const auto connect_handler = [&state, &request, &receive_handler, send_handler](
-        const code& ec, network::channel::ptr node)
+    const auto connect_handler = [&state, &request, &receive_handler,
+        send_handler](const code& ec, network::channel::ptr node)
     {
-        if (state.succeeded(ec))
+        if (!state.succeeded(ec))
         {
-            bool supports_bip157 = (node->peer_version()->services() &
-                message::version::service::node_compact_filters) != 0;
-
-            if (supports_bip157)
-            {
-                node->subscribe<message::compact_filter_headers>(
-                    std::move(receive_handler));
-
-                node->send(request, send_handler);
-            }
-            else
-            {
-                state.error(BX_BIP157_UNSUPPORTED);
-                stop(error::posix_to_error_code(console_result::failure));
-            }
-        }
-        else
             stop(ec);
+            return;
+        }
+
+        const auto peer_bip157 = (node->peer_version()->services() &
+            message::version::service::node_compact_filters) != 0;
+
+        if (!peer_bip157)
+        {
+            state.error(BX_BIP157_UNSUPPORTED);
+            stop(error::service_stopped);
+        }
+
+        node->subscribe<message::compact_filter_headers>(
+            std::move(receive_handler));
+        node->send(request, send_handler);
     };
 
     const auto start_handler = [&state](const code& ec)
