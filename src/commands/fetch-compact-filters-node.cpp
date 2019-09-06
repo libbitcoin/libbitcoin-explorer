@@ -44,7 +44,6 @@ using namespace bc::explorer::config;
 using namespace bc::network;
 using namespace bc::system;
 
-static const uint32_t hosts_pool_capacity = 1000;
 static std::promise<code> complete;
 
 // Manage the race between console stop and network stop.

@@ -159,7 +159,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
             stop(ec);
     };
 
-    const auto connect_handler = [&state, &tx, send_handler](const code& ec,
+    const auto connect_handler = [&tx, send_handler](const code& ec,
         channel::ptr node)
     {
         // If error keep trying.
@@ -171,7 +171,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
         return true;
     };
 
-    const auto run_handler = [&state, &network](const code& ec)
+    const auto run_handler = [&state](const code& ec)
     {
         if (!state.succeeded(ec))
             stop(ec);

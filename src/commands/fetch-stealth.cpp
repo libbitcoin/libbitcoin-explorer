@@ -69,8 +69,7 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, &filter, json](const code& ec,
-        const stealth::list& list)
+    auto on_done = [&state, json](const code& ec, const stealth::list& list)
     {
         if (!state.succeeded(ec))
             return;

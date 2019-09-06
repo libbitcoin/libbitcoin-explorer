@@ -45,7 +45,6 @@ using namespace bc::network;
 using namespace bc::system;
 using namespace std::placeholders;
 
-static const uint32_t hosts_pool_capacity = 1000;
 static std::promise<code> complete;
 
 // Manage the race between console stop and network stop.
@@ -154,7 +153,7 @@ console_result fetch_compact_filter_checkpoint_node::invoke(
         node->send(request, send_handler);
     };
 
-    const auto start_handler = [&output, &state](const code& ec)
+    const auto start_handler = [&state](const code& ec)
     {
         if (!state.succeeded(ec))
             stop(ec);
