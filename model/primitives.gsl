@@ -27,6 +27,7 @@ function global.map_type(type)
     my.type_btc = "btc"
     my.type_byte = "byte"
     my.type_cert_key = "cert_key"
+    my.type_compact_filter = "compact_filter"
     my.type_ec_private = "ec_private"
     my.type_ec_public = "ec_public"
     my.type_ek_private = "ek_private"
@@ -74,6 +75,7 @@ function global.map_type(type)
     my.type_btc_bx = "explorer::config::btc"
     my.type_byte_bx = "explorer::config::byte"
     my.type_cert_key_bx = "explorer::config::cert_key"
+    my.type_compact_filter_bx = "system::config::compact_filter"
     my.type_ec_private_bx = "explorer::config::ec_private"
     my.type_ec_public_bx = "system::wallet::ec_public"
     my.type_ek_private_bx = "system::wallet::ek_private"
@@ -133,6 +135,8 @@ function global.map_type(type)
         return my.type_byte_bx
     elsif my.type = my.type_cert_key
         return my.type_cert_key_bx
+    elsif my.type = my.type_compact_filter
+        return my.type_compact_filter_bx
     elsif my.type = my.type_ec_private
         return my.type_ec_private_bx
     elsif my.type = my.type_ec_public

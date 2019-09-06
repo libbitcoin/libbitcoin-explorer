@@ -33,6 +33,7 @@ using namespace bc::system::wallet;
 
 console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 {
+#ifdef WITH_QRENCODE
     // Bound parameters.
     const auto& image = get_png_option();
     const auto& insensitive = get_insensitive_option();
@@ -40,7 +41,6 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
     const auto& version = get_version_option();
     const auto& address = get_payment_address_argument();
 
-#ifdef WITH_QRENCODE
     const auto delimiter = scheme.empty() ? "" : ":";
     const auto qr_string = scheme + delimiter + address.encoded();
     const auto qr_data = qr::encode(to_chunk(qr_string), version, qr::level,

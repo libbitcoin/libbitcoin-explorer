@@ -64,6 +64,9 @@
 #include <bitcoin/explorer/commands/fetch-block.hpp>
 #include <bitcoin/explorer/commands/fetch-block-hashes.hpp>
 #include <bitcoin/explorer/commands/fetch-block-height.hpp>
+#include <bitcoin/explorer/commands/fetch-compact-filter-checkpoint-node.hpp>
+#include <bitcoin/explorer/commands/fetch-compact-filter-headers-node.hpp>
+#include <bitcoin/explorer/commands/fetch-compact-filters-node.hpp>
 #include <bitcoin/explorer/commands/fetch-header.hpp>
 #include <bitcoin/explorer/commands/fetch-height.hpp>
 #include <bitcoin/explorer/commands/fetch-history.hpp>
@@ -83,6 +86,8 @@
 #include <bitcoin/explorer/commands/input-set.hpp>
 #include <bitcoin/explorer/commands/input-sign.hpp>
 #include <bitcoin/explorer/commands/input-validate.hpp>
+#include <bitcoin/explorer/commands/match-neutrino-filter-address.hpp>
+#include <bitcoin/explorer/commands/match-neutrino-filter-script.hpp>
 #include <bitcoin/explorer/commands/message-sign.hpp>
 #include <bitcoin/explorer/commands/message-validate.hpp>
 #include <bitcoin/explorer/commands/mnemonic-decode.hpp>

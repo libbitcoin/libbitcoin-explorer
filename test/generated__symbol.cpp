@@ -233,6 +233,21 @@ BOOST_AUTO_TEST_CASE(generated__symbol__fetch_block_height__returns_expected_val
     BOOST_REQUIRE_EQUAL(fetch_block_height::symbol(), "fetch-block-height");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_compact_filter_checkpoint_node__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(fetch_compact_filter_checkpoint_node::symbol(), "fetch-compact-filter-checkpoint-node");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_compact_filter_headers_node__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(fetch_compact_filter_headers_node::symbol(), "fetch-compact-filter-headers-node");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_compact_filters_node__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(fetch_compact_filters_node::symbol(), "fetch-compact-filters-node");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_header__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(fetch_header::symbol(), "fetch-header");
@@ -326,6 +341,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__input_sign__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__input_validate__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(input_validate::symbol(), "input-validate");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__match_neutrino_filter_address__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(match_neutrino_filter_address::symbol(), "match-neutrino-filter-address");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__match_neutrino_filter_script__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(match_neutrino_filter_script::symbol(), "match-neutrino-filter-script");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__message_sign__returns_expected_value)

@@ -48,6 +48,9 @@ _bx()
         fetch-block
         fetch-block-hashes
         fetch-block-height
+        fetch-compact-filter-checkpoint-node
+        fetch-compact-filter-headers-node
+        fetch-compact-filters-node
         fetch-header
         fetch-height
         fetch-history
@@ -65,6 +68,8 @@ _bx()
         input-set
         input-sign
         input-validate
+        match-neutrino-filter-address
+        match-neutrino-filter-script
         message-sign
         message-validate
         mnemonic-new

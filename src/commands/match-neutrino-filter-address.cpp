@@ -16,41 +16,48 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/commands/electrum-to-seed.hpp>
+
+// Sponsored in part by Digital Contract Design, LLC
+
+#include <bitcoin/explorer/commands/match-neutrino-filter-address.hpp>
 
 #include <iostream>
+#include <cstdint>
 #include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
+using namespace bc::explorer::config;
 using namespace bc::system;
-using namespace bc::system::config;
 using namespace bc::system::wallet;
 
-console_result electrum_to_seed::invoke(std::ostream& output,
+console_result match_neutrino_filter_address::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const dictionary_list& language = get_language_option();
+    const message::compact_filter& filter = get_filter_argument();
+    const auto& address = get_address_argument();
 
-#ifdef WITH_ICU
-    const auto& passphrase = get_passphrase_option();
-    const auto& words = get_words_argument();
+    if (filter.filter_type() != neutrino_filter_type)
+    {
+        output << BX_FILTER_TYPE_UNRECOGNIZED << std::endl;
+        return console_result::failure;
+    }
 
-    if (passphrase.empty())
-        output << base16(electrum::decode_mnemonic(words)) << std::endl;
-    else
-        output << base16(electrum::decode_mnemonic(words, passphrase)) << std::endl;
+    if (!neutrino::match_filter(filter, address))
+    {
+        output << BX_FILTER_MATCH_ADDRESS_FAILURE << std::endl;
+        return console_result::invalid;
+    }
+
+    output << BX_FILTER_MATCH_ADDRESS_SUCCESS << std::endl;
+    return console_result::okay;
 
     return console_result::okay;
-#else
-    error << BX_ELECTRUM_REQUIRES_ICU << std::endl;
-    return console_result::failure;
-#endif
-
 }
 
 } //namespace commands

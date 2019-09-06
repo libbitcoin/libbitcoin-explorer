@@ -83,6 +83,9 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/fetch-block-hashes.cpp \
     src/commands/fetch-block-height.cpp \
     src/commands/fetch-block.cpp \
+    src/commands/fetch-compact-filter-checkpoint-node.cpp \
+    src/commands/fetch-compact-filter-headers-node.cpp \
+    src/commands/fetch-compact-filters-node.cpp \
     src/commands/fetch-header.cpp \
     src/commands/fetch-height.cpp \
     src/commands/fetch-history.cpp \
@@ -102,6 +105,8 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/input-set.cpp \
     src/commands/input-sign.cpp \
     src/commands/input-validate.cpp \
+    src/commands/match-neutrino-filter-address.cpp \
+    src/commands/match-neutrino-filter-script.cpp \
     src/commands/message-sign.cpp \
     src/commands/message-validate.cpp \
     src/commands/mnemonic-decode.cpp \
@@ -230,6 +235,9 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/electrum-to-seed.cpp \
     test/commands/fetch-balance.cpp \
     test/commands/fetch-block.cpp \
+    test/commands/fetch-compact-filter-checkpoint-node.cpp \
+    test/commands/fetch-compact-filter-headers-node.cpp \
+    test/commands/fetch-compact-filters-node.cpp \
     test/commands/fetch-header.cpp \
     test/commands/fetch-height.cpp \
     test/commands/fetch-history.cpp \
@@ -249,6 +257,8 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/input-set.cpp \
     test/commands/input-sign.cpp \
     test/commands/input-validate.cpp \
+    test/commands/match-neutrino-filter-address.cpp \
+    test/commands/match-neutrino-filter-script.cpp \
     test/commands/message-sign.cpp \
     test/commands/message-validate.cpp \
     test/commands/mnemonic-decode.cpp \
@@ -358,6 +368,9 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/fetch-block-hashes.hpp \
     include/bitcoin/explorer/commands/fetch-block-height.hpp \
     include/bitcoin/explorer/commands/fetch-block.hpp \
+    include/bitcoin/explorer/commands/fetch-compact-filter-checkpoint-node.hpp \
+    include/bitcoin/explorer/commands/fetch-compact-filter-headers-node.hpp \
+    include/bitcoin/explorer/commands/fetch-compact-filters-node.hpp \
     include/bitcoin/explorer/commands/fetch-header.hpp \
     include/bitcoin/explorer/commands/fetch-height.hpp \
     include/bitcoin/explorer/commands/fetch-history.hpp \
@@ -377,6 +390,8 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/input-set.hpp \
     include/bitcoin/explorer/commands/input-sign.hpp \
     include/bitcoin/explorer/commands/input-validate.hpp \
+    include/bitcoin/explorer/commands/match-neutrino-filter-address.hpp \
+    include/bitcoin/explorer/commands/match-neutrino-filter-script.hpp \
     include/bitcoin/explorer/commands/message-sign.hpp \
     include/bitcoin/explorer/commands/message-validate.hpp \
     include/bitcoin/explorer/commands/mnemonic-decode.hpp \

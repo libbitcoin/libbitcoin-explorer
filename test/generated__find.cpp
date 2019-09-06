@@ -233,6 +233,21 @@ BOOST_AUTO_TEST_CASE(generated__find__fetch_block_height__returns_object)
     BOOST_REQUIRE(find("fetch-block-height") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__fetch_compact_filter_checkpoint_node__returns_object)
+{
+    BOOST_REQUIRE(find("fetch-compact-filter-checkpoint-node") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_compact_filter_headers_node__returns_object)
+{
+    BOOST_REQUIRE(find("fetch-compact-filter-headers-node") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_compact_filters_node__returns_object)
+{
+    BOOST_REQUIRE(find("fetch-compact-filters-node") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__fetch_header__returns_object)
 {
     BOOST_REQUIRE(find("fetch-header") != nullptr);
@@ -326,6 +341,16 @@ BOOST_AUTO_TEST_CASE(generated__find__input_sign__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__input_validate__returns_object)
 {
     BOOST_REQUIRE(find("input-validate") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__match_neutrino_filter_address__returns_object)
+{
+    BOOST_REQUIRE(find("match-neutrino-filter-address") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__match_neutrino_filter_script__returns_object)
+{
+    BOOST_REQUIRE(find("match-neutrino-filter-script") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__message_sign__returns_object)

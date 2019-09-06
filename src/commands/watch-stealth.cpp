@@ -74,8 +74,8 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output);
 
-    auto on_update = [&output, &state, &prefix](const code& ec,
-        uint16_t sequence, size_t height, const hash_digest& tx_hash)
+    auto on_update = [&output, &state](const code& ec, uint16_t sequence,
+        size_t height, const hash_digest& tx_hash)
     {
         if (!state.succeeded(ec))
             return;

@@ -77,6 +77,9 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<fetch_block>());
     func(make_shared<fetch_block_hashes>());
     func(make_shared<fetch_block_height>());
+    func(make_shared<fetch_compact_filter_checkpoint_node>());
+    func(make_shared<fetch_compact_filter_headers_node>());
+    func(make_shared<fetch_compact_filters_node>());
     func(make_shared<fetch_header>());
     func(make_shared<fetch_height>());
     func(make_shared<fetch_history>());
@@ -96,6 +99,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<input_set>());
     func(make_shared<input_sign>());
     func(make_shared<input_validate>());
+    func(make_shared<match_neutrino_filter_address>());
+    func(make_shared<match_neutrino_filter_script>());
     func(make_shared<message_sign>());
     func(make_shared<message_validate>());
     func(make_shared<mnemonic_decode>());
@@ -226,6 +231,12 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_block_hashes>();
     if (symbol == fetch_block_height::symbol())
         return make_shared<fetch_block_height>();
+    if (symbol == fetch_compact_filter_checkpoint_node::symbol())
+        return make_shared<fetch_compact_filter_checkpoint_node>();
+    if (symbol == fetch_compact_filter_headers_node::symbol())
+        return make_shared<fetch_compact_filter_headers_node>();
+    if (symbol == fetch_compact_filters_node::symbol())
+        return make_shared<fetch_compact_filters_node>();
     if (symbol == fetch_header::symbol())
         return make_shared<fetch_header>();
     if (symbol == fetch_height::symbol())
@@ -264,6 +275,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<input_sign>();
     if (symbol == input_validate::symbol())
         return make_shared<input_validate>();
+    if (symbol == match_neutrino_filter_address::symbol())
+        return make_shared<match_neutrino_filter_address>();
+    if (symbol == match_neutrino_filter_script::symbol())
+        return make_shared<match_neutrino_filter_script>();
     if (symbol == message_sign::symbol())
         return make_shared<message_sign>();
     if (symbol == message_validate::symbol())

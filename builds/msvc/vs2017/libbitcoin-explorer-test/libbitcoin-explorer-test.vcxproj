@@ -109,6 +109,9 @@
     <ClCompile Include="..\..\..\..\test\commands\electrum-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-block.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\fetch-compact-filter-checkpoint-node.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\fetch-compact-filter-headers-node.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\fetch-compact-filters-node.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-header.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-height.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-history.cpp" />
@@ -128,6 +131,8 @@
     <ClCompile Include="..\..\..\..\test\commands\input-set.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-sign.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-validate.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\match-neutrino-filter-address.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\match-neutrino-filter-script.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\message-sign.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\message-validate.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp" />

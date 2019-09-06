@@ -115,6 +115,9 @@
     <ClCompile Include="..\..\..\..\src\commands\fetch-block-hashes.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block-height.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\fetch-compact-filter-checkpoint-node.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\fetch-compact-filter-headers-node.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\fetch-compact-filters-node.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-header.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-height.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-history.cpp" />
@@ -134,6 +137,8 @@
     <ClCompile Include="..\..\..\..\src\commands\input-set.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\input-sign.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\input-validate.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\match-neutrino-filter-address.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\match-neutrino-filter-script.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\message-sign.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\message-validate.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-decode.cpp" />
@@ -246,6 +251,9 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-hashes.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-height.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-compact-filter-checkpoint-node.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-compact-filter-headers-node.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-compact-filters-node.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-header.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-height.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-history.hpp" />
@@ -265,6 +273,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\input-set.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\input-sign.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\input-validate.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\match-neutrino-filter-address.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\match-neutrino-filter-script.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\message-sign.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\message-validate.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-decode.hpp" />

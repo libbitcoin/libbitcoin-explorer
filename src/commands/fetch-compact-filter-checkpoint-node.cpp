@@ -17,7 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/send-tx-p2p.hpp>
+// Sponsored in part by Digital Contract Design, LLC
+
+#include <bitcoin/explorer/commands/fetch-compact-filter-checkpoint-node.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -41,8 +43,8 @@ using namespace boost;
 using namespace bc::explorer::config;
 using namespace bc::network;
 using namespace bc::system;
+using namespace std::placeholders;
 
-static const uint32_t hosts_pool_capacity = 1000;
 static std::promise<code> complete;
 
 // Manage the race between console stop and network stop.
@@ -58,32 +60,39 @@ static void handle_stop(int)
     stop(error::service_stopped);
 }
 
-console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
+console_result fetch_compact_filter_checkpoint_node::invoke(
+    std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto nodes = get_nodes_option();
-    const tx_type& transaction = get_transaction_argument();
+    const auto& host = get_host_option();
+    const auto& port = get_port_option();
+    const auto& encoding = get_format_option();
+    const hash_digest& hash = get_hash_argument();
+    const uint8_t type = get_type_argument();
 
     // Configuration settings.
     //-------------------------------------------------------------------------
 
     const auto identifier = get_network_identifier_setting();
+    const uint8_t retries = get_network_connect_retries_setting();
     const auto connect = get_network_connect_timeout_seconds_setting();
     const auto handshake = get_network_channel_handshake_seconds_setting();
     const auto& hosts_file_name = get_network_hosts_file_setting();
-    ////const auto& debug_file_name = get_network_debug_file_setting();
-    ////const auto& error_file_name = get_network_error_file_setting();
-    const auto& seeds = get_network_seeds_setting();
 
-    // Defaults to 8 outbound connections.
     network::settings settings(system::config::settings::mainnet);
 
+    // Manual connection only.
+    settings.threads = 1;
+    settings.outbound_connections = 0;
+
+    // Guard against retry->attempt overflow.
+    const auto overflow = (retries == max_uint8);
+    const auto attempts = (overflow ? max_uint8 : retries + 1);
+
     // Defaulted by bx.
+    settings.manual_attempt_limit = attempts;
     settings.connect_timeout_seconds = connect;
     settings.channel_handshake_seconds = handshake;
-    settings.host_pool_capacity = hosts_pool_capacity;
-    ////settings.debug_file = debug_file_name;
-    ////settings.error_file = error_file_name;
     settings.hosts_file = hosts_file_name;
     settings.verbose = true;
 
@@ -91,94 +100,38 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     if (identifier != 0)
         settings.identifier = identifier;
 
-    if (!seeds.empty())
-        settings.seeds = seeds;
-
-    // Log initialization.
-    //-------------------------------------------------------------------------
-
-    ////const log::rotable_file debug_file
-    ////{
-    ////    settings.debug_file,
-    ////    settings.archive_directory,
-    ////    settings.rotation_size,
-    ////    settings.maximum_archive_size,
-    ////    settings.minimum_free_space,
-    ////    settings.maximum_archive_files
-    ////};
-
-    ////const log::rotable_file error_file
-    ////{
-    ////    settings.error_file,
-    ////    settings.archive_directory,
-    ////    settings.rotation_size,
-    ////    settings.maximum_archive_size,
-    ////    settings.minimum_free_space,
-    ////    settings.maximum_archive_files
-    ////};
-
-    ////log::stream console_out(&output, null_deleter());
-    ////log::stream console_err(&error, null_deleter());
-    ////log::initialize(debug_file, error_file, console_out, console_err);
-
-    ////static const auto header = format("=========== %1% ==========") % symbol();
-    ////LOG_DEBUG(LOG_NETWORK) << header;
-    ////LOG_ERROR(LOG_NETWORK) << header;
-
     // Network operations.
     //-------------------------------------------------------------------------
 
     p2p network(settings);
     callback_state state(error, output);
-    message::transaction tx(transaction);
-
-    // Increment state to the required number of node connections.
-    while (state < nodes)
-        ++state;
-
-    // Zero nodes specified.
-    if (state.stopped())
-        return console_result::okay;
+    message::get_compact_filter_checkpoint request(type, hash);
 
     // Catch C signals for aborting the program.
     signal(SIGTERM, handle_stop);
     signal(SIGINT, handle_stop);
 
+    // This enables json-style array formatting.
+    const auto json = encoding == encoding_engine::json;
+
+    auto receive_handler = [&state, json](const code& ec,
+        std::shared_ptr<const message::compact_filter_checkpoint> response)
+    {
+        if (state.succeeded(ec))
+            state.output(property_tree(*response, json));
+
+        stop(ec);
+        return false;
+    };
+
     const auto send_handler = [&state](const code& ec)
-    {
-        // If error keep trying.
-        if (ec)
-            return;
-
-        // Handle each successful send.
-        state.output(BX_SEND_TX_P2P_OUTPUT);
-        --state;
-
-        // If done visiting nodes set complete.
-        if (state.stopped())
-            stop(ec);
-    };
-
-    const auto connect_handler = [&tx, send_handler](const code& ec,
-        channel::ptr node)
-    {
-        // If error keep trying.
-        if (ec)
-            return true;
-
-        // Send and resubscribe to connections.
-        node->send(tx, send_handler);
-        return true;
-    };
-
-    const auto run_handler = [&state](const code& ec)
     {
         if (!state.succeeded(ec))
             stop(ec);
     };
 
-    const auto start_handler = [&state, &network, connect_handler,
-        run_handler](const code& ec)
+    const auto connect_handler = [&state, &receive_handler, &request,
+        send_handler](const code& ec, network::channel::ptr node)
     {
         if (!state.succeeded(ec))
         {
@@ -186,14 +139,32 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
             return;
         }
 
-        network.subscribe_connection(connect_handler);
-        network.run(run_handler);
+        const auto peer_bip157 = (node->peer_version()->services() &
+            message::version::service::node_compact_filters) != 0;
+
+        if (!peer_bip157)
+        {
+            state.error(BX_BIP157_UNSUPPORTED);
+            stop(error::posix_to_error_code(console_result::failure));
+        }
+
+        node->subscribe<message::compact_filter_checkpoint>(
+            std::move(receive_handler));
+        node->send(request, send_handler);
     };
 
-    // Connect to the specified number of hosts from the host pool.
-    // This attempts to maintain the set of connections, so it will always
-    // eventually achieve the target, and sometimes go over due to the race.
+    const auto start_handler = [&state](const code& ec)
+    {
+        if (!state.succeeded(ec))
+            stop(ec);
+    };
+
+    // We must start the service so that stop can be honored.
     network.start(start_handler);
+
+    // Connect to the one specified host with retry up to the specified limit.
+    // This maintains the connection but only invokes handler on first connect.
+    network.connect(host, port, connect_handler);
 
     // Wait until stopped and capture if console stop code.
     state.succeeded(complete.get_future().get());
