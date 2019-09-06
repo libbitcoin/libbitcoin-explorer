@@ -307,33 +307,34 @@
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
   </command>
 
-  <command symbol="fetch-compact-filters-node" category="ONLINE" output="compact_filter::list" network="true" description="Retrieve compact filters via a single Bitcoin network node. The distance between provided height and hash must be strictly less than 100.">
+  <command symbol="fetch-filters-node" category="ONLINE" output="compact_filter" network="true" description="Get compact filters from a single Bitcoin network node. The block count between height and hash must be less than 100.">
+    <option name="filter" shortcut="r" type="filter" description="The compact filter type, defaults to 'neutrino'." />
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="host" shortcut="t" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
-    <argument name="type" shortcut="t" type="uint8_t" default="0" description="The filter type."/>
     <argument name="height" type="uint32_t" description="The block height."/>
     <argument name="hash" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
-    <define name="BX_BIP157_UNSUPPORTED" value="The peer does not indicate support for BIP157." />
+    <define name="BX_FETCH_FILTERS_UNSUPPORTED_FILTER" value="The peer does not support the filter type." />
   </command>
 
-  <command symbol="fetch-compact-filter-checkpoint-node" category="ONLINE" output="compact_filter_headers" network="true" description="Retrieve compact filter checkpoint via a single Bitcoin network node.">
+  <command symbol="fetch-filter-checkpoint-node" category="ONLINE" output="compact_filter_checkpoint" network="true" description="Get a compact filter checkpoint from a single Bitcoin network node.">
+    <option name="filter" shortcut="r" type="filter" description="The compact filter type, defaults to 'neutrino'." />
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="host" shortcut="t" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
-    <argument name="type" type="uint8_t" default="0" description="The filter type."/>
     <argument name="hash" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
-    <define name="BX_BIP157_UNSUPPORTED" value="The peer does not indicate support for BIP157." />
+    <define name="BX_FETCH_FILTER_CHECKPOINT_UNSUPPORTED_FILTER" value="The peer does not support the filter type." />
   </command>
 
-  <command symbol="fetch-compact-filter-headers-node" category="ONLINE" output="compact_filter_headers" network="true" description="Retrieve compact filter headers via a single Bitcoin network node. The distance between provided height and hash must be strictly less than 2000.">
+  <command symbol="fetch-filter-headers-node" category="ONLINE" output="compact_filter_headers" network="true" description="Get compact filter headers from a single Bitcoin network node. The block count between height and hash must be less than 2000.">
+    <option name="filter" shortcut="r" type="filter" description="The compact filter type, defaults to 'neutrino'." />
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="host" shortcut="t" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
-    <argument name="type" type="uint8_t" default="0" description="The filter type."/>
     <argument name="height" type="uint32_t" description="The block height."/>
     <argument name="hash" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
-    <define name="BX_BIP157_UNSUPPORTED" value="The peer does not indicate support for BIP157." />
+    
+    <define name="BX_FETCH_FILTER_HEADERS_UNSUPPORTED_FILTER" value="The peer does not support the filter type." />
   </command>
 
   <command symbol="fetch-header" category="ONLINE" output="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
@@ -389,6 +390,14 @@
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
     <define name="BX_FETCH_BALANCE_INVALID_ARGUMENTS" value="A valid payments search key must be provided." />
+  </command>
+
+  <command symbol="filter-match" output="bool" category="MATH" description="Determine if a compact filter probabilistically matches a script.">
+    <option name="filter" type="filter" description="The compact filter type, defaults to 'neutrino'." />
+    <argument name="COMPACT_FILTER" required="true" type="compact_filter" description="The compact filter." />
+    <argument name="SCRIPT" stdin="true" type="script" description="The script." />
+    <define name="BX_FILTER_MATCH_VALID" value="The script matches the filter." />
+    <define name="BX_FILTER_MATCH_INVALID" value="The script does not match the filter." />
   </command>
 
   <command symbol="hd-new" formerly="hd-seed" output="hd_private" category="WALLET" description="Create a new HD (BIP32) private key from entropy.">
@@ -463,22 +472,6 @@
     <define name="BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
     <define name="BX_INPUT_VALIDATE_INDEX_VALID_ENDORSEMENT" value="The endorsement is valid." />
     <define name="BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT" value="The endorsement is not valid." />
-  </command>
-
-  <command symbol="match-neutrino-filter-address" output="bool" category="MATH" description="Determine whether the provided filter probabilistically matches the provided payment address.">
-    <argument name="FILTER" type="compact_filter" required="true" description="The neutrino filter to be evaluated." />
-    <argument name="ADDRESS" type="payment_address" description="The payment address whose membership is in question." />
-    <define name="BX_FILTER_TYPE_UNRECOGNIZED" value="The filter provided contains an unrecognized type." />
-    <define name="BX_FILTER_MATCH_ADDRESS_SUCCESS" value="Address matched filter." />
-    <define name="BX_FILTER_MATCH_ADDRESS_FAILURE" value="Address did not match filter." />
-  </command>
-
-  <command symbol="match-neutrino-filter-script" output="bool" category="MATH" description="Determine whether the provided filter probabilistically matches the provided script.">
-    <argument name="FILTER" type="compact_filter" required="true" description="The neutrino filter to be evaluated." />
-    <argument name="SCRIPT" type="script" description="The script whose membership is in question." />
-    <define name="BX_FILTER_TYPE_UNRECOGNIZED" value="The filter provided contains an unrecognized type." />
-    <define name="BX_FILTER_MATCH_SCRIPT_SUCCESS" value="Script matched filter." />
-    <define name="BX_FILTER_MATCH_SCRIPT_FAILURE" value="Script did not match filter." />
   </command>
 
   <command symbol="message-sign" output="signature" category="MESSAGING" description="Create a message signature.">
