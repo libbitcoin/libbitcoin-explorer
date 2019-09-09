@@ -126,10 +126,11 @@ console_result fetch_compact_filters_node::invoke(std::ostream& output,
         state.output(property_tree(*response, json));
 
         // Relying on response order for termination.
-        if (response->block_hash() == stop_hash)
+        auto received_final_response = (response->block_hash() == stop_hash);
+        if (received_final_response)
             stop(ec);
    
-        return !state.stopped();
+        return !received_final_response;
     };
 
     const auto send_handler = [&state](const code& ec)

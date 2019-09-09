@@ -146,6 +146,7 @@ console_result fetch_compact_filter_checkpoint_node::invoke(
         {
             state.error(BX_BIP157_UNSUPPORTED);
             stop(error::posix_to_error_code(console_result::failure));
+            return;
         }
 
         node->subscribe<message::compact_filter_checkpoint>(

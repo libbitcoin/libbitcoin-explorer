@@ -35,11 +35,13 @@ BOOST_AUTO_TEST_CASE(fetch_compact_filter_checkpoint_node__invoke__mainnet__succ
     // Send p2p log output to /dev/null.
     log::initialize();
 
-    command.set_host_option(BX_TESTNET_HOST);
-    command.set_port_option(BX_TESTNET_PORT);
+    command.set_host_option(BX_MAINNET_HOST);
+    command.set_port_option(BX_MAINNET_PORT);
     command.set_hash_argument({ BLOCK_49291_HASH });
     command.set_type_argument(0);
-    BX_REQUIRE_OKAY(command.invoke(output, error));
+
+    // Currently expecting failure due to service bit absence
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

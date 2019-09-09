@@ -146,6 +146,7 @@ console_result fetch_compact_filter_headers_node::invoke(std::ostream& output,
         {
             state.error(BX_BIP157_UNSUPPORTED);
             stop(error::service_stopped);
+            return;
         }
 
         node->subscribe<message::compact_filter_headers>(
