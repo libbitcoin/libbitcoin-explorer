@@ -39,7 +39,7 @@ console_result match_neutrino_filter_script::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const message::compact_filter& filter = get_filter_argument();
+    const message::compact_filter& filter = get_compact_filter_argument();
     const auto& script = get_script_argument();
 
     if (filter.filter_type() != neutrino_filter_type)

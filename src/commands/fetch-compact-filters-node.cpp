@@ -68,7 +68,14 @@ console_result fetch_compact_filters_node::invoke(std::ostream& output,
     const auto& encoding = get_format_option();
     const hash_digest& stop_hash = get_hash_argument();
     const uint32_t start_height = get_height_argument();
-    const uint8_t type = get_type_argument();
+    const uint16_t filter_type = get_filter_type_argument();
+
+    // Validate filter_type
+    if (filter_type > max_uint8)
+    {
+        output << BX_INVALID_FILTER_TYPE << std::endl;
+        return console_result::failure;
+    }
 
     // Configuration settings.
     //-------------------------------------------------------------------------
@@ -105,7 +112,8 @@ console_result fetch_compact_filters_node::invoke(std::ostream& output,
 
     p2p network(settings);
     callback_state state(error, output);
-    message::get_compact_filters request(type, start_height, stop_hash);
+    message::get_compact_filters request(static_cast<uint8_t>(filter_type),
+        start_height, stop_hash);
 
     // Catch C signals for aborting the program.
     signal(SIGTERM, handle_stop);

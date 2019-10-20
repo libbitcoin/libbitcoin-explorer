@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE(match_neutrino_filter_script__invoke__match)
         "ff0424eb3cfd00000000230db414c859a07e8205876354"
         "a210a75042d0463404913d61a8e068e58a3ae2aa080026");
 
-    command.set_filter_argument({ filter });
+    command.set_compact_filter_argument({ filter });
     const std::string script("dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig");
     command.set_script_argument({ script });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -47,11 +47,11 @@ BOOST_AUTO_TEST_CASE(match_neutrino_filter_script__invoke__no_match)
         "ff0424eb3cfd00000000230db414c859a07e8205876354"
         "a210a75042d0463404913d61a8e068e58a3ae2aa080026");
 
-    command.set_filter_argument({ filter });
+    command.set_compact_filter_argument({ filter });
     const std::string script("dup hash160 [001fa7459a6cfc64bdc100ba700a21003b005000] equalverify checksig");
     command.set_script_argument({ script });
     BX_REQUIRE_INVALID(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("Script did not match filter.\n");
+    BX_REQUIRE_OUTPUT("Script does not match filter.\n");
 }
 
 BOOST_AUTO_TEST_CASE(match_neutrino_filter_script__invoke__invalid_filter_type)
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(match_neutrino_filter_script__invoke__invalid_filter_type)
         "ff0424eb3cfd00000000230db414c859a07e8205876354"
         "a210a75042d0463404913d61a8e068e58a3ae2aa080026");
 
-    command.set_filter_argument({ filter });
+    command.set_compact_filter_argument({ filter });
     const std::string script("dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig");
     command.set_script_argument({ script });
     BX_REQUIRE_FAILURE(command.invoke(output, error));

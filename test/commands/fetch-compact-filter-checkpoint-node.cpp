@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(fetch_compact_filter_checkpoint_node__invoke__mainnet__succ
     command.set_host_option(BX_MAINNET_HOST);
     command.set_port_option(BX_MAINNET_PORT);
     command.set_hash_argument({ BLOCK_49291_HASH });
-    command.set_type_argument(0);
+    command.set_filter_type_argument(0);
 
     // Currently expecting failure due to service bit absence
     BX_REQUIRE_FAILURE(command.invoke(output, error));
