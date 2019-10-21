@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(match_neutrino_filter_address__invoke__match)
         "ff0424eb3cfd00000000230db414c859a07e8205876354"
         "a210a75042d0463404913d61a8e068e58a3ae2aa080026");
 
-    command.set_filter_argument({ filter });
+    command.set_compact_filter_argument({ filter });
     const std::string address("mfXcDNV1r9SPmNVziJoNG4CXFjx5Gn1BTi");
     command.set_address_argument({ address });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -49,11 +49,11 @@ BOOST_AUTO_TEST_CASE(match_neutrino_filter_address__invoke__no_match)
         "ff0424eb3cfd00000000230db414c859a07e8205876354"
         "a210a75042d0463404913d61a8e068e58a3ae2aa080026");
 
-    command.set_filter_argument({ filter });
+    command.set_compact_filter_argument({ filter });
     const std::string address("mfXcDNV1r9SPmNVEba34DG7CWrLEaRzKm3");
     command.set_address_argument({ address });
     BX_REQUIRE_INVALID(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("Address did not match filter.\n");
+    BX_REQUIRE_OUTPUT("Address does not match filter.\n");
 }
 
 BOOST_AUTO_TEST_CASE(match_neutrino_filter_address__invoke__invalid_filter_type)
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE(match_neutrino_filter_address__invoke__invalid_filter_type)
         "ff0424eb3cfd00000000230db414c859a07e8205876354"
         "a210a75042d0463404913d61a8e068e58a3ae2aa080026");
 
-    command.set_filter_argument({ filter });
+    command.set_compact_filter_argument({ filter });
     const std::string address("mfXcDNV1r9SPmNVEba34DG7CWrLEaRzKm3");
     command.set_address_argument({ address });
     BX_REQUIRE_FAILURE(command.invoke(output, error));

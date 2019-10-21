@@ -57,6 +57,8 @@ namespace commands {
  */
 #define BX_BIP157_UNSUPPORTED \
     "The peer does not indicate support for BIP157."
+#define BX_INVALID_FILTER_TYPE \
+    "The provided filter type exceeds encodable limits."
 
 /**
  * Class to implement the fetch-compact-filter-headers-node command.
@@ -96,7 +98,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Retrieve compact filter headers via a single Bitcoin network node. The distance between provided height and hash must be strictly less than 2000.";
+        return "Retrieve compact filter headers via a single Bitcoin network node. The distance between provided height and hash must be strictly less than 2000..";
     }
 
     /**
@@ -107,7 +109,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("type", 1)
+            .add("filter_type", 1)
             .add("height", 1)
             .add("hash", 1);
     }
@@ -160,9 +162,9 @@ public:
             "The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet."
         )
         (
-            "type",
-            value<uint8_t>(&argument_.type),
-            "The filter type."
+            "filter_type",
+            value<uint16_t>(&argument_.filter_type),
+            "The compact filter type."
         )
         (
             "height",
@@ -198,20 +200,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the type argument.
+     * Get the value of the filter_type argument.
      */
-    virtual uint8_t& get_type_argument()
+    virtual uint16_t& get_filter_type_argument()
     {
-        return argument_.type;
+        return argument_.filter_type;
     }
 
     /**
-     * Set the value of the type argument.
+     * Set the value of the filter_type argument.
      */
-    virtual void set_type_argument(
-        const uint8_t& value)
+    virtual void set_filter_type_argument(
+        const uint16_t& value)
     {
-        argument_.type = value;
+        argument_.filter_type = value;
     }
 
     /**
@@ -309,13 +311,13 @@ private:
     struct argument
     {
         argument()
-          : type(),
+          : filter_type(),
             height(),
             hash()
         {
         }
 
-        uint8_t type;
+        uint16_t filter_type;
         uint32_t height;
         system::config::hash256 hash;
     } argument_;

@@ -68,7 +68,14 @@ console_result fetch_compact_filter_checkpoint_node::invoke(
     const auto& port = get_port_option();
     const auto& encoding = get_format_option();
     const hash_digest& hash = get_hash_argument();
-    const uint8_t type = get_type_argument();
+    const uint16_t filter_type = get_filter_type_argument();
+
+    // Validate filter_type
+    if (filter_type > max_uint8)
+    {
+        output << BX_INVALID_FILTER_TYPE << std::endl;
+        return console_result::failure;
+    }
 
     // Configuration settings.
     //-------------------------------------------------------------------------
@@ -105,7 +112,8 @@ console_result fetch_compact_filter_checkpoint_node::invoke(
 
     p2p network(settings);
     callback_state state(error, output);
-    message::get_compact_filter_checkpoint request(type, hash);
+    message::get_compact_filter_checkpoint request(
+        static_cast<uint8_t>(filter_type), hash);
 
     // Catch C signals for aborting the program.
     signal(SIGTERM, handle_stop);

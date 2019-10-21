@@ -60,7 +60,7 @@ namespace commands {
 #define BX_FILTER_MATCH_ADDRESS_SUCCESS \
     "Address matched filter."
 #define BX_FILTER_MATCH_ADDRESS_FAILURE \
-    "Address did not match filter."
+    "Address does not match filter."
 
 /**
  * Class to implement the match-neutrino-filter-address command.
@@ -111,7 +111,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("FILTER", 1)
+            .add("COMPACT_FILTER", 1)
             .add("ADDRESS", 1);
     }
 
@@ -123,6 +123,8 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_address_argument(), "ADDRESS", variables, input, raw);
     }
 
     /**
@@ -146,8 +148,8 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "FILTER",
-            value<system::config::compact_filter>(&argument_.filter)->required(),
+            "COMPACT_FILTER",
+            value<system::config::compact_filter>(&argument_.compact_filter)->required(),
             "The neutrino filter to be evaluated."
         )
         (
@@ -179,20 +181,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the FILTER argument.
+     * Get the value of the COMPACT_FILTER argument.
      */
-    virtual system::config::compact_filter& get_filter_argument()
+    virtual system::config::compact_filter& get_compact_filter_argument()
     {
-        return argument_.filter;
+        return argument_.compact_filter;
     }
 
     /**
-     * Set the value of the FILTER argument.
+     * Set the value of the COMPACT_FILTER argument.
      */
-    virtual void set_filter_argument(
+    virtual void set_compact_filter_argument(
         const system::config::compact_filter& value)
     {
-        argument_.filter = value;
+        argument_.compact_filter = value;
     }
 
     /**
@@ -222,12 +224,12 @@ private:
     struct argument
     {
         argument()
-          : filter(),
+          : compact_filter(),
             address()
         {
         }
 
-        system::config::compact_filter filter;
+        system::config::compact_filter compact_filter;
         system::wallet::payment_address address;
     } argument_;
 
