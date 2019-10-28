@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE(match_neutrino_filter_script__invoke__match)
     const std::string script("dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig");
     command.set_script_argument({ script });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("Script matched filter.\n");
+    BX_REQUIRE_OUTPUT(BX_FILTER_MATCH_SCRIPT_SUCCESS "\n");
 }
 
 BOOST_AUTO_TEST_CASE(match_neutrino_filter_script__invoke__no_match)
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(match_neutrino_filter_script__invoke__no_match)
     const std::string script("dup hash160 [001fa7459a6cfc64bdc100ba700a21003b005000] equalverify checksig");
     command.set_script_argument({ script });
     BX_REQUIRE_INVALID(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("Script does not match filter.\n");
+    BX_REQUIRE_OUTPUT(BX_FILTER_MATCH_SCRIPT_FAILURE "\n");
 }
 
 BOOST_AUTO_TEST_CASE(match_neutrino_filter_script__invoke__invalid_filter_type)
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(match_neutrino_filter_script__invoke__invalid_filter_type)
     const std::string script("dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig");
     command.set_script_argument({ script });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("The filter provided contains an unrecognized type.\n");
+    BX_REQUIRE_OUTPUT(BX_FILTER_TYPE_UNRECOGNIZED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
