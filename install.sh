@@ -439,7 +439,8 @@ BOOST_OPTIONS=(
 #------------------------------------------------------------------------------
 SECP256K1_OPTIONS=(
 "--disable-tests" \
-"--enable-module-recovery")
+"--enable-module-recovery" \
+"--enable-endomorphism")
 
 # Define bitcoin-system options.
 #------------------------------------------------------------------------------
