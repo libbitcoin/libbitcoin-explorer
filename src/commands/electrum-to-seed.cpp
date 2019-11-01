@@ -33,17 +33,16 @@ using namespace bc::system::wallet;
 console_result electrum_to_seed::invoke(std::ostream& output,
     std::ostream& error)
 {
-    // Bound parameters.
-    const dictionary_list& language = get_language_option();
-
 #ifdef WITH_ICU
     const auto& passphrase = get_passphrase_option();
     const auto& words = get_words_argument();
 
+    // Decoding requires ICU normalization.
     if (passphrase.empty())
         output << base16(electrum::decode_mnemonic(words)) << std::endl;
     else
-        output << base16(electrum::decode_mnemonic(words, passphrase)) << std::endl;
+        output << base16(electrum::decode_mnemonic(words, passphrase))
+            << std::endl;
 
     return console_result::okay;
 #else

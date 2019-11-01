@@ -40,7 +40,6 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__okay_output)
 BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__language_en__okay_output)
 {
     BX_DECLARE_COMMAND(electrum_to_seed);
-    command.set_language_option({ "en" });
     command.set_words_argument({ "foobar" });
 #ifdef WITH_ICU
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -54,7 +53,6 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__language_en__okay_output)
 BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__12_words__okay_output)
 {
     BX_DECLARE_COMMAND(electrum_to_seed);
-    command.set_language_option({ "en" });
     command.set_words_argument({ "giggle", "crush", "argue", "inflict", "wear", "defy", "combine", "evolve", "tiger", "spatial", "crumble", "fury" });
 #ifdef WITH_ICU
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -69,7 +67,6 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__12_words__okay_output)
 BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__12_words_with_passphrase_electrum_test__okay_output)
 {
     BX_DECLARE_COMMAND(electrum_to_seed);
-    command.set_language_option({ "es" });
     command.set_passphrase_option({ "araña difícil solución término cárcel" });
     command.set_words_argument({ "almíbar", "tibio", "superar", "vencer", "hacha", "peatón", "príncipe", "matar", "consejo", "polen", "vehículo", "odisea" });
 #ifdef WITH_ICU

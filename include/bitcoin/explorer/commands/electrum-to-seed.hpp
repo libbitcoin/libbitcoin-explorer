@@ -143,11 +143,6 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "language,l",
-            value<explorer::config::language>(&option_.language),
-            "The language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'ja', 'pt', 'zh_Hans' and 'any', defaults to 'any'."
-        )
-        (
             "passphrase,p",
             value<std::string>(&option_.passphrase),
             "An optional passphrase for converting the mnemonic to a seed."
@@ -198,23 +193,6 @@ public:
     }
 
     /**
-     * Get the value of the language option.
-     */
-    virtual explorer::config::language& get_language_option()
-    {
-        return option_.language;
-    }
-
-    /**
-     * Set the value of the language option.
-     */
-    virtual void set_language_option(
-        const explorer::config::language& value)
-    {
-        option_.language = value;
-    }
-
-    /**
      * Get the value of the passphrase option.
      */
     virtual std::string& get_passphrase_option()
@@ -256,12 +234,10 @@ private:
     struct option
     {
         option()
-          : language(),
-            passphrase()
+          : passphrase()
         {
         }
 
-        explorer::config::language language;
         std::string passphrase;
     } option_;
 };
