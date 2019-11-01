@@ -24,8 +24,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/command.hpp>
-#include <bitcoin/explorer/commands/send-tx-node.hpp>
-#include <bitcoin/explorer/commands/send-tx-p2p.hpp>
+#include <bitcoin/explorer/commands/broadcast-tx.hpp>
+#include <bitcoin/explorer/commands/put-tx.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -127,8 +127,8 @@ console_result dispatch_command(int argc, const char* argv[],
     }
 
     // TODO: move log determination into generated command static.
-    if ((target == commands::send_tx_node::symbol()) ||
-        (target == commands::send_tx_p2p::symbol()))
+    if ((target == commands::put_tx::symbol()) ||
+        (target == commands::broadcast_tx::symbol()))
     {
         auto debug_file = command->get_network_debug_file_setting().string();
         auto error_file = command->get_network_error_file_setting().string();
