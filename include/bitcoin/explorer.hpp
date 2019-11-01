@@ -40,6 +40,7 @@
 #include <bitcoin/explorer/commands/base64-encode.hpp>
 #include <bitcoin/explorer/commands/bitcoin160.hpp>
 #include <bitcoin/explorer/commands/bitcoin256.hpp>
+#include <bitcoin/explorer/commands/broadcast-tx.hpp>
 #include <bitcoin/explorer/commands/btc-to-satoshi.hpp>
 #include <bitcoin/explorer/commands/cert-new.hpp>
 #include <bitcoin/explorer/commands/cert-public.hpp>
@@ -67,9 +68,9 @@
 #include <bitcoin/explorer/commands/fetch-block-hashes.hpp>
 #include <bitcoin/explorer/commands/fetch-block-height.hpp>
 #include <bitcoin/explorer/commands/fetch-block.hpp>
-#include <bitcoin/explorer/commands/fetch-compact-filter-checkpoint-node.hpp>
-#include <bitcoin/explorer/commands/fetch-compact-filter-headers-node.hpp>
-#include <bitcoin/explorer/commands/fetch-compact-filters-node.hpp>
+#include <bitcoin/explorer/commands/fetch-filter-checkpoint.hpp>
+#include <bitcoin/explorer/commands/fetch-filter-headers.hpp>
+#include <bitcoin/explorer/commands/fetch-filter.hpp>
 #include <bitcoin/explorer/commands/fetch-header.hpp>
 #include <bitcoin/explorer/commands/fetch-height.hpp>
 #include <bitcoin/explorer/commands/fetch-history.hpp>
@@ -78,6 +79,9 @@
 #include <bitcoin/explorer/commands/fetch-tx-index.hpp>
 #include <bitcoin/explorer/commands/fetch-tx.hpp>
 #include <bitcoin/explorer/commands/fetch-utxo.hpp>
+#include <bitcoin/explorer/commands/get-filter-checkpoint.hpp>
+#include <bitcoin/explorer/commands/get-filter-headers.hpp>
+#include <bitcoin/explorer/commands/get-filters.hpp>
 #include <bitcoin/explorer/commands/hd-new.hpp>
 #include <bitcoin/explorer/commands/hd-private.hpp>
 #include <bitcoin/explorer/commands/hd-public.hpp>
@@ -89,14 +93,15 @@
 #include <bitcoin/explorer/commands/input-set.hpp>
 #include <bitcoin/explorer/commands/input-sign.hpp>
 #include <bitcoin/explorer/commands/input-validate.hpp>
-#include <bitcoin/explorer/commands/match-neutrino-filter-address.hpp>
-#include <bitcoin/explorer/commands/match-neutrino-filter-script.hpp>
+#include <bitcoin/explorer/commands/match-neutrino-address.hpp>
+#include <bitcoin/explorer/commands/match-neutrino-script.hpp>
 #include <bitcoin/explorer/commands/message-sign.hpp>
 #include <bitcoin/explorer/commands/message-validate.hpp>
 #include <bitcoin/explorer/commands/mnemonic-decode.hpp>
 #include <bitcoin/explorer/commands/mnemonic-encode.hpp>
 #include <bitcoin/explorer/commands/mnemonic-new.hpp>
 #include <bitcoin/explorer/commands/mnemonic-to-seed.hpp>
+#include <bitcoin/explorer/commands/put-tx.hpp>
 #include <bitcoin/explorer/commands/qrcode.hpp>
 #include <bitcoin/explorer/commands/ripemd160.hpp>
 #include <bitcoin/explorer/commands/satoshi-to-btc.hpp>
@@ -105,8 +110,6 @@
 #include <bitcoin/explorer/commands/script-to-address.hpp>
 #include <bitcoin/explorer/commands/script-to-key.hpp>
 #include <bitcoin/explorer/commands/seed.hpp>
-#include <bitcoin/explorer/commands/send-tx-node.hpp>
-#include <bitcoin/explorer/commands/send-tx-p2p.hpp>
 #include <bitcoin/explorer/commands/send-tx.hpp>
 #include <bitcoin/explorer/commands/settings.hpp>
 #include <bitcoin/explorer/commands/sha160.hpp>

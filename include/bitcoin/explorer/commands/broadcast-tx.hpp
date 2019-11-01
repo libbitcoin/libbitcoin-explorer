@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_FETCH_COMPACT_FILTER_CHECKPOINT_NODE_HPP
-#define BX_FETCH_COMPACT_FILTER_CHECKPOINT_NODE_HPP
+#ifndef BX_BROADCAST_TX_HPP
+#define BX_BROADCAST_TX_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -55,15 +55,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_BIP157_UNSUPPORTED \
-    "The peer does not indicate support for BIP157."
-#define BX_INVALID_FILTER_TYPE \
-    "The provided filter type exceeds encodable limits."
+#define BX_SEND_TX_P2P_OUTPUT \
+    "Sent transaction."
 
 /**
- * Class to implement the fetch-compact-filter-checkpoint-node command.
+ * Class to implement the broadcast-tx command.
  */
-class BCX_API fetch_compact_filter_checkpoint_node
+class BCX_API broadcast_tx
   : public command
 {
 public:
@@ -73,16 +71,23 @@ public:
      */
     static const char* symbol()
     {
-        return "fetch-compact-filter-checkpoint-node";
+        return "broadcast-tx";
     }
 
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    static const char* formerly()
+    {
+        return "sendtx-p2p";
+    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return fetch_compact_filter_checkpoint_node::symbol();
+        return broadcast_tx::symbol();
     }
 
     /**
@@ -98,7 +103,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Retrieve compact filter checkpoint via a single Bitcoin network node.";
+        return "Broadcast a transaction to the Bitcoin network via the Bitcoin peer-to-peer network.";
     }
 
     /**
@@ -109,8 +114,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("filter_type", 1)
-            .add("hash", 1);
+            .add("TRANSACTION", 1);
     }
 
     /**
@@ -122,7 +126,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_hash_argument(), "hash", variables, input, raw);
+        load_input(get_transaction_argument(), "TRANSACTION", variables, input, raw);
     }
 
     /**
@@ -146,29 +150,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
+            "nodes,n",
+            value<size_t>(&option_.nodes)->default_value(2),
+            "The number of network nodes to send the transaction to, defaults to 2."
         )
         (
-            "host,t",
-            value<std::string>(&option_.host)->default_value("localhost"),
-            "The IP address or DNS name of the node. Defaults to localhost."
-        )
-        (
-            "port,p",
-            value<uint16_t>(&option_.port)->default_value(8333),
-            "The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet."
-        )
-        (
-            "filter_type",
-            value<uint16_t>(&argument_.filter_type),
-            "The compact filter type."
-        )
-        (
-            "hash",
-            value<system::config::hash256>(&argument_.hash),
-            "The Base16 block hash. If not specified the hash is read from STDIN."
+            "TRANSACTION",
+            value<system::config::transaction>(&argument_.transaction),
+            "The Base16 transaction to send. If not specified the transaction is read from STDIN."
         );
 
         return options;
@@ -194,88 +183,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the filter_type argument.
+     * Get the value of the TRANSACTION argument.
      */
-    virtual uint16_t& get_filter_type_argument()
+    virtual system::config::transaction& get_transaction_argument()
     {
-        return argument_.filter_type;
+        return argument_.transaction;
     }
 
     /**
-     * Set the value of the filter_type argument.
+     * Set the value of the TRANSACTION argument.
      */
-    virtual void set_filter_type_argument(
-        const uint16_t& value)
+    virtual void set_transaction_argument(
+        const system::config::transaction& value)
     {
-        argument_.filter_type = value;
+        argument_.transaction = value;
     }
 
     /**
-     * Get the value of the hash argument.
+     * Get the value of the nodes option.
      */
-    virtual system::config::hash256& get_hash_argument()
+    virtual size_t& get_nodes_option()
     {
-        return argument_.hash;
+        return option_.nodes;
     }
 
     /**
-     * Set the value of the hash argument.
+     * Set the value of the nodes option.
      */
-    virtual void set_hash_argument(
-        const system::config::hash256& value)
+    virtual void set_nodes_option(
+        const size_t& value)
     {
-        argument_.hash = value;
-    }
-
-    /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
-    }
-
-    /**
-     * Get the value of the host option.
-     */
-    virtual std::string& get_host_option()
-    {
-        return option_.host;
-    }
-
-    /**
-     * Set the value of the host option.
-     */
-    virtual void set_host_option(
-        const std::string& value)
-    {
-        option_.host = value;
-    }
-
-    /**
-     * Get the value of the port option.
-     */
-    virtual uint16_t& get_port_option()
-    {
-        return option_.port;
-    }
-
-    /**
-     * Set the value of the port option.
-     */
-    virtual void set_port_option(
-        const uint16_t& value)
-    {
-        option_.port = value;
+        option_.nodes = value;
     }
 
 private:
@@ -288,13 +226,11 @@ private:
     struct argument
     {
         argument()
-          : filter_type(),
-            hash()
+          : transaction()
         {
         }
 
-        uint16_t filter_type;
-        system::config::hash256 hash;
+        system::config::transaction transaction;
     } argument_;
 
     /**
@@ -305,15 +241,11 @@ private:
     struct option
     {
         option()
-          : format(),
-            host(),
-            port()
+          : nodes()
         {
         }
 
-        explorer::config::encoding format;
-        std::string host;
-        uint16_t port;
+        size_t nodes;
     } option_;
 };
 

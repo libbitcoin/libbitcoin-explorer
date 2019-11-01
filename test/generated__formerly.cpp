@@ -43,6 +43,11 @@ BOOST_AUTO_TEST_CASE(generated__formerly__address_encode_was_encode_addr__return
     BOOST_REQUIRE_EQUAL(formerly("encode-addr"), address_encode::symbol());
 }
 
+BOOST_AUTO_TEST_CASE(generated__formerly__broadcast_tx_was_sendtx_p2p__returns_object)
+{
+    BOOST_REQUIRE_EQUAL(formerly("sendtx-p2p"), broadcast_tx::symbol());
+}
+
 BOOST_AUTO_TEST_CASE(generated__formerly__btc_to_satoshi_was_satoshi__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("satoshi"), btc_to_satoshi::symbol());
@@ -128,6 +133,11 @@ BOOST_AUTO_TEST_CASE(generated__formerly__mnemonic_encode_was_mnemonic__returns_
     BOOST_REQUIRE_EQUAL(formerly("mnemonic"), mnemonic_encode::symbol());
 }
 
+BOOST_AUTO_TEST_CASE(generated__formerly__put_tx_was_send_tx_node__returns_object)
+{
+    BOOST_REQUIRE_EQUAL(formerly("send-tx-node"), put_tx::symbol());
+}
+
 BOOST_AUTO_TEST_CASE(generated__formerly__ripemd160_was_ripemd_hash__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("ripemd-hash"), ripemd160::symbol());
@@ -156,16 +166,6 @@ BOOST_AUTO_TEST_CASE(generated__formerly__script_to_address_was_scripthash__retu
 BOOST_AUTO_TEST_CASE(generated__formerly__send_tx_was_sendtx_obelisk__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("sendtx-obelisk"), send_tx::symbol());
-}
-
-BOOST_AUTO_TEST_CASE(generated__formerly__send_tx_node_was_sendtx_node__returns_object)
-{
-    BOOST_REQUIRE_EQUAL(formerly("sendtx-node"), send_tx_node::symbol());
-}
-
-BOOST_AUTO_TEST_CASE(generated__formerly__send_tx_p2p_was_sendtx_p2p__returns_object)
-{
-    BOOST_REQUIRE_EQUAL(formerly("sendtx-p2p"), send_tx_p2p::symbol());
 }
 
 BOOST_AUTO_TEST_CASE(generated__formerly__stealth_decode_was_stealth_show_addr__returns_object)

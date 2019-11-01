@@ -21,6 +21,7 @@ _bx()
         base64-encode
         bitcoin160
         bitcoin256
+        broadcast-tx
         btc-to-satoshi
         cert-new
         cert-public
@@ -48,9 +49,9 @@ _bx()
         fetch-block
         fetch-block-hashes
         fetch-block-height
-        fetch-compact-filter-checkpoint-node
-        fetch-compact-filter-headers-node
-        fetch-compact-filters-node
+        fetch-filter
+        fetch-filter-checkpoint
+        fetch-filter-headers
         fetch-header
         fetch-height
         fetch-history
@@ -59,6 +60,9 @@ _bx()
         fetch-tx
         fetch-tx-index
         fetch-utxo
+        get-filter-checkpoint
+        get-filter-headers
+        get-filters
         hd-new
         hd-private
         hd-public
@@ -68,12 +72,13 @@ _bx()
         input-set
         input-sign
         input-validate
-        match-neutrino-filter-address
-        match-neutrino-filter-script
+        match-neutrino-address
+        match-neutrino-script
         message-sign
         message-validate
         mnemonic-new
         mnemonic-to-seed
+        put-tx
         qrcode
         ripemd160
         satoshi-to-btc
@@ -83,8 +88,6 @@ _bx()
         script-to-key
         seed
         send-tx
-        send-tx-node
-        send-tx-p2p
         settings
         sha160
         sha256

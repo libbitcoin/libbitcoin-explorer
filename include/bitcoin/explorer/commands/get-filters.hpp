@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_MATCH_NEUTRINO_FILTER_ADDRESS_HPP
-#define BX_MATCH_NEUTRINO_FILTER_ADDRESS_HPP
+#ifndef BX_GET_FILTERS_HPP
+#define BX_GET_FILTERS_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -55,17 +55,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FILTER_TYPE_UNRECOGNIZED \
-    "The filter provided contains an unrecognized type."
-#define BX_FILTER_MATCH_ADDRESS_SUCCESS \
-    "Address matched filter."
-#define BX_FILTER_MATCH_ADDRESS_FAILURE \
-    "Address does not match filter."
+#define BX_BIP157_UNSUPPORTED \
+    "The peer does not indicate support for BIP157."
 
 /**
- * Class to implement the match-neutrino-filter-address command.
+ * Class to implement the get-filters command.
  */
-class BCX_API match_neutrino_filter_address
+class BCX_API get_filters
   : public command
 {
 public:
@@ -75,7 +71,7 @@ public:
      */
     static const char* symbol()
     {
-        return "match-neutrino-filter-address";
+        return "get-filters";
     }
 
 
@@ -84,7 +80,7 @@ public:
      */
     virtual const char* name()
     {
-        return match_neutrino_filter_address::symbol();
+        return get_filters::symbol();
     }
 
     /**
@@ -92,7 +88,7 @@ public:
      */
     virtual const char* category()
     {
-        return "MATH";
+        return "ONLINE";
     }
 
     /**
@@ -100,7 +96,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Determine whether the provided filter probabilistically matches the provided payment address.";
+        return "Retrieve compact filters via a single Bitcoin network node. The distance between provided height and hash must be strictly less than 100.";
     }
 
     /**
@@ -111,8 +107,8 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("COMPACT_FILTER", 1)
-            .add("ADDRESS", 1);
+            .add("height", 1)
+            .add("hash", 1);
     }
 
     /**
@@ -124,7 +120,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_address_argument(), "ADDRESS", variables, input, raw);
+        load_input(get_hash_argument(), "hash", variables, input, raw);
     }
 
     /**
@@ -148,14 +144,29 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "COMPACT_FILTER",
-            value<system::config::compact_filter>(&argument_.compact_filter)->required(),
-            "The neutrino filter to be evaluated."
+            "format,f",
+            value<explorer::config::encoding>(&option_.format),
+            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
-            "ADDRESS",
-            value<system::wallet::payment_address>(&argument_.address),
-            "The payment address whose membership is in question."
+            "host,t",
+            value<std::string>(&option_.host)->default_value("localhost"),
+            "The IP address or DNS name of the node. Defaults to localhost."
+        )
+        (
+            "port,p",
+            value<uint16_t>(&option_.port)->default_value(8333),
+            "The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet."
+        )
+        (
+            "height",
+            value<uint32_t>(&argument_.height),
+            "The block height."
+        )
+        (
+            "hash",
+            value<system::config::hash256>(&argument_.hash),
+            "The Base16 block hash. If not specified the hash is read from STDIN."
         );
 
         return options;
@@ -181,37 +192,88 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the COMPACT_FILTER argument.
+     * Get the value of the height argument.
      */
-    virtual system::config::compact_filter& get_compact_filter_argument()
+    virtual uint32_t& get_height_argument()
     {
-        return argument_.compact_filter;
+        return argument_.height;
     }
 
     /**
-     * Set the value of the COMPACT_FILTER argument.
+     * Set the value of the height argument.
      */
-    virtual void set_compact_filter_argument(
-        const system::config::compact_filter& value)
+    virtual void set_height_argument(
+        const uint32_t& value)
     {
-        argument_.compact_filter = value;
+        argument_.height = value;
     }
 
     /**
-     * Get the value of the ADDRESS argument.
+     * Get the value of the hash argument.
      */
-    virtual system::wallet::payment_address& get_address_argument()
+    virtual system::config::hash256& get_hash_argument()
     {
-        return argument_.address;
+        return argument_.hash;
     }
 
     /**
-     * Set the value of the ADDRESS argument.
+     * Set the value of the hash argument.
      */
-    virtual void set_address_argument(
-        const system::wallet::payment_address& value)
+    virtual void set_hash_argument(
+        const system::config::hash256& value)
     {
-        argument_.address = value;
+        argument_.hash = value;
+    }
+
+    /**
+     * Get the value of the format option.
+     */
+    virtual explorer::config::encoding& get_format_option()
+    {
+        return option_.format;
+    }
+
+    /**
+     * Set the value of the format option.
+     */
+    virtual void set_format_option(
+        const explorer::config::encoding& value)
+    {
+        option_.format = value;
+    }
+
+    /**
+     * Get the value of the host option.
+     */
+    virtual std::string& get_host_option()
+    {
+        return option_.host;
+    }
+
+    /**
+     * Set the value of the host option.
+     */
+    virtual void set_host_option(
+        const std::string& value)
+    {
+        option_.host = value;
+    }
+
+    /**
+     * Get the value of the port option.
+     */
+    virtual uint16_t& get_port_option()
+    {
+        return option_.port;
+    }
+
+    /**
+     * Set the value of the port option.
+     */
+    virtual void set_port_option(
+        const uint16_t& value)
+    {
+        option_.port = value;
     }
 
 private:
@@ -224,13 +286,13 @@ private:
     struct argument
     {
         argument()
-          : compact_filter(),
-            address()
+          : height(),
+            hash()
         {
         }
 
-        system::config::compact_filter compact_filter;
-        system::wallet::payment_address address;
+        uint32_t height;
+        system::config::hash256 hash;
     } argument_;
 
     /**
@@ -241,9 +303,15 @@ private:
     struct option
     {
         option()
+          : format(),
+            host(),
+            port()
         {
         }
 
+        explorer::config::encoding format;
+        std::string host;
+        uint16_t port;
     } option_;
 };
 

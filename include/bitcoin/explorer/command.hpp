@@ -267,7 +267,7 @@ public:
         )
         (
             "server.url",
-            value<system::config::endpoint>(&setting_.server.url)->default_value({ "tcp://mainnet.libbitcoin.net:9091" }),
+            value<system::config::endpoint>(&setting_.server.url)->default_value({ "tcp://127.0.0.1:9091" }),
             "The URL of the Libbitcoin query service."
         )
         (

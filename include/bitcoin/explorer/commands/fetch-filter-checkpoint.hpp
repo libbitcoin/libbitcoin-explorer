@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_MATCH_NEUTRINO_FILTER_SCRIPT_HPP
-#define BX_MATCH_NEUTRINO_FILTER_SCRIPT_HPP
+#ifndef BX_FETCH_FILTER_CHECKPOINT_HPP
+#define BX_FETCH_FILTER_CHECKPOINT_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -55,17 +55,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FILTER_TYPE_UNRECOGNIZED \
-    "The filter provided contains an unrecognized type."
-#define BX_FILTER_MATCH_SCRIPT_SUCCESS \
-    "Script matched filter."
-#define BX_FILTER_MATCH_SCRIPT_FAILURE \
-    "Script does not match filter."
+#define BX_BIP157_UNSUPPORTED \
+    "The peer does not indicate support for BIP157."
 
 /**
- * Class to implement the match-neutrino-filter-script command.
+ * Class to implement the fetch-filter-checkpoint command.
  */
-class BCX_API match_neutrino_filter_script
+class BCX_API fetch_filter_checkpoint
   : public command
 {
 public:
@@ -75,7 +71,7 @@ public:
      */
     static const char* symbol()
     {
-        return "match-neutrino-filter-script";
+        return "fetch-filter-checkpoint";
     }
 
 
@@ -84,7 +80,7 @@ public:
      */
     virtual const char* name()
     {
-        return match_neutrino_filter_script::symbol();
+        return fetch_filter_checkpoint::symbol();
     }
 
     /**
@@ -92,7 +88,7 @@ public:
      */
     virtual const char* category()
     {
-        return "MATH";
+        return "ONLINE";
     }
 
     /**
@@ -100,7 +96,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Determine whether the provided filter probabilistically matches the provided script.";
+        return "Retrieve compact filter checkpoint via a Libbitcoin server.";
     }
 
     /**
@@ -111,8 +107,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("COMPACT_FILTER", 1)
-            .add("SCRIPT", 1);
+            .add("hash", 1);
     }
 
     /**
@@ -124,7 +119,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_script_argument(), "SCRIPT", variables, input, raw);
+        load_input(get_hash_argument(), "hash", variables, input, raw);
     }
 
     /**
@@ -148,14 +143,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "COMPACT_FILTER",
-            value<system::config::compact_filter>(&argument_.compact_filter)->required(),
-            "The neutrino filter to be evaluated."
+            "format,f",
+            value<explorer::config::encoding>(&option_.format),
+            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
-            "SCRIPT",
-            value<system::config::script>(&argument_.script),
-            "The script whose membership is in question."
+            "hash",
+            value<system::config::hash256>(&argument_.hash),
+            "The Base16 block hash. If not specified the hash is read from STDIN."
         );
 
         return options;
@@ -181,37 +176,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the COMPACT_FILTER argument.
+     * Get the value of the hash argument.
      */
-    virtual system::config::compact_filter& get_compact_filter_argument()
+    virtual system::config::hash256& get_hash_argument()
     {
-        return argument_.compact_filter;
+        return argument_.hash;
     }
 
     /**
-     * Set the value of the COMPACT_FILTER argument.
+     * Set the value of the hash argument.
      */
-    virtual void set_compact_filter_argument(
-        const system::config::compact_filter& value)
+    virtual void set_hash_argument(
+        const system::config::hash256& value)
     {
-        argument_.compact_filter = value;
+        argument_.hash = value;
     }
 
     /**
-     * Get the value of the SCRIPT argument.
+     * Get the value of the format option.
      */
-    virtual system::config::script& get_script_argument()
+    virtual explorer::config::encoding& get_format_option()
     {
-        return argument_.script;
+        return option_.format;
     }
 
     /**
-     * Set the value of the SCRIPT argument.
+     * Set the value of the format option.
      */
-    virtual void set_script_argument(
-        const system::config::script& value)
+    virtual void set_format_option(
+        const explorer::config::encoding& value)
     {
-        argument_.script = value;
+        option_.format = value;
     }
 
 private:
@@ -224,13 +219,11 @@ private:
     struct argument
     {
         argument()
-          : compact_filter(),
-            script()
+          : hash()
         {
         }
 
-        system::config::compact_filter compact_filter;
-        system::config::script script;
+        system::config::hash256 hash;
     } argument_;
 
     /**
@@ -241,9 +234,11 @@ private:
     struct option
     {
         option()
+          : format()
         {
         }
 
+        explorer::config::encoding format;
     } option_;
 };
 
