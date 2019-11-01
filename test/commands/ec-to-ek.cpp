@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_SUITE(ec_to_ek__invoke)
 
 #ifdef WITH_ICU
 
-// BI-38 Vectors
+// BIP-38 Vectors
 
 BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__vector_0_uncompressed__okay)
 {
