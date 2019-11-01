@@ -68,7 +68,7 @@ console_result mnemonic_to_seed::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    // The passphrase requires ICU normalization.
+    // Decoding with passphrase requires ICU normalization.
     const auto seed = decode_mnemonic(words);
 #endif
 
