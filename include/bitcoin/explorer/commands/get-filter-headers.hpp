@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_FETCH_COMPACT_FILTERS_NODE_HPP
-#define BX_FETCH_COMPACT_FILTERS_NODE_HPP
+#ifndef BX_GET_FILTER_HEADERS_HPP
+#define BX_GET_FILTER_HEADERS_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -57,13 +57,11 @@ namespace commands {
  */
 #define BX_BIP157_UNSUPPORTED \
     "The peer does not indicate support for BIP157."
-#define BX_INVALID_FILTER_TYPE \
-    "The provided filter type exceeds encodable limits."
 
 /**
- * Class to implement the fetch-compact-filters-node command.
+ * Class to implement the get-filter-headers command.
  */
-class BCX_API fetch_compact_filters_node
+class BCX_API get_filter_headers
   : public command
 {
 public:
@@ -73,7 +71,7 @@ public:
      */
     static const char* symbol()
     {
-        return "fetch-compact-filters-node";
+        return "get-filter-headers";
     }
 
 
@@ -82,7 +80,7 @@ public:
      */
     virtual const char* name()
     {
-        return fetch_compact_filters_node::symbol();
+        return get_filter_headers::symbol();
     }
 
     /**
@@ -98,7 +96,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Retrieve compact filters via a single Bitcoin network node. The distance between provided height and hash must be strictly less than 100.";
+        return "Retrieve compact filter headers via a single Bitcoin network node. The distance between provided height and hash must be strictly less than 2000.";
     }
 
     /**
@@ -109,7 +107,6 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("filter_type", 1)
             .add("height", 1)
             .add("hash", 1);
     }
@@ -162,11 +159,6 @@ public:
             "The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet."
         )
         (
-            "filter_type",
-            value<uint16_t>(&argument_.filter_type),
-            "The compact filter type."
-        )
-        (
             "height",
             value<uint32_t>(&argument_.height),
             "The block height."
@@ -198,23 +190,6 @@ public:
         std::ostream& cerr);
 
     /* Properties */
-
-    /**
-     * Get the value of the filter_type argument.
-     */
-    virtual uint16_t& get_filter_type_argument()
-    {
-        return argument_.filter_type;
-    }
-
-    /**
-     * Set the value of the filter_type argument.
-     */
-    virtual void set_filter_type_argument(
-        const uint16_t& value)
-    {
-        argument_.filter_type = value;
-    }
 
     /**
      * Get the value of the height argument.
@@ -311,13 +286,11 @@ private:
     struct argument
     {
         argument()
-          : filter_type(),
-            height(),
+          : height(),
             hash()
         {
         }
 
-        uint16_t filter_type;
         uint32_t height;
         system::config::hash256 hash;
     } argument_;

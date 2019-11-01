@@ -17,7 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/send-tx-node.hpp>
+// Sponsored in part by Digital Contract Design, LLC
+
+#include <bitcoin/explorer/commands/get-filter-checkpoint.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -25,8 +27,9 @@
 #include <future>
 #include <iostream>
 #include <mutex>
-#include <boost/core/null_deleter.hpp>
+#include <boost/filesystem.hpp>
 #include <boost/format.hpp>
+#include <boost/core/null_deleter.hpp>
 #include <bitcoin/network.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -40,6 +43,7 @@ using namespace boost;
 using namespace bc::explorer::config;
 using namespace bc::network;
 using namespace bc::system;
+using namespace std::placeholders;
 
 static std::promise<code> complete;
 
@@ -56,12 +60,14 @@ static void handle_stop(int)
     stop(error::service_stopped);
 }
 
-console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
+console_result get_filter_checkpoint::invoke(
+    std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& host = get_host_option();
     const auto& port = get_port_option();
-    const tx_type& transaction = get_transaction_argument();
+    const auto& encoding = get_format_option();
+    const hash_digest& hash = get_hash_argument();
 
     // Configuration settings.
     //-------------------------------------------------------------------------
@@ -71,8 +77,6 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const auto connect = get_network_connect_timeout_seconds_setting();
     const auto handshake = get_network_channel_handshake_seconds_setting();
     const auto& hosts_file_name = get_network_hosts_file_setting();
-    ////const auto& debug_file_name = get_network_debug_file_setting();
-    ////const auto& error_file_name = get_network_error_file_setting();
 
     network::settings settings(system::config::settings::mainnet);
 
@@ -88,8 +92,6 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     settings.manual_attempt_limit = attempts;
     settings.connect_timeout_seconds = connect;
     settings.channel_handshake_seconds = handshake;
-    ////settings.debug_file = debug_file_name;
-    ////settings.error_file = error_file_name;
     settings.hosts_file = hosts_file_name;
     settings.verbose = true;
 
@@ -97,63 +99,59 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     if (identifier != 0)
         settings.identifier = identifier;
 
-    // Log initialization.
-    //-------------------------------------------------------------------------
-
-    ////const log::rotable_file debug_file
-    ////{
-    ////    settings.debug_file,
-    ////    settings.archive_directory,
-    ////    settings.rotation_size,
-    ////    settings.maximum_archive_size,
-    ////    settings.minimum_free_space,
-    ////    settings.maximum_archive_files
-    ////};
-
-    ////const log::rotable_file error_file
-    ////{
-    ////    settings.error_file,
-    ////    settings.archive_directory,
-    ////    settings.rotation_size,
-    ////    settings.maximum_archive_size,
-    ////    settings.minimum_free_space,
-    ////    settings.maximum_archive_files
-    ////};
-
-    ////log::stream console_out(&output, null_deleter());
-    ////log::stream console_err(&error, null_deleter());
-    ////log::initialize(debug_file, error_file, console_out, console_err);
-
-    ////static const auto header = format("=========== %1% ==========") % symbol();
-    ////LOG_DEBUG(LOG_NETWORK) << header;
-    ////LOG_ERROR(LOG_NETWORK) << header;
-
     // Network operations.
     //-------------------------------------------------------------------------
 
     p2p network(settings);
     callback_state state(error, output);
-    message::transaction tx(transaction);
+    message::get_compact_filter_checkpoint request(
+        neutrino_filter_type, hash);
 
     // Catch C signals for aborting the program.
     signal(SIGTERM, handle_stop);
     signal(SIGINT, handle_stop);
 
-    const auto send_handler = [&state](const code& ec)
+    // This enables json-style array formatting.
+    const auto json = encoding == encoding_engine::json;
+
+    auto receive_handler = [&state, json](const code& ec,
+        std::shared_ptr<const message::compact_filter_checkpoint> response)
     {
         if (state.succeeded(ec))
-            state.output(BX_SEND_TX_NODE_OUTPUT);
+            state.output(property_tree(*response, json));
 
         stop(ec);
+        return false;
     };
 
-    const auto connect_handler = [&state, &tx, send_handler](const code& ec,
-        network::channel::ptr node)
+    const auto send_handler = [&state](const code& ec)
     {
-        if (state.succeeded(ec))
-            node->send(tx, send_handler);
-        else
+        if (!state.succeeded(ec))
             stop(ec);
+    };
+
+    const auto connect_handler = [&state, &receive_handler, &request,
+        send_handler](const code& ec, network::channel::ptr node)
+    {
+        if (!state.succeeded(ec))
+        {
+            stop(ec);
+            return;
+        }
+
+        const auto peer_bip157 = (node->peer_version()->services() &
+            message::version::service::node_compact_filters) != 0;
+
+        if (!peer_bip157)
+        {
+            state.error(BX_BIP157_UNSUPPORTED);
+            stop(error::posix_to_error_code(console_result::failure));
+            return;
+        }
+
+        node->subscribe<message::compact_filter_checkpoint>(
+            std::move(receive_handler));
+        node->send(request, send_handler);
     };
 
     const auto start_handler = [&state](const code& ec)

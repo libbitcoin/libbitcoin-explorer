@@ -17,9 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Sponsored in part by Digital Contract Design, LLC
-
-#include <bitcoin/explorer/commands/fetch-compact-filters-node.hpp>
+#include <bitcoin/explorer/commands/put-tx.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -27,9 +25,8 @@
 #include <future>
 #include <iostream>
 #include <mutex>
-#include <boost/filesystem.hpp>
-#include <boost/format.hpp>
 #include <boost/core/null_deleter.hpp>
+#include <boost/format.hpp>
 #include <bitcoin/network.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -59,23 +56,12 @@ static void handle_stop(int)
     stop(error::service_stopped);
 }
 
-console_result fetch_compact_filters_node::invoke(std::ostream& output,
-    std::ostream& error)
+console_result put_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& host = get_host_option();
     const auto& port = get_port_option();
-    const auto& encoding = get_format_option();
-    const hash_digest& stop_hash = get_hash_argument();
-    const uint32_t start_height = get_height_argument();
-    const uint16_t filter_type = get_filter_type_argument();
-
-    // Validate filter_type
-    if (filter_type > max_uint8)
-    {
-        output << BX_INVALID_FILTER_TYPE << std::endl;
-        return console_result::failure;
-    }
+    const tx_type& transaction = get_transaction_argument();
 
     // Configuration settings.
     //-------------------------------------------------------------------------
@@ -85,6 +71,8 @@ console_result fetch_compact_filters_node::invoke(std::ostream& output,
     const auto connect = get_network_connect_timeout_seconds_setting();
     const auto handshake = get_network_channel_handshake_seconds_setting();
     const auto& hosts_file_name = get_network_hosts_file_setting();
+    ////const auto& debug_file_name = get_network_debug_file_setting();
+    ////const auto& error_file_name = get_network_error_file_setting();
 
     network::settings settings(system::config::settings::mainnet);
 
@@ -100,6 +88,8 @@ console_result fetch_compact_filters_node::invoke(std::ostream& output,
     settings.manual_attempt_limit = attempts;
     settings.connect_timeout_seconds = connect;
     settings.channel_handshake_seconds = handshake;
+    ////settings.debug_file = debug_file_name;
+    ////settings.error_file = error_file_name;
     settings.hosts_file = hosts_file_name;
     settings.verbose = true;
 
@@ -107,67 +97,63 @@ console_result fetch_compact_filters_node::invoke(std::ostream& output,
     if (identifier != 0)
         settings.identifier = identifier;
 
+    // Log initialization.
+    //-------------------------------------------------------------------------
+
+    ////const log::rotable_file debug_file
+    ////{
+    ////    settings.debug_file,
+    ////    settings.archive_directory,
+    ////    settings.rotation_size,
+    ////    settings.maximum_archive_size,
+    ////    settings.minimum_free_space,
+    ////    settings.maximum_archive_files
+    ////};
+
+    ////const log::rotable_file error_file
+    ////{
+    ////    settings.error_file,
+    ////    settings.archive_directory,
+    ////    settings.rotation_size,
+    ////    settings.maximum_archive_size,
+    ////    settings.minimum_free_space,
+    ////    settings.maximum_archive_files
+    ////};
+
+    ////log::stream console_out(&output, null_deleter());
+    ////log::stream console_err(&error, null_deleter());
+    ////log::initialize(debug_file, error_file, console_out, console_err);
+
+    ////static const auto header = format("=========== %1% ==========") % symbol();
+    ////LOG_DEBUG(LOG_NETWORK) << header;
+    ////LOG_ERROR(LOG_NETWORK) << header;
+
     // Network operations.
     //-------------------------------------------------------------------------
 
     p2p network(settings);
     callback_state state(error, output);
-    message::get_compact_filters request(static_cast<uint8_t>(filter_type),
-        start_height, stop_hash);
+    message::transaction tx(transaction);
 
     // Catch C signals for aborting the program.
     signal(SIGTERM, handle_stop);
     signal(SIGINT, handle_stop);
 
-    // This enables json-style array formatting.
-    const auto json = encoding == encoding_engine::json;
-
-    auto receive_handler = [&state, json, stop_hash](const code& ec,
-        std::shared_ptr<const message::compact_filter> response)
-    {
-        if (!state.succeeded(ec))
-        {
-            stop(ec);
-            return false;
-        }
-
-        state.output(property_tree(*response, json));
-
-        // Relying on response order for termination.
-        auto received_final_response = (response->block_hash() == stop_hash);
-        if (received_final_response)
-            stop(ec);
-   
-        return !received_final_response;
-    };
-
     const auto send_handler = [&state](const code& ec)
     {
-        if (!state.succeeded(ec))
-            stop(ec);
+        if (state.succeeded(ec))
+            state.output(BX_SEND_TX_NODE_OUTPUT);
+
+        stop(ec);
     };
 
-    const auto connect_handler = [&state, &request, &receive_handler,
-        send_handler](const code& ec, network::channel::ptr node)
+    const auto connect_handler = [&state, &tx, send_handler](const code& ec,
+        network::channel::ptr node)
     {
-        if (!state.succeeded(ec))
-        {
+        if (state.succeeded(ec))
+            node->send(tx, send_handler);
+        else
             stop(ec);
-            return;
-        }
-
-        const auto peer_bip157 = (node->peer_version()->services() &
-            message::version::service::node_compact_filters) != 0;
-
-        if (!peer_bip157)
-        {
-            state.error(BX_BIP157_UNSUPPORTED);
-            stop(error::service_stopped);
-            return;
-        }
-
-        node->subscribe<message::compact_filter>(std::move(receive_handler));
-        node->send(request, send_handler);
     };
 
     const auto start_handler = [&state](const code& ec)

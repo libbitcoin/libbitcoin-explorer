@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_SEND_TX_P2P_HPP
-#define BX_SEND_TX_P2P_HPP
+#ifndef BX_FETCH_FILTER_HPP
+#define BX_FETCH_FILTER_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -55,13 +55,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_SEND_TX_P2P_OUTPUT \
-    "Sent transaction."
+#define BX_BIP157_UNSUPPORTED \
+    "The peer does not indicate support for BIP157."
 
 /**
- * Class to implement the send-tx-p2p command.
+ * Class to implement the fetch-filter command.
  */
-class BCX_API send_tx_p2p
+class BCX_API fetch_filter
   : public command
 {
 public:
@@ -71,23 +71,16 @@ public:
      */
     static const char* symbol()
     {
-        return "send-tx-p2p";
+        return "fetch-filter";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    static const char* formerly()
-    {
-        return "sendtx-p2p";
-    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return send_tx_p2p::symbol();
+        return fetch_filter::symbol();
     }
 
     /**
@@ -103,7 +96,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Broadcast a transaction to the Bitcoin network via the Bitcoin peer-to-peer network.";
+        return "Retrieve compact filters via a Libbitcoin server.";
     }
 
     /**
@@ -113,8 +106,7 @@ public:
      */
     virtual system::arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("TRANSACTION", 1);
+        return get_argument_metadata();
     }
 
     /**
@@ -125,8 +117,6 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_transaction_argument(), "TRANSACTION", variables, input, raw);
     }
 
     /**
@@ -150,14 +140,19 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "nodes,n",
-            value<size_t>(&option_.nodes)->default_value(2),
-            "The number of network nodes to send the transaction to, defaults to 2."
+            "format,f",
+            value<explorer::config::encoding>(&option_.format),
+            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
-            "TRANSACTION",
-            value<system::config::transaction>(&argument_.transaction),
-            "The Base16 transaction to send. If not specified the transaction is read from STDIN."
+            "hash,s",
+            value<system::config::hash256>(&option_.hash),
+            "The Base16 block hash."
+        )
+        (
+            "height,t",
+            value<uint32_t>(&option_.height),
+            "The block height."
         );
 
         return options;
@@ -183,37 +178,54 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the TRANSACTION argument.
+     * Get the value of the format option.
      */
-    virtual system::config::transaction& get_transaction_argument()
+    virtual explorer::config::encoding& get_format_option()
     {
-        return argument_.transaction;
+        return option_.format;
     }
 
     /**
-     * Set the value of the TRANSACTION argument.
+     * Set the value of the format option.
      */
-    virtual void set_transaction_argument(
-        const system::config::transaction& value)
+    virtual void set_format_option(
+        const explorer::config::encoding& value)
     {
-        argument_.transaction = value;
+        option_.format = value;
     }
 
     /**
-     * Get the value of the nodes option.
+     * Get the value of the hash option.
      */
-    virtual size_t& get_nodes_option()
+    virtual system::config::hash256& get_hash_option()
     {
-        return option_.nodes;
+        return option_.hash;
     }
 
     /**
-     * Set the value of the nodes option.
+     * Set the value of the hash option.
      */
-    virtual void set_nodes_option(
-        const size_t& value)
+    virtual void set_hash_option(
+        const system::config::hash256& value)
     {
-        option_.nodes = value;
+        option_.hash = value;
+    }
+
+    /**
+     * Get the value of the height option.
+     */
+    virtual uint32_t& get_height_option()
+    {
+        return option_.height;
+    }
+
+    /**
+     * Set the value of the height option.
+     */
+    virtual void set_height_option(
+        const uint32_t& value)
+    {
+        option_.height = value;
     }
 
 private:
@@ -226,11 +238,9 @@ private:
     struct argument
     {
         argument()
-          : transaction()
         {
         }
 
-        system::config::transaction transaction;
     } argument_;
 
     /**
@@ -241,11 +251,15 @@ private:
     struct option
     {
         option()
-          : nodes()
+          : format(),
+            hash(),
+            height()
         {
         }
 
-        size_t nodes;
+        explorer::config::encoding format;
+        system::config::hash256 hash;
+        uint32_t height;
     } option_;
 };
 

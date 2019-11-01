@@ -19,7 +19,7 @@
 
 // Sponsored in part by Digital Contract Design, LLC
 
-#include <bitcoin/explorer/commands/match-neutrino-filter-script.hpp>
+#include <bitcoin/explorer/commands/match-neutrino-script.hpp>
 
 #include <iostream>
 #include <cstdint>
@@ -35,7 +35,7 @@ using namespace bc::explorer::config;
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result match_neutrino_filter_script::invoke(std::ostream& output,
+console_result match_neutrino_script::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.

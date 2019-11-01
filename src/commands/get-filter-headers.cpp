@@ -19,7 +19,7 @@
 
 // Sponsored in part by Digital Contract Design, LLC
 
-#include <bitcoin/explorer/commands/fetch-compact-filter-checkpoint-node.hpp>
+#include <bitcoin/explorer/commands/get-filter-headers.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -43,7 +43,6 @@ using namespace boost;
 using namespace bc::explorer::config;
 using namespace bc::network;
 using namespace bc::system;
-using namespace std::placeholders;
 
 static std::promise<code> complete;
 
@@ -60,22 +59,15 @@ static void handle_stop(int)
     stop(error::service_stopped);
 }
 
-console_result fetch_compact_filter_checkpoint_node::invoke(
-    std::ostream& output, std::ostream& error)
+console_result get_filter_headers::invoke(std::ostream& output,
+    std::ostream& error)
 {
     // Bound parameters.
     const auto& host = get_host_option();
     const auto& port = get_port_option();
     const auto& encoding = get_format_option();
-    const hash_digest& hash = get_hash_argument();
-    const uint16_t filter_type = get_filter_type_argument();
-
-    // Validate filter_type
-    if (filter_type > max_uint8)
-    {
-        output << BX_INVALID_FILTER_TYPE << std::endl;
-        return console_result::failure;
-    }
+    const hash_digest& stop_hash = get_hash_argument();
+    const uint32_t start_height = get_height_argument();
 
     // Configuration settings.
     //-------------------------------------------------------------------------
@@ -112,8 +104,8 @@ console_result fetch_compact_filter_checkpoint_node::invoke(
 
     p2p network(settings);
     callback_state state(error, output);
-    message::get_compact_filter_checkpoint request(
-        static_cast<uint8_t>(filter_type), hash);
+    message::get_compact_filter_headers request(
+        neutrino_filter_type, start_height, stop_hash);
 
     // Catch C signals for aborting the program.
     signal(SIGTERM, handle_stop);
@@ -123,7 +115,7 @@ console_result fetch_compact_filter_checkpoint_node::invoke(
     const auto json = encoding == encoding_engine::json;
 
     auto receive_handler = [&state, json](const code& ec,
-        std::shared_ptr<const message::compact_filter_checkpoint> response)
+        std::shared_ptr<const message::compact_filter_headers> response)
     {
         if (state.succeeded(ec))
             state.output(property_tree(*response, json));
@@ -138,7 +130,7 @@ console_result fetch_compact_filter_checkpoint_node::invoke(
             stop(ec);
     };
 
-    const auto connect_handler = [&state, &receive_handler, &request,
+    const auto connect_handler = [&state, &request, &receive_handler,
         send_handler](const code& ec, network::channel::ptr node)
     {
         if (!state.succeeded(ec))
@@ -153,11 +145,11 @@ console_result fetch_compact_filter_checkpoint_node::invoke(
         if (!peer_bip157)
         {
             state.error(BX_BIP157_UNSUPPORTED);
-            stop(error::posix_to_error_code(console_result::failure));
+            stop(error::service_stopped);
             return;
         }
 
-        node->subscribe<message::compact_filter_checkpoint>(
+        node->subscribe<message::compact_filter_headers>(
             std::move(receive_handler));
         node->send(request, send_handler);
     };

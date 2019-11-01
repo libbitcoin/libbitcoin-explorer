@@ -50,6 +50,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<base64_encode>());
     func(make_shared<bitcoin160>());
     func(make_shared<bitcoin256>());
+    func(make_shared<broadcast_tx>());
     func(make_shared<btc_to_satoshi>());
     func(make_shared<cert_new>());
     func(make_shared<cert_public>());
@@ -77,9 +78,9 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<fetch_block>());
     func(make_shared<fetch_block_hashes>());
     func(make_shared<fetch_block_height>());
-    func(make_shared<fetch_compact_filter_checkpoint_node>());
-    func(make_shared<fetch_compact_filter_headers_node>());
-    func(make_shared<fetch_compact_filters_node>());
+    func(make_shared<fetch_filter>());
+    func(make_shared<fetch_filter_checkpoint>());
+    func(make_shared<fetch_filter_headers>());
     func(make_shared<fetch_header>());
     func(make_shared<fetch_height>());
     func(make_shared<fetch_history>());
@@ -88,6 +89,9 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<fetch_tx>());
     func(make_shared<fetch_tx_index>());
     func(make_shared<fetch_utxo>());
+    func(make_shared<get_filter_checkpoint>());
+    func(make_shared<get_filter_headers>());
+    func(make_shared<get_filters>());
     func(make_shared<hd_new>());
     func(make_shared<hd_private>());
     func(make_shared<hd_public>());
@@ -99,14 +103,15 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<input_set>());
     func(make_shared<input_sign>());
     func(make_shared<input_validate>());
-    func(make_shared<match_neutrino_filter_address>());
-    func(make_shared<match_neutrino_filter_script>());
+    func(make_shared<match_neutrino_address>());
+    func(make_shared<match_neutrino_script>());
     func(make_shared<message_sign>());
     func(make_shared<message_validate>());
     func(make_shared<mnemonic_decode>());
     func(make_shared<mnemonic_encode>());
     func(make_shared<mnemonic_new>());
     func(make_shared<mnemonic_to_seed>());
+    func(make_shared<put_tx>());
     func(make_shared<qrcode>());
     func(make_shared<ripemd160>());
     func(make_shared<satoshi_to_btc>());
@@ -116,8 +121,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<script_to_key>());
     func(make_shared<seed>());
     func(make_shared<send_tx>());
-    func(make_shared<send_tx_node>());
-    func(make_shared<send_tx_p2p>());
     func(make_shared<settings>());
     func(make_shared<sha160>());
     func(make_shared<sha256>());
@@ -177,6 +180,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<bitcoin160>();
     if (symbol == bitcoin256::symbol())
         return make_shared<bitcoin256>();
+    if (symbol == broadcast_tx::symbol())
+        return make_shared<broadcast_tx>();
     if (symbol == btc_to_satoshi::symbol())
         return make_shared<btc_to_satoshi>();
     if (symbol == cert_new::symbol())
@@ -231,12 +236,12 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_block_hashes>();
     if (symbol == fetch_block_height::symbol())
         return make_shared<fetch_block_height>();
-    if (symbol == fetch_compact_filter_checkpoint_node::symbol())
-        return make_shared<fetch_compact_filter_checkpoint_node>();
-    if (symbol == fetch_compact_filter_headers_node::symbol())
-        return make_shared<fetch_compact_filter_headers_node>();
-    if (symbol == fetch_compact_filters_node::symbol())
-        return make_shared<fetch_compact_filters_node>();
+    if (symbol == fetch_filter::symbol())
+        return make_shared<fetch_filter>();
+    if (symbol == fetch_filter_checkpoint::symbol())
+        return make_shared<fetch_filter_checkpoint>();
+    if (symbol == fetch_filter_headers::symbol())
+        return make_shared<fetch_filter_headers>();
     if (symbol == fetch_header::symbol())
         return make_shared<fetch_header>();
     if (symbol == fetch_height::symbol())
@@ -253,6 +258,12 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_tx_index>();
     if (symbol == fetch_utxo::symbol())
         return make_shared<fetch_utxo>();
+    if (symbol == get_filter_checkpoint::symbol())
+        return make_shared<get_filter_checkpoint>();
+    if (symbol == get_filter_headers::symbol())
+        return make_shared<get_filter_headers>();
+    if (symbol == get_filters::symbol())
+        return make_shared<get_filters>();
     if (symbol == hd_new::symbol())
         return make_shared<hd_new>();
     if (symbol == hd_private::symbol())
@@ -275,10 +286,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<input_sign>();
     if (symbol == input_validate::symbol())
         return make_shared<input_validate>();
-    if (symbol == match_neutrino_filter_address::symbol())
-        return make_shared<match_neutrino_filter_address>();
-    if (symbol == match_neutrino_filter_script::symbol())
-        return make_shared<match_neutrino_filter_script>();
+    if (symbol == match_neutrino_address::symbol())
+        return make_shared<match_neutrino_address>();
+    if (symbol == match_neutrino_script::symbol())
+        return make_shared<match_neutrino_script>();
     if (symbol == message_sign::symbol())
         return make_shared<message_sign>();
     if (symbol == message_validate::symbol())
@@ -291,6 +302,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<mnemonic_new>();
     if (symbol == mnemonic_to_seed::symbol())
         return make_shared<mnemonic_to_seed>();
+    if (symbol == put_tx::symbol())
+        return make_shared<put_tx>();
     if (symbol == qrcode::symbol())
         return make_shared<qrcode>();
     if (symbol == ripemd160::symbol())
@@ -309,10 +322,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<seed>();
     if (symbol == send_tx::symbol())
         return make_shared<send_tx>();
-    if (symbol == send_tx_node::symbol())
-        return make_shared<send_tx_node>();
-    if (symbol == send_tx_p2p::symbol())
-        return make_shared<send_tx_p2p>();
     if (symbol == settings::symbol())
         return make_shared<settings>();
     if (symbol == sha160::symbol())
@@ -379,6 +388,8 @@ std::string formerly(const string& former)
         return address_embed::symbol();
     if (former == address_encode::formerly())
         return address_encode::symbol();
+    if (former == broadcast_tx::formerly())
+        return broadcast_tx::symbol();
     if (former == btc_to_satoshi::formerly())
         return btc_to_satoshi::symbol();
     if (former == ec_add_secrets::formerly())
@@ -413,6 +424,8 @@ std::string formerly(const string& former)
         return input_validate::symbol();
     if (former == mnemonic_encode::formerly())
         return mnemonic_encode::symbol();
+    if (former == put_tx::formerly())
+        return put_tx::symbol();
     if (former == ripemd160::formerly())
         return ripemd160::symbol();
     if (former == satoshi_to_btc::formerly())
@@ -425,10 +438,6 @@ std::string formerly(const string& former)
         return script_to_address::symbol();
     if (former == send_tx::formerly())
         return send_tx::symbol();
-    if (former == send_tx_node::formerly())
-        return send_tx_node::symbol();
-    if (former == send_tx_p2p::formerly())
-        return send_tx_p2p::symbol();
     if (former == stealth_decode::formerly())
         return stealth_decode::symbol();
     if (former == stealth_public::formerly())
