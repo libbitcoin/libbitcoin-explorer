@@ -225,11 +225,11 @@ $ ./install.sh --with-icu --with-png --with-qrencode --build-icu --build-zlib --
 
 ### Windows
 
-Visual Studio solutions are maintained for all libbitcoin libraries and dependencies. See the [libbitcoin](https://github.com/libbitcoin/libbitcoin/blob/master/README.md#windows) repository general information about building the Visual Studio solutions. To build Libbitcoin Explorer you must also download and build its **libbitcoin dependencies**, as these are not yet packaged.
+Visual Studio solutions are maintained for all libbitcoin libraries and dependencies. See the [libbitcoin-system](https://github.com/libbitcoin/libbitcoin-system/blob/master/README.md#windows) repository general information about building the Visual Studio solutions. To build Libbitcoin Explorer you must also download and build its **libbitcoin dependencies**, as these are not yet packaged.
 
 Build these solutions in order:
 
-1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
+1. [libbitcoin/libbitcoin-system](https://github.com/libbitcoin/libbitcoin-system)
 2. [libbitcoin/libbitcoin-network](https://github.com/libbitcoin/libbitcoin-network)
 2. [libbitcoin/libbitcoin-protocol](https://github.com/libbitcoin/libbitcoin-protocol)
 3. [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
