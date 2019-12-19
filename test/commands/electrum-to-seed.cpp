@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__okay_output)
 #endif
 }
 
-BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__language_en__okay_output)
+BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke_second__okay_output)
 {
     BX_DECLARE_COMMAND(electrum_to_seed);
     command.set_words_argument({ "foobar" });

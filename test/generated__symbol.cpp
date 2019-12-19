@@ -273,11 +273,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__fetch_public_key__returns_expected_value
     BOOST_REQUIRE_EQUAL(fetch_public_key::symbol(), "fetch-public-key");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__fetch_stealth__returns_expected_value)
-{
-    BOOST_REQUIRE_EQUAL(fetch_stealth::symbol(), "fetch-stealth");
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_tx__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(fetch_tx::symbol(), "fetch-tx");
@@ -551,11 +546,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__version__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__watch_key__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(watch_key::symbol(), "watch-key");
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__watch_stealth__returns_expected_value)
-{
-    BOOST_REQUIRE_EQUAL(watch_stealth::symbol(), "watch-stealth");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__watch_tx__returns_expected_value)

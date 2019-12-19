@@ -75,7 +75,6 @@
 #include <bitcoin/explorer/commands/fetch-height.hpp>
 #include <bitcoin/explorer/commands/fetch-history.hpp>
 #include <bitcoin/explorer/commands/fetch-public-key.hpp>
-#include <bitcoin/explorer/commands/fetch-stealth.hpp>
 #include <bitcoin/explorer/commands/fetch-tx-index.hpp>
 #include <bitcoin/explorer/commands/fetch-tx.hpp>
 #include <bitcoin/explorer/commands/fetch-utxo.hpp>

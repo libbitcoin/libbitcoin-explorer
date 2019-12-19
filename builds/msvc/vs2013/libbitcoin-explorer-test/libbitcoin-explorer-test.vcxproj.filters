@@ -150,9 +150,6 @@
     <ClCompile Include="..\..\..\..\test\commands\fetch-public-key.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\fetch-stealth.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\fetch-tx-index.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -313,9 +310,6 @@
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\watch-key.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\watch-stealth.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\watch-tx.cpp">

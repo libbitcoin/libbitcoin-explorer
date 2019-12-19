@@ -273,28 +273,6 @@ BCX_API pt::ptree prop_tree(const std::vector<transaction>& transactions,
     bool json);
 
 /**
- * Generate a property list for a stealth metadata row.
- * @param[in]  rows  The stealth row.
- * @return           A property list.
- */
-BCX_API pt::ptree prop_list(const client::stealth& row);
-
-/**
- * Generate a property tree for a stealth metadata row.
- * @param[in]  rows  The stealth row.
- * @return           A property tree.
- */
-BCX_API pt::ptree prop_tree(const client::stealth& row);
-
-/**
- * Generate a property tree from stealth metadata rows.
- * @param[in]  rows    The set of stealth rows.
- * @param[in]  json    Use json array formatting.
- * @return             A property tree.
- */
-BCX_API pt::ptree prop_tree(const client::stealth::list& rows, bool json);
-
-/**
  * Create a property tree for the settings command.
  * @param[in]  settings   The list of settings.
  * @returns               A new property tree containing the settings.

@@ -55,11 +55,12 @@ using namespace bc::system;
 #define BX_FIRST_TESTNET_KEY \
 "1abf6c34c4370673aee3ce1c1e6c16de549cc6baa065ff3e4b23414b1dc2eca7"
 
+// FIXME: v4 server(s) are required for network testing.
 // Default network parameters, uses libbitcoin community node.
 #define BX_MAINNET_HOST "mainnet.libbitcoin.net"
 #define BX_MAINNET_PORT 8333
-#define BX_TESTNET_HOST "testnet.libbitcoin.net"
-#define BX_TESTNET_PORT 18333
+#define BX_TESTNET_HOST "testnet2.libbitcoin.net"
+#define BX_TESTNET_PORT 28333
 #define BX_NETWORK_RETRY 0
 #define BX_NETWORK_TIMEOUT 5
 #define BX_NETWORK_HANDSHAKE 15
@@ -71,10 +72,10 @@ using namespace bc::system;
 #define BX_MAINNET_TRANSACTION "tcp://mainnet.libbitcoin.net:9094"
 
 // Libbitcoin Server (testnet), uses libbitcoin community server.
-#define BX_TESTNET_QUERY "tcp://testnet.libbitcoin.net:19091"
-#define BX_TESTNET_HEARTBEAT "tcp://mainnet.libbitcoin.net:19092"
-#define BX_TESTNET_BLOCK "tcp://mainnet.libbitcoin.net:19093"
-#define BX_TESTNET_TRANSACTION "tcp://mainnet.libbitcoin.net:19094"
+#define BX_TESTNET_QUERY "tcp://testnet2.libbitcoin.net:29091"
+#define BX_TESTNET_HEARTBEAT "tcp://testnet2.libbitcoin.net:29092"
+#define BX_TESTNET_BLOCK "tcp://testnet2.libbitcoin.net:29093"
+#define BX_TESTNET_TRANSACTION "tcp://testnet2.libbitcoin.net:29094"
 
 #define BX_DECLARE_COMMAND(extension) \
     std::stringstream output, error; \

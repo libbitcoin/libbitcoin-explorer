@@ -153,31 +153,6 @@ ptree prop_tree(const client::history::list& rows,
     return tree;
 }
 
-// stealth
-
-ptree prop_list(const client::stealth& row)
-{
-    ptree tree;
-    tree.put("ephemeral_public_key", ec_public(row.ephemeral_public_key));
-    tree.put("public_key_hash", hash160(row.public_key_hash));
-    tree.put("transaction_hash", hash256(row.transaction_hash));
-    return tree;
-}
-
-ptree prop_tree(const client::stealth& row)
-{
-    ptree tree;
-    tree.add_child("match", prop_list(row));
-    return tree;
-}
-
-ptree prop_tree(const client::stealth::list& rows, bool json)
-{
-    ptree tree;
-    tree.add_child("stealth", prop_tree_list("match", rows, json));
-    return tree;
-}
-
 } // namespace config
 } // namespace explorer
 } // namespace libbitcoin

@@ -72,7 +72,6 @@
 #include <bitcoin/explorer/commands/fetch-height.hpp>
 #include <bitcoin/explorer/commands/fetch-history.hpp>
 #include <bitcoin/explorer/commands/fetch-public-key.hpp>
-#include <bitcoin/explorer/commands/fetch-stealth.hpp>
 #include <bitcoin/explorer/commands/fetch-tx.hpp>
 #include <bitcoin/explorer/commands/fetch-tx-index.hpp>
 #include <bitcoin/explorer/commands/fetch-utxo.hpp>
@@ -128,7 +127,6 @@
 #include <bitcoin/explorer/commands/validate-tx.hpp>
 #include <bitcoin/explorer/commands/version.hpp>
 #include <bitcoin/explorer/commands/watch-key.hpp>
-#include <bitcoin/explorer/commands/watch-stealth.hpp>
 #include <bitcoin/explorer/commands/watch-tx.hpp>
 #include <bitcoin/explorer/commands/wif-to-ec.hpp>
 #include <bitcoin/explorer/commands/wif-to-public.hpp>

@@ -120,22 +120,6 @@ BOOST_AUTO_TEST_SUITE(fetch_history__invoke)
 "        }\n" \
 "        value 50000\n" \
 "    }\n" \
-"    transfer\n" \
-"    {\n" \
-"        received\n" \
-"        {\n" \
-"            hash f0315ffc38709d70ad5647e22048358dd3745f3ce3874223c80a7c92fab0c8ba\n" \
-"            height 1\n" \
-"            index 0\n" \
-"        }\n" \
-"        spent\n" \
-"        {\n" \
-"            hash 5f2052ac5cb8eed1995a087b8f4777b27345acf97a193ef8af536ed5dd4935ce\n" \
-"            height 16294\n" \
-"            index 0\n" \
-"        }\n" \
-"        value 5000000000\n" \
-"    }\n" \
 "}\n"
 
 BOOST_AUTO_TEST_CASE(fetch_history__invoke__mainnet_sx_demo1_info__okay_output)
