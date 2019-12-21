@@ -35,7 +35,6 @@ using namespace bc::client;
 using namespace bc::explorer::config;
 using namespace bc::system;
 
-// This call is deprecated at the server.
 console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -65,7 +64,6 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
 
     return state.get_result();
 }
-
 
 } //namespace commands
 } //namespace explorer
