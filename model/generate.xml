@@ -391,16 +391,6 @@
     <define name="BX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="fetch-stealth" output="stealth_row" category="ONLINE" network="true" description="Get metadata on potential payment transactions by stealth prefix filter. Requires a Libbitcoin server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <option name="height" shortcut="t" type="uint32_t" description="The minimum block height of transactions to include."/>
-    <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->
-    <!--<option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
-    <argument name="FILTER" type="base2" description="The Base2 stealth prefix filter used to locate transactions. Must be at least 8 bits in length." />
-    <define name="BX_FETCH_STEALTH_PREFIX_TOO_LONG" value="Stealth prefix is limited to 32 bits." />
-    <define name="BX_FETCH_STEALTH_FILTER_TOO_SHORT" value="Stealth prefix must be at least 8 bits." />
-  </command>
-
   <command symbol="fetch-tx" formerly="fetch-transaction" output="transaction" category="ONLINE" network="true" description="Get a transaction by its hash. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="witness" description="Include witness as applicable. Requires a version 3.4 or later Libbitcoin server connection." />
@@ -736,20 +726,8 @@
 
   <command symbol="watch-key" formerly="monitor" output="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which a payment key participates. Requires a Libbitcoin server connection.">
     <option name="duration" type="uint32_t" default="600" description="The duration of the watch in seconds, defaults to 600." />
-    <!--<option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />-->
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the address is read from STDIN."/>
     <define name="BX_WATCH_KEY_WAITING" value="Watching key: %1%..." />
-  </command>
-
-  <command symbol="watch-stealth" output="transaction" category="ONLINE" network="true" description="Watch the network for transactions by stealth prefix. Requires a Libbitcoin server connection.">
-    <option name="duration" type="uint32_t" default="600" description="The duration of the watch in seconds, defaults to 600." />
-    <!--<option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />-->
-	<!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->
-	<!--<option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
-    <argument name="PREFIX" stdin="true" type="base2" description="The Base2 stealth prefix to watch. Must be at least 8 bits in length. If not specified the prefix is read from STDIN." />
-    <define name="BX_WATCH_STEALTH_PREFIX_WAITING" value="Watching stealth prefix: %1%..." />
-    <define name="BX_WATCH_STEALTH_PREFIX_TOO_LONG" value="Stealth prefix is limited to 32 bits." />
-    <define name="BX_WATCH_STEALTH_PREFIX_TOO_SHORT" value="Stealth prefix must be at least 8 bits." />
   </command>
 
   <command symbol="watch-tx" formerly="watchtx" output="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for a transaction by hash. Requires a Libbitcoin server connection.">

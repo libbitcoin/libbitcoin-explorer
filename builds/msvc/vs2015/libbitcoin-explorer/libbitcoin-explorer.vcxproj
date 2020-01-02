@@ -123,7 +123,6 @@
     <ClCompile Include="..\..\..\..\src\commands\fetch-height.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-history.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-public-key.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\fetch-stealth.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-tx-index.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-utxo.cpp" />
@@ -179,7 +178,6 @@
     <ClCompile Include="..\..\..\..\src\commands\validate-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\version.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\watch-key.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\watch-stealth.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wif-to-public.cpp" />
@@ -262,7 +260,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-height.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-history.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-public-key.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-stealth.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-tx-index.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-utxo.hpp" />

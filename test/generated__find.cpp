@@ -273,11 +273,6 @@ BOOST_AUTO_TEST_CASE(generated__find__fetch_public_key__returns_object)
     BOOST_REQUIRE(find("fetch-public-key") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__fetch_stealth__returns_object)
-{
-    BOOST_REQUIRE(find("fetch-stealth") != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__fetch_tx__returns_object)
 {
     BOOST_REQUIRE(find("fetch-tx") != nullptr);
@@ -551,11 +546,6 @@ BOOST_AUTO_TEST_CASE(generated__find__version__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__watch_key__returns_object)
 {
     BOOST_REQUIRE(find("watch-key") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__watch_stealth__returns_object)
-{
-    BOOST_REQUIRE(find("watch-stealth") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__watch_tx__returns_object)

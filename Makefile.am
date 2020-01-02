@@ -91,7 +91,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/fetch-height.cpp \
     src/commands/fetch-history.cpp \
     src/commands/fetch-public-key.cpp \
-    src/commands/fetch-stealth.cpp \
     src/commands/fetch-tx-index.cpp \
     src/commands/fetch-tx.cpp \
     src/commands/fetch-utxo.cpp \
@@ -147,7 +146,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/validate-tx.cpp \
     src/commands/version.cpp \
     src/commands/watch-key.cpp \
-    src/commands/watch-stealth.cpp \
     src/commands/watch-tx.cpp \
     src/commands/wif-to-ec.cpp \
     src/commands/wif-to-public.cpp \
@@ -243,7 +241,6 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/fetch-height.cpp \
     test/commands/fetch-history.cpp \
     test/commands/fetch-public-key.cpp \
-    test/commands/fetch-stealth.cpp \
     test/commands/fetch-tx-index.cpp \
     test/commands/fetch-tx.cpp \
     test/commands/fetch-utxo.cpp \
@@ -298,7 +295,6 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/uri-encode.cpp \
     test/commands/validate-tx.cpp \
     test/commands/watch-key.cpp \
-    test/commands/watch-stealth.cpp \
     test/commands/watch-tx.cpp \
     test/commands/wif-to-ec.cpp \
     test/commands/wif-to-public.cpp \
@@ -379,7 +375,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/fetch-height.hpp \
     include/bitcoin/explorer/commands/fetch-history.hpp \
     include/bitcoin/explorer/commands/fetch-public-key.hpp \
-    include/bitcoin/explorer/commands/fetch-stealth.hpp \
     include/bitcoin/explorer/commands/fetch-tx-index.hpp \
     include/bitcoin/explorer/commands/fetch-tx.hpp \
     include/bitcoin/explorer/commands/fetch-utxo.hpp \

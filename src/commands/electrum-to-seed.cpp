@@ -34,6 +34,7 @@ console_result electrum_to_seed::invoke(std::ostream& output,
     std::ostream& error)
 {
 #ifdef WITH_ICU
+    // Bound parameters.
     const auto& passphrase = get_passphrase_option();
     const auto& words = get_words_argument();
 
