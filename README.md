@@ -46,6 +46,12 @@ $ sudo make install # optional
 $ sudo ldconfig     # optional
 ```
 
+If you installed [libbitcoin](https://github.com/libbitcoin/libbitcoin) to `/usr/local` (the default) and linking fails, retry by setting `PKG_CONFIG_PATH` beforehand:
+```
+$ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+$ ./configure && make
+```
+
 ### Debian/Ubuntu
 
 Libbitcoin requires a C++11 compiler, currently minimum [GCC 4.8.0](https://gcc.gnu.org/projects/cxx0x.html) or Clang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html).
