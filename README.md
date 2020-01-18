@@ -36,7 +36,7 @@ The master branch is a staging area for the next major release and should be use
 
 ### Autotools (advanced users)
 
-On Linux and macOS Libbitcoin Explorer is built using Autotools as follows and depends on [libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client).
+On Linux and macOS Libbitcoin Explorer is built using Autotools as follows and depends on [libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client) and [libbitcoin-network](https://github.com/libbitcoin/libbitcoin-network).
 
 ```sh
 $ ./autogen.sh
