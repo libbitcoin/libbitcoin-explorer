@@ -206,8 +206,7 @@ AC_MSG_NOTICE([bash_completion_BUILD_CPPFLAGS : ${bash_completion_BUILD_CPPFLAGS
 PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 4.0.0],
     [bitcoin_client_INCLUDEDIR="`$PKG_CONFIG --variable=includedir "libbitcoin-client >= 4.0.0" 2>/dev/null`"
      bitcoin_client_OTHER_CFLAGS="`$PKG_CONFIG --cflags-only-other "libbitcoin-client >= 4.0.0" 2>/dev/null`"],
-    [bitcoin_client_INCLUDEDIR=""
-     bitcoin_client_OTHER_CFLAGS=""])
+    [AC_MSG_ERROR([libbitcoin-client >= 4.0.0 is required but was not found.])])
 AC_SUBST([bitcoin_client_PKG], ['libbitcoin-client >= 4.0.0'])
 AC_SUBST([bitcoin_client_CPPFLAGS], [${bitcoin_client_CFLAGS}])
 AS_IF([test x${bitcoin_client_INCLUDEDIR} != "x"],
@@ -230,8 +229,7 @@ AC_MSG_NOTICE([bitcoin_client_BUILD_CPPFLAGS : ${bitcoin_client_BUILD_CPPFLAGS}]
 PKG_CHECK_MODULES([bitcoin_network], [libbitcoin-network >= 4.0.0],
     [bitcoin_network_INCLUDEDIR="`$PKG_CONFIG --variable=includedir "libbitcoin-network >= 4.0.0" 2>/dev/null`"
      bitcoin_network_OTHER_CFLAGS="`$PKG_CONFIG --cflags-only-other "libbitcoin-network >= 4.0.0" 2>/dev/null`"],
-    [bitcoin_network_INCLUDEDIR=""
-     bitcoin_network_OTHER_CFLAGS=""])
+    [AC_MSG_ERROR([libbitcoin-network >= 4.0.0 is required but was not found.])])
 AC_SUBST([bitcoin_network_PKG], ['libbitcoin-network >= 4.0.0'])
 AC_SUBST([bitcoin_network_CPPFLAGS], [${bitcoin_network_CFLAGS}])
 AS_IF([test x${bitcoin_network_INCLUDEDIR} != "x"],
