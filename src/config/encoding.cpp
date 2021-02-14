@@ -34,6 +34,7 @@ using namespace po;
 static auto encoding_info = "info";
 static auto encoding_json = "json";
 static auto encoding_xml = "xml";
+static auto encoding_data = "data";
 
 encoding::encoding()
   : encoding(encoding_engine::info)
@@ -71,6 +72,8 @@ std::istream& operator>>(std::istream& input, encoding& argument)
         argument.value_ = encoding_engine::json;
     else if (text == encoding_xml)
         argument.value_ = encoding_engine::xml;
+    else if (text == encoding_data)
+        argument.value_ = encoding_engine::data;
     else
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
@@ -93,6 +96,9 @@ std::ostream& operator<<(std::ostream& output, const encoding& argument)
             break;
         case encoding_engine::xml:
             value = encoding_xml;
+            break;
+        case encoding_engine::data:
+            value = encoding_data;
             break;
         default:
             BITCOIN_ASSERT_MSG(false, "Unexpected encoding value.");

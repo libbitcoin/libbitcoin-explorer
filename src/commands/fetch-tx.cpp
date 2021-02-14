@@ -52,15 +52,21 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    // This enables json-style array formatting.
-    const auto json = encoding == encoding_engine::json;
-
-    auto on_done = [&state, json](const code& ec, const tx_type& tx)
+    auto on_done = [&state, encoding](const code& ec, const tx_type& tx)
     {
         if (!state.succeeded(ec))
             return;
 
-        state.output(property_tree(tx, json));
+        if (encoding == encoding_engine::data)
+        {
+            state.output(encode_base16(tx.to_data()));
+        }
+        else
+        {
+            // This enables json-style array formatting.
+            const auto json = encoding == encoding_engine::json;
+            state.output(property_tree(tx, json));
+        }
     };
 
     if (witness)

@@ -53,16 +53,22 @@ console_result fetch_block::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    // This enables json-style array formatting.
-    const auto json = encoding == encoding_engine::json;
-
-    auto on_done = [&state, json](const code& ec,
+    auto on_done = [&state, encoding](const code& ec,
         const chain::block& block)
     {
         if (!state.succeeded(ec))
             return;
 
-        state.output(property_tree(block, json));
+        if (encoding == encoding_engine::data)
+        {
+            state.output(encode_base16(block.to_data()));
+        }
+        else
+        {
+            // This enables json-style array formatting.
+            const auto json = encoding == encoding_engine::json;
+            state.output(property_tree(block, json));
+        }
     };
 
     // Height is ignored if both are specified.

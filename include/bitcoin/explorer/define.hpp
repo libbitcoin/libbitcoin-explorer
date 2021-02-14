@@ -104,7 +104,8 @@ enum class encoding_engine
 {
     info,
     json,
-    xml
+    xml,
+    data
 };
 
 } // namespace explorer

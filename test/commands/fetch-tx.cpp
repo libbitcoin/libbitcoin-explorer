@@ -133,6 +133,9 @@ BOOST_AUTO_TEST_SUITE(fetch_tx__invoke)
 "    version 1\n" \
 "}\n"
 
+#define FETCH_TX_TESTNET_SERIALIZED_DATA \
+"0100000001c422ec82824d97c2894905ab8fcb73dbc0e16ee44797e1e1967db42cd9564218010000006c493046022100f18c97457e00c491d3eed5d9c2c5da33398595adf2708a07f677fb1e3eeeccba022100dc5c886192a9af7a28ab7689e766f3be6b01b61a4c675c97e8d2c99cd8b9d1320121037928262812eb9e73b9ca8039f8023db84b0a86c5caf6bc28cefb85e9943684acffffffff02a530ed10000000001976a91405e18e90cf803e17b9fa70abd2ad931389cc2cd488acd533591c000000001976a9148f3441dd22b15a30dcde56f9b3de7a61b7a3a74088ac00000000\n"
+
 BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_satoshis_words_tx_info__okay_output)
 {
     BX_DECLARE_CLIENT_COMMAND(fetch_tx);
@@ -167,6 +170,15 @@ BOOST_AUTO_TEST_CASE(fetch_tx__invoke__testnet_tx_info__okay_output)
     command.set_hash_argument({ FETCH_TX_TESTNET_TX_HASH });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(FETCH_TX_TESTNET_TX_INFO);
+}
+
+BOOST_AUTO_TEST_CASE(fetch_tx__invoke__testnet_tx_data__okay_output)
+{
+    BX_DECLARE_CLIENT_TESTNET_COMMAND(fetch_tx);
+    command.set_format_option({ "data" });
+    command.set_hash_argument({ FETCH_TX_TESTNET_TX_HASH });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(FETCH_TX_TESTNET_SERIALIZED_DATA);
 }
 
 // Requires server of at least v3.4.
