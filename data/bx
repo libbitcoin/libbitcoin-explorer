@@ -4,7 +4,7 @@
 _bx()
 {
     local current="${COMP_WORDS[COMP_CWORD]}"
-    
+
     # Generated from XML data source.
     local commands="
         address-decode
