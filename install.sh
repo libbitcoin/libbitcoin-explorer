@@ -85,8 +85,8 @@ ZMQ_ARCHIVE="zeromq-4.3.2.tar.gz"
 
 # Boost archive.
 #------------------------------------------------------------------------------
-BOOST_URL="http://downloads.sourceforge.net/project/boost/boost/1.62.0/boost_1_62_0.tar.bz2"
-BOOST_ARCHIVE="boost_1_62_0.tar.bz2"
+BOOST_URL="http://downloads.sourceforge.net/project/boost/boost/1.72.0/boost_1_72_0.tar.bz2"
+BOOST_ARCHIVE="boost_1_72_0.tar.bz2"
 
 
 # Define utility functions.
@@ -889,7 +889,7 @@ build_all()
     build_from_tarball "$QRENCODE_URL" "$QRENCODE_ARCHIVE" bzip2 . "$PARALLEL" "$BUILD_QRENCODE" "${QRENCODE_OPTIONS[@]}" "$@"
     build_from_tarball_boost "$BOOST_URL" "$BOOST_ARCHIVE" bzip2 . "$PARALLEL" "$BUILD_BOOST" "${BOOST_OPTIONS[@]}"
     build_from_tarball "$ZMQ_URL" "$ZMQ_ARCHIVE" gzip . "$PARALLEL" "$BUILD_ZMQ" "${ZMQ_OPTIONS[@]}" "$@"
-    build_from_github libbitcoin secp256k1 version6 "$PARALLEL" "${SECP256K1_OPTIONS[@]}" "$@"
+    build_from_github libbitcoin secp256k1 version7 "$PARALLEL" "${SECP256K1_OPTIONS[@]}" "$@"
     build_from_github libbitcoin libbitcoin-system master "$PARALLEL" "${BITCOIN_SYSTEM_OPTIONS[@]}" "$@"
     build_from_github libbitcoin libbitcoin-protocol master "$PARALLEL" "${BITCOIN_PROTOCOL_OPTIONS[@]}" "$@"
     build_from_github libbitcoin libbitcoin-client master "$PARALLEL" "${BITCOIN_CLIENT_OPTIONS[@]}" "$@"
