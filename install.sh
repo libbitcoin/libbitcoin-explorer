@@ -75,8 +75,8 @@ PNG_ARCHIVE="libpng-1.6.37.tar.xz"
 
 # QREncode archive.
 #------------------------------------------------------------------------------
-QRENCODE_URL="http://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.bz2"
-QRENCODE_ARCHIVE="qrencode-3.4.4.tar.bz2"
+QRENCODE_URL="http://fukuchi.org/works/qrencode/qrencode-4.1.1.tar.bz2"
+QRENCODE_ARCHIVE="qrencode-4.1.1.tar.bz2"
 
 # ZMQ archive.
 #------------------------------------------------------------------------------
@@ -761,7 +761,7 @@ build_from_tarball_boost()
     display_message "boost.locale.posix    : $BOOST_ICU_POSIX"
     display_message "-sNO_BZIP2            : 1"
     display_message "-sICU_PATH            : $ICU_PREFIX"
-    display_message "-sICU_LINK            : " "${ICU_LIBS[*]}"
+  # display_message "-sICU_LINK            : " "${ICU_LIBS[*]}"
     display_message "-sZLIB_LIBPATH        : $PREFIX/lib"
     display_message "-sZLIB_INCLUDE        : $PREFIX/include"
     display_message "-j                    : $JOBS"
@@ -772,15 +772,22 @@ build_from_tarball_boost()
     display_message "BOOST_OPTIONS         : $*"
     display_message "--------------------------------------------------------------------"
 
-    # boost_iostreams
-    # The zlib options prevent boost linkage to system libs in the case where
-    # we have built zlib in a prefix dir. Disabling zlib in boost is broken in
-    # all versions (through 1.60). https://svn.boost.org/trac/boost/ticket/9156
-    # The bzip2 auto-detection is not implemented, but disabling it works.
-
     ./bootstrap.sh \
         "--prefix=$PREFIX" \
         "--with-icu=$ICU_PREFIX"
+
+    # boost_iostreams:
+    # The zlib options prevent boost linkage to system libs in the case where
+    # we have built zlib in a prefix dir. Disabling zlib in boost is broken in
+    # all versions (through 1.61). There has been a patch pull request since
+    #  2015 but not merged as of 3/5/2021. svn.boost.org/trac/boost/ticket/9156
+    # The bzip2 auto-detection is not implemented, but disabling it works.
+
+    # boost_regex:
+    # As of boost 1.72.0 the ICU_LINK symbol is no longer supported and
+    # produces a hard stop if WITH_ICU is also defined. Removal is sufficient.
+    # github.com/libbitcoin/libbitcoin-system/issues/1192
+    # "-sICU_LINK=${ICU_LIBS[*]}" \
 
     ./b2 install \
         "variant=release" \
@@ -793,7 +800,6 @@ build_from_tarball_boost()
         "boost.locale.posix=$BOOST_ICU_POSIX" \
         "-sNO_BZIP2=1" \
         "-sICU_PATH=$ICU_PREFIX" \
-        "-sICU_LINK=${ICU_LIBS[*]}" \
         "-sZLIB_LIBPATH=$PREFIX/lib" \
         "-sZLIB_INCLUDE=$PREFIX/include" \
         "-j $JOBS" \
