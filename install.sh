@@ -80,8 +80,8 @@ QRENCODE_ARCHIVE="qrencode-4.1.1.tar.bz2"
 
 # ZMQ archive.
 #------------------------------------------------------------------------------
-ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.3.2/zeromq-4.3.2.tar.gz"
-ZMQ_ARCHIVE="zeromq-4.3.2.tar.gz"
+ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.3.4/zeromq-4.3.4.tar.gz"
+ZMQ_ARCHIVE="zeromq-4.3.4.tar.gz"
 
 # Boost archive.
 #------------------------------------------------------------------------------
