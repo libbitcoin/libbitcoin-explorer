@@ -160,12 +160,12 @@ public:
         )
         (
             "margin,r",
-            value<uint32_t>(&option_.margin)->default_value(2),
+            value<uint16_t>(&option_.margin)->default_value(2),
             "The margin size in pixels of the QRCODE, defaults to 2."
         )
         (
             "module,m",
-            value<uint32_t>(&option_.module)->default_value(8),
+            value<uint16_t>(&option_.module)->default_value(8),
             "The module size in pixels of the QRCODE, defaults to 8."
         )
         (
@@ -243,7 +243,7 @@ public:
     /**
      * Get the value of the margin option.
      */
-    virtual uint32_t& get_margin_option()
+    virtual uint16_t& get_margin_option()
     {
         return option_.margin;
     }
@@ -252,7 +252,7 @@ public:
      * Set the value of the margin option.
      */
     virtual void set_margin_option(
-        const uint32_t& value)
+        const uint16_t& value)
     {
         option_.margin = value;
     }
@@ -260,7 +260,7 @@ public:
     /**
      * Get the value of the module option.
      */
-    virtual uint32_t& get_module_option()
+    virtual uint16_t& get_module_option()
     {
         return option_.module;
     }
@@ -269,7 +269,7 @@ public:
      * Set the value of the module option.
      */
     virtual void set_module_option(
-        const uint32_t& value)
+        const uint16_t& value)
     {
         option_.module = value;
     }
@@ -342,8 +342,8 @@ private:
         }
 
         bool insensitive;
-        uint32_t margin;
-        uint32_t module;
+        uint16_t margin;
+        uint16_t module;
         std::string scheme;
         uint32_t version;
     } option_;
