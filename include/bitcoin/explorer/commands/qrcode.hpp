@@ -57,10 +57,8 @@ namespace commands {
  */
 #define BX_QRCODE_REQUIRES_QRENCODE \
     "The command requires a QRENCODE build."
-#define BX_QRCODE_REQUIRES_PNG \
-    "The command requires a PNG build."
-#define BX_QRCODE_WRITE_ERROR \
-    "Error writing encoded data."
+#define BX_QRCODE_GENERATION_ERROR \
+    "The QRCODE could not be generated, it may be too large."
 
 /**
  * Class to implement the qrcode command.
@@ -100,7 +98,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a QRCODE image file for a payment address.";
+        return "Create a square QRCODE TIFF file for a payment address.";
     }
 
     /**
@@ -156,29 +154,19 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "density,d",
-            value<uint32_t>(&option_.density)->default_value(72),
-            "The pixels per inch of the QRCODE, defaults to 72."
-        )
-        (
             "insensitive,i",
             value<bool>(&option_.insensitive)->zero_tokens(),
             "Do not use case sensitivity."
         )
         (
-            "module_size,m",
-            value<uint32_t>(&option_.module_size)->default_value(8),
-            "The module size in pixels of the QRCODE, defaults to 8."
-        )
-        (
-            "margin_size,r",
-            value<uint32_t>(&option_.margin_size)->default_value(2),
+            "margin,r",
+            value<uint32_t>(&option_.margin)->default_value(2),
             "The margin size in pixels of the QRCODE, defaults to 2."
         )
         (
-            "png,p",
-            value<bool>(&option_.png)->zero_tokens(),
-            "Write the QRCODE in PNG file format."
+            "module,m",
+            value<uint32_t>(&option_.module)->default_value(8),
+            "The module size in pixels of the QRCODE, defaults to 8."
         )
         (
             "scheme,s",
@@ -188,7 +176,7 @@ public:
         (
             "version,v",
             value<uint32_t>(&option_.version),
-            "The version of the QRCODE."
+            "The version of the QRCODE, defaults to 0 which is the minimum size."
         )
         (
             "PAYMENT_ADDRESS",
@@ -236,23 +224,6 @@ public:
     }
 
     /**
-     * Get the value of the density option.
-     */
-    virtual uint32_t& get_density_option()
-    {
-        return option_.density;
-    }
-
-    /**
-     * Set the value of the density option.
-     */
-    virtual void set_density_option(
-        const uint32_t& value)
-    {
-        option_.density = value;
-    }
-
-    /**
      * Get the value of the insensitive option.
      */
     virtual bool& get_insensitive_option()
@@ -270,54 +241,37 @@ public:
     }
 
     /**
-     * Get the value of the module_size option.
+     * Get the value of the margin option.
      */
-    virtual uint32_t& get_module_size_option()
+    virtual uint32_t& get_margin_option()
     {
-        return option_.module_size;
+        return option_.margin;
     }
 
     /**
-     * Set the value of the module_size option.
+     * Set the value of the margin option.
      */
-    virtual void set_module_size_option(
+    virtual void set_margin_option(
         const uint32_t& value)
     {
-        option_.module_size = value;
+        option_.margin = value;
     }
 
     /**
-     * Get the value of the margin_size option.
+     * Get the value of the module option.
      */
-    virtual uint32_t& get_margin_size_option()
+    virtual uint32_t& get_module_option()
     {
-        return option_.margin_size;
+        return option_.module;
     }
 
     /**
-     * Set the value of the margin_size option.
+     * Set the value of the module option.
      */
-    virtual void set_margin_size_option(
+    virtual void set_module_option(
         const uint32_t& value)
     {
-        option_.margin_size = value;
-    }
-
-    /**
-     * Get the value of the png option.
-     */
-    virtual bool& get_png_option()
-    {
-        return option_.png;
-    }
-
-    /**
-     * Set the value of the png option.
-     */
-    virtual void set_png_option(
-        const bool& value)
-    {
-        option_.png = value;
+        option_.module = value;
     }
 
     /**
@@ -379,21 +333,17 @@ private:
     struct option
     {
         option()
-          : density(),
-            insensitive(),
-            module_size(),
-            margin_size(),
-            png(),
+          : insensitive(),
+            margin(),
+            module(),
             scheme(),
             version()
         {
         }
 
-        uint32_t density;
         bool insensitive;
-        uint32_t module_size;
-        uint32_t margin_size;
-        bool png;
+        uint32_t margin;
+        uint32_t module;
         std::string scheme;
         uint32_t version;
     } option_;

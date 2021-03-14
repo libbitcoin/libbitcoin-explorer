@@ -12,7 +12,6 @@
     <shorthand name="EK" description="Encrypted Key" />
     <shorthand name="HD" description="Hierarchical Deterministic" />
     <shorthand name="ICU" description="International Components for Unicode" />
-    <shorthand name="PNG" description="Portable Network Graphics" />
     <shorthand name="PREVOUT" description="Previous Output" />
     <shorthand name="PUBKEY" description="EC Public Key" />
     <shorthand name="QRCODE" description="Quick Response Code" />
@@ -21,6 +20,7 @@
     <shorthand name="SHA" description="Secure Hash Algorithm" />
     <shorthand name="SOCKS" description="Socket Secure (proxy protocol)" />
     <shorthand name="SX" description="Spesmilo Exchanger (the original version of Bitcoin Explorer)" />
+    <shorthand name="TIFF" description="Tagged Image File Format" />
     <shorthand name="TX" description="Transaction" />
     <shorthand name="UTXO" description="Unspent Transaction Output" />
     <shorthand name="WIF" description="Wallet Import Format" />
@@ -537,18 +537,15 @@
     <define name="BX_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES" value="WARNING: The specified words are not a valid mnemonic in any supported dictionary." />
   </command>
 
-  <command symbol="qrcode" category="WALLET" output="raw" description="Create a QRCODE image file for a payment address.">
-    <option name="density" type="uint32_t" default="72" description="The pixels per inch of the QRCODE, defaults to 72." />
+  <command symbol="qrcode" category="WALLET" output="raw" description="Create a square QRCODE TIFF file for a payment address.">
     <option name="insensitive" description="Do not use case sensitivity." />
-    <option name="module_size" type="uint32_t" default="8" description="The module size in pixels of the QRCODE, defaults to 8." />
-    <option name="margin_size"  shortcut="r" type="uint32_t" default="2" description="The margin size in pixels of the QRCODE, defaults to 2." />
-    <option name="png" description="Write the QRCODE in PNG file format." />
+    <option name="margin"  shortcut="r" type="uint32_t" default="2" description="The margin size in pixels of the QRCODE, defaults to 2." />
+    <option name="module" type="uint32_t" default="8" description="The module size in pixels of the QRCODE, defaults to 8." />
     <option name="scheme" type="string" default="bitcoin" description="The URI scheme of the QRCODE data, defaults to bitcoin." />
-    <option name="version" type="uint32_t" description="The version of the QRCODE." />
+    <option name="version" type="uint32_t" description="The version of the QRCODE, defaults to 0 which is the minimum size." />
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" required="true" description="The payment address. If not specified the address is read from STDIN."/>
     <define name="BX_QRCODE_REQUIRES_QRENCODE" value="The command requires a QRENCODE build." />
-    <define name="BX_QRCODE_REQUIRES_PNG" value="The command requires a PNG build." />
-    <define name="BX_QRCODE_WRITE_ERROR" value="Error writing encoded data." />
+    <define name="BX_QRCODE_GENERATION_ERROR" value="The QRCODE could not be generated, it may be too large." />
   </command>
 
   <command symbol="ripemd160" formerly="ripemd-hash" output="base16" category="HASH" description="Perform a RIPEMD160 hash of Base16 data.">
