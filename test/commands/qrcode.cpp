@@ -24,102 +24,99 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(qrcode__invoke)
 
-#if defined(WITH_QRENCODE) && defined(WITH_PNG)
-
-BOOST_AUTO_TEST_CASE(qrcode__invoke__size_0_margin_0__empty_output)
+BOOST_AUTO_TEST_CASE(qrcode__invoke__margin_0_module_0_version_0_scheme_bitcoin__success_empty_image)
 {
     BX_DECLARE_COMMAND(qrcode);
 
-    ////static const data_chunk expected
-    ////{
-    ////    // TODO
-    ////};
+    static const data_chunk expected
+    {
+        // TIFF metadata.
+        0x4d, 0x4d,
+        0x00, 0x2a,
+        0x00, 0x00, 0x00, 0x08,
 
-    ////command.set_margin_option(0);
-    ////command.set_module_option(0);
-    ////command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
-    ////BX_REQUIRE_OKAY(command.invoke(output, error));
+        0x00, 0x0a,
 
-    ////istream_reader stream(output);
+        0x01, 0x00,
+        0x00, 0x04,
+        0x00, 0x00, 0x00, 0x01,
+        0x00, 0x00, 0x00, 0x00,
 
-    ////// Encode as base16 so that failure message is intelligible.
-    ////BOOST_REQUIRE_EQUAL(encode_base16(stream.read_bytes()), encode_base16(expected));
-    BOOST_REQUIRE(true);
+        0x01, 0x01,
+        0x00, 0x04,
+        0x00, 0x00, 0x00, 0x01,
+        0x00, 0x00, 0x00, 0x00,
+
+        0x01, 0x03,
+        0x00, 0x03,
+        0x00, 0x00, 0x00, 0x01,
+        0x00, 0x01,
+        0x00, 0x00,
+ 
+        0x01, 0x06,
+        0x00, 0x03,
+        0x00, 0x00, 0x00, 0x01,
+        0x00, 0x00,
+        0x00, 0x00,
+ 
+        0x01, 0x11,
+        0x00, 0x04,
+        0x00, 0x00, 0x00, 0x01,
+        0x00, 0x00, 0x00, 0x9c,
+
+        0x01, 0x16,
+        0x00, 0x04,
+        0x00, 0x00, 0x00, 0x01,
+        0x00, 0x00, 0x00, 0x00,
+
+        0x01, 0x17,
+        0x00, 0x04,
+        0x00, 0x00, 0x00, 0x01,
+        0x00, 0x00, 0x00, 0x00,
+
+        0x01, 0x1a,
+        0x00, 0x05,
+        0x00, 0x00, 0x00, 0x01,
+        0x00, 0x00, 0x00, 0x88,
+
+        0x01, 0x1b,
+        0x00, 0x05,
+        0x00, 0x00, 0x00, 0x01,
+        0x00, 0x00, 0x00, 0x90,
+
+        0x01, 0x28,
+        0x00, 0x03,
+        0x00, 0x00, 0x00, 0x01,
+        0x00, 0x01,
+        0x00, 0x00,
+
+        0x00, 0x00, 0x00, 0x00,
+
+        0x00, 0x00,
+
+        0x00, 0x00, 0x00, 0x48,
+        0x00, 0x00, 0x00, 0x01,
+        0x00, 0x00, 0x00, 0x48,
+        0x00, 0x00, 0x00, 0x01,
+
+        // Delimiter.
+        0xba, 0xad, 0xf0, 0x0d
+
+        // Image data (empty).
+    };
+
+    command.set_margin_option(0);
+    command.set_module_option(0);
+    command.set_version_option(0);
+    command.set_scheme_option("bitcoin");
+    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+
+    istream_reader stream(output);
+
+    // Encode as base16 so that failure message is intelligible.
+    BOOST_REQUIRE_EQUAL(encode_base16(stream.read_bytes()), encode_base16(expected));
 }
-
-BOOST_AUTO_TEST_CASE(qrcode__invoke__size_1_margin_1__success_expected_output)
-{
-    BX_DECLARE_COMMAND(qrcode);
-
-    ////static const data_chunk expected
-    ////{
-    ////    // TODO
-    ////};
-
-    ////command.set_margin_option(1);
-    ////command.set_module_option(1);
-    ////command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
-    ////BX_REQUIRE_OKAY(command.invoke(output, error));
-
-    ////istream_reader stream(output);
-
-    ////// Encode as base16 so that failure message is intelligible.
-    ////BOOST_REQUIRE_EQUAL(encode_base16(stream.read_bytes()), encode_base16(expected));
-    BOOST_REQUIRE(true);
-}
-
-BOOST_AUTO_TEST_CASE(qrcode__invoke__no_defaults__success_expected_output)
-{
-    BX_DECLARE_COMMAND(qrcode);
-
-    ////const data_chunk expected
-    ////{
-    ////    // TODO
-    ////};
-
-    ////command.set_insensitive_option(false);
-    ////command.set_margin_option(1);
-    ////command.set_module_option(1);
-    ////command.set_scheme_option("foo");
-    ////command.set_version_option(1);
-    ////command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
-    ////BX_REQUIRE_OKAY(command.invoke(output, error));
-
-    ////istream_reader stream(output);
-
-    ////// Encode as base16 so that failure message is intelligible.
-    ////BOOST_REQUIRE_EQUAL(encode_base16(stream.read_bytes()), encode_base16(expected));
-
-    BOOST_REQUIRE(true);
-}
-
-BOOST_AUTO_TEST_CASE(qrcode__invoke__all_defaults__success_expected_output)
-{
-    BX_DECLARE_COMMAND(qrcode);
-
-    ////const data_chunk expected
-    ////{
-    ////    // TODO
-    ////};
-
-    ////command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
-    ////BX_REQUIRE_OKAY(command.invoke(output, error));
-
-    ////istream_reader stream(output);
-
-    ////// Encode as base16 so that failure message is intelligible.
-    ////BOOST_REQUIRE_EQUAL(encode_base16(stream.read_bytes()), encode_base16(expected));
-
-    BOOST_REQUIRE(true);
-}
-
-#else
-BOOST_AUTO_TEST_CASE(qrcode__invoke__always__failure_error)
-{
-    BX_DECLARE_COMMAND(qrcode);
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-}
-#endif
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

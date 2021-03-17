@@ -55,10 +55,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_QRCODE_REQUIRES_QRENCODE \
-    "The command requires a QRENCODE build."
 #define BX_QRCODE_GENERATION_ERROR \
     "The QRCODE could not be generated, it may be too large."
+#define BX_QRCODE_MAXIMUM_VERSION \
+    "The version exceeds the maximum value of 40."
 
 /**
  * Class to implement the qrcode command.
@@ -154,11 +154,6 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "insensitive,i",
-            value<bool>(&option_.insensitive)->zero_tokens(),
-            "Do not use case sensitivity."
-        )
-        (
             "margin,r",
             value<uint16_t>(&option_.margin)->default_value(2),
             "The margin size in pixels of the QRCODE, defaults to 2."
@@ -175,7 +170,7 @@ public:
         )
         (
             "version,v",
-            value<uint32_t>(&option_.version),
+            value<uint8_t>(&option_.version),
             "The version of the QRCODE, defaults to 0 which is the minimum size."
         )
         (
@@ -221,23 +216,6 @@ public:
         const system::wallet::payment_address& value)
     {
         argument_.payment_address = value;
-    }
-
-    /**
-     * Get the value of the insensitive option.
-     */
-    virtual bool& get_insensitive_option()
-    {
-        return option_.insensitive;
-    }
-
-    /**
-     * Set the value of the insensitive option.
-     */
-    virtual void set_insensitive_option(
-        const bool& value)
-    {
-        option_.insensitive = value;
     }
 
     /**
@@ -294,7 +272,7 @@ public:
     /**
      * Get the value of the version option.
      */
-    virtual uint32_t& get_version_option()
+    virtual uint8_t& get_version_option()
     {
         return option_.version;
     }
@@ -303,7 +281,7 @@ public:
      * Set the value of the version option.
      */
     virtual void set_version_option(
-        const uint32_t& value)
+        const uint8_t& value)
     {
         option_.version = value;
     }
@@ -333,19 +311,17 @@ private:
     struct option
     {
         option()
-          : insensitive(),
-            margin(),
+          : margin(),
             module(),
             scheme(),
             version()
         {
         }
 
-        bool insensitive;
         uint16_t margin;
         uint16_t module;
         std::string scheme;
-        uint32_t version;
+        uint8_t version;
     } option_;
 };
 

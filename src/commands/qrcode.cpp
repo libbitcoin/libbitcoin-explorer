@@ -27,12 +27,11 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::wallet;
 
 console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 {
-#ifndef WITH_QRENCODE
     // Bound parameters.
-    const auto case_insensitive = get_insensitive_option();
     const auto margin_size = get_margin_option();
     const auto scale_factor = get_module_option();
     const auto url_scheme = get_scheme_option();
@@ -42,11 +41,17 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
     const auto delimiter = url_scheme.empty() ? "" : ":";
     const auto value = url_scheme + delimiter + address.encoded();
 
+    if (qrcode_version > qr_code::maximum_version)
+    {
+        error << BX_QRCODE_MAXIMUM_VERSION << std::endl;
+        return console_result::failure;
+    }
+
     // For raw bit stream set scale=1 and margin=0.
     // The image is at file offset bc::tiff::image_offset to EOF.
     // If image-pixel-width^2 % 8 != 0 then last byte contains padding.
     if (!qr_code::encode(output, value, qrcode_version, scale_factor,
-        margin_size, case_insensitive))
+        margin_size))
     {
         error << BX_QRCODE_GENERATION_ERROR << std::endl;
         return console_result::failure;
@@ -54,10 +59,6 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 
     output.flush();
     return console_result::okay;
-#else
-    error << BX_QRCODE_REQUIRES_QRENCODE << std::endl;
-    return console_result::failure;
-#endif
 }
 
 } //namespace commands
