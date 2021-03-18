@@ -23,8 +23,14 @@
     </Link>
     <Link Condition="($(PlatformToolset) == 'v120') Or ($(PlatformToolset) == 'CTP_Nov2013')">
       <!-- $(PlatformToolset) is hard wired to CTP_Nov2013 to allow for linkage by PlatformToolset=v120 (and CTP_Nov2013) callers. -->
-      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Debug\CTP_Nov2013\$(Linkage-libbitcoin-client)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Release\CTP_Nov2013\$(Linkage-libbitcoin-client)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">
+        $(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Debug\CTP_Nov2013\$(Linkage-libbitcoin-client)\;
+        $(ProjectDir)..\..\..\..\..\libbitcoin-client\obj\libbitcoin-client\$(PlatformName)\Debug\CTP_Nov2013\$(Linkage-libbitcoin-client)\;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">
+        $(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Release\CTP_Nov2013\$(Linkage-libbitcoin-client)\;
+        $(ProjectDir)..\..\..\..\..\libbitcoin-client\obj\libbitcoin-client\$(PlatformName)\Release\CTP_Nov2013\$(Linkage-libbitcoin-client)\;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
     </Link>
     <Link Condition="($(PlatformToolset) != 'v120') And ($(PlatformToolset) != 'CTP_Nov2013')">
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">
