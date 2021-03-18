@@ -26,14 +26,14 @@ BOOST_AUTO_TEST_SUITE(ec_add__invoke)
 
 // TODO: generate overflow condition
 
-//BOOST_AUTO_TEST_CASE(ec_add__invoke__overflow__failure_error)
-//{
-//    BX_DECLARE_COMMAND(commands::ec_add);
-//    command.set_point_argument({ "02ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" });
-//    command.set_secret_argument({ "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" });
-//    BX_REQUIRE_FAILURE(command.invoke(output, error));
-//    BX_REQUIRE_ERROR(BX_EC_ADD_OUT_OF_RANGE "\n");
-//}
+////BOOST_AUTO_TEST_CASE(ec_add__invoke__overflow__failure_error)
+////{
+////    BX_DECLARE_COMMAND(commands::ec_add);
+////    command.set_point_argument({ "02ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" });
+////    command.set_secret_argument({ "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" });
+////    BX_REQUIRE_FAILURE(command.invoke(output, error));
+////    BX_REQUIRE_ERROR(BX_EC_ADD_OUT_OF_RANGE "\n");
+////}
 
 BOOST_AUTO_TEST_CASE(ec_add__invoke__add_values__okay_output)
 {

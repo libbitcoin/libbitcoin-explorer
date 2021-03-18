@@ -42,13 +42,13 @@ BOOST_AUTO_TEST_CASE(ec_new__invoke__64_bit_seed__failure_error)
 
 // TODO: what seed generates an invalid key so we can cover this code path?
 
-//BOOST_AUTO_TEST_CASE(ec_new__invoke__128_bit_bad_seed__failure_error)
-//{
-//    BX_DECLARE_COMMAND(ec_new);
-//    command.set_seed_argument({ "00000000000000000000000000000000" });
-//    BX_REQUIRE_FAILURE(command.invoke(output, error));
-//    BX_REQUIRE_ERROR(BX_EC_NEW_INVALID_KEY "\n");
-//}
+////BOOST_AUTO_TEST_CASE(ec_new__invoke__128_bit_bad_seed__failure_error)
+////{
+////    BX_DECLARE_COMMAND(ec_new);
+////    command.set_seed_argument({ "00000000000000000000000000000000" });
+////    BX_REQUIRE_FAILURE(command.invoke(output, error));
+////    BX_REQUIRE_ERROR(BX_EC_NEW_INVALID_KEY "\n");
+////}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
