@@ -55,8 +55,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_QRCODE_GENERATION_ERROR \
-    "The QRCODE could not be generated, it may be too large."
+#define BX_QRCODE_MAXIMUM_SIZE \
+    "The image is too large for uncompressed TIFF encoding."
 #define BX_QRCODE_MAXIMUM_VERSION \
     "The version exceeds the maximum value of 40."
 

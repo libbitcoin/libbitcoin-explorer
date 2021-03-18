@@ -53,7 +53,7 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
     if (!qr_code::encode(output, value, qrcode_version, scale_factor,
         margin_size))
     {
-        error << BX_QRCODE_GENERATION_ERROR << std::endl;
+        error << BX_QRCODE_MAXIMUM_SIZE << std::endl;
         return console_result::failure;
     }
 
