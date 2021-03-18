@@ -19,10 +19,55 @@
 
 #include "command.hpp"
 
+#include <string>
+
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(qrcode__invoke)
+
+BOOST_AUTO_TEST_CASE(qrcode__invoke__invalid_version__failure_error)
+{
+    BX_DECLARE_COMMAND(qrcode);
+
+    command.set_version_option(bc::system::wallet::qr_code::maximum_version + 1u);
+    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_QRCODE_MAXIMUM_VERSION "\n");
+}
+
+BOOST_AUTO_TEST_CASE(qrcode__invoke__invalid_margin__failure_error)
+{
+    BX_DECLARE_COMMAND(qrcode);
+
+    // This maring size will create an oversized image.
+    command.set_margin_option(bc::max_uint16);
+    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_QRCODE_MAXIMUM_SIZE "\n");
+}
+
+BOOST_AUTO_TEST_CASE(qrcode__invoke__invalid_module__failure_error)
+{
+    BX_DECLARE_COMMAND(qrcode);
+
+    // This module size will create an oversized image.
+    command.set_module_option(bc::max_uint16);
+    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_QRCODE_MAXIMUM_SIZE "\n");
+}
+
+BOOST_AUTO_TEST_CASE(qrcode__invoke__invalid_scheme__failure_error)
+{
+    BX_DECLARE_COMMAND(qrcode);
+
+    // This scheme will create an oversized image.
+    command.set_scheme_option(std::string(bc::max_uint16, 's'));
+    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_QRCODE_MAXIMUM_SIZE "\n");
+}
 
 BOOST_AUTO_TEST_CASE(qrcode__invoke__margin_0_module_0_version_0_scheme_bitcoin__success_empty_image)
 {
@@ -116,6 +161,21 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__margin_0_module_0_version_0_scheme_bitcoin_
 
     // Encode as base16 so that failure message is intelligible.
     BOOST_REQUIRE_EQUAL(encode_base16(stream.read_bytes()), encode_base16(expected));
+}
+
+BOOST_AUTO_TEST_CASE(qrcode__invoke__non_default_values__success_expected_size)
+{
+    BX_DECLARE_COMMAND(qrcode);
+
+    command.set_margin_option(8);
+    command.set_module_option(16);
+    command.set_version_option(3);
+    command.set_scheme_option("shitcoin");
+    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+
+    istream_reader stream(output);
+    BOOST_REQUIRE_EQUAL(stream.read_bytes().size(), 28956u);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
