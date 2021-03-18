@@ -55,6 +55,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
+#define BX_QRCODE_MINIMUM_SIZE \
+    "The pixel size of modules must be greater than 0. "
 #define BX_QRCODE_MAXIMUM_SIZE \
     "The image is too large for uncompressed TIFF encoding."
 #define BX_QRCODE_MAXIMUM_VERSION \
@@ -154,14 +156,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "margin,r",
+            "margin,m",
             value<uint16_t>(&option_.margin)->default_value(2),
-            "The margin size in pixels of the QRCODE, defaults to 2."
+            "The pixel width of the QRCODE margin, defaults to 2."
         )
         (
-            "module,m",
-            value<uint16_t>(&option_.module)->default_value(8),
-            "The module size in pixels of the QRCODE, defaults to 8."
+            "pixels,p",
+            value<uint16_t>(&option_.pixels)->default_value(8),
+            "The pixel width of the QRCODE modules, defaults to 8."
         )
         (
             "scheme,s",
@@ -170,7 +172,7 @@ public:
         )
         (
             "version,v",
-            value<uint8_t>(&option_.version),
+            value<uint16_t>(&option_.version),
             "The version of the QRCODE, defaults to 0 which is the minimum size."
         )
         (
@@ -236,20 +238,20 @@ public:
     }
 
     /**
-     * Get the value of the module option.
+     * Get the value of the pixels option.
      */
-    virtual uint16_t& get_module_option()
+    virtual uint16_t& get_pixels_option()
     {
-        return option_.module;
+        return option_.pixels;
     }
 
     /**
-     * Set the value of the module option.
+     * Set the value of the pixels option.
      */
-    virtual void set_module_option(
+    virtual void set_pixels_option(
         const uint16_t& value)
     {
-        option_.module = value;
+        option_.pixels = value;
     }
 
     /**
@@ -272,7 +274,7 @@ public:
     /**
      * Get the value of the version option.
      */
-    virtual uint8_t& get_version_option()
+    virtual uint16_t& get_version_option()
     {
         return option_.version;
     }
@@ -281,7 +283,7 @@ public:
      * Set the value of the version option.
      */
     virtual void set_version_option(
-        const uint8_t& value)
+        const uint16_t& value)
     {
         option_.version = value;
     }
@@ -312,16 +314,16 @@ private:
     {
         option()
           : margin(),
-            module(),
+            pixels(),
             scheme(),
             version()
         {
         }
 
         uint16_t margin;
-        uint16_t module;
+        uint16_t pixels;
         std::string scheme;
-        uint8_t version;
+        uint16_t version;
     } option_;
 };
 

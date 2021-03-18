@@ -33,13 +33,13 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto margin_size = get_margin_option();
-    const auto scale_factor = get_module_option();
-    const auto url_scheme = get_scheme_option();
+    const auto scale_factor = get_pixels_option();
+    const auto uri_scheme = get_scheme_option();
     const auto qrcode_version = get_version_option();
     const auto& address = get_payment_address_argument();
 
-    const auto delimiter = url_scheme.empty() ? "" : ":";
-    const auto value = url_scheme + delimiter + address.encoded();
+    const auto delimiter = uri_scheme.empty() ? "" : ":";
+    const auto value = uri_scheme + delimiter + address.encoded();
 
     if (qrcode_version > qr_code::maximum_version)
     {
@@ -47,11 +47,16 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    // For raw bit stream set scale=1 and margin=0.
-    // The image is at file offset bc::tiff::image_offset to EOF.
-    // If image-pixel-width^2 % 8 != 0 then last byte contains padding.
-    if (!qr_code::encode(output, value, qrcode_version, scale_factor,
-        margin_size))
+    if (scale_factor == 0u)
+    {
+        error << BX_QRCODE_MINIMUM_SIZE << std::endl;
+        return console_result::failure;
+    }
+
+    // Because the parser cannot support uint8_t types.
+    const auto version = static_cast<uint8_t>(qrcode_version);
+
+    if (!qr_code::encode(output, value, version, scale_factor, margin_size))
     {
         error << BX_QRCODE_MAXIMUM_SIZE << std::endl;
         return console_result::failure;

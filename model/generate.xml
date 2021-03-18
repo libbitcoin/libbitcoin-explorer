@@ -538,11 +538,12 @@
   </command>
 
   <command symbol="qrcode" category="WALLET" output="raw" description="Create a square QRCODE TIFF file for a payment address.">
-    <option name="margin"  shortcut="r" type="uint16_t" default="2" description="The margin size in pixels of the QRCODE, defaults to 2." />
-    <option name="module" type="uint16_t" default="8" description="The module size in pixels of the QRCODE, defaults to 8." />
+    <option name="margin" type="uint16_t" default="2" description="The pixel width of the QRCODE margin, defaults to 2." />
+    <option name="pixels" type="uint16_t" default="8" description="The pixel width of the QRCODE modules, defaults to 8." />
     <option name="scheme" type="string" default="bitcoin" description="The URI scheme of the QRCODE data, defaults to bitcoin." />
-    <option name="version" type="uint8_t" description="The version of the QRCODE, defaults to 0 which is the minimum size." />
+    <option name="version" type="uint16_t" description="The version of the QRCODE, defaults to 0 which is the minimum size." />
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" required="true" description="The payment address. If not specified the address is read from STDIN."/>
+    <define name="BX_QRCODE_MINIMUM_SIZE" value="The pixel size of modules must be greater than 0. " />
     <define name="BX_QRCODE_MAXIMUM_SIZE" value="The image is too large for uncompressed TIFF encoding." />
     <define name="BX_QRCODE_MAXIMUM_VERSION" value="The version exceeds the maximum value of 40." />
   </command>
