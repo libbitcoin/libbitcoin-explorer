@@ -100,7 +100,7 @@ endif()
 
 # Find boost
 #------------------------------------------------------------------------------
-find_package( Boost 1.62.0 REQUIRED COMPONENTS
+find_package( Boost 1.72.0 REQUIRED COMPONENTS
     unit_test_framework )
 
 set( boost_unit_test_framework_LIBS "-lboost_unit_test_framework" )
@@ -151,12 +151,12 @@ endif()
 # Define project common library directories
 #------------------------------------------------------------------------------
 if (BUILD_SHARED_LIBS)
-    link_directories( 
+    link_directories(
         ${bitcoin_client_LIBRARY_DIRS}
         ${bitcoin_network_LIBRARY_DIRS}
         ${dl_LIBRARY_DIRS} )
 else()
-    link_directories( 
+    link_directories(
         ${bitcoin_client_STATIC_LIBRARY_DIRS}
         ${bitcoin_network_STATIC_LIBRARY_DIRS}
         ${dl_LIBRARY_DIRS} )
@@ -165,14 +165,14 @@ endif()
 # Define project common libraries/linker flags.
 #------------------------------------------------------------------------------
 if (BUILD_SHARED_LIBS)
-    link_libraries( 
+    link_libraries(
         "-fstack-protector"
         "-fstack-protector-all"
         ${bitcoin_client_LIBRARIES}
         ${bitcoin_network_LIBRARIES}
         ${dl_LIBRARIES} )
 else()
-    link_libraries( 
+    link_libraries(
         "-fstack-protector"
         "-fstack-protector-all"
         ${bitcoin_client_STATIC_LIBRARIES}
@@ -180,7 +180,7 @@ else()
         ${dl_LIBRARIES} )
 endif()
 
-add_definitions( 
+add_definitions(
     -DSYSCONFDIR=\"${sysconfdir}\" )
 
 # Define ${CANONICAL_LIB_NAME} project.

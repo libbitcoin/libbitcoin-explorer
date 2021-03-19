@@ -26,17 +26,17 @@ BOOST_AUTO_TEST_SUITE(ec_multiply_secrets__invoke)
 
 // TODO: generate overflow condition
 
-//BOOST_AUTO_TEST_CASE(ec_multiply_secrets__invoke__overflow__failure_error)
-//{
-//    BX_DECLARE_COMMAND(ec_multiply_secrets);
-//    command.set_secrets_argument(
-//    {
-//        { "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" },
-//        { "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" }
-//    });
-//    BX_REQUIRE_FAILURE(command.invoke(output, error));
-//    BX_REQUIRE_ERROR(BX_EC_MULITPLY_SECRETS_OUT_OF_RANGE "\n");
-//}
+////BOOST_AUTO_TEST_CASE(ec_multiply_secrets__invoke__overflow__failure_error)
+////{
+////    BX_DECLARE_COMMAND(ec_multiply_secrets);
+////    command.set_secrets_argument(
+////    {
+////        { "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" },
+////        { "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" }
+////    });
+////    BX_REQUIRE_FAILURE(command.invoke(output, error));
+////    BX_REQUIRE_ERROR(BX_EC_MULITPLY_SECRETS_OUT_OF_RANGE "\n");
+////}
 
 BOOST_AUTO_TEST_CASE(ec_multiply_secrets__invoke__no_value__okay_output)
 {

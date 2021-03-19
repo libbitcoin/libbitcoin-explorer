@@ -16,10 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/qrcode.hpp>
 
-#include <sstream>
 #include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -33,48 +31,39 @@ using namespace bc::system::wallet;
 
 console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 {
-#ifdef WITH_QRENCODE
     // Bound parameters.
-    const auto& image = get_png_option();
-    const auto& insensitive = get_insensitive_option();
-    const auto& scheme = get_scheme_option();
-    const auto& version = get_version_option();
+    const auto margin_size = get_margin_option();
+    const auto scale_factor = get_pixels_option();
+    const auto uri_scheme = get_scheme_option();
+    const auto qrcode_version = get_version_option();
     const auto& address = get_payment_address_argument();
 
-    const auto delimiter = scheme.empty() ? "" : ":";
-    const auto qr_string = scheme + delimiter + address.encoded();
-    const auto qr_data = qr::encode(to_chunk(qr_string), version, qr::level,
-        qr::mode, !insensitive);
+    const auto delimiter = uri_scheme.empty() ? "" : ":";
+    const auto value = uri_scheme + delimiter + address.encoded();
 
-    // The image option specifies we're writing output in png format.
-    if (image)
+    if (qrcode_version > qr_code::maximum_version)
     {
-#ifdef WITH_PNG
-        const auto& density = get_density_option();
-        const auto& margin = get_margin_size_option();
-        const auto& module = get_module_size_option();
-
-        const auto result = png::write_png(qr_data, module, density, margin,
-            png::inches_per_meter, png::get_default_foreground(),
-            png::get_default_background(), output);
-
-        return (result ? console_result::okay : console_result::failure);
-#else
-        error << BX_QRCODE_REQUIRES_PNG << std::endl;
+        error << BX_QRCODE_MAXIMUM_VERSION << std::endl;
         return console_result::failure;
-#endif // WITH_PNG
     }
 
-    // The qr data is written to the output stream in 'qrencode' format.
-    ostream_writer sink(output);
-    sink.write_bytes(qr_data);
-    output.flush();
+    if (scale_factor == 0u)
+    {
+        error << BX_QRCODE_MINIMUM_SIZE << std::endl;
+        return console_result::failure;
+    }
 
+    // Because the parser cannot support uint8_t types.
+    const auto version = static_cast<uint8_t>(qrcode_version);
+
+    if (!qr_code::encode(output, value, version, scale_factor, margin_size))
+    {
+        error << BX_QRCODE_MAXIMUM_SIZE << std::endl;
+        return console_result::failure;
+    }
+
+    output.flush();
     return console_result::okay;
-#else
-    error << BX_QRCODE_REQUIRES_QRENCODE << std::endl;
-    return console_result::failure;
-#endif // WITH_QRENCODE
 }
 
 } //namespace commands

@@ -23,12 +23,24 @@
     </Link>
     <Link Condition="($(PlatformToolset) == 'v120') Or ($(PlatformToolset) == 'CTP_Nov2013')">
       <!-- $(PlatformToolset) is hard wired to CTP_Nov2013 to allow for linkage by PlatformToolset=v120 (and CTP_Nov2013) callers. -->
-      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Debug\CTP_Nov2013\$(Linkage-libbitcoin-network)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Release\CTP_Nov2013\$(Linkage-libbitcoin-network)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Debug\CTP_Nov2013\$(Linkage-libbitcoin-network)\;
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\obj\libbitcoin-network\$(PlatformName)\Debug\CTP_Nov2013\$(Linkage-libbitcoin-network)\;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Release\CTP_Nov2013\$(Linkage-libbitcoin-network)\;
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\obj\libbitcoin-network\$(PlatformName)\Release\CTP_Nov2013\$(Linkage-libbitcoin-network)\;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
     </Link>
     <Link Condition="($(PlatformToolset) != 'v120') And ($(PlatformToolset) != 'CTP_Nov2013')">
-      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-libbitcoin-network)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libbitcoin-network)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-libbitcoin-network)\;
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\obj\libbitcoin-network\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-libbitcoin-network)\;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libbitcoin-network)\;
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\obj\libbitcoin-network\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libbitcoin-network)\;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
     </Link>
     <Link Condition="$(PlatformToolset) == 'v120'">
       <!-- Need to link $(VC_CTP_Nov2013_LibraryPath_x86), $(VC_CTP_Nov2013_LibraryPath_x64), or $(VC_CTP_Nov2013_LibraryPath_ARM).-->
@@ -37,44 +49,4 @@
       <AdditionalLibraryDirectories Condition="$(PlatformName) == 'Win32'">$(ProgramFiles)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-
-  <!-- Copy -->
-
-  <!-- $(PlatformToolset) is hard wired to CTP_Nov2013 to allow for linkage by PlatformToolset=v120 (and CTP_Nov2013) callers. -->
-  <Target Name="Linkage-libbitcoin-network-dynamic" AfterTargets="AfterBuild" Condition="('$(Linkage-libbitcoin-network)' == 'dynamic') And (($(PlatformToolset) == 'v120') Or ($(PlatformToolset) == 'CTP_Nov2013'))">
-    <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
-          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Debug\CTP_Nov2013\dynamic\libbitcoin-network.dll"
-          DestinationFiles="$(TargetDir)libbitcoin-network.dll"
-          SkipUnchangedFiles="true" />
-    <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
-          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Debug\CTP_Nov2013\dynamic\libbitcoin-network.pdb"
-          DestinationFiles="$(TargetDir)libbitcoin-network.pdb"
-          SkipUnchangedFiles="true" />
-    <Copy Condition="$(Configuration.IndexOf('Release')) != -1"
-          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Release\CTP_Nov2013\dynamic\libbitcoin-network.dll"
-          DestinationFiles="$(TargetDir)libbitcoin-network.dll"
-          SkipUnchangedFiles="true" />
-  </Target>
-  <Target Name="Linkage-libbitcoin-network-dynamic" AfterTargets="AfterBuild" Condition="('$(Linkage-libbitcoin-network)' == 'dynamic') And (($(PlatformToolset) != 'v120') And ($(PlatformToolset) != 'CTP_Nov2013'))">
-    <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
-          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Debug\$(PlatformToolset)\dynamic\libbitcoin-network.dll"
-          DestinationFiles="$(TargetDir)libbitcoin-network.dll"
-          SkipUnchangedFiles="true" />
-    <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
-          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Debug\$(PlatformToolset)\dynamic\libbitcoin-network.pdb"
-          DestinationFiles="$(TargetDir)libbitcoin-network.pdb"
-          SkipUnchangedFiles="true" />
-    <Copy Condition="$(Configuration.IndexOf('Release')) != -1"
-          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Release\$(PlatformToolset)\dynamic\libbitcoin-network.dll"
-          DestinationFiles="$(TargetDir)libbitcoin-network.dll"
-          SkipUnchangedFiles="true" />
-  </Target>
-
-  <!-- Messages -->
-
-  <Target Name="libbitcoin-network-info" BeforeTargets="AfterBuild" Condition="'$(Linkage-libbitcoin-network)' == 'dynamic'">
-    <Message Text="Copying libbitcoin-network.dll -&gt; $(TargetDir)libbitcoin-network.dll" Importance="high"/>
-    <Message Text="Copying libbitcoin-network.pdb -&gt; $(TargetDir)libbitcoin-network.pdb" Importance="high" Condition="$(Configuration.IndexOf('Debug')) != -1" />
-  </Target>
-
 </Project>

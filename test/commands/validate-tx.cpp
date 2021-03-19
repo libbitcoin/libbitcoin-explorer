@@ -36,45 +36,45 @@ BOOST_AUTO_TEST_SUITE(validate_tx__invoke)
 // FIXME: All tests are disabled because transaction_pool_validate2 is
 // currently not implemented in master/v4.
 
-/* BOOST_AUTO_TEST_CASE(validate_tx__invoke__mainnet_satoshis_words__failure_coinbase_transaction) */
-/* { */
-/*     BX_DECLARE_CLIENT_COMMAND(validate_tx); */
-/*     command.set_transaction_argument({ BX_SATOSHIS_WORDS_TX_BASE16 }); */
-/*     BX_REQUIRE_FAILURE(command.invoke(output, error)); */
-/*     BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(coinbase_transaction) + "\n"); */
-/* } */
-
-/* BOOST_AUTO_TEST_CASE(validate_tx__invoke__bad_signature_tx__failure_missing_previous_output) */
-/* { */
-/*     BX_DECLARE_CLIENT_COMMAND(validate_tx); */
-/*     command.set_transaction_argument({ VALIDATE_TX_BAD_SIGNATURE_TX_BASE16 }); */
-/*     BX_REQUIRE_FAILURE(command.invoke(output, error)); */
-
-/*     // TODO: With store commit and robust error reporting this now returns */
-/*     // error::missing_previous_output. Need to determine if this is correct. */
-/*     ////BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(invalid_script) + "\n"); */
-/*     BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(missing_previous_output) + "\n"); */
-/* } */
-
-/* BOOST_AUTO_TEST_CASE(validate_tx__invoke__new_tx__failure_missing_previous_output) */
-/* { */
-/*     BX_DECLARE_CLIENT_COMMAND(validate_tx); */
-/*     command.set_transaction_argument({ VALIDATE_TX_NEW_TX_BASE16 }); */
-/*     BX_REQUIRE_FAILURE(command.invoke(output, error)); */
-
-/*     // TODO: With store commit and robust error reporting this now returns */
-/*     // error::missing_previous_output. Need to determine if this is correct. */
-/*     ////BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(invalid_script) + "\n"); */
-/*     BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(missing_previous_output) + "\n"); */
-/* } */
-
-/* BOOST_AUTO_TEST_CASE(validate_tx__invoke__issue_477__failure_op_equal_verify2) */
-/* { */
-/*     BX_DECLARE_CLIENT_COMMAND(validate_tx); */
-/*     command.set_transaction_argument({ VALIDATE_TX_ISSUE_477 }); */
-/*     BX_REQUIRE_FAILURE(command.invoke(output, error)); */
-/*     BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(op_equal_verify2) + "\n"); */
-/* } */
+////BOOST_AUTO_TEST_CASE(validate_tx__invoke__mainnet_satoshis_words__failure_coinbase_transaction)
+////{
+////    BX_DECLARE_CLIENT_COMMAND(validate_tx);
+////    command.set_transaction_argument({ BX_SATOSHIS_WORDS_TX_BASE16 });
+////    BX_REQUIRE_FAILURE(command.invoke(output, error));
+////    BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(coinbase_transaction) + "\n");
+////}
+////
+////BOOST_AUTO_TEST_CASE(validate_tx__invoke__bad_signature_tx__failure_missing_previous_output)
+////{
+////    BX_DECLARE_CLIENT_COMMAND(validate_tx);
+////    command.set_transaction_argument({ VALIDATE_TX_BAD_SIGNATURE_TX_BASE16 });
+////    BX_REQUIRE_FAILURE(command.invoke(output, error));
+////
+////    // TODO: With store commit and robust error reporting this now returns
+////    // error::missing_previous_output. Need to determine if this is correct.
+////    ////BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(invalid_script) + "\n");
+////    BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(missing_previous_output) + "\n");
+////}
+////
+////BOOST_AUTO_TEST_CASE(validate_tx__invoke__new_tx__failure_missing_previous_output)
+////{
+////    BX_DECLARE_CLIENT_COMMAND(validate_tx);
+////    command.set_transaction_argument({ VALIDATE_TX_NEW_TX_BASE16 });
+////    BX_REQUIRE_FAILURE(command.invoke(output, error));
+////
+////    // TODO: With store commit and robust error reporting this now returns
+////    // error::missing_previous_output. Need to determine if this is correct.
+////    ////BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(invalid_script) + "\n");
+////    BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(missing_previous_output) + "\n");
+////}
+////
+////BOOST_AUTO_TEST_CASE(validate_tx__invoke__issue_477__failure_op_equal_verify2)
+////{
+////    BX_DECLARE_CLIENT_COMMAND(validate_tx);
+////    command.set_transaction_argument({ VALIDATE_TX_ISSUE_477 });
+////    BX_REQUIRE_FAILURE(command.invoke(output, error));
+////    BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(op_equal_verify2) + "\n");
+////}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

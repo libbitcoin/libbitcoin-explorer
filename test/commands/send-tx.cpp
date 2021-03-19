@@ -30,17 +30,17 @@ BOOST_AUTO_TEST_SUITE(send_tx__invoke)
 // FIXME: All tests are disabled because transaction_pool_broadcast is
 // currently not implemented in master/v4.
 
-/* BOOST_AUTO_TEST_CASE(send_tx__invoke__mainnet_tx_A__failure_error) */
-/* { */
-/*     BX_DECLARE_CLIENT_COMMAND(send_tx); */
-/*     command.set_transaction_argument({ SEND_TX_A }); */
-
-/*     // TODO: With store commit and robust error reporting this now returns */
-/*     // error::missing_previous_output. Need to determine if this is correct. */
-/*     ////BX_REQUIRE_OKAY(command.invoke(output, error)); */
-/*     BX_REQUIRE_FAILURE(command.invoke(output, error)); */
-/*     BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(missing_previous_output) + "\n"); */
-/* } */
+////BOOST_AUTO_TEST_CASE(send_tx__invoke__mainnet_tx_A__failure_error)
+//// {
+////    BX_DECLARE_CLIENT_COMMAND(send_tx); */
+////    command.set_transaction_argument({ SEND_TX_A });
+////
+////    // TODO: With store commit and robust error reporting this now returns
+////    // error::missing_previous_output. Need to determine if this is correct.
+////    ////BX_REQUIRE_OKAY(command.invoke(output, error));
+////    BX_REQUIRE_FAILURE(command.invoke(output, error));
+////    BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(missing_previous_output) + "\n");
+////}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
