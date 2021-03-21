@@ -23,24 +23,24 @@ IF NOT EXIST "%nuget_pkg_path%" (
   )
 )
 
-call :init libbitcoin-system libbitcoin-system version3
+call :init libbitcoin libbitcoin-system version3
 IF %ERRORLEVEL% NEQ 0 (
-  call :failure "Initializing repository libbitcoin-system libbitcoin-system version3 failed."
+  call :failure "Initializing repository libbitcoin libbitcoin-system version3 failed."
   exit /b 1
 )
-call :init libbitcoin-system libbitcoin-protocol version3
+call :init libbitcoin libbitcoin-protocol version3
 IF %ERRORLEVEL% NEQ 0 (
-  call :failure "Initializing repository libbitcoin-system libbitcoin-protocol version3 failed."
+  call :failure "Initializing repository libbitcoin libbitcoin-protocol version3 failed."
   exit /b 1
 )
-call :init libbitcoin-system libbitcoin-client version3
+call :init libbitcoin libbitcoin-client version3
 IF %ERRORLEVEL% NEQ 0 (
-  call :failure "Initializing repository libbitcoin-system libbitcoin-client version3 failed."
+  call :failure "Initializing repository libbitcoin libbitcoin-client version3 failed."
   exit /b 1
 )
-call :init libbitcoin-system libbitcoin-network version3
+call :init libbitcoin libbitcoin-network version3
 IF %ERRORLEVEL% NEQ 0 (
-  call :failure "Initializing repository libbitcoin-system libbitcoin-network version3 failed."
+  call :failure "Initializing repository libbitcoin libbitcoin-network version3 failed."
   exit /b 1
 )
 call :bld_repo libbitcoin-explorer
