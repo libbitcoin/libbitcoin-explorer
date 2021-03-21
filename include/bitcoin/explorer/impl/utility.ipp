@@ -43,7 +43,7 @@
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {

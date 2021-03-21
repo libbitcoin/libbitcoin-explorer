@@ -19,7 +19,7 @@
 #include <bitcoin/explorer/commands/script-encode.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/script.hpp>
 

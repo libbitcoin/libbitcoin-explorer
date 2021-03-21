@@ -23,7 +23,7 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 
 using namespace boost::filesystem;
 using namespace boost::program_options;

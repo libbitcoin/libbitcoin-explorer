@@ -30,7 +30,7 @@
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/parser.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 
 namespace libbitcoin {
 namespace explorer {

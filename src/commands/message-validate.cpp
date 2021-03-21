@@ -19,7 +19,7 @@
 #include <bitcoin/explorer/commands/input-validate.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 
 namespace libbitcoin {
 namespace explorer {

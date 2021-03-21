@@ -22,7 +22,7 @@
 #include <iostream>
 #include <string>
 #include <boost/filesystem.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 
