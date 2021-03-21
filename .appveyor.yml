@@ -1,10 +1,10 @@
 ###############################################################################
-#  Copyright (c) 2014-2015 libbitcoin-explorer developers (see COPYING).
+#  Copyright (c) 2014-2020 libbitcoin-explorer developers (see COPYING).
 #
 #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 #
 ###############################################################################
-version: 3.6.0.{build}-{branch}
+version: 3.7.0.{build}-{branch}
 
 image: Visual Studio 2013
 
