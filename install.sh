@@ -412,7 +412,6 @@ display_configuration()
 # Define icu options.
 #------------------------------------------------------------------------------
 ICU_OPTIONS=(
-"--enable-draft" \
 "--enable-tools" \
 "--disable-extras" \
 "--disable-icuio" \
