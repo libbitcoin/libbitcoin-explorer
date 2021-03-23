@@ -44,8 +44,8 @@ BUILD_DIR="build-libbitcoin-explorer"
 
 # ICU archive.
 #------------------------------------------------------------------------------
-ICU_URL="https://github.com/unicode-org/icu/releases/download/release-55-2/icu4c-55_2-src.tgz"
-ICU_ARCHIVE="icu4c-55_2-src.tgz"
+ICU_URL="https://github.com/unicode-org/icu/releases/download/release-68-2/icu4c-68_2-src.tgz"
+ICU_ARCHIVE="icu4c-68_2-src.tgz"
 
 # ZMQ archive.
 #------------------------------------------------------------------------------
@@ -405,7 +405,6 @@ display_configuration()
 # Define icu options.
 #------------------------------------------------------------------------------
 ICU_OPTIONS=(
-"--enable-draft" \
 "--enable-tools" \
 "--disable-extras" \
 "--disable-icuio" \
