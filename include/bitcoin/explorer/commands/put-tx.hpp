@@ -83,6 +83,13 @@ public:
     }
 
     /**
+     * Destructor.
+     */
+    virtual ~put_tx()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

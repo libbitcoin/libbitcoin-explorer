@@ -80,6 +80,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~version()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

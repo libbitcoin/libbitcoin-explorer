@@ -76,6 +76,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~ec_to_witness()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

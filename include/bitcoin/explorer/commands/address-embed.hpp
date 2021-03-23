@@ -77,6 +77,13 @@ public:
     }
 
     /**
+     * Destructor.
+     */
+    virtual ~address_embed()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

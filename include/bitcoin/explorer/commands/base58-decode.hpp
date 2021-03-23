@@ -70,6 +70,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~base58_decode()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

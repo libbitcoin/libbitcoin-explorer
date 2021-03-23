@@ -70,6 +70,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~fetch_block_height()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

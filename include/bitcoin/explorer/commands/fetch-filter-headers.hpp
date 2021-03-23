@@ -76,6 +76,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~fetch_filter_headers()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
