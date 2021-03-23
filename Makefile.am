@@ -474,9 +474,13 @@ endif BASH_COMPLETIONDIR
 
 # files => ${sysconfdir}/libbitcoin
 #------------------------------------------------------------------------------
+if WITH_CONSOLE
+
 sysconf_libbitcoindir = ${sysconfdir}/libbitcoin
 sysconf_libbitcoin_DATA = \
     data/bx.cfg
+
+endif WITH_CONSOLE
 
 
 # Custom make targets.
