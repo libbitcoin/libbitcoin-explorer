@@ -79,6 +79,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~cert_public()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

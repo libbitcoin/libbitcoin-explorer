@@ -83,6 +83,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~stealth_encode()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

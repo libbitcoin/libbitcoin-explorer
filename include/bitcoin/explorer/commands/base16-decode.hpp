@@ -73,6 +73,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~base16_decode()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

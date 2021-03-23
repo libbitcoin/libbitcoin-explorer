@@ -80,6 +80,13 @@ public:
     }
 
     /**
+     * Destructor.
+     */
+    virtual ~satoshi_to_btc()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

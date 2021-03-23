@@ -73,6 +73,13 @@ public:
     }
 
     /**
+     * Destructor.
+     */
+    virtual ~command()
+    {
+    }
+
+    /**
      * The symbolic (not localizable) command name, lower case.
      * @return  Example: "fetch-transaction"
      */
@@ -158,7 +165,7 @@ public:
         definitions.add_options()
         (
             /* This composes with the command line options. */
-            BX_CONFIG_VARIABLE, 
+            BX_CONFIG_VARIABLE,
             value<boost::filesystem::path>()
                 ->composing()->default_value(config_default_path()),
             "The path to the configuration settings file."
@@ -337,7 +344,7 @@ public:
     }
 
     /* Properties */
-    
+
     /**
      * Get command line argument metadata.
      */
@@ -709,7 +716,7 @@ public:
 protected:
 
     /**
-     * This base class is abstract but not pure virtual, so prevent direct 
+     * This base class is abstract but not pure virtual, so prevent direct
      * construction here.
      */
     command()
@@ -717,7 +724,7 @@ protected:
     }
 
 private:
-    
+
     /**
      * Command line argument metadata.
      */

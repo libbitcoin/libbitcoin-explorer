@@ -86,6 +86,13 @@ public:
     }
 
     /**
+     * Destructor.
+     */
+    virtual ~input_set()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

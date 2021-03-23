@@ -81,6 +81,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~ek_to_address()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

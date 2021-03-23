@@ -86,6 +86,13 @@ public:
     }
 
     /**
+     * Destructor.
+     */
+    virtual ~watch_address()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

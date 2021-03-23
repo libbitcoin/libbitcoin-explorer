@@ -86,6 +86,13 @@ public:
     }
 
     /**
+     * Destructor.
+     */
+    virtual ~send_tx_p2p()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
