@@ -83,6 +83,13 @@ public:
     }
 
     /**
+     * Destructor.
+     */
+    virtual ~ec_to_ek()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

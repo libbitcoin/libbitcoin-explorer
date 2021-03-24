@@ -18,7 +18,7 @@
 _bx()
 {
     local current="${COMP_WORDS[COMP_CWORD]}"
-    
+
     # Generated from XML data source.
     local commands="
 .for command by symbol as _command where !is_xml_true(_command.obsolete)

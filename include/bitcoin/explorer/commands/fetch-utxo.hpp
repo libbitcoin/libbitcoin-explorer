@@ -83,6 +83,13 @@ public:
     }
 
     /**
+     * Destructor.
+     */
+    virtual ~fetch_utxo()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

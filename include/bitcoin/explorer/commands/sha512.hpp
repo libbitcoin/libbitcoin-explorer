@@ -70,6 +70,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~sha512()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

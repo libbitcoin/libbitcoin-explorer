@@ -76,6 +76,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~get_filter_checkpoint()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

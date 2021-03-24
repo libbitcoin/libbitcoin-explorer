@@ -80,6 +80,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~match_neutrino_address()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

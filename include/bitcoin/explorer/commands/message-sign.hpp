@@ -70,6 +70,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~message_sign()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()

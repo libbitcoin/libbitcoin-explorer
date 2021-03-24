@@ -70,6 +70,13 @@ public:
     }
 
     /**
+     * Destructor.
+     */
+    virtual ~command()
+    {
+    }
+
+    /**
      * The symbolic (not localizable) command name, lower case.
      * @return  Example: "fetch-transaction"
      */

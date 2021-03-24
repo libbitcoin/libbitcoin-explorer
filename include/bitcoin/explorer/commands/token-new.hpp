@@ -82,6 +82,13 @@ public:
 
 
     /**
+     * Destructor.
+     */
+    virtual ~token_new()
+    {
+    }
+
+    /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
