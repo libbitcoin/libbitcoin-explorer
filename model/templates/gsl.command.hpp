@@ -21,7 +21,7 @@
 #include <vector>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 .primitives()
 #include <bitcoin/explorer/utility.hpp>
@@ -49,6 +49,13 @@ public:
     static const char* symbol()
     {
         return "not-implemented";
+    }
+
+    /**
+     * Destructor.
+     */
+    virtual ~command()
+    {
     }
 
     /**

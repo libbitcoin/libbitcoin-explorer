@@ -20,7 +20,7 @@
 #include <bitcoin/explorer/commands/wif-to-public.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {

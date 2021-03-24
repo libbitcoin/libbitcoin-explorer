@@ -19,7 +19,7 @@
 
 #include <bitcoin/explorer/commands/hd-to-ec.hpp>
 
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 

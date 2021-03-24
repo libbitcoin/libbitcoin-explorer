@@ -1,5 +1,5 @@
 ###############################################################################
-#  Copyright (c) 2014-2015 libbitcoin-explorer developers (see COPYING).
+#  Copyright (c) 2014-2020 libbitcoin-explorer developers (see COPYING).
 #
 #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 #
@@ -25,7 +25,7 @@ Version: @PACKAGE_VERSION@
 #==============================================================================
 # Dependencies that publish package configuration.
 #------------------------------------------------------------------------------
-Requires: libbitcoin-client >= 3.6.0 libbitcoin-network >= 3.6.0
+Requires: libbitcoin-client >= 3.7.0 libbitcoin-network >= 3.7.0
 
 # Include directory and any other required compiler flags.
 #------------------------------------------------------------------------------

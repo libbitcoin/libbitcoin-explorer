@@ -18,7 +18,7 @@
  */
 #include <bitcoin/explorer/commands/hd-to-wif.hpp>
 
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {

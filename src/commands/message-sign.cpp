@@ -20,7 +20,7 @@
 
 #include <iostream>
 #include <cstdint>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/utility.hpp>
 

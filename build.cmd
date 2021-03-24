@@ -1,5 +1,5 @@
 REM ###########################################################################
-REM #  Copyright (c) 2014-2015 libbitcoin-explorer developers (see COPYING).
+REM #  Copyright (c) 2014-2020 libbitcoin-explorer developers (see COPYING).
 REM #
 REM #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 REM #
@@ -23,9 +23,9 @@ IF NOT EXIST "%nuget_pkg_path%" (
   )
 )
 
-call :init libbitcoin libbitcoin version3
+call :init libbitcoin libbitcoin-system version3
 IF %ERRORLEVEL% NEQ 0 (
-  call :failure "Initializing repository libbitcoin libbitcoin version3 failed."
+  call :failure "Initializing repository libbitcoin libbitcoin-system version3 failed."
   exit /b 1
 )
 call :init libbitcoin libbitcoin-protocol version3

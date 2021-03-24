@@ -23,7 +23,7 @@
 #include <string>
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/header.hpp>
 #include <bitcoin/explorer/config/input.hpp>

@@ -1,5 +1,5 @@
 ###############################################################################
-#  Copyright (c) 2014-2015 libbitcoin-explorer developers (see COPYING).
+#  Copyright (c) 2014-2020 libbitcoin-explorer developers (see COPYING).
 #
 #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 #
@@ -429,9 +429,13 @@ endif BASH_COMPLETIONDIR
 
 # files => ${sysconfdir}/libbitcoin
 #------------------------------------------------------------------------------
+if WITH_CONSOLE
+
 sysconf_libbitcoindir = ${sysconfdir}/libbitcoin
 sysconf_libbitcoin_DATA = \
     data/bx.cfg
+
+endif WITH_CONSOLE
 
 
 # Custom make targets.

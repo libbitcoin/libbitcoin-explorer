@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -79,6 +79,13 @@ public:
         return "ek-to-address";
     }
 
+
+    /**
+     * Destructor.
+     */
+    virtual ~ek_to_address()
+    {
+    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.

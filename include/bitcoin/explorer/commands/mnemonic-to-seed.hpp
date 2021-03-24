@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -83,6 +83,13 @@ public:
         return "mnemonic-to-seed";
     }
 
+
+    /**
+     * Destructor.
+     */
+    virtual ~mnemonic_to_seed()
+    {
+    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.

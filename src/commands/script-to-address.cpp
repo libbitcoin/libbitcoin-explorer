@@ -19,7 +19,7 @@
 #include <bitcoin/explorer/commands/script-to-address.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
