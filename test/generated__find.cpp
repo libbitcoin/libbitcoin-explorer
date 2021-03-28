@@ -188,6 +188,16 @@ BOOST_AUTO_TEST_CASE(generated__find__ek_to_ec__returns_object)
     BOOST_REQUIRE(find("ek-to-ec") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__electrum_new__returns_object)
+{
+    BOOST_REQUIRE(find("electrum-new") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__electrum_to_seed__returns_object)
+{
+    BOOST_REQUIRE(find("electrum-to-seed") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__fetch_balance__returns_object)
 {
     BOOST_REQUIRE(find("fetch-balance") != nullptr);

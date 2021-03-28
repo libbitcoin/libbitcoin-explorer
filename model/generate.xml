@@ -258,6 +258,20 @@
     <define name="BX_EK_TO_EC_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
 
+  <command symbol="electrum-new" output="string" multipleX="true" category="WALLET" description="Create a mnemonic seed (Electrum) from entropy. WARNING: mnemonic should be created from properly generated entropy.">
+    <option name="prefix" type="electrum" description="The electrum seed type identifier to use. Options are 'standard', 'witness', and 'dual' (for two factor authentication), defaults to 'standard'." />
+    <option name="language" type="language" description="The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'pt', 'ja', 'zh_Hans' and 'any', defaults to 'en'." />
+    <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy from which the mnemonic is created. If not specified the entropy is read from STDIN." />
+    <define name="BX_ELECTRUM_NEW_INVALID_SEED" value="The seed size is not supported." />
+    <define name="BX_ELECTRUM_REQUIRES_ICU" value="The command requires an ICU build." />
+  </command>
+
+  <command symbol="electrum-to-seed" output="base16" category="WALLET" description="Convert a mnemonic seed (Electrum) to its numeric representation.">
+     <option name="passphrase" type="string" description="An optional passphrase for converting the mnemonic to a seed." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of words that that make up the mnemonic. If not specified the words are read from STDIN." />
+    <define name="BX_ELECTRUM_TO_SEED_REQUIRES_ICU" value="The passphrase option requires an ICU build." />
+  </command>
+
   <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN." />

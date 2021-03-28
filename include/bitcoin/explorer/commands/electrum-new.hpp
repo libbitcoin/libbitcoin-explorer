@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_SEND_TX_P2P_HPP
-#define BX_SEND_TX_P2P_HPP
+#ifndef BX_ELECTRUM_NEW_HPP
+#define BX_ELECTRUM_NEW_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -59,13 +59,15 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_SEND_TX_P2P_OUTPUT \
-    "Sent transaction."
+#define BX_ELECTRUM_NEW_INVALID_SEED \
+    "The seed size is not supported."
+#define BX_ELECTRUM_REQUIRES_ICU \
+    "The command requires an ICU build."
 
 /**
- * Class to implement the send-tx-p2p command.
+ * Class to implement the electrum-new command.
  */
-class BCX_API send_tx_p2p
+class BCX_API electrum_new
   : public command
 {
 public:
@@ -75,21 +77,14 @@ public:
      */
     static const char* symbol()
     {
-        return "send-tx-p2p";
+        return "electrum-new";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    static const char* formerly()
-    {
-        return "sendtx-p2p";
-    }
 
     /**
      * Destructor.
      */
-    virtual ~send_tx_p2p()
+    virtual ~electrum_new()
     {
     }
 
@@ -98,7 +93,7 @@ public:
      */
     virtual const char* name()
     {
-        return send_tx_p2p::symbol();
+        return electrum_new::symbol();
     }
 
     /**
@@ -106,7 +101,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ONLINE";
+        return "WALLET";
     }
 
     /**
@@ -114,7 +109,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Broadcast a transaction to the Bitcoin network via the Bitcoin peer-to-peer network.";
+        return "Create a mnemonic seed (Electrum) from entropy. WARNING: mnemonic should be created from properly generated entropy.";
     }
 
     /**
@@ -125,7 +120,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("TRANSACTION", 1);
+            .add("SEED", 1);
     }
 
 	/**
@@ -137,7 +132,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_transaction_argument(), "TRANSACTION", variables, input, raw);
+        load_input(get_seed_argument(), "SEED", variables, input, raw);
     }
 
     /**
@@ -161,14 +156,19 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "nodes,n",
-            value<size_t>(&option_.nodes)->default_value(2),
-            "The number of network nodes to send the transaction to, defaults to 2."
+            "prefix,p",
+            value<explorer::config::electrum>(&option_.prefix),
+            "The electrum seed type identifier to use. Options are 'standard', 'witness', and 'dual' (for two factor authentication), defaults to 'standard'."
         )
         (
-            "TRANSACTION",
-            value<explorer::config::transaction>(&argument_.transaction),
-            "The Base16 transaction to send. If not specified the transaction is read from STDIN."
+            "language,l",
+            value<explorer::config::language>(&option_.language),
+            "The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'pt', 'ja', 'zh_Hans' and 'any', defaults to 'en'."
+        )
+        (
+            "SEED",
+            value<bc::config::base16>(&argument_.seed),
+            "The Base16 entropy from which the mnemonic is created. If not specified the entropy is read from STDIN."
         );
 
         return options;
@@ -194,37 +194,54 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the TRANSACTION argument.
+     * Get the value of the SEED argument.
      */
-    virtual explorer::config::transaction& get_transaction_argument()
+    virtual bc::config::base16& get_seed_argument()
     {
-        return argument_.transaction;
+        return argument_.seed;
     }
 
     /**
-     * Set the value of the TRANSACTION argument.
+     * Set the value of the SEED argument.
      */
-    virtual void set_transaction_argument(
-        const explorer::config::transaction& value)
+    virtual void set_seed_argument(
+        const bc::config::base16& value)
     {
-        argument_.transaction = value;
+        argument_.seed = value;
     }
 
     /**
-     * Get the value of the nodes option.
+     * Get the value of the prefix option.
      */
-    virtual size_t& get_nodes_option()
+    virtual explorer::config::electrum& get_prefix_option()
     {
-        return option_.nodes;
+        return option_.prefix;
     }
 
     /**
-     * Set the value of the nodes option.
+     * Set the value of the prefix option.
      */
-    virtual void set_nodes_option(
-        const size_t& value)
+    virtual void set_prefix_option(
+        const explorer::config::electrum& value)
     {
-        option_.nodes = value;
+        option_.prefix = value;
+    }
+
+    /**
+     * Get the value of the language option.
+     */
+    virtual explorer::config::language& get_language_option()
+    {
+        return option_.language;
+    }
+
+    /**
+     * Set the value of the language option.
+     */
+    virtual void set_language_option(
+        const explorer::config::language& value)
+    {
+        option_.language = value;
     }
 
 private:
@@ -237,11 +254,11 @@ private:
     struct argument
     {
         argument()
-          : transaction()
+          : seed()
         {
         }
 
-        explorer::config::transaction transaction;
+        bc::config::base16 seed;
     } argument_;
 
     /**
@@ -252,11 +269,13 @@ private:
     struct option
     {
         option()
-          : nodes()
+          : prefix(),
+            language()
         {
         }
 
-        size_t nodes;
+        explorer::config::electrum prefix;
+        explorer::config::language language;
     } option_;
 };
 

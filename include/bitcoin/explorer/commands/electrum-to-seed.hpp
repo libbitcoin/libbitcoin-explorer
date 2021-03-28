@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_SEND_TX_P2P_HPP
-#define BX_SEND_TX_P2P_HPP
+#ifndef BX_ELECTRUM_TO_SEED_HPP
+#define BX_ELECTRUM_TO_SEED_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -59,13 +59,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_SEND_TX_P2P_OUTPUT \
-    "Sent transaction."
+#define BX_ELECTRUM_TO_SEED_REQUIRES_ICU \
+    "The passphrase option requires an ICU build."
 
 /**
- * Class to implement the send-tx-p2p command.
+ * Class to implement the electrum-to-seed command.
  */
-class BCX_API send_tx_p2p
+class BCX_API electrum_to_seed
   : public command
 {
 public:
@@ -75,21 +75,14 @@ public:
      */
     static const char* symbol()
     {
-        return "send-tx-p2p";
+        return "electrum-to-seed";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    static const char* formerly()
-    {
-        return "sendtx-p2p";
-    }
 
     /**
      * Destructor.
      */
-    virtual ~send_tx_p2p()
+    virtual ~electrum_to_seed()
     {
     }
 
@@ -98,7 +91,7 @@ public:
      */
     virtual const char* name()
     {
-        return send_tx_p2p::symbol();
+        return electrum_to_seed::symbol();
     }
 
     /**
@@ -106,7 +99,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ONLINE";
+        return "WALLET";
     }
 
     /**
@@ -114,7 +107,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Broadcast a transaction to the Bitcoin network via the Bitcoin peer-to-peer network.";
+        return "Convert a mnemonic seed (Electrum) to its numeric representation.";
     }
 
     /**
@@ -125,7 +118,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("TRANSACTION", 1);
+            .add("WORD", -1);
     }
 
 	/**
@@ -137,7 +130,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_transaction_argument(), "TRANSACTION", variables, input, raw);
+        load_input(get_words_argument(), "WORD", variables, input, raw);
     }
 
     /**
@@ -161,14 +154,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "nodes,n",
-            value<size_t>(&option_.nodes)->default_value(2),
-            "The number of network nodes to send the transaction to, defaults to 2."
+            "passphrase,p",
+            value<std::string>(&option_.passphrase),
+            "An optional passphrase for converting the mnemonic to a seed."
         )
         (
-            "TRANSACTION",
-            value<explorer::config::transaction>(&argument_.transaction),
-            "The Base16 transaction to send. If not specified the transaction is read from STDIN."
+            "WORD",
+            value<std::vector<std::string>>(&argument_.words),
+            "The set of words that that make up the mnemonic. If not specified the words are read from STDIN."
         );
 
         return options;
@@ -194,37 +187,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the TRANSACTION argument.
+     * Get the value of the WORD arguments.
      */
-    virtual explorer::config::transaction& get_transaction_argument()
+    virtual std::vector<std::string>& get_words_argument()
     {
-        return argument_.transaction;
+        return argument_.words;
     }
 
     /**
-     * Set the value of the TRANSACTION argument.
+     * Set the value of the WORD arguments.
      */
-    virtual void set_transaction_argument(
-        const explorer::config::transaction& value)
+    virtual void set_words_argument(
+        const std::vector<std::string>& value)
     {
-        argument_.transaction = value;
+        argument_.words = value;
     }
 
     /**
-     * Get the value of the nodes option.
+     * Get the value of the passphrase option.
      */
-    virtual size_t& get_nodes_option()
+    virtual std::string& get_passphrase_option()
     {
-        return option_.nodes;
+        return option_.passphrase;
     }
 
     /**
-     * Set the value of the nodes option.
+     * Set the value of the passphrase option.
      */
-    virtual void set_nodes_option(
-        const size_t& value)
+    virtual void set_passphrase_option(
+        const std::string& value)
     {
-        option_.nodes = value;
+        option_.passphrase = value;
     }
 
 private:
@@ -237,11 +230,11 @@ private:
     struct argument
     {
         argument()
-          : transaction()
+          : words()
         {
         }
 
-        explorer::config::transaction transaction;
+        std::vector<std::string> words;
     } argument_;
 
     /**
@@ -252,11 +245,11 @@ private:
     struct option
     {
         option()
-          : nodes()
+          : passphrase()
         {
         }
 
-        size_t nodes;
+        std::string passphrase;
     } option_;
 };
 

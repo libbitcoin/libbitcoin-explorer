@@ -106,6 +106,8 @@
     <ClCompile Include="..\..\..\..\src\commands\ek-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ek-to-address.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ek-to-ec.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\electrum_new.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\electrum_to_seed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-balance.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-header.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-height.cpp" />
@@ -171,6 +173,7 @@
     <ClCompile Include="..\..\..\..\src\config\byte.cpp" />
     <ClCompile Include="..\..\..\..\src\config\cert_key.cpp" />
     <ClCompile Include="..\..\..\..\src\config\ec_private.cpp" />
+    <ClCompile Include="..\..\..\..\src\config\electrum.cpp" />
     <ClCompile Include="..\..\..\..\src\config\encoding.cpp" />
     <ClCompile Include="..\..\..\..\src\config\endorsement.cpp" />
     <ClCompile Include="..\..\..\..\src\config\hashtype.cpp" />
@@ -228,6 +231,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-to-address.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-to-ec.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-new.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-to-seed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-balance.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-header.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-height.hpp" />
@@ -293,6 +298,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\byte.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\cert_key.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\ec_private.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\electrum.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\encoding.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\endorsement.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\hashtype.hpp" />

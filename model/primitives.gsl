@@ -31,6 +31,7 @@ function global.map_type(type)
     my.type_ek_private = "ek_private"
     my.type_ek_public = "ek_public"
     my.type_ek_token = "ek_token"
+    my.type_electrum = "electrum"
     my.type_encoding = "encoding"
     my.type_endorsement = "endorsement"
     my.type_endpoint = "endpoint"
@@ -75,6 +76,7 @@ function global.map_type(type)
     my.type_ek_private_bx = "bc::wallet::ek_private"
     my.type_ek_public_bx = "bc::wallet::ek_public"
     my.type_ek_token_bx = "bc::wallet::ek_token"
+    my.type_electrum_bx = "explorer::config::electrum"
     my.type_encoding_bx = "explorer::config::encoding"
     my.type_endorsement_bx = "explorer::config::endorsement"
     my.type_endpoint_bx = "bc::config::endpoint"
@@ -135,6 +137,8 @@ function global.map_type(type)
         return my.type_ek_public_bx
     elsif my.type = my.type_ek_token
         return my.type_ek_token_bx
+    elsif my.type = my.type_electrum
+        return my.type_electrum_bx
     elsif my.type = my.type_encoding
         return my.type_encoding_bx
     elsif my.type = my.type_endorsement
@@ -266,6 +270,7 @@ endfunction
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/cert_key.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hashtype.hpp>

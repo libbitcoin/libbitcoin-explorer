@@ -68,6 +68,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ek_public_to_ec>());
     func(make_shared<ek_to_address>());
     func(make_shared<ek_to_ec>());
+    func(make_shared<electrum_new>());
+    func(make_shared<electrum_to_seed>());
     func(make_shared<fetch_balance>());
     func(make_shared<fetch_header>());
     func(make_shared<fetch_height>());
@@ -195,6 +197,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ek_to_address>();
     if (symbol == ek_to_ec::symbol())
         return make_shared<ek_to_ec>();
+    if (symbol == electrum_new::symbol())
+        return make_shared<electrum_new>();
+    if (symbol == electrum_to_seed::symbol())
+        return make_shared<electrum_to_seed>();
     if (symbol == fetch_balance::symbol())
         return make_shared<fetch_balance>();
     if (symbol == fetch_header::symbol())
