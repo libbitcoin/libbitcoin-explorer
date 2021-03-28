@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(electrum_new__invoke__es_dictionary_prefix__okay_output)
     command.set_language_option({ "es" });
     command.set_prefix_option({ "standard" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(to_normal_nfkd_form("gráfico codo ámbar insecto verbo cráter celoso entrar tarjeta sala coco frito") + "\n");
+    BX_REQUIRE_OUTPUT("gráfico codo ámbar insecto verbo cráter celoso entrar tarjeta sala coco frito\n");
 }
 
 BOOST_AUTO_TEST_CASE(electrum_new__invoke__32_bytes__okay_output)
