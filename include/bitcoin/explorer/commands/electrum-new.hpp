@@ -158,7 +158,7 @@ public:
         (
             "prefix,p",
             value<explorer::config::electrum>(&option_.prefix),
-            "The electrum seed type identifier to use. Options are 'standard', 'witness', and 'dual' (for two factor authentication), defaults to 'standard'."
+            "The electrum seed type identifier to use. Options are 'standard', 'witness', 'dual' (two factor authentication), 'dual-witness', and 'old', defaults to 'standard'."
         )
         (
             "language,l",

@@ -259,7 +259,7 @@
   </command>
 
   <command symbol="electrum-new" output="string" multipleX="true" category="WALLET" description="Create a mnemonic seed (Electrum) from entropy. WARNING: mnemonic should be created from properly generated entropy.">
-    <option name="prefix" type="electrum" description="The electrum seed type identifier to use. Options are 'standard', 'witness', and 'dual' (for two factor authentication), defaults to 'standard'." />
+    <option name="prefix" type="electrum" description="The electrum seed type identifier to use. Options are 'standard', 'witness', 'dual' (two factor authentication), 'dual-witness', and 'old', defaults to 'standard'." />
     <option name="language" type="language" description="The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'pt', 'ja', 'zh_Hans' and 'any', defaults to 'en'." />
     <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy from which the mnemonic is created. If not specified the entropy is read from STDIN." />
     <define name="BX_ELECTRUM_NEW_INVALID_SEED" value="The seed size is not supported." />

@@ -50,7 +50,7 @@ public:
      * Initialization constructor.
      * @param[in]  electrum seed types  The value to initialize with.
      */
-    electrum(wallet::electrum::seed& electrum);
+    electrum(wallet::electrum::seed_prefix& electrum);
 
     /**
      * Copy constructor.
@@ -62,7 +62,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator wallet::electrum::seed() const;
+    operator wallet::electrum::seed_prefix() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -87,7 +87,7 @@ private:
     /**
      * The state of this object.
      */
-    wallet::electrum::seed value_;
+    wallet::electrum::seed_prefix value_;
 };
 
 } // namespace config
