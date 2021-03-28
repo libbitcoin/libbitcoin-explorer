@@ -74,6 +74,8 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/ek-public.cpp \
     src/commands/ek-to-address.cpp \
     src/commands/ek-to-ec.cpp \
+    src/commands/electrum_new.cpp \
+    src/commands/electrum_to_seed.cpp \
     src/commands/fetch-balance.cpp \
     src/commands/fetch-header.cpp \
     src/commands/fetch-height.cpp \
@@ -139,6 +141,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/config/byte.cpp \
     src/config/cert_key.cpp \
     src/config/ec_private.cpp \
+    src/config/electrum.cpp \
     src/config/encoding.cpp \
     src/config/endorsement.cpp \
     src/config/hashtype.cpp \
@@ -214,6 +217,8 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/ek-public.cpp \
     test/commands/ek-to-address.cpp \
     test/commands/ek-to-ec.cpp \
+    test/commands/electrum_new.cpp \
+    test/commands/electrum_to_seed.cpp \
     test/commands/fetch-balance.cpp \
     test/commands/fetch-header.cpp \
     test/commands/fetch-height.cpp \
@@ -330,6 +335,8 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/ek-public.hpp \
     include/bitcoin/explorer/commands/ek-to-address.hpp \
     include/bitcoin/explorer/commands/ek-to-ec.hpp \
+    include/bitcoin/explorer/commands/electrum-new.hpp \
+    include/bitcoin/explorer/commands/electrum-to-seed.hpp \
     include/bitcoin/explorer/commands/fetch-balance.hpp \
     include/bitcoin/explorer/commands/fetch-header.hpp \
     include/bitcoin/explorer/commands/fetch-height.hpp \
@@ -398,6 +405,7 @@ include_bitcoin_explorer_config_HEADERS = \
     include/bitcoin/explorer/config/byte.hpp \
     include/bitcoin/explorer/config/cert_key.hpp \
     include/bitcoin/explorer/config/ec_private.hpp \
+    include/bitcoin/explorer/config/electrum.hpp \
     include/bitcoin/explorer/config/encoding.hpp \
     include/bitcoin/explorer/config/endorsement.hpp \
     include/bitcoin/explorer/config/hashtype.hpp \
