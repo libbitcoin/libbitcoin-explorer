@@ -33,7 +33,6 @@
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/predicate.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/info_parser.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -82,12 +81,12 @@ data_chunk new_seed(size_t bit_length)
 
 string_list numbers_to_strings(const chain::point::indexes& indexes)
 {
-    string_list stringlist;
+    string_list list;
 
     for (const auto index: indexes)
-        stringlist.push_back(std::to_string(index));
+        list.push_back(std::to_string(index));
 
-    return stringlist;
+    return list;
 }
 
 // TODO: switch to binary for raw (primitive) reads in windows.
@@ -109,7 +108,7 @@ name_value_pairs split_pairs(const std::vector<std::string> tokens,
         const auto& left = words[0];
 
         std::string right;
-        if (words.size() > 1)
+        if (words.size() > 1u)
             right = words[1];
 
         list.push_back(std::make_pair(left, right));
@@ -120,18 +119,11 @@ name_value_pairs split_pairs(const std::vector<std::string> tokens,
 
 bool starts_with(const std::string& value, const std::string& prefix)
 {
-    try
-    {
-        return boost::istarts_with(value, prefix);
-    }
-    catch (boost::bad_lexical_cast)
-    {
-        return false;
-    }
+    return bc::starts_with(value.begin(), value.end(), prefix);
 }
 
 // This verifies the checksum.
-bool unwrap(wallet::wrapped_data& data, data_slice wrapped)
+bool unwrap(wallet::wrapped_data& data, const data_slice& wrapped)
 {
     if (!verify_checksum(wrapped))
         return false;
@@ -148,7 +140,7 @@ bool unwrap(wallet::wrapped_data& data, data_slice wrapped)
 // This recalculates the checksum, ignoring what is in data.checksum.
 data_chunk wrap(const wallet::wrapped_data& data)
 {
-    auto bytes = to_chunk(data.version);
+    data_chunk bytes{ data.version };
     extend_data(bytes, data.payload);
     append_checksum(bytes);
     return bytes;
