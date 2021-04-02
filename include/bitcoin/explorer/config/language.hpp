@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_BIP39_LANGUAGE_HPP
-#define BX_BIP39_LANGUAGE_HPP
+#ifndef BX_LANGUAGE_HPP
+#define BX_LANGUAGE_HPP
 
 #include <iostream>
 #include <string>
@@ -48,9 +48,9 @@ public:
 
     /**
      * Initialization constructor.
-     * @param[in]  languages  The value to initialize with.
+     * @param[in]  language  The value to initialize with.
      */
-    language(bc::wallet::dictionary_list& languages);
+    language(const wallet::dictionary& language);
 
     /**
      * Copy constructor.
@@ -62,7 +62,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::wallet::dictionary_list() const;
+    operator const wallet::dictionary&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -87,7 +87,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::wallet::dictionary_list value_;
+    const wallet::dictionary* value_;
 };
 
 } // namespace config
