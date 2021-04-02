@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__electrum_unverified_words__okay_o
     BX_REQUIRE_OUTPUT("363dec0e575b887cfccebee4c84fca5a3a6bed9d0e099c061fa6b85020b031f8fe3636d9af187bf432d451273c625e20f24f651ada41aae2c4ea62d87e9fa44c\n");
 #else
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_ELECTRUM_REQUIRES_ICU "\n");
+    BX_REQUIRE_ERROR(BX_ELECTRUM_TO_SEED_REQUIRES_ICU "\n");
 #endif
 }
 
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__11_words__unsafe_sentence)
     BX_REQUIRE_ERROR(BX_ELECTRUM_TO_SEED_UNSAFE_SENTENCE "\n");
 #else
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_ELECTRUM_REQUIRES_ICU "\n");
+    BX_REQUIRE_ERROR(BX_ELECTRUM_TO_SEED_REQUIRES_ICU "\n");
 #endif
 }
 
@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__12_words__okay_output)
     BX_REQUIRE_OUTPUT("eb095e70f0eb8d24f2cef276c75b136c2ff41eb72a9291eb22ba45d11fbb875a965bd6ae09873543eea98bf3ae05067203cd56388e0978aebc3a511932704d80\n");
 #else
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_ELECTRUM_REQUIRES_ICU "\n");
+    BX_REQUIRE_ERROR(BX_ELECTRUM_TO_SEED_REQUIRES_ICU "\n");
 #endif
 }
 
@@ -92,7 +92,7 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__12_invalid_en_words__invalid_lang
     BX_REQUIRE_ERROR(BX_ELECTRUM_TO_SEED_INVALID_LANGUAGES "\n");
 #else
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_ELECTRUM_REQUIRES_ICU "\n");
+    BX_REQUIRE_ERROR(BX_ELECTRUM_TO_SEED_REQUIRES_ICU "\n");
 #endif
 }
 
@@ -110,7 +110,7 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__12_words_en__okay_output)
     BX_REQUIRE_OUTPUT("eb095e70f0eb8d24f2cef276c75b136c2ff41eb72a9291eb22ba45d11fbb875a965bd6ae09873543eea98bf3ae05067203cd56388e0978aebc3a511932704d80\n");
 #else
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_ELECTRUM_REQUIRES_ICU "\n");
+    BX_REQUIRE_ERROR(BX_ELECTRUM_TO_SEED_REQUIRES_ICU "\n");
 #endif
 }
 
@@ -128,7 +128,7 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__12_en_words_es_ja_en_zh_Hans__oka
     BX_REQUIRE_OUTPUT("eb095e70f0eb8d24f2cef276c75b136c2ff41eb72a9291eb22ba45d11fbb875a965bd6ae09873543eea98bf3ae05067203cd56388e0978aebc3a511932704d80\n");
 #else
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_ELECTRUM_REQUIRES_ICU "\n");
+    BX_REQUIRE_ERROR(BX_ELECTRUM_TO_SEED_REQUIRES_ICU "\n");
 #endif
 }
 
@@ -146,7 +146,7 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__12_en_words_es_ja_zh_Hans__invali
     BX_REQUIRE_ERROR(BX_ELECTRUM_TO_SEED_INVALID_LANGUAGES "\n");
 #else
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_ELECTRUM_REQUIRES_ICU "\n");
+    BX_REQUIRE_ERROR(BX_ELECTRUM_TO_SEED_REQUIRES_ICU "\n");
 #endif
 }
 
