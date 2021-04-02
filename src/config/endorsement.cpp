@@ -46,7 +46,7 @@ static bool decode_endorsement(bc::endorsement& endorsement,
     return true;
 }
 
-static std::string encode_endorsement(data_slice signature)
+static std::string encode_endorsement(const data_slice& signature)
 {
     return encode_base16(signature);
 }
