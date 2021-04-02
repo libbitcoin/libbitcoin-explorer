@@ -106,13 +106,8 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__12_en_words_en__okay_output)
         "legal", "winner", "thank", "year", "wave", "sausage",
         "worth", "useful", "legal", "winner", "thank", "yellow"
     });
-#ifdef WITH_ICU
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("878386efb78845b3355bd15ea4d39ef97d179cb712b77d5c12b6be415fffeffe5f377ba02bf3f8544ab800b955e51fbff09828f682052a20faa6addbbddfb096\n");
-#else
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_MNEMONIC_TO_SEED_PASSPHRASE_REQUIRES_ICU "\n");
-#endif
 }
 
 BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__12_en_words_es_fr_it_cs_pt_ja_ko_zh_Hans_zh_Hant__invalid_languages)
@@ -127,13 +122,8 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__12_en_words_es_fr_it_cs_pt_ja_ko_
         "legal", "winner", "thank", "year", "wave", "sausage",
         "worth", "useful", "legal", "winner", "thank", "yellow"
     });
-#ifdef WITH_ICU
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_MNEMONIC_TO_SEED_INVALID_LANGUAGES "\n");
-#else
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_MNEMONIC_TO_SEED_PASSPHRASE_REQUIRES_ICU "\n");
-#endif
 }
 
 BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__12_en_words_es_fr_it_cs_en_pt_ja_ko_zh_Hans_zh_Hant__okay_output)
@@ -148,13 +138,8 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__12_en_words_es_fr_it_cs_en_pt_ja_
         "legal", "winner", "thank", "year", "wave", "sausage",
         "worth", "useful", "legal", "winner", "thank", "yellow"
     });
-#ifdef WITH_ICU
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("878386efb78845b3355bd15ea4d39ef97d179cb712b77d5c12b6be415fffeffe5f377ba02bf3f8544ab800b955e51fbff09828f682052a20faa6addbbddfb096\n");
-#else
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_MNEMONIC_TO_SEED_PASSPHRASE_REQUIRES_ICU "\n");
-#endif
 }
 
 // Various passphrases.
