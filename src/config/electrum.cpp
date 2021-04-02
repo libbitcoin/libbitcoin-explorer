@@ -32,7 +32,7 @@ namespace config {
 using namespace bc;
 using namespace po;
 
-static auto electrum_empty = "old";
+////static auto electrum_empty = "old";
 static auto electrum_standard = "standard";
 static auto electrum_witness = "witness";
 static auto electrum_two_factor_authentication = "dual";
@@ -69,11 +69,12 @@ std::istream& operator>>(std::istream& input, electrum& argument)
     std::string text;
     input >> text;
 
-    if (text == electrum_empty)
-    {
-        argument.value_ = seed_prefix::empty;
-    }
-    else if (text == electrum_standard)
+    ////if (text == electrum_empty)
+    ////{
+    ////    argument.value_ = seed_prefix::empty;
+    ////}
+    ////else 
+    if (text == electrum_standard)
     {
         argument.value_ = seed_prefix::standard;
     }
@@ -102,11 +103,12 @@ std::ostream& operator<<(std::ostream& output, const electrum& argument)
     using namespace wallet::electrum;
     std::string text;
 
-    if (argument.value_ == seed_prefix::empty)
-    {
-        text = electrum_empty;
-    }
-    else if (argument.value_ == seed_prefix::standard)
+    ////if (argument.value_ == seed_prefix::empty)
+    ////{
+    ////    text = electrum_empty;
+    ////}
+    ////else 
+    if (argument.value_ == seed_prefix::standard)
     {
         text = electrum_standard;
     }
