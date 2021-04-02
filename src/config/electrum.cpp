@@ -32,12 +32,14 @@ namespace config {
 using namespace bc;
 using namespace po;
 
+////static auto electrum_empty = "old";
 static auto electrum_standard = "standard";
 static auto electrum_witness = "witness";
 static auto electrum_two_factor_authentication = "dual";
+static auto electrum_two_factor_authentication_witness = "dual-witness";
 
 electrum::electrum()
-  : value_(wallet::electrum::seed::standard)
+  : value_(wallet::electrum::seed_prefix::standard)
 {
 }
 
@@ -46,7 +48,7 @@ electrum::electrum(const std::string& token)
     std::stringstream(token) >> *this;
 }
 
-electrum::electrum(wallet::electrum::seed& electrum)
+electrum::electrum(wallet::electrum::seed_prefix& electrum)
   : value_(electrum)
 {
 }
@@ -56,27 +58,37 @@ electrum::electrum(const electrum& other)
 {
 }
 
-electrum::operator wallet::electrum::seed() const
+electrum::operator wallet::electrum::seed_prefix() const
 {
     return value_;
 }
 
 std::istream& operator>>(std::istream& input, electrum& argument)
 {
+    using namespace wallet::electrum;
     std::string text;
     input >> text;
 
+    ////if (text == electrum_empty)
+    ////{
+    ////    argument.value_ = seed_prefix::empty;
+    ////}
+    ////else 
     if (text == electrum_standard)
     {
-        argument.value_ = wallet::electrum::seed::standard;
+        argument.value_ = seed_prefix::standard;
     }
     else if (text == electrum_witness)
     {
-        argument.value_ = wallet::electrum::seed::witness;
+        argument.value_ = seed_prefix::witness;
     }
     else if (text == electrum_two_factor_authentication)
     {
-        argument.value_ = wallet::electrum::seed::two_factor_authentication;
+        argument.value_ = seed_prefix::two_factor_authentication;
+    }
+    else if (text == electrum_two_factor_authentication_witness)
+    {
+        argument.value_ = seed_prefix::two_factor_authentication_witness;
     }
     else
     {
@@ -88,19 +100,29 @@ std::istream& operator>>(std::istream& input, electrum& argument)
 
 std::ostream& operator<<(std::ostream& output, const electrum& argument)
 {
+    using namespace wallet::electrum;
     std::string text;
 
-    if (argument.value_ == wallet::electrum::seed::standard)
+    ////if (argument.value_ == seed_prefix::empty)
+    ////{
+    ////    text = electrum_empty;
+    ////}
+    ////else 
+    if (argument.value_ == seed_prefix::standard)
     {
         text = electrum_standard;
     }
-    else if (argument.value_ == wallet::electrum::seed::witness)
+    else if (argument.value_ == seed_prefix::witness)
     {
         text = electrum_witness;
     }
-    else if (argument.value_ == wallet::electrum::seed::two_factor_authentication)
+    else if (argument.value_ == seed_prefix::two_factor_authentication)
     {
         text = electrum_two_factor_authentication;
+    }
+    else if (argument.value_ == seed_prefix::two_factor_authentication_witness)
+    {
+        text = electrum_two_factor_authentication_witness;
     }
     else
     {

@@ -142,11 +142,21 @@ std::string serialize(const Value& value, const std::string& fallback="");
  * Serialize the specified satoshi item to binary data.
  * The data will be resized as necessary to fit the item.
  * @param       <Item>  The type of the item.
- * @param[out] data     The binary data.
  * @param[in]  item     The satoshi item.
+ * @return              The binary data.
  */
 template <typename Item>
 data_chunk serialize_satoshi_item(const Item& item);
+
+/**
+ * Project a vector of config classes to a vector of dictionary pointers.
+ * @param     Configuration   The config dictionary type.
+ * @param[in] configurations  The config dictionary.
+ * @return                    The projected collection.
+ */
+template <typename Configuration>
+wallet::dictionary_list to_lexicon(
+    const std::vector<Configuration>& configurations);
 
 /**
  * Write a value to a file in the specified path and otherwise to the
@@ -197,13 +207,6 @@ BCX_API string_list numbers_to_strings(const chain::point::indexes& indexes);
 BCX_API std::string read_stream(std::istream& stream);
 
 /**
- * Convert any script to an opcode::raw_data script (e.g. for input signing).
- * @param[in]  script  The script to convert.
- * @return             The data script.
- */
-BCX_API chain::script script_to_raw_data_script(const chain::script& script);
-
-/**
  * Split a list of tokens with delimiters into a name-value pair list.
  * @param[in]  tokens     The string to test
  * @param[in]  delimiter  The delimiter, defualts to ":".
@@ -226,7 +229,7 @@ BCX_API bool starts_with(const std::string& value, const std::string& prefix);
  * @param[in]  wrapped  The wrapped data to unwrap.
  * @return              True if input checksum validates.
  */
-BCX_API bool unwrap(wallet::wrapped_data& data, data_slice wrapped);
+BCX_API bool unwrap(wallet::wrapped_data& data, const data_slice& wrapped);
 
 /**
  * Wrap arbitrary data.

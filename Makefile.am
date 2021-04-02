@@ -140,6 +140,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/config/btc.cpp \
     src/config/byte.cpp \
     src/config/cert_key.cpp \
+    src/config/dictionary.cpp \
     src/config/ec_private.cpp \
     src/config/electrum.cpp \
     src/config/encoding.cpp \
@@ -404,6 +405,7 @@ include_bitcoin_explorer_config_HEADERS = \
     include/bitcoin/explorer/config/btc.hpp \
     include/bitcoin/explorer/config/byte.hpp \
     include/bitcoin/explorer/config/cert_key.hpp \
+    include/bitcoin/explorer/config/dictionary.hpp \
     include/bitcoin/explorer/config/ec_private.hpp \
     include/bitcoin/explorer/config/electrum.hpp \
     include/bitcoin/explorer/config/encoding.hpp \

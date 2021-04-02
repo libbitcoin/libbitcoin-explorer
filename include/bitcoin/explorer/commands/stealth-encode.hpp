@@ -33,6 +33,7 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/dictionary.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
@@ -64,7 +65,7 @@ namespace commands {
 #define BX_STEALTH_ENCODE_SIGNATURES_OVERFLOW \
     "The number of signatures is greater than the number of SPEND_PUBKEYs."
 #define BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED \
-    "WARNING: multiple signature stealth transactions are not yet fully supported."
+    "Multiple signature stealth transactions are not supported."
 
 /**
  * Class to implement the stealth-encode command.

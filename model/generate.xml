@@ -259,17 +259,21 @@
   </command>
 
   <command symbol="electrum-new" output="string" multipleX="true" category="WALLET" description="Create a mnemonic seed (Electrum) from entropy. WARNING: mnemonic should be created from properly generated entropy.">
-    <option name="prefix" type="electrum" description="The electrum seed type identifier to use. Options are 'standard', 'witness', and 'dual' (for two factor authentication), defaults to 'standard'." />
-    <option name="language" type="language" description="The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'pt', 'ja', 'zh_Hans' and 'any', defaults to 'en'." />
-    <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy from which the mnemonic is created. If not specified the entropy is read from STDIN." />
-    <define name="BX_ELECTRUM_NEW_INVALID_SEED" value="The seed size is not supported." />
-    <define name="BX_ELECTRUM_REQUIRES_ICU" value="The command requires an ICU build." />
+    <option name="language" type="dictionary" description="The language identifier of the mnemonic dictionary. Options are 'en', 'es', 'ja', and 'zh_Hans', defaults to 'en'." />
+    <option name="version" type="electrum" description="The electrum seed type identifier. Options are 'standard', 'witness', 'dual' (two factor authentication), and 'dual-witness', defaults to 'standard'." />
+    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy of at least 17 bytes from which the mnemonic is created. If not specified the entropy is read from STDIN." />
+    <define name="BX_ELECTRUM_NEW_REQUIRES_ICU" value="The command requires an ICU build." />
+    <define name="BX_ELECTRUM_NEW_UNSAFE_ENTROPY" value="The entropy size must be at least 17 bytes." />
   </command>
 
   <command symbol="electrum-to-seed" output="base16" category="WALLET" description="Convert a mnemonic seed (Electrum) to its numeric representation.">
-     <option name="passphrase" type="string" description="An optional passphrase for converting the mnemonic to a seed." />
-    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of words that that make up the mnemonic. If not specified the words are read from STDIN." />
-    <define name="BX_ELECTRUM_TO_SEED_REQUIRES_ICU" value="The passphrase option requires an ICU build." />
+    <option name="language" type="dictionary" multiple="true" description="The optional language identifiers of mnemonic dictionaries against which to validate. Options are 'en', 'es', 'ja', and 'zh_Hans', defaults to none. Multiple tokens must be quoted." />
+    <option name="passphrase" type="string" description="An optional passphrase for converting the mnemonic to a seed." />
+    <option name="version" type="electrum" description="The electrum seed type identifier to use. Options are 'standard', 'witness', 'dual' (two factor authentication), and 'dual-witness', defaults to 'standard'." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="At least 12 words that that make up the mnemonic. If not specified the words are read from STDIN." />
+    <define name="BX_ELECTRUM_TO_SEED_INVALID_LANGUAGES" value="The specified words are not a valid mnemonic in any specified dictionary." />
+    <define name="BX_ELECTRUM_TO_SEED_REQUIRES_ICU" value="The passphrase option requires an ICU build." /> 
+    <define name="BX_ELECTRUM_TO_SEED_UNSAFE_SENTENCE" value="The word count must be at least 12." />
   </command>
 
   <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
@@ -422,19 +426,20 @@
   </command>
 
   <command symbol="mnemonic-new" output="string" multipleX="true" category="WALLET" description="Create a mnemonic seed (BIP39) from entropy. WARNING: mnemonic should be created from properly generated entropy.">
-    <option name="language" type="language" description="The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'fr', 'it', 'ja', 'cs', 'ru', 'uk', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'." />
-    <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy from which the mnemonic is created. The length must be evenly divisible by 32 bits. If not specified the entropy is read from STDIN." />
-    <define name="BX_EC_MNEMONIC_NEW_INVALID_ENTROPY" value="The seed length in bytes is not evenly divisible by 32 bits." />
+    <option name="language" type="language" description="The language identifier of the mnemonic dictionary. Options are 'en', 'es', 'fr', 'it', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', and 'zh_Hant', defaults to 'en'." />
+    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy of at least 17 bytes and evenly divisible by 4 from which the mnemonic is created. If not specified the entropy is read from STDIN." />
+    <define name="BX_MNEMONIC_NEW_INVALID_ENTROPY" value="The entropy size in bytes must be evenly divisible 4." />
+    <define name="BX_MNEMONIC_NEW_UNSAFE_ENTROPY" value="The entropy size must be at least 16 bytes." />
   </command>
 
   <command symbol="mnemonic-to-seed" output="base16" category="WALLET" description="Convert a mnemonic seed (BIP39) to its numeric representation.">
-    <option name="language" type="language" description="The language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'fr', 'it', 'ja', 'cs', 'ru', 'uk', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'any'." />
+    <option name="language" type="language" multiple="true" description="The optional language identifiers of mnemonic dictionaries against which to validate. Options are 'en', 'es', 'fr', 'it', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', and 'zh_Hant', defaults to none. Multiple tokens must be quoted." />
     <option name="passphrase" type="string" description="An optional passphrase for converting the mnemonic to a seed." />
-    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of words that that make up the mnemonic. If not specified the words are read from STDIN." />
-    <define name="BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE" value="The number of words must be divisible by 3." />
-    <define name="BX_EC_MNEMONIC_TO_SEED_PASSPHRASE_UNSUPPORTED" value="The passphrase option requires an ICU build." />
-    <define name="BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE" value="The specified words are not a valid mnemonic in the specified dictionary." />
-    <define name="BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES" value="WARNING: The specified words are not a valid mnemonic in any supported dictionary." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="At least 12 words evenly disible by 3 that that make up the mnemonic. If not specified the words are read from STDIN." />
+    <define name="BX_MNEMONIC_TO_SEED_INVALID_LANGUAGES" value="The specified words are not a valid mnemonic in any specified dictionary." />
+    <define name="BX_MNEMONIC_TO_SEED_INVALID_SENTENCE" value="The word count must be evenly divisible by 3." />
+    <define name="BX_MNEMONIC_TO_SEED_PASSPHRASE_REQUIRES_ICU" value="The passphrase option requires an ICU build." />
+    <define name="BX_MNEMONIC_TO_SEED_UNSAFE_SENTENCE" value="The word count must be at least 12." />
   </command>
 
   <command symbol="qrcode" category="WALLET" output="raw" description="Create a QRCODE image file for a payment address.">
@@ -524,7 +529,7 @@
     <argument name="SPEND_PUBKEY" limit="-1" type="ec_public" description="The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY." />
     <define name="BX_STEALTH_ENCODE_FILTER_TOO_LONG" value="The filter is limited to 32 bits." />
     <define name="BX_STEALTH_ENCODE_SIGNATURES_OVERFLOW" value="The number of signatures is greater than the number of SPEND_PUBKEYs." />
-    <define name="BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED" value="WARNING: multiple signature stealth transactions are not yet fully supported." />
+    <define name="BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED" value="Multiple signature stealth transactions are not supported." />
   </command>
   
   <command symbol="stealth-public" formerly="stealth-uncover" output="ec_public" category="STEALTH" description="Derive the stealth public key necessary to address and to identify a stealth payment.">
@@ -566,8 +571,8 @@
     <option name="script_version" type="byte" configuration="wallet.pay_to_script_hash_version" description="The pay-to-script-hash payment address version, defaults to 5. This is used to differentiate output addresses." />
     <option name="lock_time" type="uint32_t" description="The transaction lock time." />
     <option name="version" type="uint32_t" configuration="wallet.transaction_version" description="The transaction version, defaults to 1." />
-    <option name="input" multiple="true" type="input" description="The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value." />
-    <option name="output" multiple="true" type="output" description="The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 64 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs." />
+    <option name="input" type="input" multiple="true" description="The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value." />
+    <option name="output" type="output" multiple="true" description="The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 64 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs." />
     <define name="BX_TX_ENCODE_INVALID_OUTPUT" value="An output is not valid." />
     <define name="BX_TX_ENCODE_LOCKTIME_CONFLICT" value="The specified lock time is ineffective because all sequences are set to the maximum value." />
   </command>

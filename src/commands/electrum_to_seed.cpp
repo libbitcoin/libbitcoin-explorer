@@ -18,6 +18,7 @@
  */
 #include <bitcoin/explorer/commands/electrum-to-seed.hpp>
 
+#include <functional>
 #include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -25,32 +26,47 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-
 using namespace bc;
 using namespace bc::config;
 using namespace bc::wallet;
 
+// Limit seed creation to 12 words of entropy.
+constexpr size_t minimum_safe_words = 12;
+
 console_result electrum_to_seed::invoke(std::ostream& output,
     std::ostream& error)
 {
-#ifdef WITH_ICU
+#ifndef WITH_ICU
+    error << BX_ELECTRUM_TO_SEED_REQUIRES_ICU << std::endl;
+    return console_result::failure;
+#else
+
     // Bound parameters.
+    const auto& dictionaries = get_languages_option();
     const auto& passphrase = get_passphrase_option();
+    const auto prefix = get_version_option();
     const auto& words = get_words_argument();
 
-    // Decoding requires ICU normalization.
-    if (passphrase.empty())
-        output << base16(electrum::decode_mnemonic(words)) << std::endl;
-    else
-        output << base16(electrum::decode_mnemonic(words, passphrase))
-            << std::endl;
+    if (words.size() < minimum_safe_words)
+    {
+        error << BX_ELECTRUM_TO_SEED_UNSAFE_SENTENCE << std::endl;
+        return console_result::failure;
+    }
 
+    // Any word set works regardless of language validation.
+    if (!dictionaries.empty() &&
+        !electrum::validate_mnemonic(words, to_lexicon(dictionaries), prefix))
+    {
+        error << BX_ELECTRUM_TO_SEED_INVALID_LANGUAGES << std::endl;
+        return console_result::failure;
+    }
+
+    // Validation (above) and decoding requires ICU normalization.
+    const auto seed = electrum::decode_mnemonic(words, passphrase);
+
+    output << base16(seed) << std::endl;
     return console_result::okay;
-#else
-    error << BX_ELECTRUM_REQUIRES_ICU << std::endl;
-    return console_result::failure;
 #endif
-
 }
 
 } //namespace commands

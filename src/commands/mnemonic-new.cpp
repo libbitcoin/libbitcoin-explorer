@@ -27,24 +27,30 @@ namespace explorer {
 namespace commands {
 using namespace bc::wallet;
 
+// Minimum entropy required to create a 12 word seed.
+constexpr size_t minimum_safe_entropy_size = 16;
+
 console_result mnemonic_new::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const dictionary_list& language = get_language_option();
-    const data_chunk& entropy = get_seed_argument();
+    const dictionary& language = get_language_option();
+    const data_chunk& entropy = get_entropy_argument();
 
-    const auto entropy_size = entropy.size();
-
-    if ((entropy_size % bc::wallet::mnemonic_seed_multiple) != 0)
+    if (entropy.size() < minimum_safe_entropy_size)
     {
-        error << BX_EC_MNEMONIC_NEW_INVALID_ENTROPY << std::endl;
+        error << BX_MNEMONIC_NEW_UNSAFE_ENTROPY << std::endl;
         return console_result::failure;
     }
 
-    // If 'any' default to first ('en'), otherwise the one specified.
-    const auto dictionary = language.front();
-    const auto words = create_mnemonic(entropy, *dictionary);
+    if ((entropy.size() % mnemonic_seed_multiple) != 0u)
+    {
+        error << BX_MNEMONIC_NEW_INVALID_ENTROPY << std::endl;
+        return console_result::failure;
+    }
+
+    // Language parser defaults to 'en'.
+    const auto words = wallet::create_mnemonic(entropy, language);
 
     output << join(words) << std::endl;
     return console_result::okay;

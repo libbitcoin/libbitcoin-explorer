@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2019 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin.
  *
@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_ELECTRUM_HPP
-#define BX_ELECTRUM_HPP
+#ifndef BX_DICTIONARY_HPP
+#define BX_DICTIONARY_HPP
 
 #include <iostream>
 #include <string>
@@ -29,40 +29,40 @@ namespace explorer {
 namespace config {
 
 /**
- * Serialization helper to convert between electrum seed prefix and string.
+ * Serialization helper to convert between dictionary and string.
  */
-class BCX_API electrum
+class BCX_API dictionary
 {
 public:
 
     /**
      * Default constructor.
      */
-    electrum();
+    dictionary();
 
     /**
      * Initialization constructor.
      * @param[in]  token  The value to initialize with.
      */
-    electrum(const std::string& token);
+    dictionary(const std::string& token);
 
     /**
      * Initialization constructor.
-     * @param[in]  electrum seed types  The value to initialize with.
+     * @param[in]  languages  The value to initialize with.
      */
-    electrum(wallet::electrum::seed_prefix& electrum);
+    dictionary(const wallet::dictionary& dictionary);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    electrum(const electrum& other);
+    dictionary(const dictionary& other);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator wallet::electrum::seed_prefix() const;
+    operator const wallet::dictionary&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -71,7 +71,7 @@ public:
      * @return                The input stream reference.
      */
     friend std::istream& operator>>(std::istream& input,
-        electrum& argument);
+        dictionary& argument);
 
     /**
      * Overload stream out.
@@ -80,14 +80,14 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output,
-        const electrum& argument);
+        const dictionary& argument);
 
 private:
 
     /**
      * The state of this object.
      */
-    wallet::electrum::seed_prefix value_;
+    const wallet::dictionary* value_;
 };
 
 } // namespace config

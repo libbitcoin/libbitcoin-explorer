@@ -34,11 +34,9 @@
 #include <tuple>
 #include <vector>
 #include <boost/algorithm/string.hpp>
-#include <boost/bind.hpp>
+#include <boost/any.hpp>
 #include <boost/program_options.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/dynamic_bitset/dynamic_bitset.hpp>
-#include <boost/range/algorithm/find_if.hpp>
 #include <boost/lexical_cast.hpp>
 #ifdef _MSC_VER
 #pragma warning(pop)
@@ -84,7 +82,7 @@ void deserialize(std::vector<Value>& collection, const std::string& text,
     bool trim)
 {
     // This had problems with the inclusion of the ideographic (CJK) space
-    // (0xe3,0x80, 0x80). Need to infuse the local in bc::split().
+    // (0xe3,0x80, 0x80). Need to infuse the locale in bc::split().
     const auto tokens = split(text, " \n\r\t");
     for (const auto& token: tokens)
     {
@@ -144,6 +142,18 @@ data_chunk serialize_satoshi_item(const Item& item)
 {
     return item.to_data();
 }
+
+template <typename Configuration>
+wallet::dictionary_list to_lexicon(
+    const std::vector<Configuration>& configurations)
+{
+    wallet::dictionary_list dictionaries;
+    for (const auto& configuration: configurations)
+        dictionaries.push_back(
+            std::reference_wrapper<const wallet::dictionary>(configuration));
+
+    return dictionaries;
+};
 
 template <typename Instance>
 void write_file(std::ostream& output, const std::string& path,

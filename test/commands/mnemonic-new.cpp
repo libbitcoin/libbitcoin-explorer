@@ -24,142 +24,178 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(mnemonic_new__invoke)
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__64_bits__okay_output)
+// TODO: add all Trezor vectors.
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__trezor__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
-    command.set_seed_argument({ "baadf00dbaadf00d" });
+    command.set_entropy_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant alone\n");
+    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__136_bits__failure_error)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__trezor_en__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00dff" });
+    command.set_language_option({ "en" });
+    command.set_entropy_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
+}
+
+// Various entropy sizes.
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__0_bytes__unsafe_entropy)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_entropy_argument({ "" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_MNEMONIC_NEW_INVALID_ENTROPY "\n");
+    BX_REQUIRE_ERROR(BX_MNEMONIC_NEW_UNSAFE_ENTROPY "\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__1_byte__unsafe_entropy)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    command.set_entropy_argument({ "42" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_MNEMONIC_NEW_UNSAFE_ENTROPY "\n");
+}
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__2_bytes__unsafe_entropy)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_entropy_argument({ "baad" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_MNEMONIC_NEW_UNSAFE_ENTROPY "\n");
+}
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__4_bytes__unsafe_entropy)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_entropy_argument({ "baadf00d" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_MNEMONIC_NEW_UNSAFE_ENTROPY "\n");
+}
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__8_bytes__unsafe_entropy)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_entropy_argument({ "baadf00dbaadf00d" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_MNEMONIC_NEW_UNSAFE_ENTROPY "\n");
+}
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__16_bytes__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant almost turkey safe asset step lab boy\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__standard_default__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__17_bytes__failure_error)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
-    command.set_seed_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d42" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_MNEMONIC_NEW_INVALID_ENTROPY "\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__standard_en__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__32_bytes__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00dbaadf00dbaadf00dbaadf00dbaadf00d" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant almost turkey safe asset step lab bread print way dad fiber useless horse problem theme sweet finger scan reject\n");
+}
+
+// Various languages.
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__16_bytes_en__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
     command.set_language_option({ "en" });
-    command.set_seed_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
-}
-
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__standard_all__okay_output)
-{
-    BX_DECLARE_COMMAND(mnemonic_new);
-    command.set_language_option({ "any" });
-    command.set_seed_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
-}
-
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_en__okay_output)
-{
-    BX_DECLARE_COMMAND(mnemonic_new);
-    command.set_language_option({ "en" });
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant almost turkey safe asset step lab boy\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_es__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__16_bytes_es__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
     command.set_language_option({ "es" });
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("previo humilde actuar jarabe tabique ahorro tope pulpo anís señal lavar bahía\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_fr__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__16_bytes_fr__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
     command.set_language_option({ "fr" });
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("placard garantir acerbe gratuit soluble affaire théorie ponctuel anguleux salon horrible bateau\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_it__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__16_bytes_it__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
     command.set_language_option({ "it" });
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("rizoma lastra affabile lucidato sultano algebra tramonto rupe annuncio sonda mega bavosa\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_ja__okay_output)
-{
-    BX_DECLARE_COMMAND(mnemonic_new);
-    command.set_language_option({ "ja" });
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("ねんかん すずしい あひる せたけ ほとんど あんまり めいあん のべる いなか ふとる ぜんりゃく えいせい\n");
-}
-
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_cs__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__16_bytes_cs__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
     command.set_language_option({ "cs" });
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("semeno mudrc babka nasekat uvolnit bazuka vydra skanzen broskev trefit nuget datel\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_ru__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__16_bytes_pt__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
-    command.set_language_option({ "ru" });
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    command.set_language_option({ "pt" });
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("ремарка кривой айсберг лауреат тротуар амнезия фонтан рояль бакалея сухой магазин бунт\n");
+    BX_REQUIRE_OUTPUT("pesquisa gabinete acetona glorioso sirene adorar tesoura plaqueta alucinar roupa hipismo auditor\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_uk__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__16_bytes_ja__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
-    command.set_language_option({ "uk" });
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    command.set_language_option({ "ja" });
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("сержант ледачий актив люкс фах арена цемент слон бесіда тротуар мандри верба" "\n");
+    BX_REQUIRE_OUTPUT("ねんかん すずしい あひる せたけ ほとんど あんまり めいあん のべる いなか ふとる ぜんりゃく えいせい\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_zh_Hans__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__16_bytes_ko__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_language_option({ "ko" });
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("전체 손실 갈비 숫자 큰길 개별 프랑스 정보 계획 초등학생 식빵 귀국\n");
+}
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__16_bytes_zh_Hans__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
     command.set_language_option({ "zh_Hans" });
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("博 肉 地 危 惜 多 陪 荒 因 患 伊 基\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_zh_Hant__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__16_bytes_zh_Hant__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
     command.set_language_option({ "zh_Hant" });
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("博 肉 地 危 惜 多 陪 荒 因 患 伊 基\n");
 }

@@ -33,6 +33,7 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/dictionary.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
@@ -59,8 +60,12 @@ namespace commands {
 /**
  * Various localizable strings.
  */
+#define BX_ELECTRUM_TO_SEED_INVALID_LANGUAGES \
+    "The specified words are not a valid mnemonic in any specified dictionary."
 #define BX_ELECTRUM_TO_SEED_REQUIRES_ICU \
     "The passphrase option requires an ICU build."
+#define BX_ELECTRUM_TO_SEED_UNSAFE_SENTENCE \
+    "The word count must be at least 12."
 
 /**
  * Class to implement the electrum-to-seed command.
@@ -154,14 +159,24 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "language,l",
+            value<std::vector<explorer::config::dictionary>>(&option_.languages),
+            "The optional language identifiers of mnemonic dictionaries against which to validate. Options are 'en', 'es', 'ja', and 'zh_Hans', defaults to none. Multiple tokens must be quoted."
+        )
+        (
             "passphrase,p",
             value<std::string>(&option_.passphrase),
             "An optional passphrase for converting the mnemonic to a seed."
         )
         (
+            "version,v",
+            value<explorer::config::electrum>(&option_.version),
+            "The electrum seed type identifier to use. Options are 'standard', 'witness', 'dual' (two factor authentication), and 'dual-witness', defaults to 'standard'."
+        )
+        (
             "WORD",
             value<std::vector<std::string>>(&argument_.words),
-            "The set of words that that make up the mnemonic. If not specified the words are read from STDIN."
+            "At least 12 words that that make up the mnemonic. If not specified the words are read from STDIN."
         );
 
         return options;
@@ -204,6 +219,23 @@ public:
     }
 
     /**
+     * Get the value of the language options.
+     */
+    virtual std::vector<explorer::config::dictionary>& get_languages_option()
+    {
+        return option_.languages;
+    }
+
+    /**
+     * Set the value of the language options.
+     */
+    virtual void set_languages_option(
+        const std::vector<explorer::config::dictionary>& value)
+    {
+        option_.languages = value;
+    }
+
+    /**
      * Get the value of the passphrase option.
      */
     virtual std::string& get_passphrase_option()
@@ -218,6 +250,23 @@ public:
         const std::string& value)
     {
         option_.passphrase = value;
+    }
+
+    /**
+     * Get the value of the version option.
+     */
+    virtual explorer::config::electrum& get_version_option()
+    {
+        return option_.version;
+    }
+
+    /**
+     * Set the value of the version option.
+     */
+    virtual void set_version_option(
+        const explorer::config::electrum& value)
+    {
+        option_.version = value;
     }
 
 private:
@@ -245,11 +294,15 @@ private:
     struct option
     {
         option()
-          : passphrase()
+          : languages(),
+            passphrase(),
+            version()
         {
         }
 
+        std::vector<explorer::config::dictionary> languages;
         std::string passphrase;
+        explorer::config::electrum version;
     } option_;
 };
 
