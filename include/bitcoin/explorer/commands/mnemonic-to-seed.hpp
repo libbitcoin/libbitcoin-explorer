@@ -33,6 +33,7 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/dictionary.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
@@ -59,14 +60,14 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE \
-    "The number of words must be divisible by 3."
-#define BX_EC_MNEMONIC_TO_SEED_PASSPHRASE_UNSUPPORTED \
+#define BX_MNEMONIC_TO_SEED_INVALID_LANGUAGES \
+    "The specified words are not a valid mnemonic in any specified dictionary."
+#define BX_MNEMONIC_TO_SEED_INVALID_SENTENCE \
+    "The word count must be evenly divisible by 3."
+#define BX_MNEMONIC_TO_SEED_PASSPHRASE_REQUIRES_ICU \
     "The passphrase option requires an ICU build."
-#define BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE \
-    "The specified words are not a valid mnemonic in the specified dictionary."
-#define BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES \
-    "WARNING: The specified words are not a valid mnemonic in any supported dictionary."
+#define BX_MNEMONIC_TO_SEED_UNSAFE_SENTENCE \
+    "The word count must be at least 12."
 
 /**
  * Class to implement the mnemonic-to-seed command.
@@ -161,8 +162,8 @@ public:
         )
         (
             "language,l",
-            value<explorer::config::language>(&option_.language),
-            "The language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'fr', 'it', 'ja', 'cs', 'ru', 'uk', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'any'."
+            value<std::vector<explorer::config::language>>(&option_.languages),
+            "The optional language identifiers of mnemonic dictionaries against which to validate. Options are 'en', 'es', 'fr', 'it', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', and 'zh_Hant', defaults to none. Multiple tokens must be quoted."
         )
         (
             "passphrase,p",
@@ -172,7 +173,7 @@ public:
         (
             "WORD",
             value<std::vector<std::string>>(&argument_.words),
-            "The set of words that that make up the mnemonic. If not specified the words are read from STDIN."
+            "At least 12 words evenly disible by 3 that that make up the mnemonic. If not specified the words are read from STDIN."
         );
 
         return options;
@@ -215,20 +216,20 @@ public:
     }
 
     /**
-     * Get the value of the language option.
+     * Get the value of the language options.
      */
-    virtual explorer::config::language& get_language_option()
+    virtual std::vector<explorer::config::language>& get_languages_option()
     {
-        return option_.language;
+        return option_.languages;
     }
 
     /**
-     * Set the value of the language option.
+     * Set the value of the language options.
      */
-    virtual void set_language_option(
-        const explorer::config::language& value)
+    virtual void set_languages_option(
+        const std::vector<explorer::config::language>& value)
     {
-        option_.language = value;
+        option_.languages = value;
     }
 
     /**
@@ -273,12 +274,12 @@ private:
     struct option
     {
         option()
-          : language(),
+          : languages(),
             passphrase()
         {
         }
 
-        explorer::config::language language;
+        std::vector<explorer::config::language> languages;
         std::string passphrase;
     } option_;
 };

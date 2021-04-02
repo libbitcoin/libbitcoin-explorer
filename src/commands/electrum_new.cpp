@@ -25,46 +25,35 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-
 using namespace bc;
 using namespace bc::wallet;
 
+// Minimum entropy required to create a 12 word seed.
+constexpr size_t twelve_word_minimum_entropy_size = 17;
+
 console_result electrum_new::invoke(std::ostream& output, std::ostream& error)
 {
-#ifdef WITH_ICU
-    // Requires a seed of at least 17 bytes (136 bits).
-    static const size_t minimum_electrum_words = 12;
-
+#ifndef WITH_ICU
+    error << BX_ELECTRUM_NEW_REQUIRES_ICU << std::endl;
+    return console_result::failure;
+#else
     // Bound parameters.
-    const dictionary_list& language = get_language_option();
-    const data_chunk& seed = get_seed_argument();
-    const auto prefix = get_prefix_option();
+    const dictionary& language = get_language_option();
+    const auto prefix = get_version_option();
+    const data_chunk& entropy = get_entropy_argument();
 
-    // trunc(log2(2048)) = 11
-    const auto word_bits = static_cast<size_t>(std::log2(dictionary_size));
-
-    // 17 * 8 = 136
-    const auto seed_bits = seed.size() * byte_bits;
-
-    // 136 / 11 = 12
-    const auto words = seed_bits / word_bits;
-
-    if (words < minimum_electrum_words)
+    if (entropy.size() < twelve_word_minimum_entropy_size)
     {
-        error << BX_ELECTRUM_NEW_INVALID_SEED << std::endl;
+        error << BX_ELECTRUM_NEW_UNSAFE_ENTROPY << std::endl;
         return console_result::failure;
     }
 
-    // If 'any' default to first ('en'), otherwise the one specified.
-    const auto dictionary = language.front();
-
-    auto mnemonic = electrum::create_mnemonic(seed, *dictionary, prefix);
+    // Language parser defaults to 'en'.
+    // Creation requires ICU normalization.
+    const auto mnemonic = electrum::create_mnemonic(entropy, language, prefix);
 
     output << join(mnemonic) << std::endl;
     return console_result::okay;
-#else
-    error << BX_ELECTRUM_REQUIRES_ICU << std::endl;
-    return console_result::failure;
 #endif
 }
 

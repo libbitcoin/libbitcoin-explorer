@@ -33,6 +33,7 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/dictionary.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
@@ -59,8 +60,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_MNEMONIC_NEW_INVALID_ENTROPY \
-    "The seed length in bytes is not evenly divisible by 32 bits."
+#define BX_MNEMONIC_NEW_INVALID_ENTROPY \
+    "The entropy size in bytes must be evenly divisible 4."
+#define BX_MNEMONIC_NEW_UNSAFE_ENTROPY \
+    "The entropy size must be at least 16 bytes."
 
 /**
  * Class to implement the mnemonic-new command.
@@ -118,7 +121,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SEED", 1);
+            .add("ENTROPY", 1);
     }
 
 	/**
@@ -130,7 +133,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_seed_argument(), "SEED", variables, input, raw);
+        load_input(get_entropy_argument(), "ENTROPY", variables, input, raw);
     }
 
     /**
@@ -156,12 +159,12 @@ public:
         (
             "language,l",
             value<explorer::config::language>(&option_.language),
-            "The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'fr', 'it', 'ja', 'cs', 'ru', 'uk', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'."
+            "The language identifier of the mnemonic dictionary. Options are 'en', 'es', 'fr', 'it', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', and 'zh_Hant', defaults to 'en'."
         )
         (
-            "SEED",
-            value<bc::config::base16>(&argument_.seed),
-            "The Base16 entropy from which the mnemonic is created. The length must be evenly divisible by 32 bits. If not specified the entropy is read from STDIN."
+            "ENTROPY",
+            value<bc::config::base16>(&argument_.entropy),
+            "The Base16 entropy of at least 17 bytes and evenly divisible by 4 from which the mnemonic is created. If not specified the entropy is read from STDIN."
         );
 
         return options;
@@ -187,20 +190,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SEED argument.
+     * Get the value of the ENTROPY argument.
      */
-    virtual bc::config::base16& get_seed_argument()
+    virtual bc::config::base16& get_entropy_argument()
     {
-        return argument_.seed;
+        return argument_.entropy;
     }
 
     /**
-     * Set the value of the SEED argument.
+     * Set the value of the ENTROPY argument.
      */
-    virtual void set_seed_argument(
+    virtual void set_entropy_argument(
         const bc::config::base16& value)
     {
-        argument_.seed = value;
+        argument_.entropy = value;
     }
 
     /**
@@ -230,11 +233,11 @@ private:
     struct argument
     {
         argument()
-          : seed()
+          : entropy()
         {
         }
 
-        bc::config::base16 seed;
+        bc::config::base16 entropy;
     } argument_;
 
     /**
