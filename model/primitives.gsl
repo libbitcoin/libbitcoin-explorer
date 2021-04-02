@@ -26,6 +26,7 @@ function global.map_type(type)
     my.type_btc = "btc"
     my.type_byte = "byte"
     my.type_cert_key = "cert_key"
+    my.type_dictionary = "dictionary"
     my.type_ec_private = "ec_private"
     my.type_ec_public = "ec_public"
     my.type_ek_private = "ek_private"
@@ -71,6 +72,7 @@ function global.map_type(type)
     my.type_btc_bx = "explorer::config::btc"
     my.type_byte_bx = "explorer::config::byte"
     my.type_cert_key_bx = "explorer::config::cert_key"
+    my.type_dictionary_bx = "explorer::config::dictionary"
     my.type_ec_private_bx = "explorer::config::ec_private"
     my.type_ec_public_bx = "bc::wallet::ec_public"
     my.type_ek_private_bx = "bc::wallet::ek_private"
@@ -127,6 +129,8 @@ function global.map_type(type)
         return my.type_byte_bx
     elsif my.type = my.type_cert_key
         return my.type_cert_key_bx
+    elsif my.type = my.type_dictionary
+        return my.type_dictionary_bx
     elsif my.type = my.type_ec_private
         return my.type_ec_private_bx
     elsif my.type = my.type_ec_public
@@ -269,6 +273,7 @@ endfunction
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/dictionary.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>

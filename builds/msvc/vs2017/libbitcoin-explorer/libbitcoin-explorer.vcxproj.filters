@@ -336,6 +336,9 @@
     <ClCompile Include="..\..\..\..\src\config\cert_key.cpp">
       <Filter>src\config</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\config\dictionary.cpp">
+      <Filter>src\config</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\config\ec_private.cpp">
       <Filter>src\config</Filter>
     </ClCompile>
@@ -705,6 +708,9 @@
       <Filter>include\bitcoin\explorer\config</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\cert_key.hpp">
+      <Filter>include\bitcoin\explorer\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\dictionary.hpp">
       <Filter>include\bitcoin\explorer\config</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\ec_private.hpp">
