@@ -42,15 +42,15 @@ public:
 
     /**
      * Initialization constructor.
-     * @param[in]  token  The value to initialize with.
+     * @param[in]  version  The value to initialize with.
      */
-    electrum(const std::string& token);
+    electrum(const std::string& version);
 
     /**
      * Initialization constructor.
-     * @param[in]  electrum seed types  The value to initialize with.
+     * @param[in]  prefix  The value to initialize with.
      */
-    electrum(system::wallet::electrum::seed& electrum);
+    electrum(system::wallet::electrum::seed_prefix prefix);
 
     /**
      * Copy constructor.
@@ -62,7 +62,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator system::wallet::electrum::seed() const;
+    operator system::wallet::electrum::seed_prefix() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -87,7 +87,7 @@ private:
     /**
      * The state of this object.
      */
-    system::wallet::electrum::seed value_;
+    system::wallet::electrum::seed_prefix value_;
 };
 
 } // namespace config
