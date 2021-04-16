@@ -87,7 +87,7 @@ std::ostream& operator<<(std::ostream& output, const cert_key& argument)
     std::string decoded;
 
     // Z85 is unusual in that it requires four byte alignment.
-    // We have already guarded construction against this, so we can ignore here.
+    // We have already guarded construction against this, so can ignore here.
     /* bool */ encode_base85(decoded, argument.value_);
 
     output << decoded;
