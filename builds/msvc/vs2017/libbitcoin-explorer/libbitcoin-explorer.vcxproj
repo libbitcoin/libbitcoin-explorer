@@ -146,7 +146,6 @@
     <ClCompile Include="..\..\..\..\src\commands\message-validate.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-encode.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\mnemonic-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\put-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\qrcode.cpp" />
@@ -247,6 +246,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-to-address.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-to-ec.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-to-seed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-balance.hpp" />
@@ -283,7 +283,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\message-validate.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-encode.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-to-seed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\put-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\qrcode.hpp" />

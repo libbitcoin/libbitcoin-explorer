@@ -106,6 +106,7 @@
     <ClCompile Include="..\..\..\..\test\commands\ek-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ek-to-address.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ek-to-ec.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\electrum-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp" />
@@ -137,7 +138,6 @@
     <ClCompile Include="..\..\..\..\test\commands\message-validate.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\mnemonic-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\put-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\qrcode.cpp" />

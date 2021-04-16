@@ -62,6 +62,7 @@
 #include <bitcoin/explorer/commands/ek-public.hpp>
 #include <bitcoin/explorer/commands/ek-to-address.hpp>
 #include <bitcoin/explorer/commands/ek-to-ec.hpp>
+#include <bitcoin/explorer/commands/electrum-decode.hpp>
 #include <bitcoin/explorer/commands/electrum-new.hpp>
 #include <bitcoin/explorer/commands/electrum-to-seed.hpp>
 #include <bitcoin/explorer/commands/fetch-balance.hpp>
@@ -98,7 +99,6 @@
 #include <bitcoin/explorer/commands/message-validate.hpp>
 #include <bitcoin/explorer/commands/mnemonic-decode.hpp>
 #include <bitcoin/explorer/commands/mnemonic-encode.hpp>
-#include <bitcoin/explorer/commands/mnemonic-new.hpp>
 #include <bitcoin/explorer/commands/mnemonic-to-seed.hpp>
 #include <bitcoin/explorer/commands/put-tx.hpp>
 #include <bitcoin/explorer/commands/qrcode.hpp>

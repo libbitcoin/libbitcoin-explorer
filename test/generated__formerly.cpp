@@ -128,11 +128,6 @@ BOOST_AUTO_TEST_CASE(generated__formerly__input_validate_was_validsig__returns_o
     BOOST_REQUIRE_EQUAL(formerly("validsig"), input_validate::symbol());
 }
 
-BOOST_AUTO_TEST_CASE(generated__formerly__mnemonic_encode_was_mnemonic__returns_object)
-{
-    BOOST_REQUIRE_EQUAL(formerly("mnemonic"), mnemonic_encode::symbol());
-}
-
 BOOST_AUTO_TEST_CASE(generated__formerly__put_tx_was_send_tx_node__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("send-tx-node"), put_tx::symbol());

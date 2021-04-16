@@ -43,6 +43,7 @@ _bx()
         ek-public-to-ec
         ek-to-address
         ek-to-ec
+        electrum-decode
         electrum-new
         electrum-to-seed
         fetch-balance
@@ -75,7 +76,8 @@ _bx()
         match-neutrino-script
         message-sign
         message-validate
-        mnemonic-new
+        mnemonic-decode
+        mnemonic-encode
         mnemonic-to-seed
         put-tx
         qrcode

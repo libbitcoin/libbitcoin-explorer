@@ -208,6 +208,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ek_to_ec__returns_expected_value)
     BOOST_REQUIRE_EQUAL(ek_to_ec::symbol(), "ek-to-ec");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__electrum_decode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(electrum_decode::symbol(), "electrum-decode");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__electrum_new__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(electrum_new::symbol(), "electrum-new");
@@ -386,11 +391,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_decode__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_encode__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(mnemonic_encode::symbol(), "mnemonic-encode");
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_new__returns_expected_value)
-{
-    BOOST_REQUIRE_EQUAL(mnemonic_new::symbol(), "mnemonic-new");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_to_seed__returns_expected_value)

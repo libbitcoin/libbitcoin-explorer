@@ -114,7 +114,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/message-validate.cpp \
     src/commands/mnemonic-decode.cpp \
     src/commands/mnemonic-encode.cpp \
-    src/commands/mnemonic-new.cpp \
     src/commands/mnemonic-to-seed.cpp \
     src/commands/put-tx.cpp \
     src/commands/qrcode.cpp \
@@ -233,6 +232,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/ek-public.cpp \
     test/commands/ek-to-address.cpp \
     test/commands/ek-to-ec.cpp \
+    test/commands/electrum-decode.cpp \
     test/commands/electrum-new.cpp \
     test/commands/electrum-to-seed.cpp \
     test/commands/fetch-balance.cpp \
@@ -264,7 +264,6 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/message-validate.cpp \
     test/commands/mnemonic-decode.cpp \
     test/commands/mnemonic-encode.cpp \
-    test/commands/mnemonic-new.cpp \
     test/commands/mnemonic-to-seed.cpp \
     test/commands/put-tx.cpp \
     test/commands/qrcode.cpp \
@@ -362,6 +361,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/ek-public.hpp \
     include/bitcoin/explorer/commands/ek-to-address.hpp \
     include/bitcoin/explorer/commands/ek-to-ec.hpp \
+    include/bitcoin/explorer/commands/electrum-decode.hpp \
     include/bitcoin/explorer/commands/electrum-new.hpp \
     include/bitcoin/explorer/commands/electrum-to-seed.hpp \
     include/bitcoin/explorer/commands/fetch-balance.hpp \
@@ -398,7 +398,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/message-validate.hpp \
     include/bitcoin/explorer/commands/mnemonic-decode.hpp \
     include/bitcoin/explorer/commands/mnemonic-encode.hpp \
-    include/bitcoin/explorer/commands/mnemonic-new.hpp \
     include/bitcoin/explorer/commands/mnemonic-to-seed.hpp \
     include/bitcoin/explorer/commands/put-tx.hpp \
     include/bitcoin/explorer/commands/qrcode.hpp \

@@ -208,6 +208,11 @@ BOOST_AUTO_TEST_CASE(generated__find__ek_to_ec__returns_object)
     BOOST_REQUIRE(find("ek-to-ec") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__electrum_decode__returns_object)
+{
+    BOOST_REQUIRE(find("electrum-decode") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__electrum_new__returns_object)
 {
     BOOST_REQUIRE(find("electrum-new") != nullptr);
@@ -386,11 +391,6 @@ BOOST_AUTO_TEST_CASE(generated__find__mnemonic_decode__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__mnemonic_encode__returns_object)
 {
     BOOST_REQUIRE(find("mnemonic-encode") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__mnemonic_new__returns_object)
-{
-    BOOST_REQUIRE(find("mnemonic-new") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__mnemonic_to_seed__returns_object)

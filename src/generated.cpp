@@ -72,6 +72,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ek_public_to_ec>());
     func(make_shared<ek_to_address>());
     func(make_shared<ek_to_ec>());
+    func(make_shared<electrum_decode>());
     func(make_shared<electrum_new>());
     func(make_shared<electrum_to_seed>());
     func(make_shared<fetch_balance>());
@@ -108,7 +109,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<message_validate>());
     func(make_shared<mnemonic_decode>());
     func(make_shared<mnemonic_encode>());
-    func(make_shared<mnemonic_new>());
     func(make_shared<mnemonic_to_seed>());
     func(make_shared<put_tx>());
     func(make_shared<qrcode>());
@@ -222,6 +222,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ek_to_address>();
     if (symbol == ek_to_ec::symbol())
         return make_shared<ek_to_ec>();
+    if (symbol == electrum_decode::symbol())
+        return make_shared<electrum_decode>();
     if (symbol == electrum_new::symbol())
         return make_shared<electrum_new>();
     if (symbol == electrum_to_seed::symbol())
@@ -294,8 +296,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<mnemonic_decode>();
     if (symbol == mnemonic_encode::symbol())
         return make_shared<mnemonic_encode>();
-    if (symbol == mnemonic_new::symbol())
-        return make_shared<mnemonic_new>();
     if (symbol == mnemonic_to_seed::symbol())
         return make_shared<mnemonic_to_seed>();
     if (symbol == put_tx::symbol())
@@ -416,8 +416,6 @@ std::string formerly(const string& former)
         return input_sign::symbol();
     if (former == input_validate::formerly())
         return input_validate::symbol();
-    if (former == mnemonic_encode::formerly())
-        return mnemonic_encode::symbol();
     if (former == put_tx::formerly())
         return put_tx::symbol();
     if (former == ripemd160::formerly())

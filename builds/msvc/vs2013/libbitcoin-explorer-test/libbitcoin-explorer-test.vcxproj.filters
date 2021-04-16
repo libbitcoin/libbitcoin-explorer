@@ -126,6 +126,9 @@
     <ClCompile Include="..\..\..\..\test\commands\ek-to-ec.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\electrum-decode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\electrum-new.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -217,9 +220,6 @@
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\mnemonic-new.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-to-seed.cpp">
