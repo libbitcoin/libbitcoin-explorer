@@ -53,8 +53,7 @@ console_result commands::ek_public::invoke(std::ostream& output,
     ec_compressed unused2;
 
     // This cannot fail because the token has been validated.
-    /* bool */ create_key_pair(unused1, key, unused2, token, bytes, version,
-        compressed);
+    create_key_pair(unused1, key, unused2, token, bytes, version, compressed);
 
     output << wallet::ek_public(key) << std::endl;
     return console_result::okay;

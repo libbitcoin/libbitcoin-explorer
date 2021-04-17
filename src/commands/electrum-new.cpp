@@ -29,43 +29,50 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
+////<define name="BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE" value="The entropy size is not 17 to 64 bytes." />
+////<define name="BX_ELECTRUM_NEW_INVALID_VERSION1_LANGUAGE" value="Version1 langauges are limited to 'en' and 'pt'." />
+
 console_result electrum_new::invoke(std::ostream& output, std::ostream& error)
 {
-#ifdef WITH_ICU
-    // Requires a seed of at least 17 bytes (136 bits).
-    static const size_t minimum_electrum_words = 12;
+    ////// Bound parameters.
+    ////const language lingo = get_language_option();
+    ////const electrum::seed_prefix prefix = get_prefix_option();
+    ////const data_chunk& entropy = get_entropy_argument();
 
-    // Bound parameters.
-    const dictionary_list& language = get_language_option();
-    const data_chunk& seed = get_seed_argument();
-    const auto prefix = get_prefix_option();
+    ////if (!electrum::is_valid_entropy_size(entropy.size()))
+    ////{
+    ////    error << BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE << std::endl;
+    ////    return console_result::failure;
+    ////}
 
-    // trunc(log2(2048)) = 11
-    const auto word_bits = static_cast<size_t>(std::log2(dictionary_size));
+    ////// Langauge is ensured for v2 but not v1.
+    ////if (prefix == electrum::seed_prefix::old)
+    ////{
+    ////    if (!electrum_v1::is_valid_dictionary(lingo))
+    ////    {
+    ////        error << BX_ELECTRUM_NEW_INVALID_VERSION1_LANGUAGE << std::endl;
+    ////        return console_result::failure;
+    ////    }
 
-    // 17 * 8 = 136
-    const auto seed_bits = seed.size() * byte_bits;
+    ////    const auto seed = electrum_v1(entropy);
+    ////}
 
-    // 136 / 11 = 12
-    const auto words = seed_bits / word_bits;
+    ////else if (!electrum::is_valid_dictionary(lingo))
+    ////{
+    ////    error << BX_ELECTRUM_NEW_INVALID_VERSION1_LANGUAGE << std::endl;
+    ////    return console_result::failure;
+    ////}
 
-    if (words < minimum_electrum_words)
-    {
-        error << BX_ELECTRUM_NEW_INVALID_SEED << std::endl;
-        return console_result::failure;
-    }
+    ////// If 'any' default to first ('en'), otherwise the one specified.
+    ////const auto dictionary = language.front();
 
-    // If 'any' default to first ('en'), otherwise the one specified.
-    const auto dictionary = language.front();
+    ////auto mnemonic = electrum::create_mnemonic(seed, *dictionary, prefix);
 
-    auto mnemonic = electrum::create_mnemonic(seed, *dictionary, prefix);
+    ////output << join(mnemonic) << std::endl;
+    ////return console_result::okay;
 
-    output << join(mnemonic) << std::endl;
-    return console_result::okay;
-#else
-    error << BX_ELECTRUM_REQUIRES_ICU << std::endl;
+    ////error << BX_ELECTRUM_REQUIRES_ICU << std::endl;
     return console_result::failure;
-#endif
 }
 
 } //namespace commands

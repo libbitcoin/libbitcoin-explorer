@@ -18,6 +18,7 @@
  */
 #include <bitcoin/explorer/commands/seed.hpp>
 
+#include <cstddef>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>
@@ -34,14 +35,23 @@ console_result seed::invoke(std::ostream& output, std::ostream& error)
     const auto bit_length = get_bit_length_option();
 
     // These are soft requirements for security and rationality.
-    // We use bit vs. byte length input as the more familiar convention.
-    if (bit_length < minimum_seed_size * byte_bits ||
-        bit_length % byte_bits != 0)
+    // Use bit vs. byte length input as the more familiar convention.
+    if ((bit_length < (minimum_seed_size * byte_bits)) ||
+        (bit_length % byte_bits) != 0)
     {
         error << BX_SEED_BIT_LENGTH_UNSUPPORTED << std::endl;
         return console_result::failure;
     }
 
+    const auto new_seed = [](size_t bit_length)
+    {
+        const auto fill_seed_size = bit_length / byte_bits;
+        data_chunk seed(fill_seed_size);
+        pseudo_random_fill(seed);
+        return seed;
+    };
+
+    // Use of prng limits testability.
     const auto seed = new_seed(bit_length);
 
     output << base16(seed) << std::endl;

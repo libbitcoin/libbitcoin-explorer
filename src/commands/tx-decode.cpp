@@ -33,7 +33,7 @@ using namespace bc::system;
 console_result tx_decode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& encoding = get_format_option();
+    const encoding_engine  encoding = get_format_option();
     const auto& transaction = get_transaction_argument();
 
     // This enables json-style array formatting.

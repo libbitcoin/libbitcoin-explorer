@@ -19,10 +19,9 @@
 #include <bitcoin/explorer/commands/ec-multiply-secrets.hpp>
 
 #include <iostream>
+#include <iterator>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
-
 
 namespace libbitcoin {
 namespace explorer {
@@ -35,29 +34,27 @@ console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& e
     // Bound parameters.
     const auto& secrets = get_secrets_argument();
 
-    ec_secret product(null_hash);
-    for (auto const& secret: secrets)
+    if (secrets.empty())
     {
-        // Initialize product on first pass.
-        if (product == null_hash)
-        {
-            product = secret;
-            continue;
-        }
+        output << encode_base16(null_hash) << std::endl;
+        return console_result::okay;
+    }
 
+    ec_secret product(secrets.front());
+
+    for (auto secret = std::next(secrets.begin()); secret != secrets.end(); ++secret)
+    {
         // Elliptic curve function (INTEGER * INTEGER) % curve-order.
-        if (!system::ec_multiply(product, secret))
+        if (!system::ec_multiply(product, *secret))
         {
             error << BX_EC_MULITPLY_SECRETS_OUT_OF_RANGE << std::endl;
             return console_result::failure;
         }
     }
 
-    // We don't use bc::ec_private serialization (WIF) here.
-    output << config::ec_private(product) << std::endl;
+    output << encode_base16(product) << std::endl;
     return console_result::okay;
 }
-
 
 } //namespace commands
 } //namespace explorer

@@ -46,7 +46,7 @@ console_result hd_to_public::invoke(std::ostream& output, std::ostream& error)
 
     if (!versioned)
     {
-        output << "ERROR" << std::endl;
+        output << BX_HD_TO_PUBLIC_INVALID_KEY << std::endl;
         return console_result::failure;
     }
 

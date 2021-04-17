@@ -35,7 +35,7 @@ console_result stealth_decode::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& encoding = get_format_option();
+    const encoding_engine  encoding = get_format_option();
     const auto& address = get_stealth_address_argument();
 
     // This enables json-style array formatting.

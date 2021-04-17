@@ -39,7 +39,7 @@ system::console_result fetch_block_hashes::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& encoding = get_format_option();
+    const encoding_engine encoding = get_format_option();
     const auto height = get_height_option();
     const hash_digest& hash = get_hash_option();
     auto connection = get_connection(*this);

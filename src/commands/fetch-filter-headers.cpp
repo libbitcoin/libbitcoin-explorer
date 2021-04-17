@@ -51,7 +51,7 @@ console_result fetch_filter_headers::invoke(std::ostream& output,
     const auto start_height = get_start_height_argument();
     const auto stop_height = get_stop_height_option();
     const hash_digest& stop_hash = get_stop_hash_option();
-    const encoding& encoding = get_format_option();
+    const encoding_engine encoding = get_format_option();
     const auto connection = get_connection(*this);
 
     obelisk_client client(connection.retries);

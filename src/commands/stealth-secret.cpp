@@ -21,8 +21,6 @@
 #include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
-
 
 // This is nearly the same as ec-add-secrets.
 namespace libbitcoin {
@@ -45,7 +43,7 @@ console_result stealth_secret::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    output << config::ec_private(sum) << std::endl;
+    output << encode_base16(sum) << std::endl;
     return console_result::okay;
 }
 

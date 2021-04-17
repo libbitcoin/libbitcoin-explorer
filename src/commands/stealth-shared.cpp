@@ -22,7 +22,6 @@
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-
 // This is nearly the same as ec-multiply + sha256.
 // Pass either (ephem_secret, scan_pubkey) or (scan_secret, ephem_pubkey).
 namespace libbitcoin {
@@ -47,7 +46,7 @@ console_result stealth_shared::invoke(std::ostream& output,
 
     const auto hash = sha256_hash(product);
 
-    output << config::ec_private(hash) << std::endl;
+    output << encode_base16(hash) << std::endl;
     return console_result::okay;
 }
 

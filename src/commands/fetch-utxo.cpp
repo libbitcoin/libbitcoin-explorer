@@ -39,7 +39,7 @@ using namespace bc::system::chain;
 console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& encoding = get_format_option();
+    const encoding_engine  encoding = get_format_option();
     const auto algorithm = get_algorithm_option();
     const auto satoshi = get_satoshi_argument();
     const hash_digest& key = get_hash_argument();

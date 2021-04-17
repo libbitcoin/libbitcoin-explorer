@@ -23,17 +23,18 @@
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
 using namespace bc::system;
 
+////<define name="BX_MNEMONIC_ENCODE_INVALID_ENTROPY_SIZE" value="The entropy size is not 16, 20, 24, 28, or 32 bytes." />
+
 console_result mnemonic_encode::invoke(std::ostream& output,
     std::ostream& error)
 {
-    error << BX_MNEMONIC_ENCODE_OBSOLETE << std::endl;
+    ////error << BX_MNEMONIC_ENCODE_OBSOLETE << std::endl;
     return console_result::failure;
 }
 

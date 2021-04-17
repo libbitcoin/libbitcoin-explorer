@@ -50,8 +50,7 @@ console_result ek_new::invoke(std::ostream& output, std::ostream& error)
     encrypted_private secret;
 
     // This cannot fail because the token has been validated.
-    /* bool */ create_key_pair(secret, unused, token, bytes, version,
-        !uncompressed);
+    create_key_pair(secret, unused, token, bytes, version, !uncompressed);
 
     output << ek_private(secret) << std::endl;
     return console_result::okay;

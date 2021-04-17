@@ -27,9 +27,9 @@ namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::explorer::config;
 using namespace bc::system;
 using namespace bc::system::config;
+using namespace bc::explorer::config;
 
 console_result base58check_encode::invoke(std::ostream& output,
     std::ostream& error)
@@ -39,8 +39,7 @@ console_result base58check_encode::invoke(std::ostream& output,
     const auto& payload = get_base16_argument();
 
     const wrapper wrapped(version, payload);
-    const auto encoded_wrapper = wrapped.to_data();
-    const base58 base58check(encoded_wrapper);
+    const base58 base58check(wrapped.to_data());
 
     output << base58check << std::endl;
     return console_result::okay;

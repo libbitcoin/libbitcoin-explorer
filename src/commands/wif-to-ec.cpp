@@ -21,8 +21,6 @@
 #include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
-
 
 namespace libbitcoin {
 namespace explorer {
@@ -33,9 +31,9 @@ using namespace bc::system;
 console_result wif_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& secret = get_wif_argument();
+    const ec_secret& secret = get_wif_argument();
 
-    output << config::ec_private(secret) << std::endl;
+    output << encode_base16(secret) << std::endl;
     return console_result::okay;
 }
 

@@ -35,7 +35,7 @@ console_result wrap_decode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& wrapped = get_wrapped_argument();
-    const auto& encoding = get_format_option();
+    const encoding_engine  encoding = get_format_option();
 
     const auto tree = property_tree(wrapped);
 

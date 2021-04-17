@@ -23,14 +23,12 @@
 #include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
 using namespace bc::system;
-using namespace bc::system::wallet;
 
 console_result ek_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
@@ -47,7 +45,7 @@ console_result ek_to_ec::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    output << config::ec_private(secret) << std::endl;
+    output << encode_base16(secret) << std::endl;
     return console_result::okay;
 #else
     error << BX_EK_TO_EC_REQUIRES_ICU << std::endl;

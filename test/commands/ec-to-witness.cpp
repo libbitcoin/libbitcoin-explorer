@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(ec_to_witness__invoke__test_list__valid_expected)
         BX_DECLARE_COMMAND(ec_to_witness);
         command.set_ec_public_key_argument({ test.public_key });
         command.set_prefix_argument({ test.prefix });
-        command.set_address_format_option({ test.format });
+        command.set_witness_option({ test.format });
         BX_REQUIRE_OKAY(command.invoke(output, error));
         BX_REQUIRE_OUTPUT(test.output);
     }

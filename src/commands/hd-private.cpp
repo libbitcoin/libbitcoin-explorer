@@ -42,7 +42,7 @@ console_result hd_private::invoke(std::ostream& output, std::ostream& error)
 
     if (!child_private_key)
     {
-        output << "ERROR" << std::endl;
+        output << BX_HD_PRIVATE_INVALID_DERIVED_KEY << std::endl;
         return console_result::failure;
     }
 

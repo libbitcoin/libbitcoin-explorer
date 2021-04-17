@@ -48,7 +48,7 @@ console_result ek_to_address::invoke(std::ostream& output, std::ostream& error)
     ec_compressed point;
 
     // It is not possible for the validated secret to fail conversion.
-    /* bool */ secret_to_public(point, secret);
+    secret_to_public(point, secret);
     const payment_address address({ point, compressed }, version);
 
     output << address << std::endl;

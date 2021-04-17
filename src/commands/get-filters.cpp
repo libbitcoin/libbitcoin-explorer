@@ -65,7 +65,7 @@ console_result get_filters::invoke(std::ostream& output,
     // Bound parameters.
     const auto& host = get_host_option();
     const auto& port = get_port_option();
-    const auto& encoding = get_format_option();
+    const encoding_engine  encoding = get_format_option();
     const hash_digest& stop_hash = get_hash_argument();
     const uint32_t start_height = get_height_argument();
 

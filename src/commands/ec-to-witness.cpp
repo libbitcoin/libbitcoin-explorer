@@ -34,9 +34,12 @@ console_result ec_to_witness::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& point = get_ec_public_key_argument();
     const auto prefix = get_prefix_argument();
-    const auto format = get_address_format_option();
+    const auto format = get_witness_option();
 
-    output << witness_address(point, format, prefix).encoded() << std::endl;
+    // BUGBUG: prefix not validated.
+    // TODO: prefix should be read from config (numeric).
+
+    output << witness_address(point, format, prefix) << std::endl;
     return console_result::okay;
 }
 

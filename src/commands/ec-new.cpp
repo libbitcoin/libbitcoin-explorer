@@ -22,7 +22,6 @@
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
 
 
 // The BX_EC_NEW_INVALID_KEY condition is not covered by test.
@@ -36,23 +35,24 @@ using namespace bc::system;
 console_result ec_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const data_chunk& seed = get_seed_argument();
+    const data_chunk& entropy = get_seed_argument();
 
-    if (seed.size() < minimum_seed_size)
+    if (entropy.size() < minimum_seed_size)
     {
         error << BX_EC_NEW_SHORT_SEED << std::endl;
         return console_result::failure;
     }
 
-    ec_secret secret(new_key(seed));
-    if (secret == null_hash)
+    // Use hd_private to derive and validate a secret from entropy.
+    const wallet::hd_private key(entropy);
+
+    if (!key)
     {
         error << BX_EC_NEW_INVALID_KEY << std::endl;
         return console_result::failure;
     }
 
-    // We don't use bc::ec_private serialization (WIF) here.
-    output << config::ec_private(secret) << std::endl;
+    output << encode_base16(key.secret()) << std::endl;
     return console_result::okay;
 }
 

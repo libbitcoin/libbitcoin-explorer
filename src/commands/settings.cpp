@@ -35,7 +35,7 @@ console_result commands::settings::invoke(std::ostream& output,
     std::ostream& error)
 {
     // bound parameters
-    const auto& encoding = get_format_option();
+    const encoding_engine  encoding = get_format_option();
 
     // TODO: look into serializer object quoting.
     // TODO: load from metadata into settings list.

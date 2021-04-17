@@ -37,12 +37,12 @@ console_result message_sign::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& secret = get_wif_argument();
-    const auto& message = get_message_argument();
+    const data_chunk& message = get_message_argument();
 
     message_signature sign;
 
     // This cannot fail because the secret has been validated.
-    /* bool */ sign_message(sign, message, secret);
+    sign_message(sign, message, secret);
 
     output << signature(sign) << std::endl;
     return console_result::okay;
