@@ -113,7 +113,7 @@ std::istream& operator>>(std::istream& input, wrapper& argument)
 
     // The checksum is validated here.
     if (!unwrap(argument.value_, system::config::base16(text)))
-        throw_istream_failure(text);
+        throw istream_failure(text);
 
     return input;
 }

@@ -68,7 +68,7 @@ std::ostream& operator<<(std::ostream& output, const language& argument)
     const auto text = system::wallet::languages::to_name(argument);
 
     if (text.empty())
-        throw_ostream_failure("language");
+        throw ostream_failure("language");
 
     output << text;
     return output;

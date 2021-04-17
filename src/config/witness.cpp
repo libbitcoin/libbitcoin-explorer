@@ -66,7 +66,7 @@ std::istream& operator>>(std::istream& input, witness& argument)
     else if (text == witness_script_hash)
         argument.value_ = witness::type::witness_script_hash;
     else
-        throw_istream_failure(text);
+        throw istream_failure(text);
 
     return input;
 }
@@ -80,7 +80,7 @@ std::ostream& operator<<(std::ostream& output, const witness& argument)
     else if (argument.value_ == witness::type::witness_script_hash)
         text = witness_script_hash;
     else
-        throw_ostream_failure("witness");
+        throw ostream_failure("witness");
 
     output << text;
     return output;

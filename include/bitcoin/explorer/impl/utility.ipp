@@ -85,7 +85,7 @@ void load_path(Value& parameter, const std::string& name,
 
     system::ifstream file(path, std::ios::binary);
     if (!file.good())
-        throw_istream_failure(path);
+        throw istream_failure(path);
 
     system::deserialize(parameter, file, !raw);
 }

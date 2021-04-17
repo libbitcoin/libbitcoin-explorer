@@ -68,7 +68,7 @@ std::istream& operator>>(std::istream& input, encoding& argument)
     else if (text == encoding_xml)
         argument.value_ = encoding_engine::xml;
     else
-        throw_istream_failure(text);
+        throw istream_failure(text);
 
     return input;
 }
@@ -89,7 +89,7 @@ std::ostream& operator<<(std::ostream& output, const encoding& argument)
             text = encoding_xml;
             break;
         default:
-            throw_ostream_failure("encoding");
+            throw ostream_failure("encoding");
     }
 
     output << text;

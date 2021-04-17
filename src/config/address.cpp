@@ -70,7 +70,7 @@ std::istream& operator>>(std::istream& input, address& argument)
 
     // TODO: add witness address.
 
-    throw_istream_failure(text);
+    throw istream_failure(text);
     return input;
 }
 

@@ -62,7 +62,7 @@ std::istream& operator>>(std::istream& input, signature& argument)
     system::data_chunk out;
     if (!system::decode_base64(out, text) ||
         (out.size() != system::wallet::message_signature_size))
-        throw_istream_failure(text);
+        throw istream_failure(text);
 
     std::copy(out.begin(), out.end(), argument.value_.begin());
 

@@ -29,21 +29,9 @@
 namespace libbitcoin {
 namespace explorer {
 
-/**
- * Centralize istream exceptions.
- */
-inline void throw_istream_failure(const std::string& message)
-{
-    throw po::invalid_option_value(message);
-}
-
-/**
- * Centralize ostream exceptions.
- */
-inline void throw_ostream_failure(const std::string& message)
-{
-    throw std::iostream::failure(message);
-}
+// Standardize iostream exceptions.
+using istream_failure = po::invalid_option_value;
+using ostream_failure = std::iostream::failure;
 
 /**
  * Read an input stream to the specified type.

@@ -66,7 +66,7 @@ std::istream& operator>>(std::istream& input, byte& argument)
     system::deserialize(number, text, true);
 
     if (number > max_uint8)
-        throw_istream_failure(text);
+        throw istream_failure(text);
 
     argument.value_ = static_cast<uint8_t>(number);
     return input;

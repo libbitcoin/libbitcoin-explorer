@@ -68,7 +68,7 @@ std::istream& operator>>(std::istream& input, sighash& argument)
     else if (text == sighash_single)
         argument.value_ = sighash::type::single;
     else
-        throw_istream_failure(text);
+        throw istream_failure(text);
 
     return input;
 }
@@ -89,7 +89,7 @@ std::ostream& operator<<(std::ostream& output, const sighash& argument)
             text = sighash_single;
             break;
         default:
-            throw_ostream_failure("sighash");
+            throw ostream_failure("sighash");
     }
 
     output << text;
