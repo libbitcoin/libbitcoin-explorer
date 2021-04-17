@@ -34,7 +34,7 @@ namespace explorer {
  */
 inline void throw_istream_failure(const std::string& message)
 {
-    BOOST_THROW_EXCEPTION(po::invalid_option_value(message));
+    throw po::invalid_option_value(message);
 }
 
 /**
@@ -42,8 +42,7 @@ inline void throw_istream_failure(const std::string& message)
  */
 inline void throw_ostream_failure(const std::string& message)
 {
-    // TODO: maybe a better exception for ostream.
-    BOOST_THROW_EXCEPTION(po::invalid_option_value(message));
+    throw std::iostream::failure(message);
 }
 
 /**
