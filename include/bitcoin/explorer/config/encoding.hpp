@@ -20,6 +20,7 @@
 #define BX_ENCODING_HPP
 
 #include <iostream>
+#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -27,66 +28,26 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-/**
- * Serialization helper to convert between text and encoding engine.
- */
+// Enumeration mapper.
+
 class BCX_API encoding
 {
 public:
+    typedef encoding_engine type;
 
-    /**
-     * Default constructor, sets encoding_engine::info.
-     */
     encoding();
-
-    /**
-     * Initialization constructor.
-     * @param[in]  token  The value to initialize with.
-     */
-    encoding(const std::string& token);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  engine  The value to initialize with.
-     */
-    encoding(encoding_engine engine);
-
-    /**
-     * Copy constructor.
-     * @param[in]  other  The object to copy into self on construct.
-     */
     encoding(const encoding& other);
+    encoding(const std::string& token);
+    encoding(const type& value);
 
-    /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    operator encoding_engine() const;
+    operator const type&() const;
 
-    /**
-     * Overload stream in. Throws if input is invalid.
-     * @param[in]   input     The input stream to read the value from.
-     * @param[out]  argument  The object to receive the read value.
-     * @return                The input stream reference.
-     */
-    friend std::istream& operator>>(std::istream& input,
-        encoding& argument);
-
-    /**
-     * Overload stream out.
-     * @param[in]   output    The output stream to write the value to.
-     * @param[out]  argument  The object from which to obtain the value.
-     * @return                The output stream reference.
-     */
+    friend std::istream& operator>>(std::istream& input, encoding& argument);
     friend std::ostream& operator<<(std::ostream& output,
         const encoding& argument);
 
 private:
-
-    /**
-     * The state of this object's encoding engine data.
-     */
-    encoding_engine value_;
+    type value_;
 };
 
 } // namespace explorer

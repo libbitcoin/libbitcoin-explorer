@@ -16,41 +16,43 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/commands/mnemonic-new.hpp>
+#ifndef BX_WITNESS_HPP
+#define BX_WITNESS_HPP
 
 #include <iostream>
+#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
-namespace commands {
-using namespace bc::system;
-using namespace bc::system::wallet;
+namespace config {
 
-console_result mnemonic_new::invoke(std::ostream& output,
-    std::ostream& error)
+// Enumeration mapper.
+// TODO: Remove this, prefix should be read from numerically and from config.
+
+class BCX_API witness
 {
-    // Bound parameters.
-    const dictionary_list& language = get_language_option();
-    const data_chunk& entropy = get_seed_argument();
+public:
+    typedef system::wallet::witness_address::address_format type;
 
-    const auto entropy_size = entropy.size();
+    witness();
+    witness(const witness& other);
+    witness(const std::string& token);
+    witness(const type& value);
 
-    if ((entropy_size % wallet::mnemonic_seed_multiple) != 0)
-    {
-        error << BX_MNEMONIC_NEW_INVALID_SEED << std::endl;
-        return console_result::failure;
-    }
+    operator const type&() const;
 
-    // If 'any' default to first ('en'), otherwise the one specified.
-    const auto dictionary = language.front();
-    const auto words = create_mnemonic(entropy, *dictionary);
+    friend std::istream& operator>>(std::istream& input, witness& argument);
+    friend std::ostream& operator<<(std::ostream& output, 
+        const witness& argument);
 
-    output << join(words) << std::endl;
-    return console_result::okay;
-}
+private:
+    type value_;
+};
 
-} //namespace commands
-} //namespace explorer
-} //namespace libbitcoin
+} // namespace config
+} // namespace explorer
+} // namespace libbitcoin
+
+#endif

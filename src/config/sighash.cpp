@@ -16,66 +16,83 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 
-#include <cstdint>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-byte::byte()
-  : value_(0)
+constexpr auto sighash_all = "all";
+constexpr auto sighash_none = "none";
+constexpr auto sighash_single = "single";
+
+sighash::sighash()
+  : value_(type::all)
 {
 }
 
-byte::byte(const byte& other)
-  : byte(other.value_)
+sighash::sighash(const sighash& other)
+  : value_(other.value_)
 {
 }
 
-byte::byte(const std::string& token)
+sighash::sighash(const std::string& token)
 {
     std::stringstream(token) >> *this;
 }
 
-byte::byte(const type& value)
+sighash::sighash(const type& value)
   : value_(value)
 {
 }
 
-byte::operator const type&() const
+sighash::operator const type&() const
 {
     return value_;
 }
 
-std::istream& operator>>(std::istream& input, byte& argument)
+std::istream& operator>>(std::istream& input, sighash& argument)
 {
     std::string text;
     input >> text;
 
-    // We have this byte class only because deserialization doesn't
-    // treat 8 bit values as decimal numbers (unlike 16+ bit numbers).
-
-    uint16_t number;
-    system::deserialize(number, text, true);
-
-    if (number > max_uint8)
+    if (text == sighash_all)
+        argument.value_ = sighash::type::all;
+    else if (text == sighash_none)
+        argument.value_ = sighash::type::none;
+    else if (text == sighash_single)
+        argument.value_ = sighash::type::single;
+    else
         throw_istream_failure(text);
 
-    argument.value_ = static_cast<uint8_t>(number);
     return input;
 }
 
-std::ostream& operator<<(std::ostream& output, const byte& argument)
+std::ostream& operator<<(std::ostream& output, const sighash& argument)
 {
-    uint16_t number(argument.value_);
-    output << number;
+    std::string text;
+
+    switch (argument.value_)
+    {
+        case sighash::type::all:
+            text = sighash_all;
+            break;
+        case sighash::type::none:
+            text = sighash_none;
+            break;
+        case sighash::type::single:
+            text = sighash_single;
+            break;
+        default:
+            throw_ostream_failure("sighash");
+    }
+
+    output << text;
     return output;
 }
 

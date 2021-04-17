@@ -15,7 +15,6 @@ function global.map_type(type)
 
     # Local type constants.
     my.type_address = "address"
-    my.type_address_format = "address_format"
     my.type_algorithm = "algorithm"
     my.type_authority = "authority"
     my.type_bool = "bool"
@@ -26,7 +25,7 @@ function global.map_type(type)
     my.type_base85 = "base85"
     my.type_btc = "btc"
     my.type_byte = "byte"
-    my.type_cert_key = "cert_key"
+    my.type_bytes = "bytes"
     my.type_compact_filter = "compact_filter"
     my.type_ec_private = "ec_private"
     my.type_ec_public = "ec_public"
@@ -37,10 +36,8 @@ function global.map_type(type)
     my.type_encoding = "encoding"
     my.type_endorsement = "endorsement"
     my.type_endpoint = "endpoint"
-    my.type_file = "file"
     my.type_hash160 = "hash160"
     my.type_hash256 = "hash256"
-    my.type_hashtype = "hashtype"
     my.type_hd_key = "hd_key"
     my.type_hd_private = "hd_private"
     my.type_hd_public = "hd_public"
@@ -51,7 +48,7 @@ function global.map_type(type)
     my.type_payment_address = "payment_address"
     my.type_point = "point"
     my.type_path = "path"
-    my.type_raw = "raw"
+    my.type_sighash = "sighash"
     my.type_script = "script"
     my.type_signature = "signature"
     my.type_sodium = "sodium"
@@ -60,11 +57,11 @@ function global.map_type(type)
     my.type_transaction = "transaction"
     my.type_uri = "uri"
     my.type_wif = "wif"
+    my.type_witness = "witness"
     my.type_witness_address = "witness_address"
     my.type_wrapper = "wrapper"
 
     my.type_address_bx = "explorer::config::address"
-    my.type_address_format_bx = "explorer::config::address_format"
     my.type_algorithm_bx = "explorer::config::algorithm"
     my.type_authority_bx = "system::config::authority"
     my.type_base16_bx = "system::config::base16"
@@ -74,9 +71,9 @@ function global.map_type(type)
     my.type_base85_bx = "system::config::base85"
     my.type_btc_bx = "explorer::config::btc"
     my.type_byte_bx = "explorer::config::byte"
-    my.type_cert_key_bx = "explorer::config::cert_key"
+    my.type_bytes_bx = "explorer::config::bytes"
     my.type_compact_filter_bx = "system::config::compact_filter"
-    my.type_ec_private_bx = "explorer::config::ec_private"
+    my.type_ec_private_bx = "system::wallet::ec_private"
     my.type_ec_public_bx = "system::wallet::ec_public"
     my.type_ek_private_bx = "system::wallet::ek_private"
     my.type_ek_public_bx = "system::wallet::ek_public"
@@ -85,10 +82,8 @@ function global.map_type(type)
     my.type_encoding_bx = "explorer::config::encoding"
     my.type_endorsement_bx = "explorer::config::endorsement"
     my.type_endpoint_bx = "system::config::endpoint"
-    my.type_file_bx = "explorer::config::file"
     my.type_hash160_bx = "system::config::hash160"
     my.type_hash256_bx = "system::config::hash256"
-    my.type_hashtype_bx = "explorer::config::hashtype"
     my.type_hd_key_bx = "explorer::config::hd_key"
     my.type_hd_private_bx = "system::wallet::hd_private"
     my.type_hd_public_bx = "system::wallet::hd_public"
@@ -99,8 +94,8 @@ function global.map_type(type)
     my.type_path_boost = "boost::filesystem::path"
     my.type_payment_address_bx = "system::wallet::payment_address"
     my.type_point_bx = "system::config::point"
-    my.type_raw_bx = "explorer::config::raw"
     my.type_script_bx = "system::config::script"
+    my.type_sighash_bx = "explorer::config::sighash"
     my.type_signature_bx = "explorer::config::signature"
     my.type_sodium_bx = "system::config::sodium"
     my.type_stealth_address_bx = "system::wallet::stealth_address"
@@ -108,13 +103,12 @@ function global.map_type(type)
     my.type_transaction_bx = "system::config::transaction"
     my.type_uri_bx = "system::wallet::bitcoin_uri"
     my.type_wif_bx = "system::wallet::ec_private"
+    my.type_witness_bx = "explorer::config::witness"
     my.type_witness_address_bx = "system::wallet::witness_address"
     my.type_wrapper_bx = "explorer::config::wrapper"
 
     if my.type = my.type_address
         return my.type_address_bx
-    elsif my.type = my.type_address_format
-        return my.type_address_format_bx
     elsif my.type = my.type_algorithm
         return my.type_algorithm_bx
     elsif my.type = my.type_authority
@@ -131,10 +125,10 @@ function global.map_type(type)
         return my.type_base85_bx
     elsif my.type = my.type_btc
         return my.type_btc_bx
+    elsif my.type = my.type_bytes
+        return my.type_bytes_bx
     elsif my.type = my.type_byte
         return my.type_byte_bx
-    elsif my.type = my.type_cert_key
-        return my.type_cert_key_bx
     elsif my.type = my.type_compact_filter
         return my.type_compact_filter_bx
     elsif my.type = my.type_ec_private
@@ -155,14 +149,10 @@ function global.map_type(type)
         return my.type_endorsement_bx
     elsif my.type = my.type_endpoint
         return my.type_endpoint_bx
-    elsif my.type = my.type_file
-        return my.type_file_bx
     elsif my.type = my.type_hash160
         return my.type_hash160_bx
     elsif my.type = my.type_hash256
         return my.type_hash256_bx
-    elsif my.type = my.type_hashtype
-        return my.type_hashtype_bx
     elsif my.type = my.type_hd_key
         return my.type_hd_key_bx
     elsif my.type = my.type_hd_private
@@ -183,10 +173,10 @@ function global.map_type(type)
         return my.type_payment_address_bx
     elsif my.type = my.type_point
         return my.type_point_bx
-    elsif my.type = my.type_raw
-        return my.type_raw_bx
     elsif my.type = my.type_script
         return my.type_script_bx
+    elsif my.type = my.type_sighash
+        return my.type_sighash_bx
     elsif my.type = my.type_signature
         return my.type_signature_bx
     elsif my.type = my.type_sodium
@@ -201,6 +191,8 @@ function global.map_type(type)
         return my.type_uri_bx
     elsif my.type = my.type_wif
         return my.type_wif_bx
+    elsif my.type = my.type_witness
+        return my.type_witness_bx
     elsif my.type = my.type_witness_address
         return my.type_witness_address_bx
     elsif my.type = my.type_wrapper
@@ -231,7 +223,7 @@ function global.is_bool_type(type)
 endfunction
 
 function global.is_raw_type(type)
-    return ((my.type ? "") = "raw")
+    return ((my.type ? "") = "bytes")
 endfunction
 
 function global.is_braced_type(type)
@@ -277,20 +269,18 @@ endfunction
 .
 .macro global.primitives
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 .endmacro
 .

@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_ADDRESS_HPP
-#define BX_ADDRESS_HPP
+#ifndef BX_BYTES_HPP
+#define BX_BYTES_HPP
 
 #include <iostream>
 #include <string>
@@ -28,22 +28,23 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-// TODO: drop stealth and just use wallet::payment_address as primitive.
+// This is the default bytes reader.
 
-class BCX_API address
+class BCX_API bytes
 {
 public:
-    typedef std::string type;
+    typedef system::data_chunk type;
 
-    address();
-    address(const address& other);
-    address(const std::string& token);
+    bytes();
+    bytes(const bytes& other);
+    bytes(const std::string& token);
+    bytes(const type& value);
 
     operator const type&() const;
 
-    friend std::istream& operator>>(std::istream& input, address& argument);
+    friend std::istream& operator>>(std::istream& input, bytes& argument);
     friend std::ostream& operator<<(std::ostream& output,
-        const address& argument);
+        const bytes& argument);
 
 private:
     type value_;

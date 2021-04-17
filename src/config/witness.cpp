@@ -16,9 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 
-#include <cstdint>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -29,53 +28,61 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-byte::byte()
-  : value_(0)
+constexpr auto witness_pubkey_hash = "p2wpkh";
+constexpr auto witness_script_hash = "p2wsh";
+
+witness::witness()
+  : value_(type::witness_pubkey_hash)
 {
 }
 
-byte::byte(const byte& other)
-  : byte(other.value_)
+witness::witness(const witness& other)
+  : value_(other.value_)
 {
 }
 
-byte::byte(const std::string& token)
+witness::witness(const std::string& token)
 {
     std::stringstream(token) >> *this;
 }
 
-byte::byte(const type& value)
+witness::witness(const type& value)
   : value_(value)
 {
 }
 
-byte::operator const type&() const
+witness::operator const type&() const
 {
     return value_;
 }
 
-std::istream& operator>>(std::istream& input, byte& argument)
+std::istream& operator>>(std::istream& input, witness& argument)
 {
     std::string text;
     input >> text;
 
-    // We have this byte class only because deserialization doesn't
-    // treat 8 bit values as decimal numbers (unlike 16+ bit numbers).
-
-    uint16_t number;
-    system::deserialize(number, text, true);
-
-    if (number > max_uint8)
+    if (text == witness_pubkey_hash)
+        argument.value_ = witness::type::witness_pubkey_hash;
+    else if (text == witness_script_hash)
+        argument.value_ = witness::type::witness_script_hash;
+    else
         throw_istream_failure(text);
 
-    argument.value_ = static_cast<uint8_t>(number);
     return input;
 }
 
-std::ostream& operator<<(std::ostream& output, const byte& argument)
+std::ostream& operator<<(std::ostream& output, const witness& argument)
 {
-    uint16_t number(argument.value_);
-    output << number;
+    std::string text;
+
+    if (argument.value_ == witness::type::witness_pubkey_hash)
+        text = witness_pubkey_hash;
+    else if (argument.value_ == witness::type::witness_script_hash)
+        text = witness_script_hash;
+    else
+        throw_ostream_failure("witness");
+
+    output << text;
     return output;
 }
 

@@ -28,8 +28,6 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-using namespace bc::system;
-
 hd_key::hd_key()
   : value_()
 {
@@ -51,10 +49,11 @@ hd_key::hd_key(const type& value)
 {
 }
 
-////uint32_t hd_key::version() const
-////{
-////    return from_big_endian_unsafe<uint32_t>(value_.begin());
-////}
+// TODO: remove.
+uint32_t hd_key::version() const
+{
+    return system::from_big_endian_unsafe<uint32_t>(value_.begin());
+}
 
 hd_key::operator const type&() const
 {
@@ -66,12 +65,19 @@ std::istream& operator>>(std::istream& input, hd_key& argument)
     std::string text;
     input >> text;
 
-    data_chunk value;
-    if (!decode_base58(value, text) || value.size() != wallet::hd_key_size)
+    system::data_chunk out;
+    if (!system::decode_base58(out, text) ||
+        out.size() != system::wallet::hd_key_size)
         throw_istream_failure(text);
 
-    std::copy(value.begin(), value.end(), argument.value_.begin());
+    std::copy(out.begin(), out.end(), argument.value_.begin());
     return input;
+}
+
+std::ostream& operator<<(std::ostream& output, const hd_key& argument)
+{
+    output << system::encode_base58(argument.value_);
+    return output;
 }
 
 } // namespace config

@@ -21,48 +21,65 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-using namespace bc::system;
-
-address::address(const std::string& base58)
+address::address()
+  : value_()
 {
-    std::stringstream(base58) >> *this;
 }
 
-address::operator const std::string&() const
+address::address(const address& other)
+  : value_(other.value_)
+{
+}
+
+address::address(const std::string& token)
+{
+    std::stringstream(token) >> *this;
+}
+
+address::operator const type&() const
 {
     return value_;
 }
 
 std::istream& operator>>(std::istream& input, address& argument)
 {
-    std::string base58;
-    input >> base58;
+    std::string text;
+    input >> text;
 
-    wallet::payment_address payment(base58);
+    system::wallet::payment_address payment(text);
     if (payment)
     {
-        argument.value_ = base58;
+        argument.value_ = text;
         return input;
     }
 
-    wallet::stealth_address stealth(base58);
+    // Deprecated.
+    system::wallet::stealth_address stealth(text);
     if (stealth)
     {
-        argument.value_ = base58;
+        argument.value_ = text;
         return input;
     }
 
-    using namespace boost::program_options;
-    BOOST_THROW_EXCEPTION(invalid_option_value(base58));
+    // TODO: add witness address.
+
+    throw_istream_failure(text);
+    return input;
 }
 
-} // namespace explorer
+std::ostream& operator<<(std::ostream& output, const address& argument)
+{
+    output << argument.value_;
+    return output;
+}
+
 } // namespace config
+} // namespace explorer
 } // namespace libbitcoin

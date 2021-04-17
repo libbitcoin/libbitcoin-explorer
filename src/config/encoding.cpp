@@ -18,35 +18,21 @@
  */
 #include <bitcoin/explorer/config/encoding.hpp>
 
-#include <exception>
 #include <iostream>
-#include <boost/program_options.hpp>
-#include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
+#include <sstream>
+#include <string>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-using namespace po;
-
-// DRY
-static auto encoding_info = "info";
-static auto encoding_json = "json";
-static auto encoding_xml = "xml";
+constexpr auto encoding_info = "info";
+constexpr auto encoding_json = "json";
+constexpr auto encoding_xml = "xml";
 
 encoding::encoding()
-  : encoding(encoding_engine::info)
-{
-}
-
-encoding::encoding(const std::string& token)
-{
-    std::stringstream(token) >> *this;
-}
-
-encoding::encoding(encoding_engine engine)
-  : value_(engine)
+  : encoding(type::info)
 {
 }
 
@@ -55,7 +41,17 @@ encoding::encoding(const encoding& other)
 {
 }
 
-encoding::operator encoding_engine() const
+encoding::encoding(const std::string& token)
+{
+    std::stringstream(token) >> *this;
+}
+
+encoding::encoding(const type& engine)
+  : value_(engine)
+{
+}
+
+encoding::operator const type&() const
 {
     return value_;
 }
@@ -72,35 +68,34 @@ std::istream& operator>>(std::istream& input, encoding& argument)
     else if (text == encoding_xml)
         argument.value_ = encoding_engine::xml;
     else
-    {
-        BOOST_THROW_EXCEPTION(invalid_option_value(text));
-    }
+        throw_istream_failure(text);
 
     return input;
 }
 
 std::ostream& operator<<(std::ostream& output, const encoding& argument)
 {
-    std::string value;
+    std::string text;
 
     switch (argument.value_)
     {
         case encoding_engine::info:
-            value = encoding_info;
+            text = encoding_info;
             break;
         case encoding_engine::json:
-            value = encoding_json;
+            text = encoding_json;
             break;
         case encoding_engine::xml:
-            value = encoding_xml;
+            text = encoding_xml;
             break;
         default:
-            BITCOIN_ASSERT_MSG(false, "Unexpected encoding value.");
+            throw_ostream_failure("encoding");
     }
 
+    output << text;
     return output;
 }
 
-} // namespace explorer
 } // namespace config
+} // namespace explorer
 } // namespace libbitcoin

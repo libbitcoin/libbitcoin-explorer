@@ -19,10 +19,8 @@
 #ifndef BX_ENDORSEMENT_HPP
 #define BX_ENDORSEMENT_HPP
 
-#include <array>
 #include <iostream>
 #include <string>
-#include <cstdint>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -30,82 +28,26 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-/**
- * Serialization helper to convert between endorsement string and data_chunk.
- */
+// TODO: eliminate and use byte vector with runtime size check.
+
 class BCX_API endorsement
 {
 public:
+    typedef system::data_chunk type;
 
-    /**
-     * Default constructor.
-     */
     endorsement();
-
-    /**
-     * Initialization constructor.
-     * @param[in]  hexcode  The value to initialize with.
-     */
-    endorsement(const std::string& hexcode);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
-     */
-    endorsement(const system::data_chunk& value);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
-     */
-    template<size_t Size>
-    endorsement(const system::byte_array<Size>& value)
-      : value_(value.begin(), value.end())
-    {
-    }
-
-    /**
-     * Copy constructor.
-     * @param[in]  other  The object to copy into self on construct.
-     */
     endorsement(const endorsement& other);
+    endorsement(const std::string& token);
+    endorsement(const type& value);
 
-    /**
-     * Overload cast to internal type.
-     * @return  This object's value cast to internal type.
-     */
-    operator const system::data_chunk&() const;
+    operator const type&() const;
 
-    /**
-     * Overload cast to generic data reference.
-     * @return  This object's value cast to a generic data reference.
-     */
-    operator system::data_slice() const;
-
-    /**
-     * Overload stream in. If input is invalid sets no bytes in argument.
-     * @param[in]   input     The input stream to read the value from.
-     * @param[out]  argument  The object to receive the read value.
-     * @return                The input stream reference.
-     */
-    friend std::istream& operator>>(std::istream& input,
-        endorsement& argument);
-
-    /**
-     * Overload stream out.
-     * @param[in]   output    The output stream to write the value to.
-     * @param[out]  argument  The object from which to obtain the value.
-     * @return                The output stream reference.
-     */
+    friend std::istream& operator>>(std::istream& input, endorsement& argument);
     friend std::ostream& operator<<(std::ostream& output,
         const endorsement& argument);
 
 private:
-
-    /**
-     * The state of this object.
-     */
-    system::data_chunk value_;
+    type value_;
 };
 
 } // namespace explorer

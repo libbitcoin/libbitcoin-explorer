@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/config/ec_private.hpp>
+#ifndef BX_SIGHASH_HPP
+#define BX_SIGHASH_HPP
 
 #include <iostream>
-#include <sstream>
 #include <string>
-#include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -29,49 +28,30 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-using namespace bc::system;
-using namespace po;
+// Enumeration mapper.
 
-// ec_secret base16 format is private to bx.
-static bool decode_secret(ec_secret& secret, const std::string& encoded)
+class BCX_API sighash
 {
-    return decode_base16(secret, encoded) && verify(secret);
-}
+public:
+    typedef system::machine::sighash_algorithm type;
 
-ec_private::ec_private(const std::string& hexcode)
-{
-    std::stringstream(hexcode) >> *this;
-}
+    sighash();
+    sighash(const sighash& other);
+    sighash(const std::string& token);
+    sighash(const type& value);
 
-ec_private::ec_private(const ec_secret& secret)
-  : value_(secret)
-{
-}
+    operator const type&() const;
 
-ec_private::operator const ec_secret&() const
-{
-    return value_;
-}
+    friend std::istream& operator>>(std::istream& input, sighash& argument);
+    friend std::ostream& operator<<(std::ostream& output,
+        const sighash& argument);
 
-std::istream& operator>>(std::istream& input, ec_private& argument)
-{
-    std::string hexcode;
-    input >> hexcode;
+private:
+    type value_;
+};
 
-    if (!decode_secret(argument.value_, hexcode))
-    {
-        BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
-    }
-
-    return input;
-}
-
-std::ostream& operator<<(std::ostream& output, const ec_private& argument)
-{
-    output << encode_base16(argument.value_);
-    return output;
-}
-
-} // namespace explorer
 } // namespace config
+} // namespace explorer
 } // namespace libbitcoin
+
+#endif

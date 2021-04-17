@@ -21,28 +21,15 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-using namespace bc::system;
-using namespace po;
-
 language::language()
-  : value_(wallet::language::none)
-{
-}
-
-language::language(const std::string& token)
-{
-    std::stringstream(token) >> *this;
-}
-
-language::language(wallet::language identifier)
-  : value_(identifier)
+  : value_(type::none)
 {
 }
 
@@ -51,7 +38,17 @@ language::language(const language& other)
 {
 }
 
-language::operator const wallet::language() const
+language::language(const std::string& token)
+{
+    std::stringstream(token) >> *this;
+}
+
+language::language(const type& value)
+  : value_(value)
+{
+}
+
+language::operator const type&() const
 {
     return value_;
 }
@@ -71,9 +68,7 @@ std::ostream& operator<<(std::ostream& output, const language& argument)
     const auto text = system::wallet::languages::to_name(argument);
 
     if (text.empty())
-    {
-        BITCOIN_ASSERT_MSG(false, "Unexpected language value.");
-    }
+        throw_ostream_failure("language");
 
     output << text;
     return output;
