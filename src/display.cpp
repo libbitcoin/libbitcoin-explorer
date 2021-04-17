@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <memory>
+#include <boost/algorithm/string/replace.hpp>
 #include <boost/format.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/dispatch.hpp>

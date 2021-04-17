@@ -19,39 +19,32 @@
 #ifndef BX_UTILITY_HPP
 #define BX_UTILITY_HPP
 
-#include <cstddef>
-#include <cstdint>
 #include <iostream>
-#include <cstdint>
-#include <fstream>
 #include <string>
-#include <system_error>
-#include <tuple>
-#include <vector>
-#include <boost/algorithm/string.hpp>
-#include <boost/bind.hpp>
-#include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/dynamic_bitset/dynamic_bitset.hpp>
-#include <boost/range/algorithm/find_if.hpp>
-#include <boost/lexical_cast.hpp>
-#include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/client.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 
 /**
- * Types for defining name-value pair list.
+ * Centralize istream exceptions.
  */
-typedef std::pair<std::string, std::string> name_value_pair;
-typedef std::vector<name_value_pair> name_value_pairs;
+inline void throw_istream_failure(const std::string& message)
+{
+    BOOST_THROW_EXCEPTION(po::invalid_option_value(message));
+}
 
 /**
- * Forward declaration to break header cycle.
+ * Centralize ostream exceptions.
  */
-class command;
+inline void throw_ostream_failure(const std::string& message)
+{
+    // TODO: maybe a better exception for ostream.
+    BOOST_THROW_EXCEPTION(po::invalid_option_value(message));
+}
 
 /**
  * Read an input stream to the specified type.
@@ -74,15 +67,14 @@ template <typename Value>
 void deserialize(Value& value, std::istream& input, bool trim);
 
 /**
- * Deserialize the tokens of a text string to a vector of the inner type.
- * @param      <Value>     The inner type.
- * @param[out] collection  The parsed vector value.
- * @param[in]  text        The text to convert.
- * @param[in]  trim        True if value should be trimmed before conversion.
+ * Get client connection settings for the given command.
+ * @param      <Command>  The bx command type.
+ * @param[in]  command    The bx command instance.
+ * return                 The connetion settings for the command.
  */
-template <typename Value>
-void deserialize(std::vector<Value>& collection, const std::string& text,
-    bool trim);
+template <typename Command>
+client::connection_settings get_connection(const Command& command);
+
 /**
  * If the variable is not yet loaded, load from stdin as fallback.
  * @param      <Value>    The type of the parameter to load.
@@ -121,81 +113,11 @@ void write_file(std::ostream& output, const std::string& path,
     const Instance& instance, bool terminate=true);
 
 /**
- * Get the connection settings for the configured network.
- * @param    command  The command.
- * @returns           A structure containing the connection settings.
- */
-BCX_API client::connection_settings get_connection(const command& command);
-
-/**
- * Generate a new ec key from a seed.
- * @param[in]  seed  The seed for key randomness.
- * @return           The new key.
- */
-BCX_API system::ec_secret new_key(const system::data_chunk& seed);
-
-/**
- * Generate a new pseudorandom seed.
- * @param[in]  seed  The seed length in bits. Will be aligned to nearest byte.
- * @return           The new key.
- */
-BCX_API system::data_chunk new_seed(size_t bit_length=minimum_seed_bits);
-
-/**
- * Convert a list of indexes to a list of strings. This could be generalized.
- * @param[in]  indexes  The list of indexes to convert.
- * @return              The list of strings.
- */
-BCX_API system::string_list numbers_to_strings(
-    const system::chain::point::indexes& indexes);
-
-/**
  * Get a message from the specified input stream.
  * @param[in]  stream The input stream to read.
  * @return            The message read from the input stream.
  */
 BCX_API std::string read_stream(std::istream& stream);
-
-/**
- * Convert any script to an opcode::raw_data script (e.g. for input signing).
- * @param[in]  script  The script to convert.
- * @return             The data script.
- */
-BCX_API system::chain::script script_to_raw_data_script(
-    const system::chain::script& script);
-
-/**
- * Split a list of tokens with delimiters into a name-value pair list.
- * @param[in]  tokens     The string to test
- * @param[in]  delimiter  The delimiter, defualts to ":".
- * @return                The name-value pair list.
- */
-name_value_pairs split_pairs(const std::vector<std::string> tokens,
-    const std::string delimiter=":");
-
-/**
- * Determine if a string starts with another (case insensitive).
- * @param[in]  value   The string to test
- * @param[in]  prefix  The prefix to test against.
- * @return             True if the value is prefixed by the prefix.
- */
-BCX_API bool starts_with(const std::string& value, const std::string& prefix);
-
-/**
- * Unwrap a wrapped payload.
- * @param[in]  data     The data structure to accept the unwrap.
- * @param[in]  wrapped  The wrapped data to unwrap.
- * @return              True if input checksum validates.
- */
-BCX_API bool unwrap(system::wallet::wrapped_data& data,
-    system::data_slice wrapped);
-
-/**
- * Wrap arbitrary data.
- * @param[in]  data  The data structure to wrap.
- * @return           The wrapped data.
- */
-BCX_API system::data_chunk wrap(const system::wallet::wrapped_data& data);
 
 /**
  * Serialize a property tree using a specified encoding.

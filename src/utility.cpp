@@ -18,24 +18,15 @@
  */
 #include <bitcoin/explorer/utility.hpp>
 
-#include <algorithm>
-#include <iomanip>
-#include <iostream>
 #include <cstdint>
-#include <vector>
-#include <boost/date_time.hpp>
-#include <boost/filesystem.hpp>
-#include <boost/format.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/predicate.hpp>
+#include <iostream>
+#include <iterator>
+#include <string>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/info_parser.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <bitcoin/client.hpp>
-#include <bitcoin/explorer/command.hpp>
-#include <bitcoin/explorer/define.hpp>
 
 using namespace bc::client;
 using namespace bc::system;
@@ -44,109 +35,12 @@ using boost::filesystem::path;
 namespace libbitcoin {
 namespace explorer {
 
-connection_settings get_connection(const command& command)
-{
-    return connection_settings
-    {
-        command.get_server_connect_retries_setting(),
-        command.get_server_url_setting(),
-        command.get_server_block_url_setting(),
-        command.get_server_transaction_url_setting(),
-        command.get_server_socks_proxy_setting(),
-        command.get_server_server_public_key_setting(),
-        command.get_server_client_private_key_setting()
-    };
-}
-
-// The key may be invalid, caller may test for null secret.
-ec_secret new_key(const data_chunk& seed)
-{
-    const wallet::hd_private key(seed);
-    return key.secret();
-}
-
-// Not testable due to lack of random engine injection.
-data_chunk new_seed(size_t bit_length)
-{
-    size_t fill_seed_size = bit_length / byte_bits;
-    data_chunk seed(fill_seed_size);
-    pseudo_random_fill(seed);
-    return seed;
-}
-
-string_list numbers_to_strings(
-    const chain::point::indexes& indexes)
-{
-    string_list stringlist;
-
-    for (const auto index: indexes)
-        stringlist.push_back(std::to_string(index));
-
-    return stringlist;
-}
-
-// TODO: switch to binary for raw (primitive) reads in windows.
+// TODO: switch to binary for raw (primitive) reads in Win32.
 std::string read_stream(std::istream& stream)
 {
     std::istreambuf_iterator<char> first(stream), last;
     std::string result(first, last);
     return result;
-}
-
-name_value_pairs split_pairs(const std::vector<std::string> tokens,
-    const std::string delimiter)
-{
-    name_value_pairs list;
-
-    for (const auto& token: tokens)
-    {
-        const auto words = split(token, delimiter);
-        const auto& left = words[0];
-
-        std::string right;
-        if (words.size() > 1)
-            right = words[1];
-
-        list.push_back(std::make_pair(left, right));
-    }
-
-    return list;
-}
-
-bool starts_with(const std::string& value, const std::string& prefix)
-{
-    try
-    {
-        return boost::istarts_with(value, prefix);
-    }
-    catch (boost::bad_lexical_cast)
-    {
-        return false;
-    }
-}
-
-// This verifies the checksum.
-bool unwrap(wallet::wrapped_data& data, data_slice wrapped)
-{
-    if (!verify_checksum(wrapped))
-        return false;
-
-    data.version = wrapped.data()[0];
-    const auto payload_begin = std::begin(wrapped) + 1;
-    const auto checksum_begin = std::end(wrapped) - checksum_size;
-    data.payload.resize(checksum_begin - payload_begin);
-    std::copy(payload_begin, checksum_begin, data.payload.begin());
-    data.checksum = from_little_endian_unsafe<uint32_t>(checksum_begin);
-    return true;
-}
-
-// This recalculates the checksum, ignoring what is in data.checksum.
-data_chunk wrap(const wallet::wrapped_data& data)
-{
-    auto bytes = to_chunk(data.version);
-    extend_data(bytes, data.payload);
-    append_checksum(bytes);
-    return bytes;
 }
 
 // We aren't yet using a reader, although it is possible using ptree.

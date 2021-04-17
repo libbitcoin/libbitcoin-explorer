@@ -19,31 +19,12 @@
 #ifndef BX_UTILITY_IPP
 #define BX_UTILITY_IPP
 
-#ifdef _MSC_VER
-// Suppressing msvc warnings from boost that are heard to deal with
-// because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
-// without sampling it first.
-#pragma warning(push)
-#pragma warning(disable : 4996)
-#endif
-#include <cstddef>
 #include <iostream>
-#include <cstdint>
 #include <string>
-#include <system_error>
-#include <tuple>
-#include <vector>
-#include <boost/algorithm/string.hpp>
-#include <boost/bind.hpp>
+#include <boost/any.hpp>
 #include <boost/program_options.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/dynamic_bitset/dynamic_bitset.hpp>
-#include <boost/range/algorithm/find_if.hpp>
-#include <boost/lexical_cast.hpp>
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/client.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -58,6 +39,21 @@ template <typename Value>
 void deserialize(Value& value, std::istream& input, bool trim)
 {
     system::deserialize(value, read_stream(input), trim);
+}
+
+template <typename Command>
+client::connection_settings get_connection(const Command& command)
+{
+    return
+    {
+        command.get_server_connect_retries_setting(),
+        command.get_server_url_setting(),
+        command.get_server_block_url_setting(),
+        command.get_server_transaction_url_setting(),
+        command.get_server_socks_proxy_setting(),
+        command.get_server_server_public_key_setting(),
+        command.get_server_client_private_key_setting()
+    };
 }
 
 template <typename Value>
@@ -89,9 +85,7 @@ void load_path(Value& parameter, const std::string& name,
 
     system::ifstream file(path, std::ios::binary);
     if (!file.good())
-    {
-        BOOST_THROW_EXCEPTION(po::invalid_option_value(path));
-    }
+        throw_istream_failure(path);
 
     system::deserialize(parameter, file, !raw);
 }
