@@ -78,6 +78,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/ek-public.cpp \
     src/commands/ek-to-address.cpp \
     src/commands/ek-to-ec.cpp \
+    src/commands/electrum-decode.cpp \
     src/commands/electrum-new.cpp \
     src/commands/electrum-to-seed.cpp \
     src/commands/fetch-balance.cpp \
@@ -152,20 +153,18 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/wrap-decode.cpp \
     src/commands/wrap-encode.cpp \
     src/config/address.cpp \
-    src/config/address_format.cpp \
     src/config/algorithm.cpp \
     src/config/btc.cpp \
     src/config/byte.cpp \
-    src/config/cert_key.cpp \
-    src/config/ec_private.cpp \
+    src/config/bytes.cpp \
     src/config/electrum.cpp \
     src/config/encoding.cpp \
     src/config/endorsement.cpp \
-    src/config/hashtype.cpp \
     src/config/hd_key.cpp \
     src/config/language.cpp \
-    src/config/raw.cpp \
+    src/config/sighash.cpp \
     src/config/signature.cpp \
+    src/config/witness.cpp \
     src/config/wrapper.cpp
 
 # console/bx => ${bindir}
@@ -428,9 +427,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/uri-encode.hpp \
     include/bitcoin/explorer/commands/validate-tx.hpp \
     include/bitcoin/explorer/commands/version.hpp \
-    include/bitcoin/explorer/commands/watch-address.hpp \
     include/bitcoin/explorer/commands/watch-key.hpp \
-    include/bitcoin/explorer/commands/watch-stealth.hpp \
     include/bitcoin/explorer/commands/watch-tx.hpp \
     include/bitcoin/explorer/commands/wif-to-ec.hpp \
     include/bitcoin/explorer/commands/wif-to-public.hpp \
@@ -441,20 +438,18 @@ include_bitcoin_explorer_commands_HEADERS = \
 include_bitcoin_explorer_configdir = ${includedir}/bitcoin/explorer/config
 include_bitcoin_explorer_config_HEADERS = \
     include/bitcoin/explorer/config/address.hpp \
-    include/bitcoin/explorer/config/address_format.hpp \
     include/bitcoin/explorer/config/algorithm.hpp \
     include/bitcoin/explorer/config/btc.hpp \
     include/bitcoin/explorer/config/byte.hpp \
-    include/bitcoin/explorer/config/cert_key.hpp \
-    include/bitcoin/explorer/config/ec_private.hpp \
+    include/bitcoin/explorer/config/bytes.hpp \
     include/bitcoin/explorer/config/electrum.hpp \
     include/bitcoin/explorer/config/encoding.hpp \
     include/bitcoin/explorer/config/endorsement.hpp \
-    include/bitcoin/explorer/config/hashtype.hpp \
     include/bitcoin/explorer/config/hd_key.hpp \
     include/bitcoin/explorer/config/language.hpp \
-    include/bitcoin/explorer/config/raw.hpp \
+    include/bitcoin/explorer/config/sighash.hpp \
     include/bitcoin/explorer/config/signature.hpp \
+    include/bitcoin/explorer/config/witness.hpp \
     include/bitcoin/explorer/config/wrapper.hpp
 
 include_bitcoin_explorer_impldir = ${includedir}/bitcoin/explorer/impl

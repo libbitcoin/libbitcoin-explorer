@@ -29,20 +29,18 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -55,8 +53,12 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_MNEMONIC_DECODE_OBSOLETE \
-    "Electrum version 1 functions are obsolete. Use electrum-to-seed or mnemonic-to-seed (BIP39) command instead."
+#define BX_MNEMONIC_DECODE_INVALID_WORD_COUNT \
+    "The word count is not 12, 15, 18, 21, or 24."
+#define BX_MNEMONIC_DECODE_INVALID_WORDS \
+    "The mnemonic is not from the specified dictionary."
+#define BX_MNEMONIC_DECODE_INVALID_WORDS_ICU \
+    "The mnemonic is not from the specified dictionary. This is not an ICU build. Ensure that the mnemonic is prenormalized."
 
 /**
  * Class to implement the mnemonic-decode command.
@@ -73,7 +75,6 @@ public:
     {
         return "mnemonic-decode";
     }
-
 
     /**
      * Destructor.
@@ -95,7 +96,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ELECTRUM";
+        return "WALLET";
     }
 
     /**
@@ -103,16 +104,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Convert a seed to its Electrum mnemonic.";
-    }
-
-    /**
-     * Declare whether the command has been obsoleted.
-     * @return  True if the command is obsolete
-     */
-    virtual bool obsolete()
-    {
-        return true;
+        return "Convert a BIP39 mnemonic to its numeric entropy.";
     }
 
     /**
@@ -122,7 +114,8 @@ public:
      */
     virtual system::arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("WORD", -1);
     }
 
     /**
@@ -133,6 +126,8 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_words_argument(), "WORD", variables, input, raw);
     }
 
     /**
@@ -154,6 +149,16 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
+        )
+        (
+            "language,l",
+            value<explorer::config::language>(&option_.language),
+            "The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant'', 'none', and 'any', defaults to 'any'."
+        )
+        (
+            "WORD",
+            value<std::vector<std::string>>(&argument_.words),
+            "The set of 12, 15, 18, 21, or 24 words that that make up the mnemonic. If not specified the words are read from STDIN."
         );
 
         return options;
@@ -178,6 +183,40 @@ public:
 
     /* Properties */
 
+    /**
+     * Get the value of the WORD arguments.
+     */
+    virtual std::vector<std::string>& get_words_argument()
+    {
+        return argument_.words;
+    }
+
+    /**
+     * Set the value of the WORD arguments.
+     */
+    virtual void set_words_argument(
+        const std::vector<std::string>& value)
+    {
+        argument_.words = value;
+    }
+
+    /**
+     * Get the value of the language option.
+     */
+    virtual explorer::config::language& get_language_option()
+    {
+        return option_.language;
+    }
+
+    /**
+     * Set the value of the language option.
+     */
+    virtual void set_language_option(
+        const explorer::config::language& value)
+    {
+        option_.language = value;
+    }
+
 private:
 
     /**
@@ -188,9 +227,11 @@ private:
     struct argument
     {
         argument()
+          : words()
         {
         }
 
+        std::vector<std::string> words;
     } argument_;
 
     /**
@@ -201,9 +242,11 @@ private:
     struct option
     {
         option()
+          : language()
         {
         }
 
+        explorer::config::language language;
     } option_;
 };
 

@@ -29,20 +29,18 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -55,8 +53,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_MNEMONIC_ENCODE_OBSOLETE \
-    "Electrum version 1 functions are obsolete. Use electrum-new or mnemonic-new (BIP39) command instead."
+#define BX_MNEMONIC_ENCODE_INVALID_ENTROPY_SIZE \
+    "The entropy size is not 16, 20, 24, 28, or 32 bytes."
 
 /**
  * Class to implement the mnemonic-encode command.
@@ -72,14 +70,6 @@ public:
     static const char* symbol()
     {
         return "mnemonic-encode";
-    }
-
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    static const char* formerly()
-    {
-        return "mnemonic";
     }
 
     /**
@@ -102,7 +92,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ELECTRUM";
+        return "WALLET";
     }
 
     /**
@@ -110,16 +100,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Convert an Electrum mnemonic to its seed.";
-    }
-
-    /**
-     * Declare whether the command has been obsoleted.
-     * @return  True if the command is obsolete
-     */
-    virtual bool obsolete()
-    {
-        return true;
+        return "Convert numeric entropy to its BIP39 mnemonic.";
     }
 
     /**
@@ -129,7 +110,8 @@ public:
      */
     virtual system::arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("ENTROPY", 1);
     }
 
     /**
@@ -140,6 +122,8 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_entropy_argument(), "ENTROPY", variables, input, raw);
     }
 
     /**
@@ -161,6 +145,16 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
+        )
+        (
+            "language,l",
+            value<explorer::config::language>(&option_.language),
+            "The dictionary to generate the mnemonic from. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'."
+        )
+        (
+            "ENTROPY",
+            value<system::config::base16>(&argument_.entropy),
+            "The 16, 20, 24, 28, or 32 bytes of Base16 entropy from which the mnemonic is derived. If not specified the entropy is read from STDIN."
         );
 
         return options;
@@ -185,6 +179,40 @@ public:
 
     /* Properties */
 
+    /**
+     * Get the value of the ENTROPY argument.
+     */
+    virtual system::config::base16& get_entropy_argument()
+    {
+        return argument_.entropy;
+    }
+
+    /**
+     * Set the value of the ENTROPY argument.
+     */
+    virtual void set_entropy_argument(
+        const system::config::base16& value)
+    {
+        argument_.entropy = value;
+    }
+
+    /**
+     * Get the value of the language option.
+     */
+    virtual explorer::config::language& get_language_option()
+    {
+        return option_.language;
+    }
+
+    /**
+     * Set the value of the language option.
+     */
+    virtual void set_language_option(
+        const explorer::config::language& value)
+    {
+        option_.language = value;
+    }
+
 private:
 
     /**
@@ -195,9 +223,11 @@ private:
     struct argument
     {
         argument()
+          : entropy()
         {
         }
 
+        system::config::base16 entropy;
     } argument_;
 
     /**
@@ -208,9 +238,11 @@ private:
     struct option
     {
         option()
+          : language()
         {
         }
 
+        explorer::config::language language;
     } option_;
 };
 

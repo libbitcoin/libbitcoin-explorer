@@ -29,20 +29,18 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -67,7 +65,6 @@ public:
     {
         return "ec-to-wif";
     }
-
 
     /**
      * Destructor.
@@ -155,7 +152,7 @@ public:
         )
         (
             "EC_PRIVATE_KEY",
-            value<explorer::config::ec_private>(&argument_.ec_private_key),
+            value<system::wallet::ec_private>(&argument_.ec_private_key),
             "The Base16 EC private key to convert. If not specified the key is read from STDIN."
         );
 
@@ -190,7 +187,7 @@ public:
     /**
      * Get the value of the EC_PRIVATE_KEY argument.
      */
-    virtual explorer::config::ec_private& get_ec_private_key_argument()
+    virtual system::wallet::ec_private& get_ec_private_key_argument()
     {
         return argument_.ec_private_key;
     }
@@ -199,7 +196,7 @@ public:
      * Set the value of the EC_PRIVATE_KEY argument.
      */
     virtual void set_ec_private_key_argument(
-        const explorer::config::ec_private& value)
+        const system::wallet::ec_private& value)
     {
         argument_.ec_private_key = value;
     }
@@ -252,7 +249,7 @@ private:
         {
         }
 
-        explorer::config::ec_private ec_private_key;
+        system::wallet::ec_private ec_private_key;
     } argument_;
 
     /**

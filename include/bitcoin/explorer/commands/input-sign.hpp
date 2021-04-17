@@ -29,20 +29,18 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -172,12 +170,12 @@ public:
         )
         (
             "sign_type,s",
-            value<explorer::config::hashtype>(&option_.sign_type),
+            value<explorer::config::sighash>(&option_.sign_type),
             "A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', and 'single', defaults to 'all'."
         )
         (
             "EC_PRIVATE_KEY",
-            value<explorer::config::ec_private>(&argument_.ec_private_key)->required(),
+            value<system::wallet::ec_private>(&argument_.ec_private_key)->required(),
             "The Base16 EC private key to sign with."
         )
         (
@@ -216,7 +214,7 @@ public:
     /**
      * Get the value of the EC_PRIVATE_KEY argument.
      */
-    virtual explorer::config::ec_private& get_ec_private_key_argument()
+    virtual system::wallet::ec_private& get_ec_private_key_argument()
     {
         return argument_.ec_private_key;
     }
@@ -225,7 +223,7 @@ public:
      * Set the value of the EC_PRIVATE_KEY argument.
      */
     virtual void set_ec_private_key_argument(
-        const explorer::config::ec_private& value)
+        const system::wallet::ec_private& value)
     {
         argument_.ec_private_key = value;
     }
@@ -301,7 +299,7 @@ public:
     /**
      * Get the value of the sign_type option.
      */
-    virtual explorer::config::hashtype& get_sign_type_option()
+    virtual explorer::config::sighash& get_sign_type_option()
     {
         return option_.sign_type;
     }
@@ -310,7 +308,7 @@ public:
      * Set the value of the sign_type option.
      */
     virtual void set_sign_type_option(
-        const explorer::config::hashtype& value)
+        const explorer::config::sighash& value)
     {
         option_.sign_type = value;
     }
@@ -331,7 +329,7 @@ private:
         {
         }
 
-        explorer::config::ec_private ec_private_key;
+        system::wallet::ec_private ec_private_key;
         system::config::script contract;
         system::config::transaction transaction;
     } argument_;
@@ -352,7 +350,7 @@ private:
 
         bool anyone;
         uint32_t index;
-        explorer::config::hashtype sign_type;
+        explorer::config::sighash sign_type;
     } option_;
 };
 

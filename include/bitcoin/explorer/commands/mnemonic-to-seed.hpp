@@ -29,20 +29,18 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -55,14 +53,14 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE \
-    "The number of words must be divisible by 3."
-#define BX_MNEMONIC_TO_SEED_REQUIRES_ICU \
-    "The passphrase option requires an ICU build."
-#define BX_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE \
-    "WARNING: The specified words are not a valid mnemonic in the specified dictionary."
-#define BX_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES \
-    "WARNING: The specified words are not a valid mnemonic in any supported dictionary."
+#define BX_MNEMONIC_TO_SEED_INVALID_WORD_COUNT \
+    "The word count is not 12, 15, 18, 21, or 24."
+#define BX_MNEMONIC_TO_SEED_INVALID_WORDS \
+    "The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported."
+#define BX_MNEMONIC_TO_SEED_INVALID_WORDS_ICU \
+    "The mnemonic is not from the specified dictionary. This is not an ICU build, so ensure that the mnemonic is prenormalized. Non-dictionary mnemonics are not supported."
+#define BX_MNEMONIC_TO_SEED_PASSPHRASE_ICU \
+    "This is not an ICU build, so the passphrase is limited to ascii characters."
 
 /**
  * Class to implement the mnemonic-to-seed command.
@@ -79,7 +77,6 @@ public:
     {
         return "mnemonic-to-seed";
     }
-
 
     /**
      * Destructor.
@@ -109,7 +106,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Convert a mnemonic seed (BIP39) to its numeric representation.";
+        return "Convert a BIP39 dictionary-based mnemonic to a wallet seed. Entropy cannot be derived from the seed. WARNING: mnemonic should be created from properly generated entropy.";
     }
 
     /**
@@ -158,17 +155,17 @@ public:
         (
             "language,l",
             value<explorer::config::language>(&option_.language),
-            "The language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'fr', 'it', 'ja', 'cs', 'ru', 'uk', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'any'."
+            "The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant', 'none', and 'any', defaults to 'any'."
         )
         (
             "passphrase,p",
             value<std::string>(&option_.passphrase),
-            "An optional passphrase for converting the mnemonic to a seed."
+            "An optional passphrase for the seed."
         )
         (
             "WORD",
             value<std::vector<std::string>>(&argument_.words),
-            "The set of words that that make up the mnemonic. If not specified the words are read from STDIN."
+            "The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN."
         );
 
         return options;

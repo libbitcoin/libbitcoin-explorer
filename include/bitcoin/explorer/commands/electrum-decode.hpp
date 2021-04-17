@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_MNEMONIC_NEW_HPP
-#define BX_MNEMONIC_NEW_HPP
+#ifndef BX_ELECTRUM_DECODE_HPP
+#define BX_ELECTRUM_DECODE_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -29,20 +29,18 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -55,13 +53,17 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_MNEMONIC_NEW_INVALID_SEED \
-    "The seed length in bytes is not evenly divisible by 32 bits."
+#define BX_ELECTRUM_DECODE_INVALID_WORD_COUNT \
+    "The word count is not 12 to 46."
+#define BX_ELECTRUM_DECODE_INVALID_WORDS \
+    "The mnemonic is not from the specified dictionary."
+#define BX_ELECTRUM_DECODE_INVALID_WORDS_ICU \
+    "The mnemonic is not from the specified dictionary. This is not an ICU build. Ensure that the mnemonic is prenormalized."
 
 /**
- * Class to implement the mnemonic-new command.
+ * Class to implement the electrum-decode command.
  */
-class BCX_API mnemonic_new
+class BCX_API electrum_decode
   : public command
 {
 public:
@@ -71,14 +73,13 @@ public:
      */
     static const char* symbol()
     {
-        return "mnemonic-new";
+        return "electrum-decode";
     }
-
 
     /**
      * Destructor.
      */
-    virtual ~mnemonic_new()
+    virtual ~electrum_decode()
     {
     }
 
@@ -87,7 +88,7 @@ public:
      */
     virtual const char* name()
     {
-        return mnemonic_new::symbol();
+        return electrum_decode::symbol();
     }
 
     /**
@@ -103,7 +104,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a mnemonic seed (BIP39) from entropy. WARNING: mnemonic should be created from properly generated entropy.";
+        return "Convert an Electrum mnemonic to its numeric entropy. Entropy round-trips with the electrum-new command.";
     }
 
     /**
@@ -114,7 +115,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SEED", 1);
+            .add("WORD", -1);
     }
 
     /**
@@ -126,7 +127,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_seed_argument(), "SEED", variables, input, raw);
+        load_input(get_words_argument(), "WORD", variables, input, raw);
     }
 
     /**
@@ -152,12 +153,12 @@ public:
         (
             "language,l",
             value<explorer::config::language>(&option_.language),
-            "The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'fr', 'it', 'ja', 'cs', 'ru', 'uk', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'."
+            "The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant', and 'any', defaults to 'any'."
         )
         (
-            "SEED",
-            value<system::config::base16>(&argument_.seed),
-            "The Base16 entropy from which the mnemonic is created. The length must be evenly divisible by 32 bits. If not specified the entropy is read from STDIN."
+            "WORD",
+            value<std::vector<std::string>>(&argument_.words),
+            "The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN."
         );
 
         return options;
@@ -183,20 +184,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SEED argument.
+     * Get the value of the WORD arguments.
      */
-    virtual system::config::base16& get_seed_argument()
+    virtual std::vector<std::string>& get_words_argument()
     {
-        return argument_.seed;
+        return argument_.words;
     }
 
     /**
-     * Set the value of the SEED argument.
+     * Set the value of the WORD arguments.
      */
-    virtual void set_seed_argument(
-        const system::config::base16& value)
+    virtual void set_words_argument(
+        const std::vector<std::string>& value)
     {
-        argument_.seed = value;
+        argument_.words = value;
     }
 
     /**
@@ -226,11 +227,11 @@ private:
     struct argument
     {
         argument()
-          : seed()
+          : words()
         {
         }
 
-        system::config::base16 seed;
+        std::vector<std::string> words;
     } argument_;
 
     /**
