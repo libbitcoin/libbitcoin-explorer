@@ -53,8 +53,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_SEED_BIT_LENGTH_UNSUPPORTED \
-    "The seed size is not supported."
+#define BX_SEED_OBSOLETE \
+    "This command is obsolete. Use the entropy command instead."
 
 /**
  * Class to implement the seed command.
@@ -104,6 +104,15 @@ public:
     }
 
     /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    virtual bool obsolete()
+    {
+        return true;
+    }
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -142,11 +151,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "bit_length,b",
-            value<uint16_t>(&option_.bit_length)->default_value(192),
-            "The length of the seed in bits. Must be divisible by 8 and must not be less than 128, defaults to 192."
         );
 
         return options;
@@ -171,23 +175,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the bit_length option.
-     */
-    virtual uint16_t& get_bit_length_option()
-    {
-        return option_.bit_length;
-    }
-
-    /**
-     * Set the value of the bit_length option.
-     */
-    virtual void set_bit_length_option(
-        const uint16_t& value)
-    {
-        option_.bit_length = value;
-    }
-
 private:
 
     /**
@@ -211,11 +198,9 @@ private:
     struct option
     {
         option()
-          : bit_length()
         {
         }
 
-        uint16_t bit_length;
     } option_;
 };
 

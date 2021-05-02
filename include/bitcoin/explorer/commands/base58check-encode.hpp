@@ -51,6 +51,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_BASE58CHECK_ENCODE_OBSOLETE \
+    "This command is obsolete. Use combination of base58-encode and checked-decode instead."
+
+/**
  * Class to implement the base58check-encode command.
  */
 class BCX_API base58check_encode
@@ -98,14 +104,22 @@ public:
     }
 
     /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    virtual bool obsolete()
+    {
+        return true;
+    }
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
     virtual system::arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("BASE16", 1);
+        return get_argument_metadata();
     }
 
     /**
@@ -116,8 +130,6 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_base16_argument(), "BASE16", variables, input, raw);
     }
 
     /**
@@ -139,16 +151,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "version,v",
-            value<explorer::config::byte>(&option_.version)->default_value(0),
-            "The desired version number."
-        )
-        (
-            "BASE16",
-            value<system::config::base16>(&argument_.base16),
-            "The Base16 value to Base58Check encode. If not specified the value is read from STDIN."
         );
 
         return options;
@@ -160,12 +162,6 @@ public:
      */
     virtual void set_defaults_from_config(po::variables_map& variables)
     {
-        const auto& option_version = variables["version"];
-        const auto& option_version_config = variables["wallet.pay_to_public_key_hash_version"];
-        if (option_version.defaulted() && !option_version_config.defaulted())
-        {
-            option_.version = option_version_config.as<explorer::config::byte>();
-        }
     }
 
     /**
@@ -179,40 +175,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the BASE16 argument.
-     */
-    virtual system::config::base16& get_base16_argument()
-    {
-        return argument_.base16;
-    }
-
-    /**
-     * Set the value of the BASE16 argument.
-     */
-    virtual void set_base16_argument(
-        const system::config::base16& value)
-    {
-        argument_.base16 = value;
-    }
-
-    /**
-     * Get the value of the version option.
-     */
-    virtual explorer::config::byte& get_version_option()
-    {
-        return option_.version;
-    }
-
-    /**
-     * Set the value of the version option.
-     */
-    virtual void set_version_option(
-        const explorer::config::byte& value)
-    {
-        option_.version = value;
-    }
-
 private:
 
     /**
@@ -223,11 +185,9 @@ private:
     struct argument
     {
         argument()
-          : base16()
         {
         }
 
-        system::config::base16 base16;
     } argument_;
 
     /**
@@ -238,11 +198,9 @@ private:
     struct option
     {
         option()
-          : version()
         {
         }
 
-        explorer::config::byte version;
     } option_;
 };
 

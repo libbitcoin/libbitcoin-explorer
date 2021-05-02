@@ -51,6 +51,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_BASE58CHECK_DECODE_OBSOLETE \
+    "This command is obsolete. Use combination of checked-encode and base58-encode instead."
+
+/**
  * Class to implement the base58check-decode command.
  */
 class BCX_API base58check_decode
@@ -98,14 +104,22 @@ public:
     }
 
     /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    virtual bool obsolete()
+    {
+        return true;
+    }
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
     virtual system::arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("BASE58CHECK", 1);
+        return get_argument_metadata();
     }
 
     /**
@@ -116,8 +130,6 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_base58check_argument(), "BASE58CHECK", variables, input, raw);
     }
 
     /**
@@ -139,16 +151,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
-        )
-        (
-            "BASE58CHECK",
-            value<system::config::base58>(&argument_.base58check),
-            "The Base58Check value to decode. If not specified the value is read from STDIN."
         );
 
         return options;
@@ -173,40 +175,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the BASE58CHECK argument.
-     */
-    virtual system::config::base58& get_base58check_argument()
-    {
-        return argument_.base58check;
-    }
-
-    /**
-     * Set the value of the BASE58CHECK argument.
-     */
-    virtual void set_base58check_argument(
-        const system::config::base58& value)
-    {
-        argument_.base58check = value;
-    }
-
-    /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
-    }
-
 private:
 
     /**
@@ -217,11 +185,9 @@ private:
     struct argument
     {
         argument()
-          : base58check()
         {
         }
 
-        system::config::base58 base58check;
     } argument_;
 
     /**
@@ -232,11 +198,9 @@ private:
     struct option
     {
         option()
-          : format()
         {
         }
 
-        explorer::config::encoding format;
     } option_;
 };
 

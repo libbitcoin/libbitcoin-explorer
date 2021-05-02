@@ -51,6 +51,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_WRAP_ENCODE_OBSOLETE \
+    "This command is obsolete. Use checked-encode instead."
+
+/**
  * Class to implement the wrap-encode command.
  */
 class BCX_API wrap_encode
@@ -64,14 +70,6 @@ public:
     static const char* symbol()
     {
         return "wrap-encode";
-    }
-
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    static const char* formerly()
-    {
-        return "wrap";
     }
 
     /**
@@ -106,14 +104,22 @@ public:
     }
 
     /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    virtual bool obsolete()
+    {
+        return true;
+    }
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
     virtual system::arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("PAYLOAD", 1);
+        return get_argument_metadata();
     }
 
     /**
@@ -124,8 +130,6 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_payload_argument(), "PAYLOAD", variables, input, raw);
     }
 
     /**
@@ -147,16 +151,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "version,v",
-            value<explorer::config::byte>(&option_.version)->default_value(0),
-            "The desired version number."
-        )
-        (
-            "PAYLOAD",
-            value<system::config::base16>(&argument_.payload),
-            "The Base16 data to wrap. If not specified the value is read from STDIN."
         );
 
         return options;
@@ -168,12 +162,6 @@ public:
      */
     virtual void set_defaults_from_config(po::variables_map& variables)
     {
-        const auto& option_version = variables["version"];
-        const auto& option_version_config = variables["wallet.pay_to_public_key_hash_version"];
-        if (option_version.defaulted() && !option_version_config.defaulted())
-        {
-            option_.version = option_version_config.as<explorer::config::byte>();
-        }
     }
 
     /**
@@ -187,40 +175,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the PAYLOAD argument.
-     */
-    virtual system::config::base16& get_payload_argument()
-    {
-        return argument_.payload;
-    }
-
-    /**
-     * Set the value of the PAYLOAD argument.
-     */
-    virtual void set_payload_argument(
-        const system::config::base16& value)
-    {
-        argument_.payload = value;
-    }
-
-    /**
-     * Get the value of the version option.
-     */
-    virtual explorer::config::byte& get_version_option()
-    {
-        return option_.version;
-    }
-
-    /**
-     * Set the value of the version option.
-     */
-    virtual void set_version_option(
-        const explorer::config::byte& value)
-    {
-        option_.version = value;
-    }
-
 private:
 
     /**
@@ -231,11 +185,9 @@ private:
     struct argument
     {
         argument()
-          : payload()
         {
         }
 
-        system::config::base16 payload;
     } argument_;
 
     /**
@@ -246,11 +198,9 @@ private:
     struct option
     {
         option()
-          : version()
         {
         }
 
-        explorer::config::byte version;
     } option_;
 };
 
