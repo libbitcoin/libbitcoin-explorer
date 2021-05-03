@@ -59,7 +59,6 @@ std::istream& operator>>(std::istream& input, language& argument)
     input >> text;
 
     argument = system::wallet::languages::from_name(text);
-
     return input;
 }
 

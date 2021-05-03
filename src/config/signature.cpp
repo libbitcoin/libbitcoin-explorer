@@ -65,7 +65,6 @@ std::istream& operator>>(std::istream& input, signature& argument)
         throw istream_failure(text);
 
     std::copy(out.begin(), out.end(), argument.value_.begin());
-
     return input;
 }
 
