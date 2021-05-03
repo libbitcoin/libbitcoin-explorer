@@ -18,14 +18,6 @@
  */
 #include <bitcoin/explorer/commands/ec-new.hpp>
 
-#include <iostream>
-#include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/utility.hpp>
-
-
-// The BX_EC_NEW_INVALID_KEY condition is not covered by test.
-// This is because is not known what seed will produce an invalid key.
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
@@ -35,17 +27,19 @@ using namespace bc::system;
 console_result ec_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const data_chunk& entropy = get_seed_argument();
+    const data_chunk& entropy = get_entropy_argument();
 
     if (entropy.size() < minimum_seed_size)
     {
-        error << BX_EC_NEW_SHORT_SEED << std::endl;
+        error << BX_EC_NEW_SHORT_ENTROPY << std::endl;
         return console_result::failure;
     }
 
     // Use hd_private to derive and validate a secret from entropy.
     const wallet::hd_private key(entropy);
 
+    // This condition is not covered by test because is not known what entropy
+    // will produce an invalid key.
     if (!key)
     {
         error << BX_EC_NEW_INVALID_KEY << std::endl;
