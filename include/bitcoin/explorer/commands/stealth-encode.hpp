@@ -100,7 +100,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Encode a stealth payment address.";
+        return "Encode a stealth payment address. Does not support stealth multisignature.";
     }
 
     /**
@@ -112,7 +112,7 @@ public:
     {
         return get_argument_metadata()
             .add("SCAN_PUBKEY", 1)
-            .add("SPEND_PUBKEY", -1);
+            .add("SPEND_PUBKEY", 1);
     }
 
     /**
@@ -162,8 +162,8 @@ public:
         )
         (
             "SPEND_PUBKEY",
-            value<std::vector<system::wallet::ec_public>>(&argument_.spend_pubkeys),
-            "The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY."
+            value<system::wallet::ec_public>(&argument_.spend_pubkey),
+            "The Base16 EC public key corresponding to the private key that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY."
         );
 
         return options;
@@ -212,20 +212,20 @@ public:
     }
 
     /**
-     * Get the value of the SPEND_PUBKEY arguments.
+     * Get the value of the SPEND_PUBKEY argument.
      */
-    virtual std::vector<system::wallet::ec_public>& get_spend_pubkeys_argument()
+    virtual system::wallet::ec_public& get_spend_pubkey_argument()
     {
-        return argument_.spend_pubkeys;
+        return argument_.spend_pubkey;
     }
 
     /**
-     * Set the value of the SPEND_PUBKEY arguments.
+     * Set the value of the SPEND_PUBKEY argument.
      */
-    virtual void set_spend_pubkeys_argument(
-        const std::vector<system::wallet::ec_public>& value)
+    virtual void set_spend_pubkey_argument(
+        const system::wallet::ec_public& value)
     {
-        argument_.spend_pubkeys = value;
+        argument_.spend_pubkey = value;
     }
 
     /**
@@ -273,12 +273,12 @@ private:
     {
         argument()
           : scan_pubkey(),
-            spend_pubkeys()
+            spend_pubkey()
         {
         }
 
         system::wallet::ec_public scan_pubkey;
-        std::vector<system::wallet::ec_public> spend_pubkeys;
+        system::wallet::ec_public spend_pubkey;
     } argument_;
 
     /**

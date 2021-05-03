@@ -654,12 +654,12 @@
   </command>
 
   <!-- Deprecate? -->
-  <command symbol="stealth-encode" output="stealth_address" category="STEALTH" description="Encode a stealth payment address.">
+  <command symbol="stealth-encode" output="stealth_address" category="STEALTH" description="Encode a stealth payment address. Does not support stealth multisignature.">
     <option name="filter" type="base2" description="The Base2 stealth prefix filter that will be used to locate payments." />
     <!--<option name="signatures" type="byte" description="The number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs." />-->
     <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
     <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to create a payment." />
-    <argument name="SPEND_PUBKEY" limit="-1" type="ec_public" description="The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY." />
+    <argument name="SPEND_PUBKEY" type="ec_public" description="The Base16 EC public key corresponding to the private key that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY." />
     <define name="BX_STEALTH_ENCODE_FILTER_TOO_LONG" value="The filter is limited to 32 bits." />
     <!--<define name="BX_STEALTH_ENCODE_SIGNATURES_OVERFLOW" value="The number of signatures is greater than the number of SPEND_PUBKEYs." />-->
     <!--<define name="BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED" value="WARNING: multiple signature stealth transactions are not yet fully supported." />-->
