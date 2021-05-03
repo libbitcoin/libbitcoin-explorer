@@ -35,14 +35,6 @@ using boost::filesystem::path;
 namespace libbitcoin {
 namespace explorer {
 
-// TODO: switch to binary for raw (primitive) reads in Win32.
-std::string read_stream(std::istream& stream)
-{
-    std::istreambuf_iterator<char> first(stream), last;
-    std::string result(first, last);
-    return result;
-}
-
 // We aren't yet using a reader, although it is possible using ptree.
 std::ostream& write_stream(std::ostream& output, const pt::ptree& tree,
     encoding_engine engine)

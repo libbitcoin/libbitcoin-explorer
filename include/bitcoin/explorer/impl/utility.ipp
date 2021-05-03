@@ -29,18 +29,6 @@
 namespace libbitcoin {
 namespace explorer {
 
-template <typename Value>
-Value deserialize(std::istream& input, bool trim)
-{
-    return system::deserialize<Value>(read_stream(input), trim);
-}
-
-template <typename Value>
-void deserialize(Value& value, std::istream& input, bool trim)
-{
-    system::deserialize(value, read_stream(input), trim);
-}
-
 template <typename Command>
 client::connection_settings get_connection(const Command& command)
 {
@@ -61,7 +49,8 @@ void load_input(Value& parameter, const std::string& name,
     po::variables_map& variables, std::istream& input, bool raw)
 {
     if (variables.find(name) == variables.end())
-        deserialize(parameter, input, !raw);
+        if (!system::deserialize(parameter, input, !raw))
+            throw istream_failure(name);
 }
 
 template <typename Value>
@@ -84,10 +73,8 @@ void load_path(Value& parameter, const std::string& name,
     }
 
     system::ifstream file(path, std::ios::binary);
-    if (!file.good())
+    if (!file.good() || !system::deserialize(parameter, file))
         throw istream_failure(path);
-
-    system::deserialize(parameter, file, !raw);
 }
 
 template <typename Instance>

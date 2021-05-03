@@ -59,23 +59,17 @@ std::istream& operator>>(std::istream& input, byte& argument)
     std::string text;
     input >> text;
 
-    // We have this byte class only because deserialization doesn't
-    // treat 8 bit values as decimal numbers (unlike 16+ bit numbers).
-
-    uint16_t number;
-    system::deserialize(number, text, true);
-
-    if (number > max_uint8)
+    // Can't rely on cin for uint8_t.
+    if (!system::deserialize(argument.value_, text))
         throw istream_failure(text);
 
-    argument.value_ = static_cast<uint8_t>(number);
     return input;
 }
 
 std::ostream& operator<<(std::ostream& output, const byte& argument)
 {
-    uint16_t number(argument.value_);
-    output << number;
+    // Can't rely on cout for uint8_t.
+    output << system::serialize(argument.value_);
     return output;
 }
 
