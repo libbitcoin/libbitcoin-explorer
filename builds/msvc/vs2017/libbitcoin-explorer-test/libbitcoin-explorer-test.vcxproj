@@ -88,6 +88,8 @@
     <ClCompile Include="..\..\..\..\test\commands\btc-to-satoshi.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\cert-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\cert-public.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\checked-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\checked-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-decompress.cpp" />
@@ -109,6 +111,7 @@
     <ClCompile Include="..\..\..\..\test\commands\electrum-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-to-seed.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\entropy.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-block.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-header.cpp" />

@@ -118,6 +118,16 @@ BOOST_AUTO_TEST_CASE(generated__find__cert_public__returns_object)
     BOOST_REQUIRE(find("cert-public") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__checked_decode__returns_object)
+{
+    BOOST_REQUIRE(find("checked-decode") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__checked_encode__returns_object)
+{
+    BOOST_REQUIRE(find("checked-encode") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__ec_add__returns_object)
 {
     BOOST_REQUIRE(find("ec-add") != nullptr);
@@ -221,6 +231,11 @@ BOOST_AUTO_TEST_CASE(generated__find__electrum_new__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__electrum_to_seed__returns_object)
 {
     BOOST_REQUIRE(find("electrum-to-seed") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__entropy__returns_object)
+{
+    BOOST_REQUIRE(find("entropy") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_balance__returns_object)

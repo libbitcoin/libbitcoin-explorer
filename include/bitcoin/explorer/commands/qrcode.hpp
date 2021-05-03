@@ -172,11 +172,11 @@ public:
         (
             "scheme,s",
             value<std::string>(&option_.scheme)->default_value("bitcoin"),
-            "The URI scheme of the QRCODE data, defaults to bitcoin."
+            "The URI scheme of the QRCODE data, defaults to 'bitcoin'."
         )
         (
             "version,v",
-            value<uint16_t>(&option_.version),
+            value<uint8_t>(&option_.version),
             "The version of the QRCODE, defaults to 0 which is the minimum size."
         )
         (
@@ -278,7 +278,7 @@ public:
     /**
      * Get the value of the version option.
      */
-    virtual uint16_t& get_version_option()
+    virtual uint8_t& get_version_option()
     {
         return option_.version;
     }
@@ -287,7 +287,7 @@ public:
      * Set the value of the version option.
      */
     virtual void set_version_option(
-        const uint16_t& value)
+        const uint8_t& value)
     {
         option_.version = value;
     }
@@ -327,7 +327,7 @@ private:
         uint16_t margin;
         uint16_t pixels;
         std::string scheme;
-        uint16_t version;
+        uint8_t version;
     } option_;
 };
 

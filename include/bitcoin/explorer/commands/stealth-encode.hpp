@@ -55,10 +55,6 @@ namespace commands {
  */
 #define BX_STEALTH_ENCODE_FILTER_TOO_LONG \
     "The filter is limited to 32 bits."
-#define BX_STEALTH_ENCODE_SIGNATURES_OVERFLOW \
-    "The number of signatures is greater than the number of SPEND_PUBKEYs."
-#define BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED \
-    "WARNING: multiple signature stealth transactions are not yet fully supported."
 
 /**
  * Class to implement the stealth-encode command.
@@ -153,11 +149,6 @@ public:
             "filter,f",
             value<system::config::base2>(&option_.filter),
             "The Base2 stealth prefix filter that will be used to locate payments."
-        )
-        (
-            "signatures,s",
-            value<explorer::config::byte>(&option_.signatures),
-            "The number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs."
         )
         (
             "version,v",
@@ -255,23 +246,6 @@ public:
     }
 
     /**
-     * Get the value of the signatures option.
-     */
-    virtual explorer::config::byte& get_signatures_option()
-    {
-        return option_.signatures;
-    }
-
-    /**
-     * Set the value of the signatures option.
-     */
-    virtual void set_signatures_option(
-        const explorer::config::byte& value)
-    {
-        option_.signatures = value;
-    }
-
-    /**
      * Get the value of the version option.
      */
     virtual explorer::config::byte& get_version_option()
@@ -316,13 +290,11 @@ private:
     {
         option()
           : filter(),
-            signatures(),
             version()
         {
         }
 
         system::config::base2 filter;
-        explorer::config::byte signatures;
         explorer::config::byte version;
     } option_;
 };

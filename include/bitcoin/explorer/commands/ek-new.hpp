@@ -53,8 +53,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EK_NEW_SHORT_SEED \
-    "The seed is less than 192 bits long."
+#define BX_EK_NEW_SHORT_ENTROPY \
+    "The entropy is less than 192 bits long."
 
 /**
  * Class to implement the ek-new command.
@@ -112,7 +112,7 @@ public:
     {
         return get_argument_metadata()
             .add("TOKEN", 1)
-            .add("SEED", 1);
+            .add("ENTROPY", 1);
     }
 
     /**
@@ -124,7 +124,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_seed_argument(), "SEED", variables, input, raw);
+        load_input(get_entropy_argument(), "ENTROPY", variables, input, raw);
     }
 
     /**
@@ -163,9 +163,9 @@ public:
             "The intermediate passphrase token."
         )
         (
-            "SEED",
-            value<system::config::base16>(&argument_.seed),
-            "The Base16 entropy for the new encrypted private key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the seed is read from STDIN."
+            "ENTROPY",
+            value<system::config::base16>(&argument_.entropy),
+            "The Base16 entropy for the new encrypted private key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the entropy is read from STDIN."
         );
 
         return options;
@@ -214,20 +214,20 @@ public:
     }
 
     /**
-     * Get the value of the SEED argument.
+     * Get the value of the ENTROPY argument.
      */
-    virtual system::config::base16& get_seed_argument()
+    virtual system::config::base16& get_entropy_argument()
     {
-        return argument_.seed;
+        return argument_.entropy;
     }
 
     /**
-     * Set the value of the SEED argument.
+     * Set the value of the ENTROPY argument.
      */
-    virtual void set_seed_argument(
+    virtual void set_entropy_argument(
         const system::config::base16& value)
     {
-        argument_.seed = value;
+        argument_.entropy = value;
     }
 
     /**
@@ -275,12 +275,12 @@ private:
     {
         argument()
           : token(),
-            seed()
+            entropy()
         {
         }
 
         system::wallet::ek_token token;
-        system::config::base16 seed;
+        system::config::base16 entropy;
     } argument_;
 
     /**

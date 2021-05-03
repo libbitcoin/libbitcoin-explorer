@@ -92,6 +92,8 @@
     <ClCompile Include="..\..\..\..\src\commands\btc-to-satoshi.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\cert-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\cert-public.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\checked-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\checked-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-decompress.cpp" />
@@ -113,6 +115,7 @@
     <ClCompile Include="..\..\..\..\src\commands\electrum-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\electrum-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\electrum-to-seed.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\entropy.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-balance.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block-hashes.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block-height.cpp" />
@@ -227,6 +230,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\btc-to-satoshi.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\cert-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\cert-public.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\checked-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\checked-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-add-secrets.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-add.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-decompress.hpp" />
@@ -248,6 +253,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-to-seed.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\entropy.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-balance.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-hashes.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-height.hpp" />

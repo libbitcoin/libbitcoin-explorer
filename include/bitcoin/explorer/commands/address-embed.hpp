@@ -165,7 +165,7 @@ public:
         (
             "DATA",
             value<explorer::config::bytes>(&argument_.data),
-            "The binary data to encode as Base16. This can be text or any other data. If not specified the data is read from STDIN."
+            "The binary data to embed as Base16. This can be text or any other data. If not specified the data is read from STDIN."
         );
 
         return options;

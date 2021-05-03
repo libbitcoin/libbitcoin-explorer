@@ -100,7 +100,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Retrieve compact filters via a Libbitcoin server.";
+        return "Retrieve compact filters from a Libbitcoin server.";
     }
 
     /**

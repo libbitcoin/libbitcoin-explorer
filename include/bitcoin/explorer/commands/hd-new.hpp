@@ -53,10 +53,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_HD_NEW_SHORT_SEED \
-    "The seed is less than 128 bits long."
+#define BX_HD_NEW_SHORT_ENTROPY \
+    "The entropy is less than 128 bits long."
 #define BX_HD_NEW_INVALID_KEY \
-    "The seed produced an invalid key."
+    "The entropy produced an invalid key."
 
 /**
  * Class to implement the hd-new command.
@@ -121,7 +121,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SEED", 1);
+            .add("ENTROPY", 1);
     }
 
     /**
@@ -133,7 +133,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_seed_argument(), "SEED", variables, input, raw);
+        load_input(get_entropy_argument(), "ENTROPY", variables, input, raw);
     }
 
     /**
@@ -162,9 +162,9 @@ public:
             "The desired HD private key version, defaults to 76066276."
         )
         (
-            "SEED",
-            value<system::config::base16>(&argument_.seed),
-            "The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN."
+            "ENTROPY",
+            value<system::config::base16>(&argument_.entropy),
+            "The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the entropy is read from STDIN."
         );
 
         return options;
@@ -196,20 +196,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SEED argument.
+     * Get the value of the ENTROPY argument.
      */
-    virtual system::config::base16& get_seed_argument()
+    virtual system::config::base16& get_entropy_argument()
     {
-        return argument_.seed;
+        return argument_.entropy;
     }
 
     /**
-     * Set the value of the SEED argument.
+     * Set the value of the ENTROPY argument.
      */
-    virtual void set_seed_argument(
+    virtual void set_entropy_argument(
         const system::config::base16& value)
     {
-        argument_.seed = value;
+        argument_.entropy = value;
     }
 
     /**
@@ -239,11 +239,11 @@ private:
     struct argument
     {
         argument()
-          : seed()
+          : entropy()
         {
         }
 
-        system::config::base16 seed;
+        system::config::base16 entropy;
     } argument_;
 
     /**

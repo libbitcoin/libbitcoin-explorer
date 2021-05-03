@@ -100,7 +100,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Retrieve compact filters via a single Bitcoin network node. The distance between provided height and hash must be strictly less than 100.";
+        return "Retrieve compact filters from a single Bitcoin network node. The distance between provided height and hash must be strictly less than 100.";
     }
 
     /**

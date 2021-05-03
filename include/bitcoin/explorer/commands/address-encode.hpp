@@ -156,7 +156,7 @@ public:
         (
             "RIPEMD160",
             value<system::config::hash160>(&argument_.ripemd160),
-            "The Base16 hash to convert. If not specified the value is read from STDIN."
+            "The Base16 hash to encode. If not specified the value is read from STDIN."
         );
 
         return options;

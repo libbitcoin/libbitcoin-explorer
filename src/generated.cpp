@@ -54,6 +54,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<btc_to_satoshi>());
     func(make_shared<cert_new>());
     func(make_shared<cert_public>());
+    func(make_shared<checked_decode>());
+    func(make_shared<checked_encode>());
     func(make_shared<ec_add>());
     func(make_shared<ec_add_secrets>());
     func(make_shared<ec_decompress>());
@@ -75,6 +77,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<electrum_decode>());
     func(make_shared<electrum_new>());
     func(make_shared<electrum_to_seed>());
+    func(make_shared<entropy>());
     func(make_shared<fetch_balance>());
     func(make_shared<fetch_block>());
     func(make_shared<fetch_block_hashes>());
@@ -186,6 +189,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<cert_new>();
     if (symbol == cert_public::symbol())
         return make_shared<cert_public>();
+    if (symbol == checked_decode::symbol())
+        return make_shared<checked_decode>();
+    if (symbol == checked_encode::symbol())
+        return make_shared<checked_encode>();
     if (symbol == ec_add::symbol())
         return make_shared<ec_add>();
     if (symbol == ec_add_secrets::symbol())
@@ -228,6 +235,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<electrum_new>();
     if (symbol == electrum_to_seed::symbol())
         return make_shared<electrum_to_seed>();
+    if (symbol == entropy::symbol())
+        return make_shared<entropy>();
     if (symbol == fetch_balance::symbol())
         return make_shared<fetch_balance>();
     if (symbol == fetch_block::symbol())
@@ -386,6 +395,10 @@ std::string formerly(const string& former)
         return broadcast_tx::symbol();
     if (former == btc_to_satoshi::formerly())
         return btc_to_satoshi::symbol();
+    if (former == checked_decode::formerly())
+        return checked_decode::symbol();
+    if (former == checked_encode::formerly())
+        return checked_encode::symbol();
     if (former == ec_add_secrets::formerly())
         return ec_add_secrets::symbol();
     if (former == ec_multiply_secrets::formerly())
@@ -398,6 +411,8 @@ std::string formerly(const string& former)
         return ec_to_ek::symbol();
     if (former == ec_to_public::formerly())
         return ec_to_public::symbol();
+    if (former == entropy::formerly())
+        return entropy::symbol();
     if (former == fetch_height::formerly())
         return fetch_height::symbol();
     if (former == fetch_public_key::formerly())
@@ -444,10 +459,6 @@ std::string formerly(const string& former)
         return watch_key::symbol();
     if (former == watch_tx::formerly())
         return watch_tx::symbol();
-    if (former == wrap_decode::formerly())
-        return wrap_decode::symbol();
-    if (former == wrap_encode::formerly())
-        return wrap_encode::symbol();
 
     return "";
 }

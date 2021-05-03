@@ -100,7 +100,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Retrieve compact filter checkpoint via a single Bitcoin network node.";
+        return "Retrieve compact filter checkpoint from a single Bitcoin network node.";
     }
 
     /**

@@ -34,26 +34,6 @@ using istream_failure = po::invalid_option_value;
 using ostream_failure = std::iostream::failure;
 
 /**
- * Read an input stream to the specified type.
- * @param      <Value>  The converted type.
- * @param[in]  input    The stream to convert.
- * @param[in]  trim     True if value should be trimmed before conversion.
- * return               The parsed value.
- */
-template <typename Value>
-Value deserialize(std::istream& input, bool trim);
-
-/**
- * Read an input stream to the specified type.
- * @param      <Value>  The converted type.
- * @param[out] value    The parsed value.
- * @param[in]  input    The stream to convert.
- * @param[in]  trim     True if value should be trimmed before conversion.
- */
-template <typename Value>
-void deserialize(Value& value, std::istream& input, bool trim);
-
-/**
  * Get client connection settings for the given command.
  * @param      <Command>  The bx command type.
  * @param[in]  command    The bx command instance.
@@ -98,13 +78,6 @@ void load_path(Value& parameter, const std::string& name,
 template <typename Instance>
 void write_file(std::ostream& output, const std::string& path,
     const Instance& instance, bool terminate=true);
-
-/**
- * Get a message from the specified input stream.
- * @param[in]  stream The input stream to read.
- * @return            The message read from the input stream.
- */
-BCX_API std::string read_stream(std::istream& stream);
 
 /**
  * Serialize a property tree using a specified encoding.

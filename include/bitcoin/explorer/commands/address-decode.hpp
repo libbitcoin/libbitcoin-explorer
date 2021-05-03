@@ -156,7 +156,7 @@ public:
         (
             "PAYMENT_ADDRESS",
             value<system::wallet::payment_address>(&argument_.payment_address),
-            "The payment address to convert. If not specified the address is read from STDIN."
+            "The payment address to decode. If not specified the address is read from STDIN."
         );
 
         return options;
