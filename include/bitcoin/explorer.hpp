@@ -32,12 +32,16 @@
 #include <bitcoin/explorer/commands/address-to-key.hpp>
 #include <bitcoin/explorer/commands/base16-decode.hpp>
 #include <bitcoin/explorer/commands/base16-encode.hpp>
+#include <bitcoin/explorer/commands/base32-decode.hpp>
+#include <bitcoin/explorer/commands/base32-encode.hpp>
 #include <bitcoin/explorer/commands/base58-decode.hpp>
 #include <bitcoin/explorer/commands/base58-encode.hpp>
 #include <bitcoin/explorer/commands/base58check-decode.hpp>
 #include <bitcoin/explorer/commands/base58check-encode.hpp>
 #include <bitcoin/explorer/commands/base64-decode.hpp>
 #include <bitcoin/explorer/commands/base64-encode.hpp>
+#include <bitcoin/explorer/commands/bech32-decode.hpp>
+#include <bitcoin/explorer/commands/bech32-encode.hpp>
 #include <bitcoin/explorer/commands/bitcoin160.hpp>
 #include <bitcoin/explorer/commands/bitcoin256.hpp>
 #include <bitcoin/explorer/commands/broadcast-tx.hpp>
@@ -111,6 +115,7 @@
 #include <bitcoin/explorer/commands/script-encode.hpp>
 #include <bitcoin/explorer/commands/script-to-address.hpp>
 #include <bitcoin/explorer/commands/script-to-key.hpp>
+#include <bitcoin/explorer/commands/script-to-witness.hpp>
 #include <bitcoin/explorer/commands/seed.hpp>
 #include <bitcoin/explorer/commands/send-tx.hpp>
 #include <bitcoin/explorer/commands/settings.hpp>

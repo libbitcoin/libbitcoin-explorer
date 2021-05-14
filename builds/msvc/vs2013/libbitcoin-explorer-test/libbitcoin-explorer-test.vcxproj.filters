@@ -36,6 +36,12 @@
     <ClCompile Include="..\..\..\..\test\commands\base16-encode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\base32-decode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\base32-encode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\base58-decode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -54,6 +60,12 @@
     <ClCompile Include="..\..\..\..\test\commands\base64-encode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\bech32-decode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\bech32-encode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\bitcoin160.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -70,6 +82,12 @@
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\cert-public.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\checked-decode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\checked-encode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\ec-add-secrets.cpp">
@@ -133,6 +151,9 @@
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\electrum-to-seed.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\entropy.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp">
@@ -249,6 +270,9 @@
     <ClCompile Include="..\..\..\..\test\commands\script-to-key.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\script-to-witness.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\seed.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -356,5 +380,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\debug.natvis" />
   </ItemGroup>
 </Project>

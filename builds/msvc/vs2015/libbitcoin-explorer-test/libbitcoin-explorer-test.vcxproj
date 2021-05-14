@@ -76,18 +76,24 @@
     <ClCompile Include="..\..\..\..\test\commands\address-to-key.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base16-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base16-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\base32-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\base32-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base58-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base58-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base58check-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base58check-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base64-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base64-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\bech32-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\bech32-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\bitcoin160.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\bitcoin256.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\broadcast-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\btc-to-satoshi.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\cert-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\cert-public.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\checked-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\checked-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-decompress.cpp" />
@@ -109,6 +115,7 @@
     <ClCompile Include="..\..\..\..\test\commands\electrum-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-to-seed.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\entropy.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-block.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-header.cpp" />
@@ -147,6 +154,7 @@
     <ClCompile Include="..\..\..\..\test\commands\script-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\script-to-address.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\script-to-key.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\script-to-witness.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\seed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\send-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\settings.cpp" />
@@ -233,7 +241,7 @@
       <Project>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</Project>
     </ProjectReference>
   </ItemGroup>
-    <ItemGroup>
-      <Natvis Include="..\..\debug.natvis" />
-    </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\debug.natvis" />
+  </ItemGroup>
 </Project>
