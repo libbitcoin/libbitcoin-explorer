@@ -42,6 +42,7 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -100,7 +101,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a Curve ZMQ private key for use with a Libbitcoin server. WARNING: entropy is obtained from the underlying platform.";
+        return "Create a Base85 Curve ZMQ private key for use with a Libbitcoin server. WARNING: entropy is obtained from the underlying platform.";
     }
 
     /**

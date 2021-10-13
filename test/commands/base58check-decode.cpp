@@ -19,6 +19,8 @@
 
 #include "command.hpp"
 
+BX_USING_NAMESPACES()
+
 BOOST_AUTO_TEST_SUITE(obsolete)
 BOOST_AUTO_TEST_SUITE(base58check_decode__invoke)
 

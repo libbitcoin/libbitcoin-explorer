@@ -28,11 +28,13 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-constexpr auto witness_pubkey_hash = "p2wpkh";
-constexpr auto witness_script_hash = "p2wsh";
+constexpr auto witness_p2kh_hash = "p2kh";
+constexpr auto witness_p2sh_hash = "p2sh";
+constexpr auto witness_unknown = "unknown";
+constexpr auto witness_invalid = "invalid";
 
 witness::witness()
-  : value_(type::witness_pubkey_hash)
+  : value_(type::invalid)
 {
 }
 
@@ -61,12 +63,12 @@ std::istream& operator>>(std::istream& input, witness& argument)
     std::string text;
     input >> text;
 
-    if (text == witness_pubkey_hash)
-        argument.value_ = witness::type::witness_pubkey_hash;
-    else if (text == witness_script_hash)
-        argument.value_ = witness::type::witness_script_hash;
+    if (text == witness_p2kh_hash)
+        argument.value_ = witness::type::version_0_p2kh;
+    else if (text == witness_p2sh_hash)
+        argument.value_ = witness::type::version_0_p2sh;
     else
-        throw istream_failure(text);
+        throw system::istream_exception(text);
 
     return input;
 }
@@ -75,12 +77,16 @@ std::ostream& operator<<(std::ostream& output, const witness& argument)
 {
     std::string text;
 
-    if (argument.value_ == witness::type::witness_pubkey_hash)
-        text = witness_pubkey_hash;
-    else if (argument.value_ == witness::type::witness_script_hash)
-        text = witness_script_hash;
+    if (argument.value_ == witness::type::version_0_p2kh)
+        text = witness_p2kh_hash;
+    else if (argument.value_ == witness::type::version_0_p2sh)
+        text = witness_p2sh_hash;
+    else if (argument.value_ == witness::type::unknown)
+        text = witness_unknown;
+    else if (argument.value_ == witness::type::invalid)
+        text = witness_invalid;
     else
-        throw ostream_failure("witness");
+        throw system::ostream_exception("witness");
 
     output << text;
     return output;

@@ -33,11 +33,11 @@ using namespace bc::system::config;
 console_result bitcoin256::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& data = get_base16_argument();
+    const data_chunk& data = get_base16_argument();
 
     const auto hash = bitcoin_hash(data);
 
-    output << hash256(hash) << std::endl;
+    output << base16(hash) << std::endl;
     return console_result::okay;
 }
 

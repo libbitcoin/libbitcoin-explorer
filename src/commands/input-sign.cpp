@@ -27,8 +27,8 @@ namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::system::config;
 using namespace bc::system;
+using namespace bc::system::config;
 
 // The BX_INPUT_SIGN_FAILED condition uncovered by test.
 // This is because a vector to produce the failure is not known.

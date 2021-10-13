@@ -63,7 +63,7 @@ std::istream& operator>>(std::istream& input, btc& argument)
 
     // bitcoins to satoshis (shift 8 decimal places)
     if (!system::decode_base10(out, text, system::btc_decimal_places))
-        throw istream_failure(text);
+        throw system::istream_exception(text);
 
     argument.value_ = out;
     return input;

@@ -28,6 +28,7 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::config;
 
 console_result stealth_secret::invoke(std::ostream& output,
     std::ostream& error)
@@ -43,7 +44,7 @@ console_result stealth_secret::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    output << encode_base16(sum) << std::endl;
+    output << base16(sum) << std::endl;
     return console_result::okay;
 }
 

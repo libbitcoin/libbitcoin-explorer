@@ -56,8 +56,6 @@ console_result match_neutrino_address::invoke(std::ostream& output,
 
     output << BX_FILTER_MATCH_ADDRESS_SUCCESS << std::endl;
     return console_result::okay;
-
-    return console_result::okay;
 }
 
 } //namespace commands

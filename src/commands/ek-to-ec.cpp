@@ -29,6 +29,7 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::config;
 
 console_result ek_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
@@ -45,7 +46,7 @@ console_result ek_to_ec::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    output << encode_base16(secret) << std::endl;
+    output << base16(secret) << std::endl;
     return console_result::okay;
 #else
     error << BX_EK_TO_EC_REQUIRES_ICU << std::endl;

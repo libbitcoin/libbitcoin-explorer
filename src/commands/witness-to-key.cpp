@@ -18,8 +18,6 @@
  */
 #include <bitcoin/explorer/commands/witness-to-key.hpp>
 
-#include <iostream>
-#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -27,15 +25,16 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
-using namespace bc::system::wallet;
+using namespace bc::system::config;
 
 console_result witness_to_key::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& witness = get_witness_address_argument();
+    const auto& address = get_witness_address_argument();
 
-    output << encode_base16(witness.output_script().to_payments_key())
-           << std::endl;
+    auto key = address.script().to_payments_key();
+
+    output << base16(key) << std::endl;
     return console_result::okay;
 }
 

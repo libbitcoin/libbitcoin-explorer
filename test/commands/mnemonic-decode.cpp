@@ -27,7 +27,7 @@
 ////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__64_bits__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
-////    command.set_seed_argument({ "baadf00dbaadf00d" });
+////    command.set_entropy_argument({ "baadf00dbaadf00d" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////    BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant alone\n");
 ////}
@@ -35,7 +35,7 @@
 ////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__136_bits__failure_error)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
-////    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00dff" });
+////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00dff" });
 ////    BX_REQUIRE_FAILURE(command.invoke(output, error));
 ////    BX_REQUIRE_ERROR(BX_MNEMONIC_NEW_INVALID_SEED "\n");
 ////}
@@ -43,7 +43,7 @@
 ////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
-////    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////    BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant almost turkey safe asset step lab boy\n");
 ////}
@@ -51,7 +51,7 @@
 ////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__standard_default__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
-////    command.set_seed_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
+////    command.set_entropy_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
 ////}
@@ -60,7 +60,7 @@
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "en" });
-////    command.set_seed_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
+////    command.set_entropy_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
 ////}
@@ -69,7 +69,7 @@
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "any" });
-////    command.set_seed_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
+////    command.set_entropy_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
 ////}
@@ -78,7 +78,7 @@
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "en" });
-////    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////    BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant almost turkey safe asset step lab boy\n");
 ////}
@@ -87,7 +87,7 @@
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "es" });
-////    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////#ifdef WITH_ICU
 ////    BX_REQUIRE_OUTPUT(to_normal_nfkd_form("previo humilde actuar jarabe tabique ahorro tope pulpo anís señal lavar bahía") + "\n");
@@ -98,7 +98,7 @@
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "fr" });
-////    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////    BX_REQUIRE_OUTPUT("placard garantir acerbe gratuit soluble affaire théorie ponctuel anguleux salon horrible bateau\n");
 ////}
@@ -107,7 +107,7 @@
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "it" });
-////    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////    BX_REQUIRE_OUTPUT("rizoma lastra affabile lucidato sultano algebra tramonto rupe annuncio sonda mega bavosa\n");
 ////}
@@ -116,7 +116,7 @@
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "ja" });
-////    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////    BX_REQUIRE_OUTPUT("ねんかん すずしい あひる せたけ ほとんど あんまり めいあん のべる いなか ふとる ぜんりゃく えいせい\n");
 ////}
@@ -125,7 +125,7 @@
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "ko" });
-////    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////    BX_REQUIRE_OUTPUT("전체 손실 갈비 숫자 큰길 개별 프랑스 정보 계획 초등학생 식빵 귀국\n");
 ////}
@@ -134,7 +134,7 @@
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "zh_Hans" });
-////    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////    BX_REQUIRE_OUTPUT("博 肉 地 危 惜 多 陪 荒 因 患 伊 基\n");
 ////}
@@ -143,7 +143,7 @@
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "zh_Hant" });
-////    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
 ////    BX_REQUIRE_OUTPUT("博 肉 地 危 惜 多 陪 荒 因 患 伊 基\n");
 ////}

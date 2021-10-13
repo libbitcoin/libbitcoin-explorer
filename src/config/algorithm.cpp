@@ -65,7 +65,7 @@ std::istream& operator>>(std::istream& input, algorithm& argument)
     else if (text == algorithm_individual)
         argument.value_ = algorithm::type::individual;
     else
-        throw istream_failure(text);
+        throw system::istream_exception(text);
 
     return input;
 }
@@ -83,7 +83,7 @@ std::ostream& operator<<(std::ostream& output, const algorithm& argument)
             text = algorithm_individual;
             break;
         default:
-            throw ostream_failure("algorithm");
+            throw system::ostream_exception("algorithm");
     };
 
     output << text;

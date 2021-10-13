@@ -58,6 +58,16 @@ BOOST_AUTO_TEST_CASE(generated__find__base16_encode__returns_object)
     BOOST_REQUIRE(find("base16-encode") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__base32_decode__returns_object)
+{
+    BOOST_REQUIRE(find("base32-decode") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__base32_encode__returns_object)
+{
+    BOOST_REQUIRE(find("base32-encode") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__base58_decode__returns_object)
 {
     BOOST_REQUIRE(find("base58-decode") != nullptr);
@@ -86,6 +96,16 @@ BOOST_AUTO_TEST_CASE(generated__find__base64_decode__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__base64_encode__returns_object)
 {
     BOOST_REQUIRE(find("base64-encode") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__bech32_decode__returns_object)
+{
+    BOOST_REQUIRE(find("bech32-decode") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__bech32_encode__returns_object)
+{
+    BOOST_REQUIRE(find("bech32-encode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__bitcoin160__returns_object)
@@ -451,6 +471,11 @@ BOOST_AUTO_TEST_CASE(generated__find__script_to_address__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__script_to_key__returns_object)
 {
     BOOST_REQUIRE(find("script-to-key") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__script_to_witness__returns_object)
+{
+    BOOST_REQUIRE(find("script-to-witness") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__seed__returns_object)

@@ -42,12 +42,16 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<address_to_key>());
     func(make_shared<base16_decode>());
     func(make_shared<base16_encode>());
+    func(make_shared<base32_decode>());
+    func(make_shared<base32_encode>());
     func(make_shared<base58_decode>());
     func(make_shared<base58_encode>());
     func(make_shared<base58check_decode>());
     func(make_shared<base58check_encode>());
     func(make_shared<base64_decode>());
     func(make_shared<base64_encode>());
+    func(make_shared<bech32_decode>());
+    func(make_shared<bech32_encode>());
     func(make_shared<bitcoin160>());
     func(make_shared<bitcoin256>());
     func(make_shared<broadcast_tx>());
@@ -121,6 +125,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<script_encode>());
     func(make_shared<script_to_address>());
     func(make_shared<script_to_key>());
+    func(make_shared<script_to_witness>());
     func(make_shared<seed>());
     func(make_shared<send_tx>());
     func(make_shared<settings>());
@@ -165,6 +170,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<base16_decode>();
     if (symbol == base16_encode::symbol())
         return make_shared<base16_encode>();
+    if (symbol == base32_decode::symbol())
+        return make_shared<base32_decode>();
+    if (symbol == base32_encode::symbol())
+        return make_shared<base32_encode>();
     if (symbol == base58_decode::symbol())
         return make_shared<base58_decode>();
     if (symbol == base58_encode::symbol())
@@ -177,6 +186,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<base64_decode>();
     if (symbol == base64_encode::symbol())
         return make_shared<base64_encode>();
+    if (symbol == bech32_decode::symbol())
+        return make_shared<bech32_decode>();
+    if (symbol == bech32_encode::symbol())
+        return make_shared<bech32_encode>();
     if (symbol == bitcoin160::symbol())
         return make_shared<bitcoin160>();
     if (symbol == bitcoin256::symbol())
@@ -323,6 +336,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<script_to_address>();
     if (symbol == script_to_key::symbol())
         return make_shared<script_to_key>();
+    if (symbol == script_to_witness::symbol())
+        return make_shared<script_to_witness>();
     if (symbol == seed::symbol())
         return make_shared<seed>();
     if (symbol == send_tx::symbol())

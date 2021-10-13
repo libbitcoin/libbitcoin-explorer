@@ -23,6 +23,7 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::config;
 
 console_result ec_new::invoke(std::ostream& output, std::ostream& error)
 {
@@ -46,7 +47,7 @@ console_result ec_new::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    output << encode_base16(key.secret()) << std::endl;
+    output << base16(key.secret()) << std::endl;
     return console_result::okay;
 }
 

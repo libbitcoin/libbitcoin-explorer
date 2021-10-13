@@ -13,10 +13,14 @@ _bx()
         address-to-key
         base16-decode
         base16-encode
+        base32-decode
+        base32-encode
         base58-decode
         base58-encode
         base64-decode
         base64-encode
+        bech32-decode
+        bech32-encode
         bitcoin160
         bitcoin256
         broadcast-tx
@@ -88,6 +92,7 @@ _bx()
         script-encode
         script-to-address
         script-to-key
+        script-to-witness
         send-tx
         settings
         sha160

@@ -44,13 +44,15 @@ client::connection_settings get_connection(const Command& command)
     };
 }
 
+// TODO: bool raw parameter obsoleted.
+// config::bytes type will automatically deserialize as raw data.
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
-    po::variables_map& variables, std::istream& input, bool raw)
+    po::variables_map& variables, std::istream& input, bool)
 {
     if (variables.find(name) == variables.end())
-        if (!system::deserialize(parameter, input, !raw))
-            throw istream_failure(name);
+        if (!system::deserialize(parameter, input))
+            throw system::istream_exception(name);
 }
 
 template <typename Value>
@@ -63,6 +65,7 @@ void load_path(Value& parameter, const std::string& name,
         return;
 
     // Get the argument value as a string.
+    // boost: overloads taking an any pointer do not throw.
     const auto path = boost::any_cast<std::string>(variable->second.value());
 
     // The path is the stdio sentinal, so clear parameter and don't read file.
@@ -74,7 +77,7 @@ void load_path(Value& parameter, const std::string& name,
 
     system::ifstream file(path, std::ios::binary);
     if (!file.good() || !system::deserialize(parameter, file))
-        throw istream_failure(path);
+        throw system::istream_exception(path);
 }
 
 template <typename Instance>

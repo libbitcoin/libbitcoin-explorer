@@ -21,17 +21,12 @@
 
 #include <iostream>
 #include <string>
-#include <boost/program_options.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/client.hpp>
 
 namespace libbitcoin {
 namespace explorer {
-
-// Standardize iostream exceptions.
-using istream_failure = po::invalid_option_value;
-using ostream_failure = std::iostream::failure;
 
 /**
  * Get client connection settings for the given command.

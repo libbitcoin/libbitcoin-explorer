@@ -42,6 +42,7 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -102,7 +103,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Validate the checksum of checked Base16 data and recover its version and payload.";
+        return "Validate the bitcoin checksum of Base16 data and recover its version and payload.";
     }
 
     /**
@@ -113,7 +114,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("WRAPPED", 1);
+            .add("CHECKED", 1);
     }
 
     /**
@@ -125,7 +126,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_wrapped_argument(), "WRAPPED", variables, input, raw);
+        load_input(get_checked_argument(), "CHECKED", variables, input, raw);
     }
 
     /**
@@ -154,9 +155,9 @@ public:
             "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
-            "WRAPPED",
-            value<explorer::config::wrapper>(&argument_.wrapped),
-            "The Base16 data to decode. If not specified the value is read from STDIN."
+            "CHECKED",
+            value<system::config::base16>(&argument_.checked),
+            "The checked Base16 data to decode. If not specified the value is read from STDIN."
         );
 
         return options;
@@ -182,20 +183,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the WRAPPED argument.
+     * Get the value of the CHECKED argument.
      */
-    virtual explorer::config::wrapper& get_wrapped_argument()
+    virtual system::config::base16& get_checked_argument()
     {
-        return argument_.wrapped;
+        return argument_.checked;
     }
 
     /**
-     * Set the value of the WRAPPED argument.
+     * Set the value of the CHECKED argument.
      */
-    virtual void set_wrapped_argument(
-        const explorer::config::wrapper& value)
+    virtual void set_checked_argument(
+        const system::config::base16& value)
     {
-        argument_.wrapped = value;
+        argument_.checked = value;
     }
 
     /**
@@ -225,11 +226,11 @@ private:
     struct argument
     {
         argument()
-          : wrapped()
+          : checked()
         {
         }
 
-        explorer::config::wrapper wrapped;
+        system::config::base16 checked;
     } argument_;
 
     /**

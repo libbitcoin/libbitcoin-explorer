@@ -73,7 +73,7 @@ std::istream& operator>>(std::istream& input, electrum& argument)
     else if (text == prefix_two_factor_authentication_witness)
         argument.value_ = electrum::type::two_factor_authentication_witness;
     else
-        throw istream_failure(text);
+        throw system::istream_exception(text);
 
     return input;
 }
@@ -97,7 +97,7 @@ std::ostream& operator<<(std::ostream& output, const electrum& argument)
             text = prefix_two_factor_authentication_witness;
             break;
         default:
-            throw ostream_failure("electrum");
+            throw system::ostream_exception("electrum");
     };
 
     output << text;

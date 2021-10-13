@@ -42,6 +42,7 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -102,7 +103,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Convert an EC public key to a payment address.";
+        return "Create a pay-to-public-key-hash address from an EC public key.";
     }
 
     /**
@@ -151,12 +152,12 @@ public:
         (
             "version,v",
             value<explorer::config::byte>(&option_.version)->default_value(0),
-            "The desired payment address version."
+            "The desired payment address version, defaults to 0."
         )
         (
             "EC_PUBLIC_KEY",
             value<system::wallet::ec_public>(&argument_.ec_public_key),
-            "The Base16 EC public key to convert. If not specified the key is read from STDIN."
+            "The Base16 EC public key of the address. If not specified the key is read from STDIN."
         );
 
         return options;

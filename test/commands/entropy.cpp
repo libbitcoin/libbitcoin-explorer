@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE(entropy__invoke__minimum_size__okay_output)
 
     // Here we must explicitly set the default value, since we are bypassing
     // the boost parser and variable bindings which implement defaults.
-    command.set_bit_length_option(128);
+    command.set_bits_option(128);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BOOST_REQUIRE(output.str().size() == BX_ENTROPY_BITS_TO_TERMINATED_BASE16(128));
 }
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(entropy__invoke__minimum_size__okay_output)
 BOOST_AUTO_TEST_CASE(entropy__invoke__good_size__okay_output)
 {
     BX_DECLARE_COMMAND(entropy);
-    command.set_bit_length_option(256);
+    command.set_bits_option(256);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BOOST_REQUIRE(output.str().size() == BX_ENTROPY_BITS_TO_TERMINATED_BASE16(256));
 }
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(entropy__invoke__good_size__okay_output)
 BOOST_AUTO_TEST_CASE(entropy__invoke_big_size_okay_output)
 {
     BX_DECLARE_COMMAND(entropy);
-    command.set_bit_length_option(512);
+    command.set_bits_option(512);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BOOST_REQUIRE(output.str().size() == BX_ENTROPY_BITS_TO_TERMINATED_BASE16(512));
 }
@@ -56,17 +56,17 @@ BOOST_AUTO_TEST_CASE(entropy__invoke_big_size_okay_output)
 BOOST_AUTO_TEST_CASE(entropy__invoke__too_short__failure_error)
 {
     BX_DECLARE_COMMAND(entropy);
-    command.set_bit_length_option(64);
+    command.set_bits_option(64);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_ENTROPY_BIT_LENGTH_UNSUPPORTED "\n");
+    BX_REQUIRE_ERROR(BX_ENTROPY_SHORT_BIT_LENGTH "\n");
 }
 
 BOOST_AUTO_TEST_CASE(entropy__invoke__not_byte_aligned__failure_error)
 {
     BX_DECLARE_COMMAND(entropy);
-    command.set_bit_length_option(129);
+    command.set_bits_option(129);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_ENTROPY_BIT_LENGTH_UNSUPPORTED "\n");
+    BX_REQUIRE_ERROR(BX_ENTROPY_SHORT_BIT_LENGTH "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

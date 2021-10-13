@@ -63,16 +63,16 @@ console_result fetch_filter::invoke(std::ostream& output,
 
     callback_state state(error, output, encoding);
 
-    // This enables json-style array formatting.
-    const auto json = encoding == encoding_engine::json;
+    ////// This enables json-style array formatting.
+    ////const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, json](const code& ec,
+    auto on_done = [&state](const code& ec,
         const message::compact_filter& response)
     {
         if (!state.succeeded(ec))
             return;
 
-        state.output(property_tree(response, json));
+        state.output(property_tree(response));
     };
 
     // Height is ignored if both are specified.

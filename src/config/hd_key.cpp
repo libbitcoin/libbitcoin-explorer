@@ -68,7 +68,7 @@ std::istream& operator>>(std::istream& input, hd_key& argument)
     system::data_chunk out;
     if (!system::decode_base58(out, text) ||
         out.size() != system::wallet::hd_key_size)
-        throw istream_failure(text);
+        throw system::istream_exception(text);
 
     std::copy(out.begin(), out.end(), argument.value_.begin());
     return input;

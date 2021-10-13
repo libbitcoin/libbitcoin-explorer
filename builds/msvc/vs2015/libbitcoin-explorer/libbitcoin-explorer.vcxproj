@@ -205,7 +205,6 @@
     <ClCompile Include="..\..\..\..\src\config\sighash.cpp" />
     <ClCompile Include="..\..\..\..\src\config\signature.cpp" />
     <ClCompile Include="..\..\..\..\src\config\witness.cpp" />
-    <ClCompile Include="..\..\..\..\src\config\wrapper.cpp" />
     <ClCompile Include="..\..\..\..\src\dispatch.cpp" />
     <ClCompile Include="..\..\..\..\src\display.cpp" />
     <ClCompile Include="..\..\..\..\src\generated.cpp" />

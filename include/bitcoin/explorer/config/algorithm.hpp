@@ -33,7 +33,7 @@ namespace config {
 class BCX_API algorithm
 {
 public:
-    typedef system::wallet::select_outputs::algorithm type;
+    typedef system::chain::points_value::selection type;
 
     algorithm();
     algorithm(const algorithm& other);

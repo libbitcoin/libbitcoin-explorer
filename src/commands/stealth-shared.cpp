@@ -29,6 +29,7 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::config;
 
 console_result stealth_shared::invoke(std::ostream& output,
     std::ostream& error)
@@ -46,7 +47,7 @@ console_result stealth_shared::invoke(std::ostream& output,
 
     const auto hash = sha256_hash(product);
 
-    output << encode_base16(hash) << std::endl;
+    output << base16(hash) << std::endl;
     return console_result::okay;
 }
 

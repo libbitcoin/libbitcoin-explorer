@@ -61,7 +61,7 @@ std::istream& operator>>(std::istream& input, byte& argument)
 
     // Can't rely on cin for uint8_t.
     if (!system::deserialize(argument.value_, text))
-        throw istream_failure(text);
+        throw system::istream_exception(text);
 
     return input;
 }

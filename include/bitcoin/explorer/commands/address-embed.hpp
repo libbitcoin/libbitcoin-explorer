@@ -42,6 +42,7 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -102,7 +103,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a payment address with an embedded record of binary data.";
+        return "Create a pay-to-public-key-hash payment address with an embedded record of binary data. WARNING: any coin spent to this address is lost.";
     }
 
     /**
@@ -160,7 +161,7 @@ public:
         (
             "version,v",
             value<explorer::config::byte>(&option_.version)->default_value(0),
-            "The desired payment address version."
+            "The desired payment address version, defaults to 0."
         )
         (
             "DATA",

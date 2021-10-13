@@ -58,6 +58,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__base16_encode__returns_expected_value)
     BOOST_REQUIRE_EQUAL(base16_encode::symbol(), "base16-encode");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__base32_decode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(base32_decode::symbol(), "base32-decode");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__base32_encode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(base32_encode::symbol(), "base32-encode");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__base58_decode__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(base58_decode::symbol(), "base58-decode");
@@ -86,6 +96,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__base64_decode__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__base64_encode__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(base64_encode::symbol(), "base64-encode");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__bech32_decode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(bech32_decode::symbol(), "bech32-decode");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__bech32_encode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(bech32_encode::symbol(), "bech32-encode");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__bitcoin160__returns_expected_value)
@@ -451,6 +471,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__script_to_address__returns_expected_valu
 BOOST_AUTO_TEST_CASE(generated__symbol__script_to_key__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(script_to_key::symbol(), "script-to-key");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__script_to_witness__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(script_to_witness::symbol(), "script-to-witness");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__seed__returns_expected_value)

@@ -18,10 +18,6 @@
  */
 #include <bitcoin/explorer/commands/ec-to-witness.hpp>
 
-#include <iostream>
-#include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
-
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
@@ -33,13 +29,18 @@ console_result ec_to_witness::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& point = get_ec_public_key_argument();
-    const auto prefix = get_prefix_argument();
-    const auto format = get_witness_option();
+    const auto& prefix = get_prefix_argument();
 
-    // BUGBUG: prefix not validated.
-    // TODO: prefix should be read from config (numeric).
+    if (witness_address::parse_prefix(prefix) !=
+        witness_address::parse_result::valid)
+    {
+        output << BX_EC_TO_WITNESS_INVALID_PREFIX << std::endl;
+        return console_result::failure;
+    }
 
-    output << witness_address(point, format, prefix) << std::endl;
+    const witness_address address(point, prefix);
+
+    output << address << std::endl;
     return console_result::okay;
 }
 

@@ -27,13 +27,14 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::config;
 
 console_result wif_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const ec_secret& secret = get_wif_argument();
 
-    output << encode_base16(secret) << std::endl;
+    output << base16(secret) << std::endl;
     return console_result::okay;
 }
 

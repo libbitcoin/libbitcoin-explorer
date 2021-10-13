@@ -31,6 +31,8 @@
   <!-- IMPORTANT: update the 'settings' command when these change. -->
 
   <configuration section="wallet">
+    <setting name="witness_version" type="byte" description="The witness version, defaults to 0." />
+    <setting name="witness_address_prefix" type="string" default="bc" description="The witness address prefix, defaults to 'bc'." />
     <setting name="wif_version" type="byte" default="128" description="The wallet import format (WIF) key version, defaults to 128." />
     <setting name="hd_public_version" type="uint32_t" default="76067358" description="The hierarchical deterministic (HD) public key version, defaults to 76067358." />
     <setting name="hd_secret_version" type="uint32_t" default="76066276" description="The hierarchical deterministic (HD) private key version, defaults to 76066276." />
@@ -58,8 +60,8 @@
     <setting name="socks_proxy" type="authority" default="0.0.0.0:0" description="The address of a SOCKS5 proxy to use, defaults to none." />
     <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a server, defaults to 0." />
     <setting name="connect_timeout_seconds" default="5" type="uint16_t" description="The time limit for connection establishment, defaults to 5." />
-    <setting name="server_public_key" type="sodium" description="The Z85-encoded public key of the server." />
-    <setting name="client_private_key" type="sodium" description="The Z85-encoded private key of the client." />
+    <setting name="server_public_key" type="sodium" description="The Base85 encoded public key of the server." />
+    <setting name="client_private_key" type="sodium" description="The Base85 encoded private key of the client." />
   </configuration>
 
   <!-- General resources. -->
@@ -90,13 +92,13 @@
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address to decode. If not specified the address is read from STDIN."/>
   </command>
 
-  <command symbol="address-embed" formerly="embed-addr" output="payment_address" category="WALLET" description="Create a payment address with an embedded record of binary data.">
-    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version." />
+  <command symbol="address-embed" formerly="embed-addr" output="payment_address" category="WALLET" description="Create a pay-to-public-key-hash payment address with an embedded record of binary data. WARNING: any coin spent to this address is lost.">
+    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
     <argument name="DATA" stdin="true" type="bytes" description="The binary data to embed as Base16. This can be text or any other data. If not specified the data is read from STDIN." />
   </command>
 
   <command symbol="address-encode" formerly="encode-addr" output="payment_address" category="WALLET" description="Convert a RIPEMD160 value to a payment address.">
-    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version." />
+    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
     <argument name="RIPEMD160" stdin="true" type="hash160" description="The Base16 hash to encode. If not specified the value is read from STDIN."/>
   </command>
 
@@ -112,7 +114,13 @@
     <argument name="DATA" stdin="true" type="bytes" description="The binary data to encode as Base16. This can be text or any other data. If not specified the data is read from STDIN." />
   </command>
   
-  <!-- TODO: add base32-encode and base32-decode commands. -->
+  <command symbol="base32-decode" output="bytes" category="ENCODING" description="Convert a Base32 value to binary data.">
+    <argument name="BASE32" stdin="true" type="base32" description="The Base32 value to decode as binary data. If not specified the value is read from STDIN." />
+  </command>
+
+  <command symbol="base32-encode" output="base32" category="ENCODING" description="Convert binary data to Base32.">
+    <argument name="DATA" stdin="true" type="bytes" description="The binary data to encode as Base32. This can be text or any other data. If not specified the data is read from STDIN." />
+  </command>
 
   <command symbol="base58check-decode" category="ENCODING" obsolete="true" description="Convert a Base58Check value to its component parts.">
     <define name="BX_BASE58CHECK_DECODE_OBSOLETE" value="This command is obsolete. Use combination of checked-encode and base58-encode instead." />
@@ -146,26 +154,42 @@
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the data is read from STDIN."/>
   </command>
 
+  <command symbol="bech32-decode" output="base16" category="ENCODING" description="Validate the bech32 checksum of Base16 data and recover its witness prefix, version and program.">
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
+    <argument name="CHECKED" stdin="true" type="base16" description="The bech32 checked Base16 data to decode. If not specified the value is read from STDIN." />
+    <define name="BX_BECH32_DECODE_INVALID_CHECKSUM" value="The bech32 checksum is invalid." />
+  </command>
+
+  <command symbol="bech32-encode" output="base16" category="ENCODING" description="Add a prefix, version byte and checksum to a Base32 witness program.">
+    <option name="version" type="byte" configuration="wallet.witness_version" description="The desired witness version, between 0 and 16, defaults to 0." />
+    <argument name="prefix" type="string" configuration="wallet.witness_address_prefix" description="The desired witness address prefix, defaults to 'bc'." />
+    <argument name="PROGRAM" stdin="true" type="base16" description="The Base16 witness program to encode. If not specified the value is read from STDIN." />
+    <define name="BX_BECH32_ENCODE_SHORT_PROGRAM" value="The program is too short." />
+    <define name="BX_BECH32_ENCODE_LONG_PROGRAM" value="The program is too long." />
+    <define name="BX_BECH32_ENCODE_INVALID_PREFIX" value="The prefix is invalid." />
+    <define name="BX_BECH32_ENCODE_INVALID_VERSION" value="The version is invalid." />
+  </command>
+
   <command symbol="btc-to-satoshi" formerly="satoshi" output="uint64_t" category="MATH" description="Convert BTC to satoshi.">
     <argument name="BTC" stdin="true" type="btc" description="The number of BTC to convert. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="cert-new" category="MATH" description="Create a Curve ZMQ private key for use with a Libbitcoin server. WARNING: entropy is obtained from the underlying platform.">
+  <command symbol="cert-new" category="MATH" description="Create a Base85 Curve ZMQ private key for use with a Libbitcoin server. WARNING: entropy is obtained from the underlying platform.">
     <define name="BX_CERT_NEW_FAILURE" value="The key generation failed." />
   </command>
 
-  <command symbol="cert-public" output="sodium" category="MATH" description="Derive a Curve ZMQ public key for use with a Libbitcoin server.">
+  <command symbol="cert-public" output="sodium" category="MATH" description="Derive a Base85 Curve ZMQ public key for use with a Libbitcoin server.">
     <argument name="PRIVATE_KEY" stdin="true" type="sodium" description="The private key from which to derive the public key." />
     <define name="BX_CERT_PUBLIC_INVALID" value="The private key is not valid." />
   </command>
 
-  <command symbol="checked-decode" formerly="wrap-decode" output="wrapper" category="ENCODING" description="Validate the checksum of checked Base16 data and recover its version and payload.">
+  <command symbol="checked-decode" formerly="wrap-decode" output="base16" category="ENCODING" description="Validate the bitcoin checksum of Base16 data and recover its version and payload.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <argument name="WRAPPED" stdin="true" type="wrapper" description="The Base16 data to decode. If not specified the value is read from STDIN." />
+    <argument name="CHECKED" stdin="true" type="base16" description="The checked Base16 data to decode. If not specified the value is read from STDIN." />
   </command>
 
-  <command symbol="checked-encode" formerly="wrap-encode" output="wrapper" category="ENCODING" description="Add a version byte and checksum to Base16 data.">
-    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired version number." />
+  <command symbol="checked-encode" formerly="wrap-encode" output="base16" category="ENCODING" description="Add a version byte and bitcoin checksum to Base16 data.">
+    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
     <argument name="PAYLOAD" stdin="true" type="base16" description="The Base16 data to encode. If not specified the value is read from STDIN." />
   </command>
 
@@ -201,14 +225,14 @@
     <define name="BX_EC_NEW_INVALID_KEY" value="The entropy produced an invalid key." />
   </command>
 
-  <command symbol="ec-to-address" formerly="addr" output="payment_address" category="WALLET" description="Convert an EC public key to a payment address.">
-    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version." />
-    <argument name="EC_PUBLIC_KEY" stdin="true" type="ec_public" description="The Base16 EC public key to convert. If not specified the key is read from STDIN." />
+  <command symbol="ec-to-address" formerly="addr" output="payment_address" category="WALLET" description="Create a pay-to-public-key-hash address from an EC public key.">
+    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
+    <argument name="EC_PUBLIC_KEY" stdin="true" type="ec_public" description="The Base16 EC public key of the address. If not specified the key is read from STDIN." />
   </command>
 
   <command symbol="ec-to-ek" formerly="brainwallet" output="ek_private" category="KEY_ENCRYPTION" description="Encrypt an EC private key as an encrypted private key (BIP38).">
     <option name="uncompressed" description="Use the uncompressed public key format." />
-    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version." />
+    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
     <argument name="PASSPHRASE" required="true" description="The passphrase for encrypting the private key." />
     <argument name="EC_PRIVATE_KEY" stdin="true" type="ec_private" description="The EC private key to encrypt. If not specified the key is read from STDIN." />
     <define name="BX_EC_TO_EK_REQUIRES_ICU" value="The command requires an ICU build." />
@@ -225,16 +249,15 @@
     <argument name="EC_PRIVATE_KEY" stdin="true" type="ec_private" description="The Base16 EC private key to convert. If not specified the key is read from STDIN."/>
   </command>
 
-  <command symbol="ec-to-witness" output="witness_address" category="WALLET" description="Convert an EC public key to a witness address.">
-    <!-- TODO: this should be read from config. -->
-    <argument name="prefix" required="true" type="string" description="The witness address prefix." />
-    <option name="witness" type="witness" description="The desired Witness address format. Options are 'p2wpkh' and 'p2wsh', defaults to 'p2wpkh'." />
+  <command symbol="ec-to-witness" output="witness_address" category="WALLET" description="Create a BIP173 pay-to-witness-public-key-hash address from an EC public key.">
+    <argument name="prefix" type="string" configuration="wallet.witness_address_prefix" description="The desired witness address prefix, defaults to 'bc'." />
     <argument name="EC_PUBLIC_KEY" stdin="true" type="ec_public" description="The Base16 EC public key of the address. If not specified the key is read from STDIN." />
-  </command>
+    <define name="BX_EC_TO_WITNESS_INVALID_PREFIX" value="The prefix is invalid." />
+  </command> 
 
   <command symbol="ek-address" output="payment_address" category="KEY_ENCRYPTION" description="Create a payment address derived from an intermediate passphrase token (BIP38).">
     <option name="uncompressed" description="Use the uncompressed public key format, as used to create the corresponding encrypted private key." />
-    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version used to create the corresponding encrypted private key." />
+    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version used to create the corresponding encrypted private key, defaults to 0." />
     <argument name="TOKEN" required="true" type="ek_token" description="The intermediate passphrase token used to create the corresponding encrypted private key." />
     <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy used to create the corresponding encrypted private key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the entropy is read from STDIN." />
     <define name="BX_EK_ADDRESS_SHORT_ENTROPY" value="The entropy is less than 192 bits long." />
@@ -242,7 +265,7 @@
 
   <command symbol="ek-new" output="ek_private" category="KEY_ENCRYPTION" description="Create an encrypted private key from an intermediate passphrase token (BIP38).">
     <option name="uncompressed" description="Use the uncompressed public key format." />
-    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version." />
+    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
     <argument name="TOKEN" required="true" type="ek_token" description="The intermediate passphrase token." />
     <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new encrypted private key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the entropy is read from STDIN." />
     <define name="BX_EK_NEW_SHORT_ENTROPY" value="The entropy is less than 192 bits long." />
@@ -250,7 +273,7 @@
 
   <command symbol="ek-public" output="ek_public" category="KEY_ENCRYPTION" description="Create an encrypted public key from an intermediate passphrase token (BIP38).">
     <option name="uncompressed" description="Use the uncompressed public key format, as used to create the corresponding encrypted private key." />
-    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version used to create the corresponding encrypted private key." />
+    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version used to create the corresponding encrypted private key, defaults to 0." />
     <argument name="TOKEN" required="true" type="ek_token" description="The intermediate passphrase token used to create the corresponding encrypted private key." />
     <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new encrypted public key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the entropy is read from STDIN." />
     <define name="BX_EK_PUBLIC_SHORT_ENTROPY" value="The entropy is less than 192 bits long." />
@@ -597,14 +620,20 @@
     <argument name="SCRIPT" stdin="true" type="script" description="The plain text script tokens that make up the script. Multiple tokens must be quoted. If not specified the tokens are read from STDIN."/>
   </command>
 
-  <command symbol="script-to-address" formerly="scripthash" output="payment_address" category="TRANSACTION" description="Create a BIP16 pay-to-script-hash address from a script.">
-    <option name="version" type="byte" configuration="wallet.pay_to_script_hash_version" description="The desired pay-to-script-hash address version, defaults to 5." />
+  <command symbol="script-to-address" formerly="scripthash" output="payment_address" category="WALLET" description="Create a BIP16 pay-to-script-hash address from a script.">
+    <option name="version" type="byte" configuration="wallet.pay_to_script_hash_version" description="The desired payment address version, defaults to 5." />
     <argument name="SCRIPT" stdin="true" type="script" description="The script to use in the address. Multiple tokens must be quoted. If not specified the script is read from STDIN."/>
   </command>
 
   <command symbol="script-to-key" output="base16" category="WALLET" description="Derive the payments search key of an output script.">
-    <option name="version" type="byte" configuration="wallet.pay_to_script_hash_version" description="The desired pay-to-script-hash address version, defaults to 5." />
+    <option name="version" type="byte" configuration="wallet.pay_to_script_hash_version" description="The desired address version, defaults to 5." />
     <argument name="SCRIPT" stdin="true" type="script" description="The output script. Multiple tokens must be quoted. If not specified the script is read from STDIN."/>
+  </command>
+
+  <command symbol="script-to-witness" output="witness_address" category="WALLET" description="Create a BIP173 pay-to-witness-script-hash address from a script.">
+    <argument name="prefix" type="string" configuration="wallet.witness_address_prefix" description="The desired witness address prefix, defaults to 'bc'." />
+    <argument name="SCRIPT" stdin="true" type="script" description="The script to use in the address. Multiple tokens must be quoted. If not specified the script is read from STDIN."/>
+    <define name="BX_SCRIPT_TO_WITNESS_INVALID_PREFIX" value="The prefix is invalid." />
   </command>
   
   <command symbol="seed" category="WALLET" obsolete="true" description="Generate a pseudorandom seed.">

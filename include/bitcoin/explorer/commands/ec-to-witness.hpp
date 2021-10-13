@@ -42,6 +42,7 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -49,6 +50,12 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+/**
+ * Various localizable strings.
+ */
+#define BX_EC_TO_WITNESS_INVALID_PREFIX \
+    "The prefix is invalid."
 
 /**
  * Class to implement the ec-to-witness command.
@@ -94,7 +101,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Convert an EC public key to a witness address.";
+        return "Create a BIP173 pay-to-witness-public-key-hash address from an EC public key.";
     }
 
     /**
@@ -142,14 +149,9 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "witness,w",
-            value<explorer::config::witness>(&option_.witness),
-            "The desired Witness address format. Options are 'p2wpkh' and 'p2wsh', defaults to 'p2wpkh'."
-        )
-        (
             "prefix",
-            value<std::string>(&argument_.prefix)->required(),
-            "The witness address prefix."
+            value<std::string>(&argument_.prefix),
+            "The desired witness address prefix, defaults to 'bc'."
         )
         (
             "EC_PUBLIC_KEY",
@@ -213,23 +215,6 @@ public:
         argument_.ec_public_key = value;
     }
 
-    /**
-     * Get the value of the witness option.
-     */
-    virtual explorer::config::witness& get_witness_option()
-    {
-        return option_.witness;
-    }
-
-    /**
-     * Set the value of the witness option.
-     */
-    virtual void set_witness_option(
-        const explorer::config::witness& value)
-    {
-        option_.witness = value;
-    }
-
 private:
 
     /**
@@ -257,11 +242,9 @@ private:
     struct option
     {
         option()
-          : witness()
         {
         }
 
-        explorer::config::witness witness;
     } option_;
 };
 

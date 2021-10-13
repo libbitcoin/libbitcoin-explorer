@@ -435,9 +435,6 @@
     <ClCompile Include="..\..\..\..\src\config\witness.cpp">
       <Filter>src\config</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\config\wrapper.cpp">
-      <Filter>src\config</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\dispatch.cpp">
       <Filter>src</Filter>
     </ClCompile>

@@ -42,6 +42,7 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -102,7 +103,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Add a version byte and checksum to Base16 data.";
+        return "Add a version byte and bitcoin checksum to Base16 data.";
     }
 
     /**
@@ -151,7 +152,7 @@ public:
         (
             "version,v",
             value<explorer::config::byte>(&option_.version)->default_value(0),
-            "The desired version number."
+            "The desired payment address version, defaults to 0."
         )
         (
             "PAYLOAD",

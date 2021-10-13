@@ -172,8 +172,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/config/language.cpp \
     src/config/sighash.cpp \
     src/config/signature.cpp \
-    src/config/witness.cpp \
-    src/config/wrapper.cpp
+    src/config/witness.cpp
 
 # console/bx => ${bindir}
 #------------------------------------------------------------------------------

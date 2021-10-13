@@ -18,15 +18,12 @@
  */
 #include <bitcoin/explorer/commands/ec-add-secrets.hpp>
 
-#include <iostream>
-#include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
-
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::config;
 using namespace bc::system::wallet;
 
 console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& error)
@@ -36,7 +33,7 @@ console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& error)
 
     if (secrets.empty())
     {
-        output << encode_base16(null_hash) << std::endl;
+        output << base16(null_hash) << std::endl;
         return console_result::okay;
     }
 
@@ -55,18 +52,12 @@ console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& error)
     // isn't necessary, since wif will cast to ec_secret, which they shold already
     // accept.
 
-    // TODO: replace all >> BOOST_THROW_EXCEPTION in ::system so they are not
-    // bypassed in debug builds. Move using definition into bc namespace.
-
     // TODO: the test cases don't use >>, so they can introduce invalid objects.
     // So all objects need to be tested for validity in bx invoke handlers,
     // as these can be used independently via setters just as the test cases.
     // The setters shouldn't throw, but an invalid paramter could cause
     // premature termination. This would require consistent bool() operators.
-    // Probbably better to demonstrate validity testing in the handlers.
-
-    // TODO: figure out why invalidity is causing a memory access violation, as
-    // this should not be allowed in any case.
+    // Probably better to demonstrate validity testing in the handlers.
 
     ec_secret sum(secrets.front());
 
@@ -80,10 +71,9 @@ console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& error)
         }
     }
 
-    output << encode_base16(sum) << std::endl;
+    output << base16(sum) << std::endl;
     return console_result::okay;
 }
-
 
 } //namespace commands
 } //namespace explorer

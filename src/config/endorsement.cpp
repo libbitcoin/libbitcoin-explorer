@@ -61,7 +61,7 @@ std::istream& operator>>(std::istream& input, endorsement& argument)
     endorsement::type out;
     if (!system::decode_base16(out, text) ||
         (out.size() > system::max_endorsement_size))
-        throw istream_failure(text);
+        throw system::istream_exception(text);
 
     argument.value_ = out;
     return input;

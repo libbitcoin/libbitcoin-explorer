@@ -22,7 +22,7 @@
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(base58_encode__invoke)
+BOOST_AUTO_TEST_SUITE(base64_encode__invoke)
 
 // vectors
 // tools.ietf.org/html/rfc4648#section-10

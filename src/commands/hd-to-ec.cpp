@@ -27,6 +27,7 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::config;
 
 console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
@@ -51,7 +52,7 @@ console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
         const auto private_key = wallet::hd_private(key, prefixes);
         if (private_key)
         {
-            output << encode_base16(private_key.secret()) << std::endl;
+            output << base16(private_key.secret()) << std::endl;
             return console_result::okay;
         }
     }

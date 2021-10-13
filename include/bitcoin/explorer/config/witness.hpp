@@ -29,12 +29,11 @@ namespace explorer {
 namespace config {
 
 // Enumeration mapper.
-// TODO: Remove this, prefix should be read from numerically and from config.
 
 class BCX_API witness
 {
 public:
-    typedef system::wallet::witness_address::address_format type;
+    typedef system::wallet::witness_address::program_type type;
 
     witness();
     witness(const witness& other);

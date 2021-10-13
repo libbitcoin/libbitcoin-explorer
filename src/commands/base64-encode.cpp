@@ -18,10 +18,6 @@
  */
 #include <bitcoin/explorer/commands/base64-encode.hpp>
 
-#include <iostream>
-#include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
-
 namespace libbitcoin {
 namespace explorer {
 namespace commands {

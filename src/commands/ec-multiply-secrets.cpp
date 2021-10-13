@@ -28,6 +28,7 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::config;
 
 console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& error)
 {
@@ -36,7 +37,7 @@ console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& e
 
     if (secrets.empty())
     {
-        output << encode_base16(null_hash) << std::endl;
+        output << base16(null_hash) << std::endl;
         return console_result::okay;
     }
 
@@ -52,7 +53,7 @@ console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& e
         }
     }
 
-    output << encode_base16(product) << std::endl;
+    output << base16(product) << std::endl;
     return console_result::okay;
 }
 

@@ -29,29 +29,15 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-// TODO: remove wrap/unwrap commands and remove this.
-
 class BCX_API wrapper
 {
 public:
-    typedef system::wallet::wrapped_data type;
+    typedef system::data_chunk type;
 
     wrapper();
     wrapper(const wrapper& other);
     wrapper(const std::string& token);
     wrapper(const type& value);
-
-    // TODO remove.
-    wrapper::wrapper(const system::data_chunk& wrapped);
-
-    // TODO remove.
-    wrapper::wrapper(const system::wallet::payment_address& address);
-
-    // TODO remove.
-    wrapper(uint8_t version, const system::data_chunk& payload);
-
-    // TODO remove.
-    system::data_chunk to_data() const;
 
     operator const type&() const;
 

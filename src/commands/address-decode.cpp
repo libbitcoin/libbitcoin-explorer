@@ -35,10 +35,10 @@ console_result address_decode::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto& address = get_payment_address_argument();
-    const encoding_engine  encoding = get_format_option();
+    const encoding_engine encoding = get_format_option();
 
-    const config::wrapper wrapped(address);
-    write_stream(output, property_tree(wrapped), encoding);
+    ////const config::wrapper wrapped(address);
+    ////write_stream(output, property_tree(wrapped), encoding);
 
     return console_result::okay;
 }

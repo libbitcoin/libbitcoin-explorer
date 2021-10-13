@@ -56,6 +56,7 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
     // Because the parser cannot support uint8_t types.
     const auto version = static_cast<uint8_t>(qrcode_version);
 
+    // TODO: use encode_mode::alpha_numeric for witness addresses.
     if (!qr_code::encode(output, value, version, scale_factor, margin_size))
     {
         error << BX_QRCODE_MAXIMUM_SIZE << std::endl;

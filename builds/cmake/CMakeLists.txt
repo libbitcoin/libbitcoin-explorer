@@ -323,8 +323,7 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/config/language.cpp"
     "../../src/config/sighash.cpp"
     "../../src/config/signature.cpp"
-    "../../src/config/witness.cpp"
-    "../../src/config/wrapper.cpp" )
+    "../../src/config/witness.cpp" )
 
 # ${CANONICAL_LIB_NAME} project specific include directories.
 #------------------------------------------------------------------------------
