@@ -788,12 +788,12 @@ build_all()
     build_from_tarball "$ICU_URL" "$ICU_ARCHIVE" gzip source "$PARALLEL" "$BUILD_ICU" "${ICU_OPTIONS[@]}" "$@"
     build_from_tarball_boost "$BOOST_URL" "$BOOST_ARCHIVE" bzip2 . "$PARALLEL" "$BUILD_BOOST" "${BOOST_OPTIONS[@]}"
     build_from_tarball "$ZMQ_URL" "$ZMQ_ARCHIVE" gzip . "$PARALLEL" "$BUILD_ZMQ" "${ZMQ_OPTIONS[@]}" "$@"
-    build_from_github libbitcoin secp256k1 version7 "$PARALLEL" "${SECP256K1_OPTIONS[@]}" "$@"
-    build_from_github libbitcoin libbitcoin-system master "$PARALLEL" "${BITCOIN_SYSTEM_OPTIONS[@]}" "$@"
-    build_from_github libbitcoin libbitcoin-protocol master "$PARALLEL" "${BITCOIN_PROTOCOL_OPTIONS[@]}" "$@"
-    build_from_github libbitcoin libbitcoin-client master "$PARALLEL" "${BITCOIN_CLIENT_OPTIONS[@]}" "$@"
-    build_from_github libbitcoin libbitcoin-network master "$PARALLEL" "${BITCOIN_NETWORK_OPTIONS[@]}" "$@"
-    build_from_ci libbitcoin libbitcoin-explorer master "$PARALLEL" "${BITCOIN_EXPLORER_OPTIONS[@]}" "$@"
+    build_from_github evoskuil secp256k1 version8 "$PARALLEL" "${SECP256K1_OPTIONS[@]}" "$@"
+    build_from_github evoskuil libbitcoin-system master "$PARALLEL" "${BITCOIN_SYSTEM_OPTIONS[@]}" "$@"
+    build_from_github evoskuil libbitcoin-protocol master "$PARALLEL" "${BITCOIN_PROTOCOL_OPTIONS[@]}" "$@"
+    build_from_github evoskuil libbitcoin-client master "$PARALLEL" "${BITCOIN_CLIENT_OPTIONS[@]}" "$@"
+    build_from_github evoskuil libbitcoin-network master "$PARALLEL" "${BITCOIN_NETWORK_OPTIONS[@]}" "$@"
+    build_from_ci evoskuil libbitcoin-explorer master "$PARALLEL" "${BITCOIN_EXPLORER_OPTIONS[@]}" "$@"
 }
 
 
