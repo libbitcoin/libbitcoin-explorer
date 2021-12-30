@@ -18,4 +18,9 @@ BOOST_UNIT_TEST_OPTIONS=\
 
 # Run tests.
 #==============================================================================
-./test/libbitcoin-explorer-test ${BOOST_UNIT_TEST_OPTIONS} > test.log
+# ALlow CI to send errors to standard output
+if [[ $CI == true ]]; then
+    ./test/libbitcoin-explorer-test ${BOOST_UNIT_TEST_OPTIONS}
+else
+    ./test/libbitcoin-explorer-test ${BOOST_UNIT_TEST_OPTIONS} > test.log
+fi
