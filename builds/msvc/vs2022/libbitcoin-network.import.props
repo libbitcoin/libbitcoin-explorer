@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="Globals">
+    <_PropertySheetDisplayName>Libbitcoin Network Import Settings</_PropertySheetDisplayName>
+  </PropertyGroup>
+
+  <!-- User Interface -->
+
+  <ItemGroup Label="BuildOptionsExtension">
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)libbitcoin-network.import.xml" />
+  </ItemGroup>
+
+  <!-- Linkage -->
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libbitcoin-network\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="'$(Linkage-libbitcoin-network)' == 'static' Or '$(Linkage-libbitcoin-network)' == 'ltcg'">BCT_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies Condition="'$(Linkage-libbitcoin-network)' != ''">libbitcoin-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Link Condition="($(PlatformToolset) == 'v120') Or ($(PlatformToolset) == 'CTP_Nov2013')">
+      <!-- $(PlatformToolset) is hard wired to CTP_Nov2013 to allow for linkage by PlatformToolset=v120 (and CTP_Nov2013) callers. -->
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Debug\CTP_Nov2013\$(Linkage-libbitcoin-network)\;
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\obj\libbitcoin-network\$(PlatformName)\Debug\CTP_Nov2013\$(Linkage-libbitcoin-network)\;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Release\CTP_Nov2013\$(Linkage-libbitcoin-network)\;
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\obj\libbitcoin-network\$(PlatformName)\Release\CTP_Nov2013\$(Linkage-libbitcoin-network)\;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
+    </Link>
+    <Link Condition="($(PlatformToolset) != 'v120') And ($(PlatformToolset) != 'CTP_Nov2013')">
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-libbitcoin-network)\;
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\obj\libbitcoin-network\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-libbitcoin-network)\;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\bin\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libbitcoin-network)\;
+        $(ProjectDir)..\..\..\..\..\libbitcoin-network\obj\libbitcoin-network\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libbitcoin-network)\;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
+    </Link>
+    <Link Condition="$(PlatformToolset) == 'v120'">
+      <!-- Need to link $(VC_CTP_Nov2013_LibraryPath_x86), $(VC_CTP_Nov2013_LibraryPath_x64), or $(VC_CTP_Nov2013_LibraryPath_ARM).-->
+      <AdditionalLibraryDirectories Condition="$(PlatformName) == 'ARM'">$(ProgramFiles)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib\arm;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(PlatformName) == 'x64'">$(ProgramFiles)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib\amd64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(PlatformName) == 'Win32'">$(ProgramFiles)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

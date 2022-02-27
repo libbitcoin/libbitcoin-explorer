@@ -17,9 +17,12 @@
 #                            accesses this feature, so if you do not intend to
 #                            use passphrase normalization this dependency can
 #                            be avoided.
+# --with-mbedtls          Compile with MbedTLS Support
+#                            Provides a websockets implementation for query.
 # --build-icu              Builds ICU libraries.
 # --build-boost            Builds Boost libraries.
 # --build-zmq              Builds ZeroMQ libraries.
+# --build-mbedtls          Builds MbedTLS libraries.
 # --build-dir=<path>       Location of downloaded and intermediate files.
 # --prefix=<absolute-path> Library install location (defaults to /usr/local).
 # --disable-shared         Disables shared library builds.
@@ -52,10 +55,15 @@ ICU_ARCHIVE="icu4c-68_2-src.tgz"
 ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.3.4/zeromq-4.3.4.tar.gz"
 ZMQ_ARCHIVE="zeromq-4.3.4.tar.gz"
 
+# MBEDTLS archive.
+#------------------------------------------------------------------------------
+MBEDTLS_URL="https://tls.mbed.org/download/mbedtls-2.12.0-apache.tgz"
+MBEDTLS_ARCHIVE="mbedtls-2.12.0-apache.tgz"
+
 # Boost archive.
 #------------------------------------------------------------------------------
-BOOST_URL="http://downloads.sourceforge.net/project/boost/boost/1.72.0/boost_1_72_0.tar.bz2"
-BOOST_ARCHIVE="boost_1_72_0.tar.bz2"
+BOOST_URL="http://downloads.sourceforge.net/project/boost/boost/1.76.0/boost_1_76_0.tar.bz2"
+BOOST_ARCHIVE="boost_1_76_0.tar.bz2"
 
 
 # Define utility functions.
@@ -200,9 +208,12 @@ display_help()
     display_message "                             accesses this feature, so if you do not intend to "
     display_message "                             use passphrase normalization this dependency can "
     display_message "                             be avoided."
+    display_message "  --with-mbedtls          Compile with MbedTLS Support"
+    display_message "                             Provides a websockets implementation for query."
     display_message "  --build-icu              Builds ICU libraries."
     display_message "  --build-boost            Builds Boost libraries."
     display_message "  --build-zmq              Build ZeroMQ libraries."
+    display_message "  --build-mbedtls          Builds MbedTLS libraries."
     display_message "  --build-dir=<path>       Location of downloaded and intermediate files."
     display_message "  --prefix=<absolute-path> Library install location (defaults to /usr/local)."
     display_message "  --disable-shared         Disables shared library builds."
@@ -233,6 +244,7 @@ parse_command_line_options()
             # Custom build options (in the form of --build-<option>).
             (--build-icu)           BUILD_ICU="yes";;
             (--build-zmq)           BUILD_ZMQ="yes";;
+            (--build-mbedtls)       BUILD_MBEDTLS="yes";;
             (--build-boost)         BUILD_BOOST="yes";;
 
             # Unique script options.
@@ -356,23 +368,6 @@ set_with_boost_prefix()
     fi
 }
 
-
-# Initialize the build environment.
-#==============================================================================
-enable_exit_on_error
-parse_command_line_options "$@"
-handle_help_line_option
-handle_custom_options
-set_operating_system
-configure_build_parallelism
-set_os_specific_compiler_settings "$@"
-link_to_standard_library
-normalize_static_and_shared_options "$@"
-remove_build_options
-set_prefix
-set_pkgconfigdir
-set_with_boost_prefix
-
 display_configuration()
 {
     display_message "libbitcoin-explorer installer configuration."
@@ -389,6 +384,7 @@ display_configuration()
     display_message "WITH_ICU              : $WITH_ICU"
     display_message "BUILD_ICU             : $BUILD_ICU"
     display_message "BUILD_ZMQ             : $BUILD_ZMQ"
+    display_message "BUILD_MBEDTLS         : $BUILD_MBEDTLS"
     display_message "BUILD_BOOST           : $BUILD_BOOST"
     display_message "BUILD_DIR             : $BUILD_DIR"
     display_message "PREFIX                : $PREFIX"
@@ -398,81 +394,6 @@ display_configuration()
     display_message "with_pkgconfigdir     : ${with_pkgconfigdir}"
     display_message "--------------------------------------------------------------------"
 }
-
-
-# Define build options.
-#==============================================================================
-# Define icu options.
-#------------------------------------------------------------------------------
-ICU_OPTIONS=(
-"--enable-tools" \
-"--disable-extras" \
-"--disable-icuio" \
-"--disable-layout" \
-"--disable-layoutex" \
-"--disable-tests" \
-"--disable-samples")
-
-# Define boost options.
-#------------------------------------------------------------------------------
-BOOST_OPTIONS=(
-"--with-atomic" \
-"--with-chrono" \
-"--with-date_time" \
-"--with-filesystem" \
-"--with-iostreams" \
-"--with-locale" \
-"--with-log" \
-"--with-program_options" \
-"--with-regex" \
-"--with-system" \
-"--with-thread" \
-"--with-test")
-
-# Define secp256k1 options.
-#------------------------------------------------------------------------------
-SECP256K1_OPTIONS=(
-"--disable-tests" \
-"--enable-experimental" \
-"--enable-module-recovery" \
-"--enable-module-schnorrsig")
-
-# Define bitcoin-system options.
-#------------------------------------------------------------------------------
-BITCOIN_SYSTEM_OPTIONS=(
-"--without-tests" \
-"--without-examples" \
-"${with_boost}" \
-"${with_pkgconfigdir}")
-
-# Define bitcoin-protocol options.
-#------------------------------------------------------------------------------
-BITCOIN_PROTOCOL_OPTIONS=(
-"--without-tests" \
-"--without-examples" \
-"${with_boost}" \
-"${with_pkgconfigdir}")
-
-# Define bitcoin-client options.
-#------------------------------------------------------------------------------
-BITCOIN_CLIENT_OPTIONS=(
-"--without-tests" \
-"--without-examples" \
-"${with_boost}" \
-"${with_pkgconfigdir}")
-
-# Define bitcoin-network options.
-#------------------------------------------------------------------------------
-BITCOIN_NETWORK_OPTIONS=(
-"--without-tests" \
-"${with_boost}" \
-"${with_pkgconfigdir}")
-
-# Define bitcoin-explorer options.
-#------------------------------------------------------------------------------
-BITCOIN_EXPLORER_OPTIONS=(
-"${with_boost}" \
-"${with_pkgconfigdir}")
 
 
 # Define build functions.
@@ -688,6 +609,7 @@ build_from_tarball_boost()
     # "-sICU_LINK=${ICU_LIBS[*]}"
 
     ./b2 install \
+        "cxxstd=11" \
         "variant=release" \
         "threading=multi" \
         "$BOOST_TOOLSET" \
@@ -786,8 +708,9 @@ build_from_ci()
 build_all()
 {
     build_from_tarball "$ICU_URL" "$ICU_ARCHIVE" gzip source "$PARALLEL" "$BUILD_ICU" "${ICU_OPTIONS[@]}" "$@"
-    build_from_tarball_boost "$BOOST_URL" "$BOOST_ARCHIVE" bzip2 . "$PARALLEL" "$BUILD_BOOST" "${BOOST_OPTIONS[@]}"
     build_from_tarball "$ZMQ_URL" "$ZMQ_ARCHIVE" gzip . "$PARALLEL" "$BUILD_ZMQ" "${ZMQ_OPTIONS[@]}" "$@"
+    build_from_tarball "$MBEDTLS_URL" "$MBEDTLS_ARCHIVE" gzip . "$PARALLEL" "$BUILD_MBEDTLS" "${MBEDTLS_OPTIONS[@]}" "$@"
+    build_from_tarball_boost "$BOOST_URL" "$BOOST_ARCHIVE" bzip2 . "$PARALLEL" "$BUILD_BOOST" "${BOOST_OPTIONS[@]}"
     build_from_github evoskuil secp256k1 version8 "$PARALLEL" "${SECP256K1_OPTIONS[@]}" "$@"
     build_from_github evoskuil libbitcoin-system master "$PARALLEL" "${BITCOIN_SYSTEM_OPTIONS[@]}" "$@"
     build_from_github evoskuil libbitcoin-protocol master "$PARALLEL" "${BITCOIN_PROTOCOL_OPTIONS[@]}" "$@"
@@ -795,6 +718,97 @@ build_all()
     build_from_github evoskuil libbitcoin-network master "$PARALLEL" "${BITCOIN_NETWORK_OPTIONS[@]}" "$@"
     build_from_ci evoskuil libbitcoin-explorer master "$PARALLEL" "${BITCOIN_EXPLORER_OPTIONS[@]}" "$@"
 }
+
+
+# Initialize the build environment.
+#==============================================================================
+enable_exit_on_error
+parse_command_line_options "$@"
+handle_help_line_option
+handle_custom_options
+set_operating_system
+configure_build_parallelism
+set_os_specific_compiler_settings "$@"
+link_to_standard_library
+normalize_static_and_shared_options "$@"
+remove_build_options
+set_prefix
+set_pkgconfigdir
+set_with_boost_prefix
+
+
+# Define build options.
+#==============================================================================
+# Define icu options.
+#------------------------------------------------------------------------------
+ICU_OPTIONS=(
+"--enable-tools" \
+"--disable-extras" \
+"--disable-icuio" \
+"--disable-layout" \
+"--disable-layoutex" \
+"--disable-tests" \
+"--disable-samples")
+
+# Define boost options.
+#------------------------------------------------------------------------------
+BOOST_OPTIONS=(
+"--with-chrono" \
+"--with-date_time" \
+"--with-filesystem" \
+"--with-iostreams" \
+"--with-json" \
+"--with-locale" \
+"--with-program_options" \
+"--with-regex" \
+"--with-system" \
+"--with-thread" \
+"--with-test")
+
+# Define secp256k1 options.
+#------------------------------------------------------------------------------
+SECP256K1_OPTIONS=(
+"--disable-tests" \
+"--enable-experimental" \
+"--enable-module-recovery" \
+"--enable-module-schnorrsig")
+
+# Define bitcoin-system options.
+#------------------------------------------------------------------------------
+BITCOIN_SYSTEM_OPTIONS=(
+"--without-tests" \
+"--without-examples" \
+"${with_boost}" \
+"${with_pkgconfigdir}")
+
+# Define bitcoin-protocol options.
+#------------------------------------------------------------------------------
+BITCOIN_PROTOCOL_OPTIONS=(
+"--without-tests" \
+"--without-examples" \
+"${with_boost}" \
+"${with_pkgconfigdir}")
+
+# Define bitcoin-client options.
+#------------------------------------------------------------------------------
+BITCOIN_CLIENT_OPTIONS=(
+"--without-tests" \
+"--without-examples" \
+"${with_boost}" \
+"${with_pkgconfigdir}")
+
+# Define bitcoin-network options.
+#------------------------------------------------------------------------------
+BITCOIN_NETWORK_OPTIONS=(
+"--without-tests" \
+"${with_boost}" \
+"${with_pkgconfigdir}")
+
+# Define bitcoin-explorer options.
+#------------------------------------------------------------------------------
+BITCOIN_EXPLORER_OPTIONS=(
+"${with_boost}" \
+"${with_pkgconfigdir}")
 
 
 # Build the primary library and all dependencies.
