@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- |  Copyright (c) 2014-2020 libbitcoin-explorer developers (see COPYING).
+ |  Copyright (c) 2014-2021 libbitcoin-explorer developers (see COPYING).
  |
  |         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
  |
@@ -372,4 +372,7 @@
     <Error Condition="!Exists('$(NuGetPackageRoot)secp256k1-vc140.0.1.0.19\build\native\secp256k1-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)secp256k1-vc140.0.1.0.19\build\native\secp256k1-vc140.targets'))" />
     <Error Condition="!Exists('$(NuGetPackageRoot)libzmq_vc140.4.3.2\build\native\libzmq_vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)libzmq_vc140.4.3.2\build\native\libzmq_vc140.targets'))" />
   </Target>
+  <ItemGroup>
+    <Natvis Include="..\..\debug.natvis" />
+  </ItemGroup>
 </Project>
