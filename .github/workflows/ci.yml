@@ -91,7 +91,7 @@ jobs:
             icu: "--build-icu --with-icu"
             zmq: "--build-zmq"
             cc: "clang"
-            flags: "-Os -fPIE"
+            flags: "-Os -fvisibility=hidden -fPIE"
             packager: "brew"
             packages: ""
 
