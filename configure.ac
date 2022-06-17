@@ -69,9 +69,9 @@ AC_ARG_VAR([CC], "C compiler to use, such as gcc or clang")
 AC_ARG_VAR([CXX], "C++ compiler to use, such as g++ or clang++")
 AC_ARG_VAR([PKG_CONFIG_PATH], "Additional directories for package discovery.")
 
-# Check for baseline language coverage in the compiler for the C++11 standard.
+# Check for baseline language coverage in the compiler for the C++20 standard.
 #------------------------------------------------------------------------------
-AX_CXX_COMPILE_STDCXX_11([noext], [mandatory])
+AX_CXX_COMPILE_STDCXX([20], [noext], [mandatory])
 
 
 # Process options.
@@ -262,11 +262,11 @@ AC_MSG_NOTICE([dl_LIBS : ${dl_LIBS}])
 
 # Set flags.
 #==============================================================================
-# Require c++11 for all c++ products.
+# Require c++20 for all c++ products.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*],
-    [AX_CHECK_COMPILE_FLAG([-std=c++11],
-        [CXXFLAGS="$CXXFLAGS -std=c++11"])])
+    [AX_CHECK_COMPILE_FLAG([-std=c++20],
+        [CXXFLAGS="$CXXFLAGS -std=c++20"])])
 
 # Warn on all stuff.
 #------------------------------------------------------------------------------
@@ -331,6 +331,12 @@ AS_CASE([${CC}], [*],
 AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wno-comment],
         [CXXFLAGS="$CXXFLAGS -Wno-comment"])])
+
+# Suppress warning for copy of implicitly generated copy constructor.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-deprecated-copy],
+        [CXXFLAGS="$CXXFLAGS -Wno-deprecated-copy"])])
 
 # Conflict in stdlib under clang. Enabled in clang only.
 #------------------------------------------------------------------------------

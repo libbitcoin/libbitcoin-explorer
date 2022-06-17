@@ -34,7 +34,7 @@ else ()
   set( VERSION "${PACKAGE_VERSION}" )
 endif ()
 
-set( CMAKE_CXX_STANDARD 11 )
+set( CMAKE_CXX_STANDARD 20 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 # Add compiler options
@@ -59,6 +59,9 @@ add_compile_options( "-Wno-missing-braces" )
 
 # Ignore comments within comments or commenting of backslash extended lines.
 add_compile_options( "-Wno-comment" )
+
+# Suppress warning for copy of implicitly generated copy constructor.
+add_compile_options( "-Wno-deprecated-copy" )
 
 # Clean up bx generated code.
 add_compile_options( "-Wno-unused-parameter" )
