@@ -966,31 +966,31 @@ SECP256K1_OPTIONS=(
 # Define bitcoin-system options.
 #------------------------------------------------------------------------------
 BITCOIN_SYSTEM_OPTIONS=(
-"--without-tests" \
-"--without-examples" \
+"-Dwith-tests=no" \
+"-Dwith-examples=no" \
 "${with_boost}" \
 "${with_pkgconfigdir}")
 
 # Define bitcoin-protocol options.
 #------------------------------------------------------------------------------
 BITCOIN_PROTOCOL_OPTIONS=(
-"--without-tests" \
-"--without-examples" \
+"-Dwith-tests=no" \
+"-Dwith-examples=no" \
 "${with_boost}" \
 "${with_pkgconfigdir}")
 
 # Define bitcoin-client options.
 #------------------------------------------------------------------------------
 BITCOIN_CLIENT_OPTIONS=(
-"--without-tests" \
-"--without-examples" \
+"-Dwith-tests=no" \
+"-Dwith-examples=no" \
 "${with_boost}" \
 "${with_pkgconfigdir}")
 
 # Define bitcoin-network options.
 #------------------------------------------------------------------------------
 BITCOIN_NETWORK_OPTIONS=(
-"--without-tests" \
+"-Dwith-tests=no" \
 "${with_boost}" \
 "${with_pkgconfigdir}")
 
