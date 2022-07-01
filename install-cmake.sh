@@ -885,18 +885,18 @@ build_all()
     build_from_tarball_boost "$BOOST_ARCHIVE" "$PARALLEL" "$BUILD_BOOST" "${BOOST_OPTIONS[@]}"
     create_from_github libbitcoin secp256k1 version7
     build_from_github secp256k1 "$PARALLEL" false "${SECP256K1_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS
-    create_from_github pmienk libbitcoin-system install-cmake-v3
+    create_from_github libbitcoin libbitcoin-system version3
     build_from_github_cmake libbitcoin-system "$PARALLEL" false "${BITCOIN_SYSTEM_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
     unpack_from_tarball "$ZMQ_ARCHIVE" "$ZMQ_URL" gzip "$BUILD_ZMQ"
     build_from_tarball "$ZMQ_ARCHIVE" . "$PARALLEL" "$BUILD_ZMQ" "${ZMQ_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS
-    create_from_github pmienk libbitcoin-protocol install-cmake-v3
+    create_from_github libbitcoin libbitcoin-protocol version3
     build_from_github_cmake libbitcoin-protocol "$PARALLEL" false "${BITCOIN_PROTOCOL_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
-    create_from_github pmienk libbitcoin-client install-cmake-v3
+    create_from_github libbitcoin libbitcoin-client version3
     build_from_github_cmake libbitcoin-client "$PARALLEL" false "${BITCOIN_CLIENT_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
-    create_from_github pmienk libbitcoin-network install-cmake-v3
+    create_from_github libbitcoin libbitcoin-network version3
     build_from_github_cmake libbitcoin-network "$PARALLEL" false "${BITCOIN_NETWORK_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
     if [[ ! ($CI == true) ]]; then
-        create_from_github pmienk libbitcoin-explorer install-cmake-v3
+        create_from_github libbitcoin libbitcoin-explorer version3
         build_from_github_cmake libbitcoin-explorer "$PARALLEL" true "${BITCOIN_EXPLORER_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
     else
         push_directory "$PRESUMED_CI_PROJECT_PATH"
