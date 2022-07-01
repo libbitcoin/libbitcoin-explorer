@@ -30,7 +30,7 @@ else ()
   set( libdir "\${exec_prefix}/lib" )
   set( includedir "\${exec_prefix}/include" )
 
-  set( PACKAGE_VERSION "4.0.0" )
+  set( PACKAGE_VERSION "3.7.0" )
   set( VERSION "${PACKAGE_VERSION}" )
 endif ()
 
@@ -59,6 +59,9 @@ add_compile_options( "-Wno-missing-braces" )
 
 # Ignore comments within comments or commenting of backslash extended lines.
 add_compile_options( "-Wno-comment" )
+
+# Suppress warning for copy of implicitly generated copy constructor.
+add_compile_options( "-Wno-deprecated-copy" )
 
 # Clean up bx generated code.
 add_compile_options( "-Wno-unused-parameter" )
@@ -98,6 +101,12 @@ if (BUILD_SHARED_LIBS)
     add_definitions( -DBOOST_ALL_DYN_LINK )
 endif()
 
+if (BUILD_SHARED_LIBS)
+    set( Boost_USE_STATIC_LIBS "off" )
+else()
+    set( Boost_USE_STATIC_LIBS "on" )
+endif()
+
 # Find boost
 #------------------------------------------------------------------------------
 find_package( Boost 1.72.0 REQUIRED COMPONENTS
@@ -122,11 +131,11 @@ endif()
 
 # Find bitcoin-client
 #------------------------------------------------------------------------------
-find_package( Bitcoin-Client 4.0.0 REQUIRED )
+find_package( Bitcoin-Client 3.7.0 REQUIRED )
 
 # Find bitcoin-network
 #------------------------------------------------------------------------------
-find_package( Bitcoin-Network 4.0.0 REQUIRED )
+find_package( Bitcoin-Network 3.7.0 REQUIRED )
 
 # Find dl
 #------------------------------------------------------------------------------
@@ -225,6 +234,8 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/commands/ek-public.cpp"
     "../../src/commands/ek-to-address.cpp"
     "../../src/commands/ek-to-ec.cpp"
+    "../../src/commands/electrum_new.cpp"
+    "../../src/commands/electrum_to_seed.cpp"
     "../../src/commands/fetch-balance.cpp"
     "../../src/commands/fetch-header.cpp"
     "../../src/commands/fetch-height.cpp"
@@ -289,7 +300,9 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/config/btc.cpp"
     "../../src/config/byte.cpp"
     "../../src/config/cert_key.cpp"
+    "../../src/config/dictionary.cpp"
     "../../src/config/ec_private.cpp"
+    "../../src/config/electrum.cpp"
     "../../src/config/encoding.cpp"
     "../../src/config/endorsement.cpp"
     "../../src/config/hashtype.cpp"
@@ -399,6 +412,8 @@ if (with-tests)
         "../../test/commands/ek-public.cpp"
         "../../test/commands/ek-to-address.cpp"
         "../../test/commands/ek-to-ec.cpp"
+        "../../test/commands/electrum_new.cpp"
+        "../../test/commands/electrum_to_seed.cpp"
         "../../test/commands/fetch-balance.cpp"
         "../../test/commands/fetch-header.cpp"
         "../../test/commands/fetch-height.cpp"
