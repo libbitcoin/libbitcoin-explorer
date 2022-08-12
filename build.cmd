@@ -25,24 +25,24 @@ IF NOT EXIST "%nuget_pkg_path%" (
   )
 )
 
-call :init evoskuil libbitcoin-system master
+call :init libbitcoin libbitcoin-system master
 IF %ERRORLEVEL% NEQ 0 (
-  call :failure "Initializing repository evoskuil libbitcoin-system master failed."
+  call :failure "Initializing repository libbitcoin libbitcoin-system master failed."
   exit /b 1
 )
-call :init evoskuil libbitcoin-protocol master
+call :init libbitcoin libbitcoin-protocol master
 IF %ERRORLEVEL% NEQ 0 (
-  call :failure "Initializing repository evoskuil libbitcoin-protocol master failed."
+  call :failure "Initializing repository libbitcoin libbitcoin-protocol master failed."
   exit /b 1
 )
-call :init evoskuil libbitcoin-client master
+call :init libbitcoin libbitcoin-client master
 IF %ERRORLEVEL% NEQ 0 (
-  call :failure "Initializing repository evoskuil libbitcoin-client master failed."
+  call :failure "Initializing repository libbitcoin libbitcoin-client master failed."
   exit /b 1
 )
-call :init evoskuil libbitcoin-network master
+call :init libbitcoin libbitcoin-network master
 IF %ERRORLEVEL% NEQ 0 (
-  call :failure "Initializing repository evoskuil libbitcoin-network master failed."
+  call :failure "Initializing repository libbitcoin libbitcoin-network master failed."
   exit /b 1
 )
 call :bld_repo libbitcoin-explorer

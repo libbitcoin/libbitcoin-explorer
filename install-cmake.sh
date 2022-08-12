@@ -922,18 +922,18 @@ build_all()
     build_from_tarball "$MBEDTLS_ARCHIVE" . "$PARALLEL" "$BUILD_MBEDTLS" "${MBEDTLS_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS
     unpack_from_tarball "$BOOST_ARCHIVE" "$BOOST_URL" bzip2 "$BUILD_BOOST"
     build_from_tarball_boost "$BOOST_ARCHIVE" "$PARALLEL" "$BUILD_BOOST" "${BOOST_OPTIONS[@]}"
-    create_from_github evoskuil secp256k1 version8
+    create_from_github libbitcoin secp256k1 version8
     build_from_github secp256k1 "$PARALLEL" false "${SECP256K1_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS
-    create_from_github evoskuil libbitcoin-system master
+    create_from_github libbitcoin libbitcoin-system master
     build_from_github_cmake libbitcoin-system "$PARALLEL" false "${BITCOIN_SYSTEM_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
-    create_from_github evoskuil libbitcoin-protocol master
+    create_from_github libbitcoin libbitcoin-protocol master
     build_from_github_cmake libbitcoin-protocol "$PARALLEL" false "${BITCOIN_PROTOCOL_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
-    create_from_github evoskuil libbitcoin-client master
+    create_from_github libbitcoin libbitcoin-client master
     build_from_github_cmake libbitcoin-client "$PARALLEL" false "${BITCOIN_CLIENT_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
-    create_from_github evoskuil libbitcoin-network master
+    create_from_github libbitcoin libbitcoin-network master
     build_from_github_cmake libbitcoin-network "$PARALLEL" false "${BITCOIN_NETWORK_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
     if [[ ! ($CI == true) ]]; then
-        create_from_github evoskuil libbitcoin-explorer master
+        create_from_github libbitcoin libbitcoin-explorer master
         build_from_github_cmake libbitcoin-explorer "$PARALLEL" true "${BITCOIN_EXPLORER_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
     else
         push_directory "$PRESUMED_CI_PROJECT_PATH"
