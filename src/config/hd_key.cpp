@@ -21,45 +21,63 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-using namespace bc::system;
-using namespace po;
-
-hd_key::hd_key(const std::string& base58)
+hd_key::hd_key()
+  : value_()
 {
-    std::stringstream(base58) >> *this;
 }
 
+hd_key::hd_key(const hd_key& other)
+  : value_(other.value_)
+{
+}
+
+hd_key::hd_key(const std::string& token)
+{
+    std::stringstream(token) >> *this;
+}
+
+
+hd_key::hd_key(const type& value)
+  : value_(value)
+{
+}
+
+// TODO: remove.
 uint32_t hd_key::version() const
 {
-    return from_big_endian_unsafe<uint32_t>(value_.begin());
+    return system::from_big_endian_unsafe<uint32_t>(value_.begin());
 }
 
-hd_key::operator const wallet::hd_key&() const
+hd_key::operator const type&() const
 {
     return value_;
 }
 
 std::istream& operator>>(std::istream& input, hd_key& argument)
 {
-    std::string base58;
-    input >> base58;
+    std::string text;
+    input >> text;
 
-    data_chunk value;
-    if (!decode_base58(value, base58) || value.size() != wallet::hd_key_size)
-    {
-        BOOST_THROW_EXCEPTION(invalid_option_value(base58));
-    }
+    system::data_chunk out;
+    if (!system::decode_base58(out, text) ||
+        out.size() != system::wallet::hd_key_size)
+        throw system::istream_exception(text);
 
-    std::copy(value.begin(), value.end(), argument.value_.begin());
+    std::copy(out.begin(), out.end(), argument.value_.begin());
     return input;
+}
+
+std::ostream& operator<<(std::ostream& output, const hd_key& argument)
+{
+    output << system::encode_base58(argument.value_);
+    return output;
 }
 
 } // namespace config

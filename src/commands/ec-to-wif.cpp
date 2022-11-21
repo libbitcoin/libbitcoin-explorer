@@ -40,8 +40,9 @@ console_result ec_to_wif::invoke(std::ostream& output, std::ostream& error)
     const uint8_t payment_version = 0;
 
     // ec_private requires a composite version.
-    const auto version = ec_private::to_version(payment_version, wif_version);
+    const auto version = ec_private::to_versions(payment_version, wif_version);
 
+    // ec_private serialzies to WIF.
     output << ec_private(secret, version, !uncompressed) << std::endl;
     return console_result::okay;
 }

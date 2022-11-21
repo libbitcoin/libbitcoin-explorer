@@ -18,32 +18,19 @@
  */
 #include <bitcoin/explorer/config/byte.hpp>
 
-#include <iostream>
-#include <string>
 #include <cstdint>
-#include <boost/program_options.hpp>
+#include <iostream>
+#include <sstream>
+#include <string>
 #include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-using namespace po;
-
 byte::byte()
   : value_(0)
-{
-}
-
-byte::byte(const std::string& decimal)
-{
-    std::stringstream(decimal) >> *this;
-}
-
-byte::byte(uint8_t byte)
-  : value_(byte)
 {
 }
 
@@ -52,38 +39,40 @@ byte::byte(const byte& other)
 {
 }
 
-byte::operator uint8_t() const
+byte::byte(const std::string& token)
+{
+    std::stringstream(token) >> *this;
+}
+
+byte::byte(const type& value)
+  : value_(value)
+{
+}
+
+byte::operator const type&() const
 {
     return value_;
 }
 
 std::istream& operator>>(std::istream& input, byte& argument)
 {
-    std::string decimal;
-    input >> decimal;
+    std::string text;
+    input >> text;
 
-    // We have this byte class only because deserialization doesn't
-    // treat 8 bit values as decimal numbers (unlike 16+ bit numbers).
+    // Can't rely on cin for uint8_t.
+    if (!system::deserialize(argument.value_, text))
+        throw system::istream_exception(text);
 
-    uint16_t number;
-    system::deserialize(number, decimal, true);
-
-    if (number > max_uint8)
-    {
-        BOOST_THROW_EXCEPTION(invalid_option_value(decimal));
-    }
-
-    argument.value_ = static_cast<uint8_t>(number);
     return input;
 }
 
 std::ostream& operator<<(std::ostream& output, const byte& argument)
 {
-    uint16_t number(argument.value_);
-    output << number;
+    // Can't rely on cout for uint8_t.
+    output << system::serialize(argument.value_);
     return output;
 }
 
-} // namespace explorer
 } // namespace config
+} // namespace explorer
 } // namespace libbitcoin

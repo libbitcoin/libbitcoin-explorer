@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -55,8 +54,14 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_ELECTRUM_TO_SEED_REQUIRES_ICU \
-    "The passphrase option requires an ICU build."
+#define BX_ELECTRUM_TO_SEED_INVALID_WORD_COUNT \
+    "The word count is not 12 to 46."
+#define BX_ELECTRUM_TO_SEED_INVALID_WORDS \
+    "The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported."
+#define BX_ELECTRUM_TO_SEED_INVALID_WORDS_ICU \
+    "The mnemonic is not from the specified dictionary. This is not an ICU build, so ensure that the mnemonic is prenormalized. Non-dictionary mnemonics are not supported."
+#define BX_ELECTRUM_TO_SEED_PASSPHRASE_ICU \
+    "This is not an ICU build, so the passphrase is limited to ascii characters."
 
 /**
  * Class to implement the electrum-to-seed command.
@@ -73,7 +78,6 @@ public:
     {
         return "electrum-to-seed";
     }
-
 
     /**
      * Destructor.
@@ -103,7 +107,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Convert a mnemonic seed (Electrum) to its numeric representation.";
+        return "Convert an Electrum dictionary-based mnemonic to a wallet seed. Entropy cannot be derived from the seed. WARNING: mnemonic should be created from properly generated entropy.";
     }
 
     /**
@@ -150,14 +154,19 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "language,l",
+            value<explorer::config::language>(&option_.language),
+            "The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant', and 'any', defaults to 'any'."
+        )
+        (
             "passphrase,p",
             value<std::string>(&option_.passphrase),
-            "An optional passphrase for converting the mnemonic to a seed."
+            "An optional passphrase for the seed."
         )
         (
             "WORD",
             value<std::vector<std::string>>(&argument_.words),
-            "The set of words that that make up the mnemonic. If not specified the words are read from STDIN."
+            "The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN."
         );
 
         return options;
@@ -197,6 +206,23 @@ public:
         const std::vector<std::string>& value)
     {
         argument_.words = value;
+    }
+
+    /**
+     * Get the value of the language option.
+     */
+    virtual explorer::config::language& get_language_option()
+    {
+        return option_.language;
+    }
+
+    /**
+     * Set the value of the language option.
+     */
+    virtual void set_language_option(
+        const explorer::config::language& value)
+    {
+        option_.language = value;
     }
 
     /**
@@ -241,10 +267,12 @@ private:
     struct option
     {
         option()
-          : passphrase()
+          : language(),
+            passphrase()
         {
         }
 
+        explorer::config::language language;
         std::string passphrase;
     } option_;
 };

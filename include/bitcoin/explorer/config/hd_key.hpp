@@ -19,7 +19,6 @@
 #ifndef BX_HD_KEY_HPP
 #define BX_HD_KEY_HPP
 
-#include <cstdint>
 #include <iostream>
 #include <string>
 #include <bitcoin/system.hpp>
@@ -29,52 +28,29 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-/**
- * Serialization helper to serialize both public and private hd keys.
- */
+// Base58 reader of hd_key_size.
+
 class BCX_API hd_key
 {
 public:
+    typedef system::wallet::hd_key type;
 
-    /**
-     * Default constructor.
-     */
-    hd_key()
-    {
-    }
+    hd_key();
+    hd_key(const hd_key& other);
+    hd_key(const std::string& token);
+    hd_key(const type& value);
 
-    /**
-     * Initialization constructor.
-     * @param[in]  base58  The value to initialize with.
-     */
-    hd_key(const std::string& base58);
+    // TODO: remove.
+    uint32_t hd_key::version() const;
 
-    /**
-     * Get the version/prefix of the key value.
-     * @return  The version of the key.
-     */
-    uint32_t version() const;
+    operator const type&() const;
 
-    /**
-     * Overload cast to internal type.
-     * @return  This object's value cast to internal type.
-     */
-    operator const system::wallet::hd_key&() const;
-
-    /**
-     * Overload stream in. Throws if input is invalid.
-     * @param[in]   input     The input stream to read the value from.
-     * @param[out]  argument  The object to receive the read value.
-     * @return                The input stream reference.
-     */
     friend std::istream& operator>>(std::istream& input, hd_key& argument);
+    friend std::ostream& operator<<(std::ostream& output,
+        const hd_key& argument);
 
 private:
-
-    /**
-     * The private key state of this object.
-     */
-    system::wallet::hd_key value_;
+    type value_;
 };
 
 } // namespace config

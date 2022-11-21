@@ -27,21 +27,20 @@
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -198,6 +197,16 @@ public:
         using namespace po;
         definitions.add_options()
         (
+            "wallet.witness_version",
+            value<explorer::config::byte>(&setting_.wallet.witness_version),
+            "The witness version, defaults to 0."
+        )
+        (
+            "wallet.witness_address_prefix",
+            value<std::string>(&setting_.wallet.witness_address_prefix)->default_value("bc"),
+            "The witness address prefix, defaults to 'bc'."
+        )
+        (
             "wallet.wif_version",
             value<explorer::config::byte>(&setting_.wallet.wif_version)->default_value(128),
             "The wallet import format (WIF) key version, defaults to 128."
@@ -304,13 +313,13 @@ public:
         )
         (
             "server.server_public_key",
-            value<system::config::sodium>(&setting_.server.server_public_key),
-            "The Z85-encoded public key of the server."
+            value<protocol::zmq::sodium>(&setting_.server.server_public_key),
+            "The Base85 encoded public key of the server."
         )
         (
             "server.client_private_key",
-            value<system::config::sodium>(&setting_.server.client_private_key),
-            "The Z85-encoded private key of the client."
+            value<protocol::zmq::sodium>(&setting_.server.client_private_key),
+            "The Base85 encoded private key of the client."
         );
     }
 
@@ -361,6 +370,38 @@ public:
     virtual system::options_metadata& get_option_metadata()
     {
         return option_metadata_;
+    }
+
+    /**
+     * Get the value of the wallet.witness_version setting.
+     */
+    virtual explorer::config::byte get_wallet_witness_version_setting() const
+    {
+        return setting_.wallet.witness_version;
+    }
+
+    /**
+     * Set the value of the wallet.witness_version setting.
+     */
+    virtual void set_wallet_witness_version_setting(explorer::config::byte value)
+    {
+        setting_.wallet.witness_version = value;
+    }
+
+    /**
+     * Get the value of the wallet.witness_address_prefix setting.
+     */
+    virtual std::string get_wallet_witness_address_prefix_setting() const
+    {
+        return setting_.wallet.witness_address_prefix;
+    }
+
+    /**
+     * Set the value of the wallet.witness_address_prefix setting.
+     */
+    virtual void set_wallet_witness_address_prefix_setting(std::string value)
+    {
+        setting_.wallet.witness_address_prefix = value;
     }
 
     /**
@@ -702,7 +743,7 @@ public:
     /**
      * Get the value of the server.server_public_key setting.
      */
-    virtual system::config::sodium get_server_server_public_key_setting() const
+    virtual protocol::zmq::sodium get_server_server_public_key_setting() const
     {
         return setting_.server.server_public_key;
     }
@@ -710,7 +751,7 @@ public:
     /**
      * Set the value of the server.server_public_key setting.
      */
-    virtual void set_server_server_public_key_setting(system::config::sodium value)
+    virtual void set_server_server_public_key_setting(protocol::zmq::sodium value)
     {
         setting_.server.server_public_key = value;
     }
@@ -718,7 +759,7 @@ public:
     /**
      * Get the value of the server.client_private_key setting.
      */
-    virtual system::config::sodium get_server_client_private_key_setting() const
+    virtual protocol::zmq::sodium get_server_client_private_key_setting() const
     {
         return setting_.server.client_private_key;
     }
@@ -726,7 +767,7 @@ public:
     /**
      * Set the value of the server.client_private_key setting.
      */
-    virtual void set_server_client_private_key_setting(system::config::sodium value)
+    virtual void set_server_client_private_key_setting(protocol::zmq::sodium value)
     {
         setting_.server.client_private_key = value;
     }
@@ -776,7 +817,9 @@ private:
         struct wallet
         {
             wallet()
-              : wif_version(),
+              : witness_version(),
+                witness_address_prefix(),
+                wif_version(),
                 hd_public_version(),
                 hd_secret_version(),
                 pay_to_public_key_hash_version(),
@@ -786,6 +829,8 @@ private:
             {
             }
 
+            explorer::config::byte witness_version;
+            std::string witness_address_prefix;
             explorer::config::byte wif_version;
             uint32_t hd_public_version;
             uint32_t hd_secret_version;
@@ -839,8 +884,8 @@ private:
             system::config::authority socks_proxy;
             explorer::config::byte connect_retries;
             uint16_t connect_timeout_seconds;
-            system::config::sodium server_public_key;
-            system::config::sodium client_private_key;
+            protocol::zmq::sodium server_public_key;
+            protocol::zmq::sodium client_private_key;
         } server;
 
         setting()

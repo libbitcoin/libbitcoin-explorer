@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -75,7 +74,6 @@ public:
     {
         return "tx-encode";
     }
-
 
     /**
      * Destructor.
@@ -171,7 +169,7 @@ public:
         (
             "output,o",
             value<std::vector<system::config::output>>(&option_.outputs),
-            "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 64 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs."
+            "The set of transaction output data encoded as TARGET:SATOSHI:ENTROPY. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 64 bit spend amount in satoshi. ENTROPY is required for stealth outputs and not used otherwise. The same entropy should NOT be used for multiple outputs."
         );
 
         return options;

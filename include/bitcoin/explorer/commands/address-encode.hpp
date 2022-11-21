@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -153,12 +152,12 @@ public:
         (
             "version,v",
             value<explorer::config::byte>(&option_.version)->default_value(0),
-            "The desired payment address version."
+            "The desired payment address version, defaults to 0."
         )
         (
             "RIPEMD160",
             value<system::config::hash160>(&argument_.ripemd160),
-            "The Base16 hash to convert. If not specified the value is read from STDIN."
+            "The Base16 hash to encode. If not specified the value is read from STDIN."
         );
 
         return options;

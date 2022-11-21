@@ -18,32 +18,17 @@
  */
 #include <bitcoin/explorer/commands/base58check-encode.hpp>
 
-#include <iostream>
-#include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/wrapper.hpp>
-
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::explorer::config;
 using namespace bc::system;
-using namespace bc::system::config;
 
 console_result base58check_encode::invoke(std::ostream& output,
     std::ostream& error)
 {
-    // Bound parameters.
-    const auto version = get_version_option();
-    const auto& payload = get_base16_argument();
-
-    const wrapper wrapped(version, payload);
-    const auto encoded_wrapper = wrapped.to_data();
-    const base58 base58check(encoded_wrapper);
-
-    output << base58check << std::endl;
-    return console_result::okay;
+    error << BX_BASE58CHECK_ENCODE_OBSOLETE << std::endl;
+    return console_result::failure;
 }
 
 } //namespace commands

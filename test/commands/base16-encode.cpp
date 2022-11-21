@@ -22,7 +22,7 @@
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(base58_encode__invoke)
+BOOST_AUTO_TEST_SUITE(base16_encode__invoke)
 
 // vectors
 #define BX_BASE16_ENCODE_NIST_DECODED_A "abc"

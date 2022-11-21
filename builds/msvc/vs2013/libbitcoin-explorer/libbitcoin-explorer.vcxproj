@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- |  Copyright (c) 2014-2020 libbitcoin-explorer developers (see COPYING).
+ |  Copyright (c) 2014-2021 libbitcoin-explorer developers (see COPYING).
  |
  |         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
  |
@@ -80,18 +80,24 @@
     <ClCompile Include="..\..\..\..\src\commands\address-to-key.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base16-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base16-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\base32-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\base32-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base58-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base58-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base58check-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base58check-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base64-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base64-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\bech32-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\bech32-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\bitcoin160.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\bitcoin256.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\broadcast-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\btc-to-satoshi.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\cert-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\cert-public.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\checked-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\checked-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-decompress.cpp" />
@@ -110,8 +116,10 @@
     <ClCompile Include="..\..\..\..\src\commands\ek-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ek-to-address.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ek-to-ec.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\electrum-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\electrum-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\electrum-to-seed.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\entropy.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-balance.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block-hashes.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block-height.cpp" />
@@ -146,7 +154,6 @@
     <ClCompile Include="..\..\..\..\src\commands\message-validate.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-encode.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\mnemonic-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\put-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\qrcode.cpp" />
@@ -156,6 +163,7 @@
     <ClCompile Include="..\..\..\..\src\commands\script-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\script-to-address.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\script-to-key.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\script-to-witness.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\seed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\send-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\settings.cpp" />
@@ -185,21 +193,18 @@
     <ClCompile Include="..\..\..\..\src\commands\wrap-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wrap-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\config\address.cpp" />
-    <ClCompile Include="..\..\..\..\src\config\address_format.cpp" />
     <ClCompile Include="..\..\..\..\src\config\algorithm.cpp" />
     <ClCompile Include="..\..\..\..\src\config\btc.cpp" />
     <ClCompile Include="..\..\..\..\src\config\byte.cpp" />
-    <ClCompile Include="..\..\..\..\src\config\cert_key.cpp" />
-    <ClCompile Include="..\..\..\..\src\config\ec_private.cpp" />
+    <ClCompile Include="..\..\..\..\src\config\bytes.cpp" />
     <ClCompile Include="..\..\..\..\src\config\electrum.cpp" />
     <ClCompile Include="..\..\..\..\src\config\encoding.cpp" />
     <ClCompile Include="..\..\..\..\src\config\endorsement.cpp" />
-    <ClCompile Include="..\..\..\..\src\config\hashtype.cpp" />
     <ClCompile Include="..\..\..\..\src\config\hd_key.cpp" />
     <ClCompile Include="..\..\..\..\src\config\language.cpp" />
-    <ClCompile Include="..\..\..\..\src\config\raw.cpp" />
+    <ClCompile Include="..\..\..\..\src\config\sighash.cpp" />
     <ClCompile Include="..\..\..\..\src\config\signature.cpp" />
-    <ClCompile Include="..\..\..\..\src\config\wrapper.cpp" />
+    <ClCompile Include="..\..\..\..\src\config\witness.cpp" />
     <ClCompile Include="..\..\..\..\src\dispatch.cpp" />
     <ClCompile Include="..\..\..\..\src\display.cpp" />
     <ClCompile Include="..\..\..\..\src\generated.cpp" />
@@ -217,18 +222,24 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-to-key.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base16-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base16-encode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base32-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base32-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base58-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base58-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base58check-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base58check-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base64-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base64-encode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bech32-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bech32-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bitcoin160.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bitcoin256.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\broadcast-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\btc-to-satoshi.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\cert-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\cert-public.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\checked-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\checked-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-add-secrets.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-add.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-decompress.hpp" />
@@ -247,8 +258,10 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-to-address.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-to-ec.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-to-seed.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\entropy.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-balance.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-hashes.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-height.hpp" />
@@ -283,7 +296,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\message-validate.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-encode.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-to-seed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\put-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\qrcode.hpp" />
@@ -293,6 +305,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-to-address.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-to-key.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-to-witness.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\seed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\send-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\settings.hpp" />
@@ -314,9 +327,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\uri-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\validate-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\version.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-address.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-key.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-stealth.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wif-to-ec.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wif-to-public.hpp" />
@@ -324,20 +335,18 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wrap-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wrap-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\address.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\address_format.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\algorithm.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\btc.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\byte.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\cert_key.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\ec_private.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\bytes.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\electrum.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\encoding.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\endorsement.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\hashtype.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\hd_key.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\language.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\raw.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\sighash.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\signature.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\witness.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\wrapper.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\define.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\dispatch.hpp" />
@@ -361,14 +370,13 @@
   <ImportGroup Label="ExtensionTargets" />
   <ImportGroup Label="ExtensionSettings">
     <Import Project="$(NuGetPackageRoot)boost.1.57.0.0\build\native\boost.targets" Condition="Exists('$(NuGetPackageRoot)boost.1.57.0.0\build\native\boost.targets')" />
-    <Import Project="$(NuGetPackageRoot)boost_atomic-vc120.1.57.0.0\build\native\boost_atomic-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_atomic-vc120.1.57.0.0\build\native\boost_atomic-vc120.targets')" />
     <Import Project="$(NuGetPackageRoot)boost_chrono-vc120.1.57.0.0\build\native\boost_chrono-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_chrono-vc120.1.57.0.0\build\native\boost_chrono-vc120.targets')" />
+    <Import Project="$(NuGetPackageRoot)boost_container-vc120.1.57.0.0\build\native\boost_container-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_container-vc120.1.57.0.0\build\native\boost_container-vc120.targets')" />
     <Import Project="$(NuGetPackageRoot)boost_date_time-vc120.1.57.0.0\build\native\boost_date_time-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_date_time-vc120.1.57.0.0\build\native\boost_date_time-vc120.targets')" />
     <Import Project="$(NuGetPackageRoot)boost_filesystem-vc120.1.57.0.0\build\native\boost_filesystem-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_filesystem-vc120.1.57.0.0\build\native\boost_filesystem-vc120.targets')" />
     <Import Project="$(NuGetPackageRoot)boost_iostreams-vc120.1.57.0.0\build\native\boost_iostreams-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_iostreams-vc120.1.57.0.0\build\native\boost_iostreams-vc120.targets')" />
+    <Import Project="$(NuGetPackageRoot)boost_json-vc120.1.57.0.0\build\native\boost_json-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_json-vc120.1.57.0.0\build\native\boost_json-vc120.targets')" />
     <Import Project="$(NuGetPackageRoot)boost_locale-vc120.1.57.0.0\build\native\boost_locale-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_locale-vc120.1.57.0.0\build\native\boost_locale-vc120.targets')" />
-    <Import Project="$(NuGetPackageRoot)boost_log_setup-vc120.1.57.0.0\build\native\boost_log_setup-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_log_setup-vc120.1.57.0.0\build\native\boost_log_setup-vc120.targets')" />
-    <Import Project="$(NuGetPackageRoot)boost_log-vc120.1.57.0.0\build\native\boost_log-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_log-vc120.1.57.0.0\build\native\boost_log-vc120.targets')" />
     <Import Project="$(NuGetPackageRoot)boost_program_options-vc120.1.57.0.0\build\native\boost_program_options-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_program_options-vc120.1.57.0.0\build\native\boost_program_options-vc120.targets')" />
     <Import Project="$(NuGetPackageRoot)boost_regex-vc120.1.57.0.0\build\native\boost_regex-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_regex-vc120.1.57.0.0\build\native\boost_regex-vc120.targets')" />
     <Import Project="$(NuGetPackageRoot)boost_system-vc120.1.57.0.0\build\native\boost_system-vc120.targets" Condition="Exists('$(NuGetPackageRoot)boost_system-vc120.1.57.0.0\build\native\boost_system-vc120.targets')" />
@@ -381,14 +389,13 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(NuGetPackageRoot)boost.1.57.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost.1.57.0.0\build\native\boost.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost_atomic-vc120.1.57.0.0\build\native\boost_atomic-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_atomic-vc120.1.57.0.0\build\native\boost_atomic-vc120.targets'))" />
     <Error Condition="!Exists('$(NuGetPackageRoot)boost_chrono-vc120.1.57.0.0\build\native\boost_chrono-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_chrono-vc120.1.57.0.0\build\native\boost_chrono-vc120.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)boost_container-vc120.1.57.0.0\build\native\boost_container-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_container-vc120.1.57.0.0\build\native\boost_container-vc120.targets'))" />
     <Error Condition="!Exists('$(NuGetPackageRoot)boost_date_time-vc120.1.57.0.0\build\native\boost_date_time-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_date_time-vc120.1.57.0.0\build\native\boost_date_time-vc120.targets'))" />
     <Error Condition="!Exists('$(NuGetPackageRoot)boost_filesystem-vc120.1.57.0.0\build\native\boost_filesystem-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_filesystem-vc120.1.57.0.0\build\native\boost_filesystem-vc120.targets'))" />
     <Error Condition="!Exists('$(NuGetPackageRoot)boost_iostreams-vc120.1.57.0.0\build\native\boost_iostreams-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_iostreams-vc120.1.57.0.0\build\native\boost_iostreams-vc120.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)boost_json-vc120.1.57.0.0\build\native\boost_json-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_json-vc120.1.57.0.0\build\native\boost_json-vc120.targets'))" />
     <Error Condition="!Exists('$(NuGetPackageRoot)boost_locale-vc120.1.57.0.0\build\native\boost_locale-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_locale-vc120.1.57.0.0\build\native\boost_locale-vc120.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost_log_setup-vc120.1.57.0.0\build\native\boost_log_setup-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_log_setup-vc120.1.57.0.0\build\native\boost_log_setup-vc120.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost_log-vc120.1.57.0.0\build\native\boost_log-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_log-vc120.1.57.0.0\build\native\boost_log-vc120.targets'))" />
     <Error Condition="!Exists('$(NuGetPackageRoot)boost_program_options-vc120.1.57.0.0\build\native\boost_program_options-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_program_options-vc120.1.57.0.0\build\native\boost_program_options-vc120.targets'))" />
     <Error Condition="!Exists('$(NuGetPackageRoot)boost_regex-vc120.1.57.0.0\build\native\boost_regex-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_regex-vc120.1.57.0.0\build\native\boost_regex-vc120.targets'))" />
     <Error Condition="!Exists('$(NuGetPackageRoot)boost_system-vc120.1.57.0.0\build\native\boost_system-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_system-vc120.1.57.0.0\build\native\boost_system-vc120.targets'))" />
@@ -396,4 +403,7 @@
     <Error Condition="!Exists('$(NuGetPackageRoot)secp256k1_vc120.0.1.0.19\build\native\secp256k1_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)secp256k1_vc120.0.1.0.19\build\native\secp256k1_vc120.targets'))" />
     <Error Condition="!Exists('$(NuGetPackageRoot)libzmq_vc120.4.3.2\build\native\libzmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)libzmq_vc120.4.3.2\build\native\libzmq_vc120.targets'))" />
   </Target>
+  <ItemGroup>
+    <Natvis Include="..\..\debug.natvis" />
+  </ItemGroup>
 </Project>

@@ -63,10 +63,6 @@ protected:
     // Expose polymorphic load_command_variables method from base.
     using system::config::parser::load_command_variables;
 
-private:
-    static std::string system_config_directory();
-    static boost::filesystem::path default_config_path();
-
     bool help_;
     command& instance_;
 };

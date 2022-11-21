@@ -37,13 +37,13 @@ AM_PROG_AR
 
 # Initialize libtool.
 LT_PREREQ(2.4.2)
+
+# Enable shared libraries if available, and static if they don't conflict.
 LT_INIT
+AC_SUBST([LIBTOOL_DEPS])
 
 # Determine C++ compiler to use.
 AC_PROG_CXX
-
-# Enable shared libraries if available, and static if they don't conflict.
-AC_PROG_LIBTOOL
 
 # Enable sed for substitution.
 AC_PROG_SED
@@ -69,9 +69,9 @@ AC_ARG_VAR([CC], "C compiler to use, such as gcc or clang")
 AC_ARG_VAR([CXX], "C++ compiler to use, such as g++ or clang++")
 AC_ARG_VAR([PKG_CONFIG_PATH], "Additional directories for package discovery.")
 
-# Check for baseline language coverage in the compiler for the C++11 standard.
+# Check for baseline language coverage in the compiler for the C++20 standard.
 #------------------------------------------------------------------------------
-AX_CXX_COMPILE_STDCXX_11([noext], [mandatory])
+AX_CXX_COMPILE_STDCXX([20], [noext], [mandatory])
 
 
 # Process options.
@@ -149,17 +149,17 @@ AC_MSG_RESULT([$enable_isystem])
 
 # Check dependencies.
 #==============================================================================
-# Require Boost of at least version 1.72.0 and output ${boost_CPPFLAGS/LDFLAGS}.
+# Require Boost of at least version 1.76.0 and output ${boost_CPPFLAGS/LDFLAGS}.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*],
-    [AX_BOOST_BASE([1.72.0],
+    [AX_BOOST_BASE([1.76.0],
         [AC_SUBST([boost_CPPFLAGS], [${BOOST_CPPFLAGS}])
          AC_SUBST([boost_ISYS_CPPFLAGS], [`echo ${BOOST_CPPFLAGS} | $SED s/^-I/-isystem/g | $SED s/' -I'/' -isystem'/g`])
          AC_SUBST([boost_LDFLAGS], [${BOOST_LDFLAGS}])
          AC_MSG_NOTICE([boost_CPPFLAGS : ${boost_CPPFLAGS}])
          AC_MSG_NOTICE([boost_ISYS_CPPFLAGS : ${boost_ISYS_CPPFLAGS}])
          AC_MSG_NOTICE([boost_LDFLAGS : ${boost_LDFLAGS}])],
-        [AC_MSG_ERROR([Boost 1.72.0 or later is required but was not found.])])])
+        [AC_MSG_ERROR([Boost 1.76.0 or later is required but was not found.])])])
 
 AS_CASE([${enable_isystem}],[yes],
     [AC_SUBST([boost_BUILD_CPPFLAGS], [${boost_ISYS_CPPFLAGS}])],
@@ -262,11 +262,11 @@ AC_MSG_NOTICE([dl_LIBS : ${dl_LIBS}])
 
 # Set flags.
 #==============================================================================
-# Require c++11 for all c++ products.
+# Require c++20 for all c++ products.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*],
-    [AX_CHECK_COMPILE_FLAG([-std=c++11],
-        [CXXFLAGS="$CXXFLAGS -std=c++11"])])
+    [AX_CHECK_COMPILE_FLAG([-std=c++20],
+        [CXXFLAGS="$CXXFLAGS -std=c++20"])])
 
 # Warn on all stuff.
 #------------------------------------------------------------------------------
@@ -292,22 +292,6 @@ AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wextra],
         [CXXFLAGS="$CXXFLAGS -Wextra"])])
 
-# Be really annoying.
-#------------------------------------------------------------------------------
-AS_CASE([${CC}], [*],
-    [AX_CHECK_COMPILE_FLAG([-Wpedantic],
-        [CFLAGS="$CFLAGS -Wpedantic"],
-        [AX_CHECK_COMPILE_FLAG([-pedantic],
-            [CFLAGS="$CFLAGS -pedantic"])])])
-
-# Be really annoying.
-#------------------------------------------------------------------------------
-AS_CASE([${CC}], [*],
-    [AX_CHECK_COMPILE_FLAG([-Wpedantic],
-        [CXXFLAGS="$CXXFLAGS -Wpedantic"],
-        [AX_CHECK_COMPILE_FLAG([-pedantic],
-            [CXXFLAGS="$CXXFLAGS -pedantic"])])])
-
 # Disallow warning on style order of declarations.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*],
@@ -331,6 +315,12 @@ AS_CASE([${CC}], [*],
 AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wno-comment],
         [CXXFLAGS="$CXXFLAGS -Wno-comment"])])
+
+# Suppress warning for copy of implicitly generated copy constructor.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-deprecated-copy],
+        [CXXFLAGS="$CXXFLAGS -Wno-deprecated-copy"])])
 
 # Conflict in stdlib under clang. Enabled in clang only.
 #------------------------------------------------------------------------------

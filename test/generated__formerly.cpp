@@ -53,6 +53,16 @@ BOOST_AUTO_TEST_CASE(generated__formerly__btc_to_satoshi_was_satoshi__returns_ob
     BOOST_REQUIRE_EQUAL(formerly("satoshi"), btc_to_satoshi::symbol());
 }
 
+BOOST_AUTO_TEST_CASE(generated__formerly__checked_decode_was_wrap_decode__returns_object)
+{
+    BOOST_REQUIRE_EQUAL(formerly("wrap-decode"), checked_decode::symbol());
+}
+
+BOOST_AUTO_TEST_CASE(generated__formerly__checked_encode_was_wrap_encode__returns_object)
+{
+    BOOST_REQUIRE_EQUAL(formerly("wrap-encode"), checked_encode::symbol());
+}
+
 BOOST_AUTO_TEST_CASE(generated__formerly__ec_add_secrets_was_ec_add_modp__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("ec-add-modp"), ec_add_secrets::symbol());
@@ -81,6 +91,11 @@ BOOST_AUTO_TEST_CASE(generated__formerly__ec_to_ek_was_brainwallet__returns_obje
 BOOST_AUTO_TEST_CASE(generated__formerly__ec_to_public_was_pubkey__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("pubkey"), ec_to_public::symbol());
+}
+
+BOOST_AUTO_TEST_CASE(generated__formerly__entropy_was_seed__returns_object)
+{
+    BOOST_REQUIRE_EQUAL(formerly("seed"), entropy::symbol());
 }
 
 BOOST_AUTO_TEST_CASE(generated__formerly__fetch_height_was_fetch_last_height__returns_object)
@@ -126,11 +141,6 @@ BOOST_AUTO_TEST_CASE(generated__formerly__input_sign_was_sign_input__returns_obj
 BOOST_AUTO_TEST_CASE(generated__formerly__input_validate_was_validsig__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("validsig"), input_validate::symbol());
-}
-
-BOOST_AUTO_TEST_CASE(generated__formerly__mnemonic_encode_was_mnemonic__returns_object)
-{
-    BOOST_REQUIRE_EQUAL(formerly("mnemonic"), mnemonic_encode::symbol());
 }
 
 BOOST_AUTO_TEST_CASE(generated__formerly__put_tx_was_send_tx_node__returns_object)
@@ -201,16 +211,6 @@ BOOST_AUTO_TEST_CASE(generated__formerly__watch_key_was_monitor__returns_object)
 BOOST_AUTO_TEST_CASE(generated__formerly__watch_tx_was_watchtx__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("watchtx"), watch_tx::symbol());
-}
-
-BOOST_AUTO_TEST_CASE(generated__formerly__wrap_decode_was_unwrap__returns_object)
-{
-    BOOST_REQUIRE_EQUAL(formerly("unwrap"), wrap_decode::symbol());
-}
-
-BOOST_AUTO_TEST_CASE(generated__formerly__wrap_encode_was_wrap__returns_object)
-{
-    BOOST_REQUIRE_EQUAL(formerly("wrap"), wrap_encode::symbol());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

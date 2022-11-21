@@ -21,40 +21,15 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-using namespace bc::system;
-using namespace po;
-
-// DRY
-static auto language_en = "en";
-static auto language_es = "es";
-static auto language_fr = "fr";
-static auto language_it = "it";
-static auto language_ja = "ja";
-static auto language_ko = "ko";
-static auto language_zh_Hans = "zh_Hans";
-static auto language_zh_Hant = "zh_Hant";
-static auto language_any = "any";
-
 language::language()
-  : value_(wallet::language::all)
-{
-}
-
-language::language(const std::string& token)
-{
-    std::stringstream(token) >> *this;
-}
-
-language::language(wallet::dictionary_list& languages)
-  : value_(languages)
+  : value_(type::none)
 {
 }
 
@@ -63,7 +38,17 @@ language::language(const language& other)
 {
 }
 
-language::operator const wallet::dictionary_list() const
+language::language(const std::string& token)
+{
+    std::stringstream(token) >> *this;
+}
+
+language::language(const type& value)
+  : value_(value)
+{
+}
+
+language::operator const type&() const
 {
     return value_;
 }
@@ -73,61 +58,16 @@ std::istream& operator>>(std::istream& input, language& argument)
     std::string text;
     input >> text;
 
-    argument.value_.clear();
-
-    if (text == language_any)
-        argument.value_.assign(wallet::language::all.begin(),
-            wallet::language::all.end());
-    else if(text == language_en)
-        argument.value_.push_back(&wallet::language::en);
-    else if (text == language_es)
-        argument.value_.push_back(&wallet::language::es);
-    else if (text == language_fr)
-        argument.value_.push_back(&wallet::language::fr);
-    else if (text == language_it)
-        argument.value_.push_back(&wallet::language::it);
-    else if (text == language_ja)
-        argument.value_.push_back(&wallet::language::ja);
-    else if (text == language_ko)
-        argument.value_.push_back(&wallet::language::ko);
-    else if (text == language_zh_Hans)
-        argument.value_.push_back(&wallet::language::zh_Hans);
-    else if (text == language_zh_Hant)
-        argument.value_.push_back(&wallet::language::zh_Hant);
-    else
-    {
-        BOOST_THROW_EXCEPTION(invalid_option_value(text));
-    }
-
+    argument = system::wallet::languages::from_name(text);
     return input;
 }
 
 std::ostream& operator<<(std::ostream& output, const language& argument)
 {
-    std::string text;
+    const auto text = system::wallet::languages::to_name(argument);
 
-    if (argument.value_.size() > 1)
-        text = language_any;
-    else if(argument.value_.front() == &wallet::language::en)
-        text = language_en;
-    else if (argument.value_.front() == &wallet::language::es)
-        text = language_es;
-    else if (argument.value_.front() == &wallet::language::fr)
-        text = language_fr;
-    else if (argument.value_.front() == &wallet::language::it)
-        text = language_it;
-    else if (argument.value_.front() == &wallet::language::ja)
-        text = language_ja;
-    else if (argument.value_.front() == &wallet::language::ko)
-        text = language_ko;
-    else if (argument.value_.front() == &wallet::language::zh_Hans)
-        text = language_zh_Hans;
-    else if (argument.value_.front() == &wallet::language::zh_Hant)
-        text = language_zh_Hant;
-    else
-    {
-        BITCOIN_ASSERT_MSG(false, "Unexpected encoding value.");
-    }
+    if (text.empty())
+        throw system::ostream_exception("language");
 
     output << text;
     return output;

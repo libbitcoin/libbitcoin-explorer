@@ -19,10 +19,6 @@
 
 #include <bitcoin/explorer/commands/hd-to-address.hpp>
 
-#include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
-
-
 namespace libbitcoin {
 namespace explorer {
 namespace commands {

@@ -19,10 +19,8 @@
 #ifndef BX_SIGNATURE_HPP
 #define BX_SIGNATURE_HPP
 
-#include <array>
 #include <iostream>
 #include <string>
-#include <cstdint>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -30,66 +28,26 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-/**
- * Serialization helper to convert between string and message_signature.
- */
+// Base64 reader of message_signature_size.
+
 class BCX_API signature
 {
 public:
+    typedef system::wallet::message_signature type;
 
-    /**
-     * Default constructor.
-     */
     signature();
-
-    /**
-     * Initialization constructor.
-     * @param[in]  hexcode  The value to initialize with.
-     */
-    signature(const std::string& hexcode);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
-     */
-    signature(const system::wallet::message_signature& value);
-
-    /**
-     * Copy constructor.
-     * @param[in]  other  The object to copy into self on construct.
-     */
     signature(const signature& other);
+    signature(const std::string& token);
+    signature(const type& value);
 
-    /**
-     * Overload cast to internal type.
-     * @return  This object's value cast to internal type.
-     */
-    operator const system::wallet::message_signature&() const;
+    operator const type&() const;
 
-    /**
-     * Overload stream in. If input is invalid sets no bytes in argument.
-     * @param[in]   input     The input stream to read the value from.
-     * @param[out]  argument  The object to receive the read value.
-     * @return                The input stream reference.
-     */
-    friend std::istream& operator>>(std::istream& input,
-        signature& argument);
-
-    /**
-     * Overload stream out.
-     * @param[in]   output    The output stream to write the value to.
-     * @param[out]  argument  The object from which to obtain the value.
-     * @return                The output stream reference.
-     */
+    friend std::istream& operator>>(std::istream& input, signature& argument);
     friend std::ostream& operator<<(std::ostream& output,
         const signature& argument);
 
 private:
-
-    /**
-     * The state of this object.
-     */
-    system::wallet::message_signature value_;
+    type value_;
 };
 
 } // namespace config

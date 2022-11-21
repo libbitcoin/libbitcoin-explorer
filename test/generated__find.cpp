@@ -58,6 +58,16 @@ BOOST_AUTO_TEST_CASE(generated__find__base16_encode__returns_object)
     BOOST_REQUIRE(find("base16-encode") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__base32_decode__returns_object)
+{
+    BOOST_REQUIRE(find("base32-decode") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__base32_encode__returns_object)
+{
+    BOOST_REQUIRE(find("base32-encode") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__base58_decode__returns_object)
 {
     BOOST_REQUIRE(find("base58-decode") != nullptr);
@@ -88,6 +98,16 @@ BOOST_AUTO_TEST_CASE(generated__find__base64_encode__returns_object)
     BOOST_REQUIRE(find("base64-encode") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__bech32_decode__returns_object)
+{
+    BOOST_REQUIRE(find("bech32-decode") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__bech32_encode__returns_object)
+{
+    BOOST_REQUIRE(find("bech32-encode") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__bitcoin160__returns_object)
 {
     BOOST_REQUIRE(find("bitcoin160") != nullptr);
@@ -116,6 +136,16 @@ BOOST_AUTO_TEST_CASE(generated__find__cert_new__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__cert_public__returns_object)
 {
     BOOST_REQUIRE(find("cert-public") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__checked_decode__returns_object)
+{
+    BOOST_REQUIRE(find("checked-decode") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__checked_encode__returns_object)
+{
+    BOOST_REQUIRE(find("checked-encode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_add__returns_object)
@@ -208,6 +238,11 @@ BOOST_AUTO_TEST_CASE(generated__find__ek_to_ec__returns_object)
     BOOST_REQUIRE(find("ek-to-ec") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__electrum_decode__returns_object)
+{
+    BOOST_REQUIRE(find("electrum-decode") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__electrum_new__returns_object)
 {
     BOOST_REQUIRE(find("electrum-new") != nullptr);
@@ -216,6 +251,11 @@ BOOST_AUTO_TEST_CASE(generated__find__electrum_new__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__electrum_to_seed__returns_object)
 {
     BOOST_REQUIRE(find("electrum-to-seed") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__entropy__returns_object)
+{
+    BOOST_REQUIRE(find("entropy") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_balance__returns_object)
@@ -388,11 +428,6 @@ BOOST_AUTO_TEST_CASE(generated__find__mnemonic_encode__returns_object)
     BOOST_REQUIRE(find("mnemonic-encode") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__mnemonic_new__returns_object)
-{
-    BOOST_REQUIRE(find("mnemonic-new") != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__mnemonic_to_seed__returns_object)
 {
     BOOST_REQUIRE(find("mnemonic-to-seed") != nullptr);
@@ -436,6 +471,11 @@ BOOST_AUTO_TEST_CASE(generated__find__script_to_address__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__script_to_key__returns_object)
 {
     BOOST_REQUIRE(find("script-to-key") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__script_to_witness__returns_object)
+{
+    BOOST_REQUIRE(find("script-to-witness") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__seed__returns_object)

@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -67,7 +66,6 @@ public:
     {
         return "message-sign";
     }
-
 
     /**
      * Destructor.
@@ -160,7 +158,7 @@ public:
         )
         (
             "MESSAGE",
-            value<explorer::config::raw>(&argument_.message),
+            value<explorer::config::bytes>(&argument_.message),
             "The binary message data to sign. If not specified the message is read from STDIN."
         );
 
@@ -206,7 +204,7 @@ public:
     /**
      * Get the value of the MESSAGE argument.
      */
-    virtual explorer::config::raw& get_message_argument()
+    virtual explorer::config::bytes& get_message_argument()
     {
         return argument_.message;
     }
@@ -215,7 +213,7 @@ public:
      * Set the value of the MESSAGE argument.
      */
     virtual void set_message_argument(
-        const explorer::config::raw& value)
+        const explorer::config::bytes& value)
     {
         argument_.message = value;
     }
@@ -236,7 +234,7 @@ private:
         }
 
         system::wallet::ec_private wif;
-        explorer::config::raw message;
+        explorer::config::bytes message;
     } argument_;
 
     /**

@@ -42,18 +42,24 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<address_to_key>());
     func(make_shared<base16_decode>());
     func(make_shared<base16_encode>());
+    func(make_shared<base32_decode>());
+    func(make_shared<base32_encode>());
     func(make_shared<base58_decode>());
     func(make_shared<base58_encode>());
     func(make_shared<base58check_decode>());
     func(make_shared<base58check_encode>());
     func(make_shared<base64_decode>());
     func(make_shared<base64_encode>());
+    func(make_shared<bech32_decode>());
+    func(make_shared<bech32_encode>());
     func(make_shared<bitcoin160>());
     func(make_shared<bitcoin256>());
     func(make_shared<broadcast_tx>());
     func(make_shared<btc_to_satoshi>());
     func(make_shared<cert_new>());
     func(make_shared<cert_public>());
+    func(make_shared<checked_decode>());
+    func(make_shared<checked_encode>());
     func(make_shared<ec_add>());
     func(make_shared<ec_add_secrets>());
     func(make_shared<ec_decompress>());
@@ -72,8 +78,10 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ek_public_to_ec>());
     func(make_shared<ek_to_address>());
     func(make_shared<ek_to_ec>());
+    func(make_shared<electrum_decode>());
     func(make_shared<electrum_new>());
     func(make_shared<electrum_to_seed>());
+    func(make_shared<entropy>());
     func(make_shared<fetch_balance>());
     func(make_shared<fetch_block>());
     func(make_shared<fetch_block_hashes>());
@@ -108,7 +116,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<message_validate>());
     func(make_shared<mnemonic_decode>());
     func(make_shared<mnemonic_encode>());
-    func(make_shared<mnemonic_new>());
     func(make_shared<mnemonic_to_seed>());
     func(make_shared<put_tx>());
     func(make_shared<qrcode>());
@@ -118,6 +125,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<script_encode>());
     func(make_shared<script_to_address>());
     func(make_shared<script_to_key>());
+    func(make_shared<script_to_witness>());
     func(make_shared<seed>());
     func(make_shared<send_tx>());
     func(make_shared<settings>());
@@ -162,6 +170,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<base16_decode>();
     if (symbol == base16_encode::symbol())
         return make_shared<base16_encode>();
+    if (symbol == base32_decode::symbol())
+        return make_shared<base32_decode>();
+    if (symbol == base32_encode::symbol())
+        return make_shared<base32_encode>();
     if (symbol == base58_decode::symbol())
         return make_shared<base58_decode>();
     if (symbol == base58_encode::symbol())
@@ -174,6 +186,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<base64_decode>();
     if (symbol == base64_encode::symbol())
         return make_shared<base64_encode>();
+    if (symbol == bech32_decode::symbol())
+        return make_shared<bech32_decode>();
+    if (symbol == bech32_encode::symbol())
+        return make_shared<bech32_encode>();
     if (symbol == bitcoin160::symbol())
         return make_shared<bitcoin160>();
     if (symbol == bitcoin256::symbol())
@@ -186,6 +202,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<cert_new>();
     if (symbol == cert_public::symbol())
         return make_shared<cert_public>();
+    if (symbol == checked_decode::symbol())
+        return make_shared<checked_decode>();
+    if (symbol == checked_encode::symbol())
+        return make_shared<checked_encode>();
     if (symbol == ec_add::symbol())
         return make_shared<ec_add>();
     if (symbol == ec_add_secrets::symbol())
@@ -222,10 +242,14 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ek_to_address>();
     if (symbol == ek_to_ec::symbol())
         return make_shared<ek_to_ec>();
+    if (symbol == electrum_decode::symbol())
+        return make_shared<electrum_decode>();
     if (symbol == electrum_new::symbol())
         return make_shared<electrum_new>();
     if (symbol == electrum_to_seed::symbol())
         return make_shared<electrum_to_seed>();
+    if (symbol == entropy::symbol())
+        return make_shared<entropy>();
     if (symbol == fetch_balance::symbol())
         return make_shared<fetch_balance>();
     if (symbol == fetch_block::symbol())
@@ -294,8 +318,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<mnemonic_decode>();
     if (symbol == mnemonic_encode::symbol())
         return make_shared<mnemonic_encode>();
-    if (symbol == mnemonic_new::symbol())
-        return make_shared<mnemonic_new>();
     if (symbol == mnemonic_to_seed::symbol())
         return make_shared<mnemonic_to_seed>();
     if (symbol == put_tx::symbol())
@@ -314,6 +336,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<script_to_address>();
     if (symbol == script_to_key::symbol())
         return make_shared<script_to_key>();
+    if (symbol == script_to_witness::symbol())
+        return make_shared<script_to_witness>();
     if (symbol == seed::symbol())
         return make_shared<seed>();
     if (symbol == send_tx::symbol())
@@ -386,6 +410,10 @@ std::string formerly(const string& former)
         return broadcast_tx::symbol();
     if (former == btc_to_satoshi::formerly())
         return btc_to_satoshi::symbol();
+    if (former == checked_decode::formerly())
+        return checked_decode::symbol();
+    if (former == checked_encode::formerly())
+        return checked_encode::symbol();
     if (former == ec_add_secrets::formerly())
         return ec_add_secrets::symbol();
     if (former == ec_multiply_secrets::formerly())
@@ -398,6 +426,8 @@ std::string formerly(const string& former)
         return ec_to_ek::symbol();
     if (former == ec_to_public::formerly())
         return ec_to_public::symbol();
+    if (former == entropy::formerly())
+        return entropy::symbol();
     if (former == fetch_height::formerly())
         return fetch_height::symbol();
     if (former == fetch_public_key::formerly())
@@ -416,8 +446,6 @@ std::string formerly(const string& former)
         return input_sign::symbol();
     if (former == input_validate::formerly())
         return input_validate::symbol();
-    if (former == mnemonic_encode::formerly())
-        return mnemonic_encode::symbol();
     if (former == put_tx::formerly())
         return put_tx::symbol();
     if (former == ripemd160::formerly())
@@ -446,10 +474,6 @@ std::string formerly(const string& former)
         return watch_key::symbol();
     if (former == watch_tx::formerly())
         return watch_tx::symbol();
-    if (former == wrap_decode::formerly())
-        return wrap_decode::symbol();
-    if (former == wrap_encode::formerly())
-        return wrap_encode::symbol();
 
     return "";
 }

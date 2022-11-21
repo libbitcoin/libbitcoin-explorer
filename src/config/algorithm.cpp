@@ -21,32 +21,18 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-using namespace bc::system;
-using namespace po;
-
-static auto algorithm_greedy = "greedy";
-static auto algorithm_individual = "individual";
+constexpr auto algorithm_greedy = "greedy";
+constexpr auto algorithm_individual = "individual";
 
 algorithm::algorithm()
-  : value_(wallet::select_outputs::algorithm::greedy)
-{
-}
-
-algorithm::algorithm(const std::string& token)
-{
-    std::stringstream(token) >> *this;
-}
-
-algorithm::algorithm(wallet::select_outputs::algorithm& algorithm)
-  : value_(algorithm)
+  : value_(type::greedy)
 {
 }
 
@@ -55,7 +41,16 @@ algorithm::algorithm(const algorithm& other)
 {
 }
 
-algorithm::operator wallet::select_outputs::algorithm() const
+algorithm::algorithm(const std::string& token)
+{
+    std::stringstream(token) >> *this;
+}
+
+algorithm::algorithm(const type& value)
+  : value_(value)
+{
+}
+algorithm::operator const type&() const
 {
     return value_;
 }
@@ -66,17 +61,11 @@ std::istream& operator>>(std::istream& input, algorithm& argument)
     input >> text;
 
     if (text == algorithm_greedy)
-    {
-        argument.value_ = wallet::select_outputs::algorithm::greedy;
-    }
+        argument.value_ = algorithm::type::greedy;
     else if (text == algorithm_individual)
-    {
-        argument.value_ = wallet::select_outputs::algorithm::individual;
-    }
+        argument.value_ = algorithm::type::individual;
     else
-    {
-        BOOST_THROW_EXCEPTION(invalid_option_value(text));
-    }
+        throw system::istream_exception(text);
 
     return input;
 }
@@ -85,18 +74,17 @@ std::ostream& operator<<(std::ostream& output, const algorithm& argument)
 {
     std::string text;
 
-    if (argument.value_ == wallet::select_outputs::algorithm::greedy)
+    switch (argument.value_)
     {
-        text = algorithm_greedy;
-    }
-    else if (argument.value_ == wallet::select_outputs::algorithm::individual)
-    {
-        text = algorithm_individual;
-    }
-    else
-    {
-        BITCOIN_ASSERT_MSG(false, "Unexpected algorithm value.");
-    }
+        case algorithm::type::greedy:
+            text = algorithm_greedy;
+            break;
+        case algorithm::type::individual:
+            text = algorithm_individual;
+            break;
+        default:
+            throw system::ostream_exception("algorithm");
+    };
 
     output << text;
     return output;

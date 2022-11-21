@@ -58,6 +58,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__base16_encode__returns_expected_value)
     BOOST_REQUIRE_EQUAL(base16_encode::symbol(), "base16-encode");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__base32_decode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(base32_decode::symbol(), "base32-decode");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__base32_encode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(base32_encode::symbol(), "base32-encode");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__base58_decode__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(base58_decode::symbol(), "base58-decode");
@@ -88,6 +98,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__base64_encode__returns_expected_value)
     BOOST_REQUIRE_EQUAL(base64_encode::symbol(), "base64-encode");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__bech32_decode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(bech32_decode::symbol(), "bech32-decode");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__bech32_encode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(bech32_encode::symbol(), "bech32-encode");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__bitcoin160__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(bitcoin160::symbol(), "bitcoin160");
@@ -116,6 +136,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__cert_new__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__cert_public__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(cert_public::symbol(), "cert-public");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__checked_decode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(checked_decode::symbol(), "checked-decode");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__checked_encode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(checked_encode::symbol(), "checked-encode");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_add__returns_expected_value)
@@ -208,6 +238,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ek_to_ec__returns_expected_value)
     BOOST_REQUIRE_EQUAL(ek_to_ec::symbol(), "ek-to-ec");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__electrum_decode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(electrum_decode::symbol(), "electrum-decode");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__electrum_new__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(electrum_new::symbol(), "electrum-new");
@@ -216,6 +251,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__electrum_new__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__electrum_to_seed__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(electrum_to_seed::symbol(), "electrum-to-seed");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__entropy__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(entropy::symbol(), "entropy");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_balance__returns_expected_value)
@@ -388,11 +428,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_encode__returns_expected_value)
     BOOST_REQUIRE_EQUAL(mnemonic_encode::symbol(), "mnemonic-encode");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_new__returns_expected_value)
-{
-    BOOST_REQUIRE_EQUAL(mnemonic_new::symbol(), "mnemonic-new");
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_to_seed__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(mnemonic_to_seed::symbol(), "mnemonic-to-seed");
@@ -436,6 +471,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__script_to_address__returns_expected_valu
 BOOST_AUTO_TEST_CASE(generated__symbol__script_to_key__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(script_to_key::symbol(), "script-to-key");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__script_to_witness__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(script_to_witness::symbol(), "script-to-witness");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__seed__returns_expected_value)

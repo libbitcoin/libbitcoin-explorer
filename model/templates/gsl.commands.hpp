@@ -72,8 +72,8 @@ public:
     {
         return "$(formerly)";
     }
-.endif
 
+.endif
     /**
      * Destructor.
      */

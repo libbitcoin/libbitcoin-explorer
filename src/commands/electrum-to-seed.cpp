@@ -30,27 +30,33 @@ using namespace bc::system;
 using namespace bc::system::config;
 using namespace bc::system::wallet;
 
+////<define name="BX_ELECTRUM_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12 to 46." />
+////<define name="BX_ELECTRUM_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
+////<define name="BX_ELECTRUM_TO_SEED_INVALID_WORDS_ICU" value="The mnemonic is not from the specified dictionary. This is not an ICU build, so ensure that the mnemonic is prenormalized. Non-dictionary mnemonics are not supported." />
+////<define name="BX_ELECTRUM_TO_SEED_PASSPHRASE_ICU" value="This is not an ICU build, so the passphrase is limited to ascii characters." />
+
 console_result electrum_to_seed::invoke(std::ostream& output,
     std::ostream& error)
 {
-#ifdef WITH_ICU
-    // Bound parameters.
-    const auto& passphrase = get_passphrase_option();
-    const auto& words = get_words_argument();
+////#ifdef WITH_ICU
+////    // Bound parameters.
+////    const auto& passphrase = get_passphrase_option();
+////    const auto& words = get_words_argument();
+////
+////    // Decoding requires ICU normalization.
+////    if (passphrase.empty())
+////        output << base16(electrum::decode_mnemonic(words)) << std::endl;
+////    else
+////        output << base16(electrum::decode_mnemonic(words, passphrase))
+////            << std::endl;
+////
+////    return console_result::okay;
+////#else
+////    error << BX_ELECTRUM_REQUIRES_ICU << std::endl;
+////    return console_result::failure;
+////#endif
 
-    // Decoding requires ICU normalization.
-    if (passphrase.empty())
-        output << base16(electrum::decode_mnemonic(words)) << std::endl;
-    else
-        output << base16(electrum::decode_mnemonic(words, passphrase))
-            << std::endl;
-
-    return console_result::okay;
-#else
-    error << BX_ELECTRUM_REQUIRES_ICU << std::endl;
     return console_result::failure;
-#endif
-
 }
 
 } //namespace commands

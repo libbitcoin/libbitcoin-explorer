@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -55,8 +54,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_SEED_BIT_LENGTH_UNSUPPORTED \
-    "The seed size is not supported."
+#define BX_SEED_OBSOLETE \
+    "This command is obsolete. Use the entropy command instead."
 
 /**
  * Class to implement the seed command.
@@ -73,7 +72,6 @@ public:
     {
         return "seed";
     }
-
 
     /**
      * Destructor.
@@ -104,6 +102,15 @@ public:
     virtual const char* description()
     {
         return "Generate a pseudorandom seed.";
+    }
+
+    /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    virtual bool obsolete()
+    {
+        return true;
     }
 
     /**
@@ -145,11 +152,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "bit_length,b",
-            value<uint16_t>(&option_.bit_length)->default_value(192),
-            "The length of the seed in bits. Must be divisible by 8 and must not be less than 128, defaults to 192."
         );
 
         return options;
@@ -174,23 +176,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the bit_length option.
-     */
-    virtual uint16_t& get_bit_length_option()
-    {
-        return option_.bit_length;
-    }
-
-    /**
-     * Set the value of the bit_length option.
-     */
-    virtual void set_bit_length_option(
-        const uint16_t& value)
-    {
-        option_.bit_length = value;
-    }
-
 private:
 
     /**
@@ -214,11 +199,9 @@ private:
     struct option
     {
         option()
-          : bit_length()
         {
         }
 
-        uint16_t bit_length;
     } option_;
 };
 

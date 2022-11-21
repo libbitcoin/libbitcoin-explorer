@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -55,8 +54,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EK_ADDRESS_SHORT_SEED \
-    "The seed is less than 192 bits long."
+#define BX_EK_ADDRESS_SHORT_ENTROPY \
+    "The entropy is less than 192 bits long."
 
 /**
  * Class to implement the ek-address command.
@@ -73,7 +72,6 @@ public:
     {
         return "ek-address";
     }
-
 
     /**
      * Destructor.
@@ -115,7 +113,7 @@ public:
     {
         return get_argument_metadata()
             .add("TOKEN", 1)
-            .add("SEED", 1);
+            .add("ENTROPY", 1);
     }
 
     /**
@@ -127,7 +125,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_seed_argument(), "SEED", variables, input, raw);
+        load_input(get_entropy_argument(), "ENTROPY", variables, input, raw);
     }
 
     /**
@@ -158,7 +156,7 @@ public:
         (
             "version,v",
             value<explorer::config::byte>(&option_.version)->default_value(0),
-            "The desired payment address version used to create the corresponding encrypted private key."
+            "The desired payment address version used to create the corresponding encrypted private key, defaults to 0."
         )
         (
             "TOKEN",
@@ -166,9 +164,9 @@ public:
             "The intermediate passphrase token used to create the corresponding encrypted private key."
         )
         (
-            "SEED",
-            value<system::config::base16>(&argument_.seed),
-            "The Base16 entropy used to create the corresponding encrypted private key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the seed is read from STDIN."
+            "ENTROPY",
+            value<system::config::base16>(&argument_.entropy),
+            "The Base16 entropy used to create the corresponding encrypted private key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the entropy is read from STDIN."
         );
 
         return options;
@@ -217,20 +215,20 @@ public:
     }
 
     /**
-     * Get the value of the SEED argument.
+     * Get the value of the ENTROPY argument.
      */
-    virtual system::config::base16& get_seed_argument()
+    virtual system::config::base16& get_entropy_argument()
     {
-        return argument_.seed;
+        return argument_.entropy;
     }
 
     /**
-     * Set the value of the SEED argument.
+     * Set the value of the ENTROPY argument.
      */
-    virtual void set_seed_argument(
+    virtual void set_entropy_argument(
         const system::config::base16& value)
     {
-        argument_.seed = value;
+        argument_.entropy = value;
     }
 
     /**
@@ -278,12 +276,12 @@ private:
     {
         argument()
           : token(),
-            seed()
+            entropy()
         {
         }
 
         system::wallet::ek_token token;
-        system::config::base16 seed;
+        system::config::base16 entropy;
     } argument_;
 
     /**

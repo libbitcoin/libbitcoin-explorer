@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -73,7 +72,6 @@ public:
     {
         return "ec-multiply";
     }
-
 
     /**
      * Destructor.
@@ -157,7 +155,7 @@ public:
         )
         (
             "SECRET",
-            value<explorer::config::ec_private>(&argument_.secret),
+            value<system::wallet::ec_private>(&argument_.secret),
             "The Base16 EC secret to multiply. If not specified the secret is read from STDIN."
         );
 
@@ -203,7 +201,7 @@ public:
     /**
      * Get the value of the SECRET argument.
      */
-    virtual explorer::config::ec_private& get_secret_argument()
+    virtual system::wallet::ec_private& get_secret_argument()
     {
         return argument_.secret;
     }
@@ -212,7 +210,7 @@ public:
      * Set the value of the SECRET argument.
      */
     virtual void set_secret_argument(
-        const explorer::config::ec_private& value)
+        const system::wallet::ec_private& value)
     {
         argument_.secret = value;
     }
@@ -233,7 +231,7 @@ private:
         }
 
         system::wallet::ec_public point;
-        explorer::config::ec_private secret;
+        system::wallet::ec_private secret;
     } argument_;
 
     /**

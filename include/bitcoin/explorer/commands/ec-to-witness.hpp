@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -55,8 +54,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_TO_WITNESS_PREFIX_NOT_SPECIFIED \
-    "The seed is less than 192 bits long."
+#define BX_EC_TO_WITNESS_INVALID_PREFIX \
+    "The prefix is invalid."
 
 /**
  * Class to implement the ec-to-witness command.
@@ -73,7 +72,6 @@ public:
     {
         return "ec-to-witness";
     }
-
 
     /**
      * Destructor.
@@ -103,7 +101,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Convert an EC public key to a witness address.";
+        return "Create a BIP173 pay-to-witness-public-key-hash address from an EC public key.";
     }
 
     /**
@@ -151,19 +149,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "address_format,a",
-            value<explorer::config::address_format>(&option_.address_format),
-            "The desired Witness address format, defaults to p2wpkh."
-        )
-        (
             "prefix",
-            value<std::string>(&argument_.prefix)->required(),
-            "The witness address prefix."
+            value<std::string>(&argument_.prefix),
+            "The desired witness address prefix, defaults to 'bc'."
         )
         (
             "EC_PUBLIC_KEY",
             value<system::wallet::ec_public>(&argument_.ec_public_key),
-            "The Base16 EC public key to convert. If not specified the key is read from STDIN."
+            "The Base16 EC public key of the address. If not specified the key is read from STDIN."
         );
 
         return options;
@@ -222,23 +215,6 @@ public:
         argument_.ec_public_key = value;
     }
 
-    /**
-     * Get the value of the address_format option.
-     */
-    virtual explorer::config::address_format& get_address_format_option()
-    {
-        return option_.address_format;
-    }
-
-    /**
-     * Set the value of the address_format option.
-     */
-    virtual void set_address_format_option(
-        const explorer::config::address_format& value)
-    {
-        option_.address_format = value;
-    }
-
 private:
 
     /**
@@ -266,11 +242,9 @@ private:
     struct option
     {
         option()
-          : address_format()
         {
         }
 
-        explorer::config::address_format address_format;
     } option_;
 };
 

@@ -21,14 +21,13 @@
 
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
-
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::config;
 
 console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
@@ -40,7 +39,7 @@ console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
     const auto key_version = key.version();
     if (key_version != private_version && key_version != public_version)
     {
-        output << "ERROR_VERSION" << std::endl;
+        output << HD_TO_EC_VERSION_MISMATCH << std::endl;
         return console_result::failure;
     }
 
@@ -53,7 +52,7 @@ console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
         const auto private_key = wallet::hd_private(key, prefixes);
         if (private_key)
         {
-            output << encode_base16(private_key.secret()) << std::endl;
+            output << base16(private_key.secret()) << std::endl;
             return console_result::okay;
         }
     }
@@ -68,7 +67,7 @@ console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
         }
     }
 
-    output << "ERROR_VKEY" << std::endl;
+    output << BX_HD_TO_EC_INVALID_KEY << std::endl;
     return console_result::failure;
 }
 

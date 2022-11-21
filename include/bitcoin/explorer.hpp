@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Copyright (c) 2014-2020 libbitcoin-explorer developers (see COPYING).
+// Copyright (c) 2014-2021 libbitcoin-explorer developers (see COPYING).
 //
 //        GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 //
@@ -32,18 +32,24 @@
 #include <bitcoin/explorer/commands/address-to-key.hpp>
 #include <bitcoin/explorer/commands/base16-decode.hpp>
 #include <bitcoin/explorer/commands/base16-encode.hpp>
+#include <bitcoin/explorer/commands/base32-decode.hpp>
+#include <bitcoin/explorer/commands/base32-encode.hpp>
 #include <bitcoin/explorer/commands/base58-decode.hpp>
 #include <bitcoin/explorer/commands/base58-encode.hpp>
 #include <bitcoin/explorer/commands/base58check-decode.hpp>
 #include <bitcoin/explorer/commands/base58check-encode.hpp>
 #include <bitcoin/explorer/commands/base64-decode.hpp>
 #include <bitcoin/explorer/commands/base64-encode.hpp>
+#include <bitcoin/explorer/commands/bech32-decode.hpp>
+#include <bitcoin/explorer/commands/bech32-encode.hpp>
 #include <bitcoin/explorer/commands/bitcoin160.hpp>
 #include <bitcoin/explorer/commands/bitcoin256.hpp>
 #include <bitcoin/explorer/commands/broadcast-tx.hpp>
 #include <bitcoin/explorer/commands/btc-to-satoshi.hpp>
 #include <bitcoin/explorer/commands/cert-new.hpp>
 #include <bitcoin/explorer/commands/cert-public.hpp>
+#include <bitcoin/explorer/commands/checked-decode.hpp>
+#include <bitcoin/explorer/commands/checked-encode.hpp>
 #include <bitcoin/explorer/commands/ec-add-secrets.hpp>
 #include <bitcoin/explorer/commands/ec-add.hpp>
 #include <bitcoin/explorer/commands/ec-decompress.hpp>
@@ -62,8 +68,10 @@
 #include <bitcoin/explorer/commands/ek-public.hpp>
 #include <bitcoin/explorer/commands/ek-to-address.hpp>
 #include <bitcoin/explorer/commands/ek-to-ec.hpp>
+#include <bitcoin/explorer/commands/electrum-decode.hpp>
 #include <bitcoin/explorer/commands/electrum-new.hpp>
 #include <bitcoin/explorer/commands/electrum-to-seed.hpp>
+#include <bitcoin/explorer/commands/entropy.hpp>
 #include <bitcoin/explorer/commands/fetch-balance.hpp>
 #include <bitcoin/explorer/commands/fetch-block-hashes.hpp>
 #include <bitcoin/explorer/commands/fetch-block-height.hpp>
@@ -98,7 +106,6 @@
 #include <bitcoin/explorer/commands/message-validate.hpp>
 #include <bitcoin/explorer/commands/mnemonic-decode.hpp>
 #include <bitcoin/explorer/commands/mnemonic-encode.hpp>
-#include <bitcoin/explorer/commands/mnemonic-new.hpp>
 #include <bitcoin/explorer/commands/mnemonic-to-seed.hpp>
 #include <bitcoin/explorer/commands/put-tx.hpp>
 #include <bitcoin/explorer/commands/qrcode.hpp>
@@ -108,6 +115,7 @@
 #include <bitcoin/explorer/commands/script-encode.hpp>
 #include <bitcoin/explorer/commands/script-to-address.hpp>
 #include <bitcoin/explorer/commands/script-to-key.hpp>
+#include <bitcoin/explorer/commands/script-to-witness.hpp>
 #include <bitcoin/explorer/commands/seed.hpp>
 #include <bitcoin/explorer/commands/send-tx.hpp>
 #include <bitcoin/explorer/commands/settings.hpp>
@@ -129,9 +137,7 @@
 #include <bitcoin/explorer/commands/uri-encode.hpp>
 #include <bitcoin/explorer/commands/validate-tx.hpp>
 #include <bitcoin/explorer/commands/version.hpp>
-#include <bitcoin/explorer/commands/watch-address.hpp>
 #include <bitcoin/explorer/commands/watch-key.hpp>
-#include <bitcoin/explorer/commands/watch-stealth.hpp>
 #include <bitcoin/explorer/commands/watch-tx.hpp>
 #include <bitcoin/explorer/commands/wif-to-ec.hpp>
 #include <bitcoin/explorer/commands/wif-to-public.hpp>
@@ -139,20 +145,18 @@
 #include <bitcoin/explorer/commands/wrap-decode.hpp>
 #include <bitcoin/explorer/commands/wrap-encode.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 
 #endif

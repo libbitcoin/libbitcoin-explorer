@@ -32,7 +32,7 @@ using namespace bc::system::config;
 console_result bitcoin160::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& data = get_base16_argument();
+    const data_chunk& data = get_base16_argument();
 
     const auto hash = bitcoin_short_hash(data);
 

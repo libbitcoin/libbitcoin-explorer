@@ -65,7 +65,7 @@ console_result get_filters::invoke(std::ostream& output,
     // Bound parameters.
     const auto& host = get_host_option();
     const auto& port = get_port_option();
-    const auto& encoding = get_format_option();
+    const encoding_engine  encoding = get_format_option();
     const hash_digest& stop_hash = get_hash_argument();
     const uint32_t start_height = get_height_argument();
 
@@ -111,10 +111,10 @@ console_result get_filters::invoke(std::ostream& output,
     signal(SIGTERM, handle_stop);
     signal(SIGINT, handle_stop);
 
-    // This enables json-style array formatting.
-    const auto json = encoding == encoding_engine::json;
+    ////// This enables json-style array formatting.
+    ////const auto json = encoding == encoding_engine::json;
 
-    auto receive_handler = [&state, json, stop_hash](const code& ec,
+    auto receive_handler = [&state, stop_hash](const code& ec,
         std::shared_ptr<const message::compact_filter> response)
     {
         if (!state.succeeded(ec))
@@ -123,7 +123,7 @@ console_result get_filters::invoke(std::ostream& output,
             return false;
         }
 
-        state.output(property_tree(*response, json));
+        state.output(property_tree(*response));
 
         // Relying on response order for termination.
         auto received_final_response = (response->block_hash() == stop_hash);

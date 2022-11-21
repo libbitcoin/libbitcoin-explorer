@@ -20,29 +20,17 @@
 
 #include <cstdint>
 #include <iostream>
-#include <boost/program_options.hpp>
+#include <sstream>
+#include <string>
 #include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-using namespace bc::system;
-using namespace po;
-
 btc::btc()
   : value_(0)
-{
-}
-
-btc::btc(const std::string& btc)
-{
-    std::stringstream(btc) >> *this;
-}
-
-btc::btc(uint64_t satoshi)
-  : value_(satoshi)
 {
 }
 
@@ -51,32 +39,47 @@ btc::btc(const btc& other)
 {
 }
 
-btc::operator uint64_t() const
+btc::btc(const std::string& token)
+{
+    std::stringstream(token) >> *this;
+}
+
+btc::btc(const type& value)
+  : value_(value)
+{
+}
+
+btc::operator const type&() const
 {
     return value_;
 }
 
 std::istream& operator>>(std::istream& input, btc& argument)
 {
-    std::string bitcoins;
-    input >> bitcoins;
+    std::string text;
+    input >> text;
 
-    if (!decode_base10(argument.value_, bitcoins, btc_decimal_places))
-    {
-        BOOST_THROW_EXCEPTION(invalid_option_value(bitcoins));
-    }
+    uint64_t out;
 
+    // bitcoins to satoshis (shift 8 decimal places)
+    if (!system::decode_base10(out, text, system::btc_decimal_places))
+        throw system::istream_exception(text);
+
+    argument.value_ = out;
     return input;
 }
 
 std::ostream& operator<<(std::ostream& output, const btc& argument)
 {
-    std::string bitcoins;
-    bitcoins = encode_base10(argument.value_, btc_decimal_places);
-    output << bitcoins;
+    std::string text;
+
+    // satoshis to bitcoins (shift 8 decimal places)
+    text = system::encode_base10(argument.value_, system::btc_decimal_places);
+
+    output << text;
     return output;
 }
 
-} // namespace explorer
 } // namespace config
+} // namespace explorer
 } // namespace libbitcoin

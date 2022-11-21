@@ -34,7 +34,7 @@ using namespace bc::system;
  console_result uri_decode::invoke(std::ostream& output, std::ostream& error)
  {
      // Bound parameters.
-     const auto& encoding = get_format_option();
+     const encoding_engine  encoding = get_format_option();
      const auto& uri = get_uri_argument();
 
      write_stream(output, property_tree(uri), encoding);

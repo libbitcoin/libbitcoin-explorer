@@ -24,19 +24,14 @@
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/client.hpp>
-#include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/wrapper.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
 using namespace pt;
-using namespace bc::client;
 using namespace bc::system;
 using namespace bc::system::config;
-using namespace bc::system::machine;
-using namespace bc::system::wallet;
 
 // property_tree is very odd in that what one might consider a node or element,
 // having a "containing" name cannot be added into another node without
@@ -125,7 +120,7 @@ ptree prop_tree(const client::history::list& rows, const hash_digest& key)
 }
 
 ptree prop_list(const client::history::list& rows,
-    const payment_address& balance_address)
+    const wallet::payment_address& balance_address)
 {
     ptree tree;
     uint64_t spent = 0;
@@ -146,7 +141,7 @@ ptree prop_list(const client::history::list& rows,
 }
 
 ptree prop_tree(const client::history::list& rows,
-    const payment_address& balance_address)
+    const wallet::payment_address& balance_address)
 {
     ptree tree;
     tree.add_child("balance", prop_list(rows, balance_address));

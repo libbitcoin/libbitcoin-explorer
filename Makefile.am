@@ -48,18 +48,24 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/address-to-key.cpp \
     src/commands/base16-decode.cpp \
     src/commands/base16-encode.cpp \
+    src/commands/base32-decode.cpp \
+    src/commands/base32-encode.cpp \
     src/commands/base58-decode.cpp \
     src/commands/base58-encode.cpp \
     src/commands/base58check-decode.cpp \
     src/commands/base58check-encode.cpp \
     src/commands/base64-decode.cpp \
     src/commands/base64-encode.cpp \
+    src/commands/bech32-decode.cpp \
+    src/commands/bech32-encode.cpp \
     src/commands/bitcoin160.cpp \
     src/commands/bitcoin256.cpp \
     src/commands/broadcast-tx.cpp \
     src/commands/btc-to-satoshi.cpp \
     src/commands/cert-new.cpp \
     src/commands/cert-public.cpp \
+    src/commands/checked-decode.cpp \
+    src/commands/checked-encode.cpp \
     src/commands/ec-add-secrets.cpp \
     src/commands/ec-add.cpp \
     src/commands/ec-decompress.cpp \
@@ -78,8 +84,10 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/ek-public.cpp \
     src/commands/ek-to-address.cpp \
     src/commands/ek-to-ec.cpp \
+    src/commands/electrum-decode.cpp \
     src/commands/electrum-new.cpp \
     src/commands/electrum-to-seed.cpp \
+    src/commands/entropy.cpp \
     src/commands/fetch-balance.cpp \
     src/commands/fetch-block-hashes.cpp \
     src/commands/fetch-block-height.cpp \
@@ -114,7 +122,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/message-validate.cpp \
     src/commands/mnemonic-decode.cpp \
     src/commands/mnemonic-encode.cpp \
-    src/commands/mnemonic-new.cpp \
     src/commands/mnemonic-to-seed.cpp \
     src/commands/put-tx.cpp \
     src/commands/qrcode.cpp \
@@ -124,6 +131,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/script-encode.cpp \
     src/commands/script-to-address.cpp \
     src/commands/script-to-key.cpp \
+    src/commands/script-to-witness.cpp \
     src/commands/seed.cpp \
     src/commands/send-tx.cpp \
     src/commands/settings.cpp \
@@ -153,21 +161,18 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/wrap-decode.cpp \
     src/commands/wrap-encode.cpp \
     src/config/address.cpp \
-    src/config/address_format.cpp \
     src/config/algorithm.cpp \
     src/config/btc.cpp \
     src/config/byte.cpp \
-    src/config/cert_key.cpp \
-    src/config/ec_private.cpp \
+    src/config/bytes.cpp \
     src/config/electrum.cpp \
     src/config/encoding.cpp \
     src/config/endorsement.cpp \
-    src/config/hashtype.cpp \
     src/config/hd_key.cpp \
     src/config/language.cpp \
-    src/config/raw.cpp \
+    src/config/sighash.cpp \
     src/config/signature.cpp \
-    src/config/wrapper.cpp
+    src/config/witness.cpp
 
 # console/bx => ${bindir}
 #------------------------------------------------------------------------------
@@ -202,18 +207,24 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/address-to-key.cpp \
     test/commands/base16-decode.cpp \
     test/commands/base16-encode.cpp \
+    test/commands/base32-decode.cpp \
+    test/commands/base32-encode.cpp \
     test/commands/base58-decode.cpp \
     test/commands/base58-encode.cpp \
     test/commands/base58check-decode.cpp \
     test/commands/base58check-encode.cpp \
     test/commands/base64-decode.cpp \
     test/commands/base64-encode.cpp \
+    test/commands/bech32-decode.cpp \
+    test/commands/bech32-encode.cpp \
     test/commands/bitcoin160.cpp \
     test/commands/bitcoin256.cpp \
     test/commands/broadcast-tx.cpp \
     test/commands/btc-to-satoshi.cpp \
     test/commands/cert-new.cpp \
     test/commands/cert-public.cpp \
+    test/commands/checked-decode.cpp \
+    test/commands/checked-encode.cpp \
     test/commands/command.hpp \
     test/commands/ec-add-secrets.cpp \
     test/commands/ec-add.cpp \
@@ -233,8 +244,10 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/ek-public.cpp \
     test/commands/ek-to-address.cpp \
     test/commands/ek-to-ec.cpp \
+    test/commands/electrum-decode.cpp \
     test/commands/electrum-new.cpp \
     test/commands/electrum-to-seed.cpp \
+    test/commands/entropy.cpp \
     test/commands/fetch-balance.cpp \
     test/commands/fetch-block.cpp \
     test/commands/fetch-header.cpp \
@@ -264,7 +277,6 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/message-validate.cpp \
     test/commands/mnemonic-decode.cpp \
     test/commands/mnemonic-encode.cpp \
-    test/commands/mnemonic-new.cpp \
     test/commands/mnemonic-to-seed.cpp \
     test/commands/put-tx.cpp \
     test/commands/qrcode.cpp \
@@ -274,6 +286,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/script-encode.cpp \
     test/commands/script-to-address.cpp \
     test/commands/script-to-key.cpp \
+    test/commands/script-to-witness.cpp \
     test/commands/seed.cpp \
     test/commands/send-tx.cpp \
     test/commands/settings.cpp \
@@ -332,18 +345,24 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/address-to-key.hpp \
     include/bitcoin/explorer/commands/base16-decode.hpp \
     include/bitcoin/explorer/commands/base16-encode.hpp \
+    include/bitcoin/explorer/commands/base32-decode.hpp \
+    include/bitcoin/explorer/commands/base32-encode.hpp \
     include/bitcoin/explorer/commands/base58-decode.hpp \
     include/bitcoin/explorer/commands/base58-encode.hpp \
     include/bitcoin/explorer/commands/base58check-decode.hpp \
     include/bitcoin/explorer/commands/base58check-encode.hpp \
     include/bitcoin/explorer/commands/base64-decode.hpp \
     include/bitcoin/explorer/commands/base64-encode.hpp \
+    include/bitcoin/explorer/commands/bech32-decode.hpp \
+    include/bitcoin/explorer/commands/bech32-encode.hpp \
     include/bitcoin/explorer/commands/bitcoin160.hpp \
     include/bitcoin/explorer/commands/bitcoin256.hpp \
     include/bitcoin/explorer/commands/broadcast-tx.hpp \
     include/bitcoin/explorer/commands/btc-to-satoshi.hpp \
     include/bitcoin/explorer/commands/cert-new.hpp \
     include/bitcoin/explorer/commands/cert-public.hpp \
+    include/bitcoin/explorer/commands/checked-decode.hpp \
+    include/bitcoin/explorer/commands/checked-encode.hpp \
     include/bitcoin/explorer/commands/ec-add-secrets.hpp \
     include/bitcoin/explorer/commands/ec-add.hpp \
     include/bitcoin/explorer/commands/ec-decompress.hpp \
@@ -362,8 +381,10 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/ek-public.hpp \
     include/bitcoin/explorer/commands/ek-to-address.hpp \
     include/bitcoin/explorer/commands/ek-to-ec.hpp \
+    include/bitcoin/explorer/commands/electrum-decode.hpp \
     include/bitcoin/explorer/commands/electrum-new.hpp \
     include/bitcoin/explorer/commands/electrum-to-seed.hpp \
+    include/bitcoin/explorer/commands/entropy.hpp \
     include/bitcoin/explorer/commands/fetch-balance.hpp \
     include/bitcoin/explorer/commands/fetch-block-hashes.hpp \
     include/bitcoin/explorer/commands/fetch-block-height.hpp \
@@ -398,7 +419,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/message-validate.hpp \
     include/bitcoin/explorer/commands/mnemonic-decode.hpp \
     include/bitcoin/explorer/commands/mnemonic-encode.hpp \
-    include/bitcoin/explorer/commands/mnemonic-new.hpp \
     include/bitcoin/explorer/commands/mnemonic-to-seed.hpp \
     include/bitcoin/explorer/commands/put-tx.hpp \
     include/bitcoin/explorer/commands/qrcode.hpp \
@@ -408,6 +428,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/script-encode.hpp \
     include/bitcoin/explorer/commands/script-to-address.hpp \
     include/bitcoin/explorer/commands/script-to-key.hpp \
+    include/bitcoin/explorer/commands/script-to-witness.hpp \
     include/bitcoin/explorer/commands/seed.hpp \
     include/bitcoin/explorer/commands/send-tx.hpp \
     include/bitcoin/explorer/commands/settings.hpp \
@@ -429,9 +450,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/uri-encode.hpp \
     include/bitcoin/explorer/commands/validate-tx.hpp \
     include/bitcoin/explorer/commands/version.hpp \
-    include/bitcoin/explorer/commands/watch-address.hpp \
     include/bitcoin/explorer/commands/watch-key.hpp \
-    include/bitcoin/explorer/commands/watch-stealth.hpp \
     include/bitcoin/explorer/commands/watch-tx.hpp \
     include/bitcoin/explorer/commands/wif-to-ec.hpp \
     include/bitcoin/explorer/commands/wif-to-public.hpp \
@@ -442,20 +461,18 @@ include_bitcoin_explorer_commands_HEADERS = \
 include_bitcoin_explorer_configdir = ${includedir}/bitcoin/explorer/config
 include_bitcoin_explorer_config_HEADERS = \
     include/bitcoin/explorer/config/address.hpp \
-    include/bitcoin/explorer/config/address_format.hpp \
     include/bitcoin/explorer/config/algorithm.hpp \
     include/bitcoin/explorer/config/btc.hpp \
     include/bitcoin/explorer/config/byte.hpp \
-    include/bitcoin/explorer/config/cert_key.hpp \
-    include/bitcoin/explorer/config/ec_private.hpp \
+    include/bitcoin/explorer/config/bytes.hpp \
     include/bitcoin/explorer/config/electrum.hpp \
     include/bitcoin/explorer/config/encoding.hpp \
     include/bitcoin/explorer/config/endorsement.hpp \
-    include/bitcoin/explorer/config/hashtype.hpp \
     include/bitcoin/explorer/config/hd_key.hpp \
     include/bitcoin/explorer/config/language.hpp \
-    include/bitcoin/explorer/config/raw.hpp \
+    include/bitcoin/explorer/config/sighash.hpp \
     include/bitcoin/explorer/config/signature.hpp \
+    include/bitcoin/explorer/config/witness.hpp \
     include/bitcoin/explorer/config/wrapper.hpp
 
 include_bitcoin_explorer_impldir = ${includedir}/bitcoin/explorer/impl

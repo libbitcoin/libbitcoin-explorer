@@ -19,8 +19,6 @@
 #include <bitcoin/explorer/commands/ek-address.hpp>
 
 #include <algorithm>
-#include <iostream>
-#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -35,24 +33,23 @@ console_result ek_address::invoke(std::ostream& output, std::ostream& error)
     const auto uncompressed = get_uncompressed_option();
     const auto version = get_version_option();
     const auto& token = get_token_argument();
-    const data_chunk& seed = get_seed_argument();
+    const data_chunk& entropy = get_entropy_argument();
 
-    if (seed.size() < ek_seed_size)
+    if (entropy.size() < ek_seed_size)
     {
-        error << BX_EK_ADDRESS_SHORT_SEED << std::endl;
+        error << BX_EK_ADDRESS_SHORT_ENTROPY << std::endl;
         return console_result::failure;
     }
 
     ek_seed bytes;
-    std::copy(seed.begin(), seed.begin() + ek_seed_size, bytes.begin());
+    std::copy_n(entropy.begin(), ek_seed_size, bytes.begin());
     const auto compressed = !uncompressed;
 
     ec_compressed point;
     encrypted_private unused;
 
     // This cannot fail because the token has been validated.
-    /* bool */ create_key_pair(unused, point, token, bytes, version,
-        compressed);
+    create_key_pair(unused, point, token, bytes, version, compressed);
     const payment_address address({ point, compressed }, version);
 
     output << address << std::endl;

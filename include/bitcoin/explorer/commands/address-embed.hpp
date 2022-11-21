@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -104,7 +103,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a payment address with an embedded record of binary data.";
+        return "Create a pay-to-public-key-hash payment address with an embedded record of binary data. WARNING: any coin spent to this address is lost.";
     }
 
     /**
@@ -162,12 +161,12 @@ public:
         (
             "version,v",
             value<explorer::config::byte>(&option_.version)->default_value(0),
-            "The desired payment address version."
+            "The desired payment address version, defaults to 0."
         )
         (
             "DATA",
-            value<explorer::config::raw>(&argument_.data),
-            "The binary data to encode as Base16. This can be text or any other data. If not specified the data is read from STDIN."
+            value<explorer::config::bytes>(&argument_.data),
+            "The binary data to embed as Base16. This can be text or any other data. If not specified the data is read from STDIN."
         );
 
         return options;
@@ -201,7 +200,7 @@ public:
     /**
      * Get the value of the DATA argument.
      */
-    virtual explorer::config::raw& get_data_argument()
+    virtual explorer::config::bytes& get_data_argument()
     {
         return argument_.data;
     }
@@ -210,7 +209,7 @@ public:
      * Set the value of the DATA argument.
      */
     virtual void set_data_argument(
-        const explorer::config::raw& value)
+        const explorer::config::bytes& value)
     {
         argument_.data = value;
     }
@@ -246,7 +245,7 @@ private:
         {
         }
 
-        explorer::config::raw data;
+        explorer::config::bytes data;
     } argument_;
 
     /**

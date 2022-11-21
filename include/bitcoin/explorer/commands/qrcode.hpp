@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -77,7 +76,6 @@ public:
     {
         return "qrcode";
     }
-
 
     /**
      * Destructor.
@@ -175,11 +173,11 @@ public:
         (
             "scheme,s",
             value<std::string>(&option_.scheme)->default_value("bitcoin"),
-            "The URI scheme of the QRCODE data, defaults to bitcoin."
+            "The URI scheme of the QRCODE data, defaults to 'bitcoin'."
         )
         (
             "version,v",
-            value<uint16_t>(&option_.version),
+            value<uint8_t>(&option_.version),
             "The version of the QRCODE, defaults to 0 which is the minimum size."
         )
         (
@@ -281,7 +279,7 @@ public:
     /**
      * Get the value of the version option.
      */
-    virtual uint16_t& get_version_option()
+    virtual uint8_t& get_version_option()
     {
         return option_.version;
     }
@@ -290,7 +288,7 @@ public:
      * Set the value of the version option.
      */
     virtual void set_version_option(
-        const uint16_t& value)
+        const uint8_t& value)
     {
         option_.version = value;
     }
@@ -330,7 +328,7 @@ private:
         uint16_t margin;
         uint16_t pixels;
         std::string scheme;
-        uint16_t version;
+        uint8_t version;
     } option_;
 };
 

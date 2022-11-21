@@ -18,10 +18,7 @@
  */
 #include <bitcoin/explorer/commands/hd-new.hpp>
 
-#include <iostream>
-#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-
 
 // The BX_HD_NEW_INVALID_KEY condition is uncovered by test.
 // This is because is not known what seed will produce an invalid key.
@@ -35,17 +32,17 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto version = get_version_option();
-    const data_chunk& seed = get_seed_argument();
+    const data_chunk& entropy = get_entropy_argument();
 
-    if (seed.size() < minimum_seed_size)
+    if (entropy.size() < minimum_seed_size)
     {
-        error << BX_HD_NEW_SHORT_SEED << std::endl;
+        error << BX_HD_NEW_SHORT_ENTROPY << std::endl;
         return console_result::failure;
     }
 
     // We require the private version, but public is unused here.
     const auto prefixes = wallet::hd_private::to_prefixes(version, 0);
-    const wallet::hd_private private_key(seed, prefixes);
+    const wallet::hd_private private_key(entropy, prefixes);
 
     if (!private_key)
     {

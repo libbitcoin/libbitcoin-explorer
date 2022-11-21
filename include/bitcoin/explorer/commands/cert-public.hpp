@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -74,7 +73,6 @@ public:
         return "cert-public";
     }
 
-
     /**
      * Destructor.
      */
@@ -103,7 +101,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Derive a Curve ZMQ public key for use with a Libbitcoin server.";
+        return "Derive a Base85 Curve ZMQ public key for use with a Libbitcoin server.";
     }
 
     /**
@@ -151,7 +149,7 @@ public:
         )
         (
             "PRIVATE_KEY",
-            value<system::config::sodium>(&argument_.private_key),
+            value<protocol::zmq::sodium>(&argument_.private_key),
             "The private key from which to derive the public key."
         );
 
@@ -180,7 +178,7 @@ public:
     /**
      * Get the value of the PRIVATE_KEY argument.
      */
-    virtual system::config::sodium& get_private_key_argument()
+    virtual protocol::zmq::sodium& get_private_key_argument()
     {
         return argument_.private_key;
     }
@@ -189,7 +187,7 @@ public:
      * Set the value of the PRIVATE_KEY argument.
      */
     virtual void set_private_key_argument(
-        const system::config::sodium& value)
+        const protocol::zmq::sodium& value)
     {
         argument_.private_key = value;
     }
@@ -208,7 +206,7 @@ private:
         {
         }
 
-        system::config::sodium private_key;
+        protocol::zmq::sodium private_key;
     } argument_;
 
     /**

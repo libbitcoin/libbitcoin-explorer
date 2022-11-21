@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -158,7 +157,7 @@ public:
         )
         (
             "SECRET",
-            value<std::vector<explorer::config::ec_private>>(&argument_.secrets),
+            value<std::vector<system::wallet::ec_private>>(&argument_.secrets),
             "The set of Base16 secrets to add. If not specified the secrets are read from STDIN."
         );
 
@@ -187,7 +186,7 @@ public:
     /**
      * Get the value of the SECRET arguments.
      */
-    virtual std::vector<explorer::config::ec_private>& get_secrets_argument()
+    virtual std::vector<system::wallet::ec_private>& get_secrets_argument()
     {
         return argument_.secrets;
     }
@@ -196,7 +195,7 @@ public:
      * Set the value of the SECRET arguments.
      */
     virtual void set_secrets_argument(
-        const std::vector<explorer::config::ec_private>& value)
+        const std::vector<system::wallet::ec_private>& value)
     {
         argument_.secrets = value;
     }
@@ -215,7 +214,7 @@ private:
         {
         }
 
-        std::vector<explorer::config::ec_private> secrets;
+        std::vector<system::wallet::ec_private> secrets;
     } argument_;
 
     /**

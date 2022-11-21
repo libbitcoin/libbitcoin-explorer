@@ -38,7 +38,7 @@ using namespace bc::system;
 console_result subscribe_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& encoding = get_format_option();
+    const encoding_engine  encoding = get_format_option();
     const auto& server_url = get_server_url_argument();
     const auto duration_seconds = get_duration_option();
     auto connection = get_connection(*this);

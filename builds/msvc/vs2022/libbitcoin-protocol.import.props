@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="Globals">
+    <_PropertySheetDisplayName>Libbitcoin Protocol Import Settings</_PropertySheetDisplayName>
+  </PropertyGroup>
+
+  <!-- User Interface -->
+
+  <ItemGroup Label="BuildOptionsExtension">
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)libbitcoin-protocol.import.xml" />
+  </ItemGroup>
+
+  <!-- Linkage -->
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libbitcoin-protocol\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="'$(Linkage-libbitcoin-protocol)' == 'static' Or '$(Linkage-libbitcoin-protocol)' == 'ltcg'">BCP_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies Condition="'$(Linkage-libbitcoin-protocol)' != ''">libbitcoin-protocol.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Link>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">
+        $(ProjectDir)..\..\..\..\..\libbitcoin-protocol\bin\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-libbitcoin-protocol)\;
+        $(ProjectDir)..\..\..\..\..\libbitcoin-protocol\obj\libbitcoin-protocol\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-libbitcoin-protocol)\;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">
+        $(ProjectDir)..\..\..\..\..\libbitcoin-protocol\bin\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libbitcoin-protocol)\;
+        $(ProjectDir)..\..\..\..\..\libbitcoin-protocol\obj\libbitcoin-protocol\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libbitcoin-protocol)\;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

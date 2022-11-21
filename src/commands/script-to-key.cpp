@@ -27,6 +27,7 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::config;
 using namespace bc::system::wallet;
 
 console_result script_to_key::invoke(std::ostream& output, std::ostream& error)
@@ -38,7 +39,7 @@ console_result script_to_key::invoke(std::ostream& output, std::ostream& error)
     const auto address = payment_address(script, version);
     const auto key = sha256_hash(address.output_script().to_data(false));
 
-    output << encode_base16(key) << std::endl;
+    output << base16(key) << std::endl;
     return console_result::okay;
 }
 

@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -57,10 +56,6 @@ namespace commands {
  */
 #define BX_STEALTH_ENCODE_FILTER_TOO_LONG \
     "The filter is limited to 32 bits."
-#define BX_STEALTH_ENCODE_SIGNATURES_OVERFLOW \
-    "The number of signatures is greater than the number of SPEND_PUBKEYs."
-#define BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED \
-    "WARNING: multiple signature stealth transactions are not yet fully supported."
 
 /**
  * Class to implement the stealth-encode command.
@@ -77,7 +72,6 @@ public:
     {
         return "stealth-encode";
     }
-
 
     /**
      * Destructor.
@@ -107,7 +101,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Encode a stealth payment address.";
+        return "Encode a stealth payment address. Does not support stealth multisignature.";
     }
 
     /**
@@ -119,7 +113,7 @@ public:
     {
         return get_argument_metadata()
             .add("SCAN_PUBKEY", 1)
-            .add("SPEND_PUBKEY", -1);
+            .add("SPEND_PUBKEY", 1);
     }
 
     /**
@@ -158,11 +152,6 @@ public:
             "The Base2 stealth prefix filter that will be used to locate payments."
         )
         (
-            "signatures,s",
-            value<explorer::config::byte>(&option_.signatures),
-            "The number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs."
-        )
-        (
             "version,v",
             value<explorer::config::byte>(&option_.version)->default_value(0),
             "The desired payment address version, defaults to 0."
@@ -174,8 +163,8 @@ public:
         )
         (
             "SPEND_PUBKEY",
-            value<std::vector<system::wallet::ec_public>>(&argument_.spend_pubkeys),
-            "The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY."
+            value<system::wallet::ec_public>(&argument_.spend_pubkey),
+            "The Base16 EC public key corresponding to the private key that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY."
         );
 
         return options;
@@ -224,20 +213,20 @@ public:
     }
 
     /**
-     * Get the value of the SPEND_PUBKEY arguments.
+     * Get the value of the SPEND_PUBKEY argument.
      */
-    virtual std::vector<system::wallet::ec_public>& get_spend_pubkeys_argument()
+    virtual system::wallet::ec_public& get_spend_pubkey_argument()
     {
-        return argument_.spend_pubkeys;
+        return argument_.spend_pubkey;
     }
 
     /**
-     * Set the value of the SPEND_PUBKEY arguments.
+     * Set the value of the SPEND_PUBKEY argument.
      */
-    virtual void set_spend_pubkeys_argument(
-        const std::vector<system::wallet::ec_public>& value)
+    virtual void set_spend_pubkey_argument(
+        const system::wallet::ec_public& value)
     {
-        argument_.spend_pubkeys = value;
+        argument_.spend_pubkey = value;
     }
 
     /**
@@ -255,23 +244,6 @@ public:
         const system::config::base2& value)
     {
         option_.filter = value;
-    }
-
-    /**
-     * Get the value of the signatures option.
-     */
-    virtual explorer::config::byte& get_signatures_option()
-    {
-        return option_.signatures;
-    }
-
-    /**
-     * Set the value of the signatures option.
-     */
-    virtual void set_signatures_option(
-        const explorer::config::byte& value)
-    {
-        option_.signatures = value;
     }
 
     /**
@@ -302,12 +274,12 @@ private:
     {
         argument()
           : scan_pubkey(),
-            spend_pubkeys()
+            spend_pubkey()
         {
         }
 
         system::wallet::ec_public scan_pubkey;
-        std::vector<system::wallet::ec_public> spend_pubkeys;
+        system::wallet::ec_public spend_pubkey;
     } argument_;
 
     /**
@@ -319,13 +291,11 @@ private:
     {
         option()
           : filter(),
-            signatures(),
             version()
         {
         }
 
         system::config::base2 filter;
-        explorer::config::byte signatures;
         explorer::config::byte version;
     } option_;
 };

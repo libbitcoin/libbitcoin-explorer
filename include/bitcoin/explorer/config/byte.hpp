@@ -19,75 +19,35 @@
 #ifndef BX_BYTE_HPP
 #define BX_BYTE_HPP
 
+#include <cstdint>
 #include <iostream>
 #include <string>
-#include <cstdint>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-/**
- * Serialization helper to convert between decimal string and uint8_t.
- */
+// This is necessary because the stream cannot read a single byte as a number.
+
 class BCX_API byte
 {
 public:
+    typedef uint8_t type;
 
-    /**
-     * Default constructor.
-     */
     byte();
-
-    /**
-     * Initialization constructor.
-     * @param[in]  byte  The value to initialize with.
-     */
-    byte(uint8_t byte);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  decimal  The value to initialize with.
-     */
-    byte(const std::string& decimal);
-
-    /**
-     * Copy constructor.
-     * @param[in]  other  The object to copy into self on construct.
-     */
     byte(const byte& other);
+    byte(const std::string& token);
+    byte(const type& value);
 
-    /**
-     * Overload cast to internal type.
-     * @return  This object's value cast to internal type.
-     */
-    operator uint8_t() const;
+    operator const type&() const;
 
-    /**
-     * Overload stream in. If input is invalid sets no bytes in argument.
-     * @param[in]   input     The input stream to read the value from.
-     * @param[out]  argument  The object to receive the read value.
-     * @return                The input stream reference.
-     */
-    friend std::istream& operator>>(std::istream& input,
-        byte& argument);
-
-    /**
-     * Overload stream out.
-     * @param[in]   output    The output stream to write the value to.
-     * @param[out]  argument  The object from which to obtain the value.
-     * @return                The output stream reference.
-     */
+    friend std::istream& operator>>(std::istream& input, byte& argument);
     friend std::ostream& operator<<(std::ostream& output,
         const byte& argument);
 
 private:
-
-    /**
-     * The state of this object.
-     */
-    uint8_t value_;
+    type value_;
 };
 
 } // namespace explorer

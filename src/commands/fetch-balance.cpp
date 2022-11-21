@@ -41,7 +41,7 @@ using namespace bc::system::config;
 console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& encoding = get_format_option();
+    const encoding_engine  encoding = get_format_option();
     const hash_digest& key = get_hash_argument();
     const auto connection = get_connection(*this);
 

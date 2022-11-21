@@ -21,33 +21,21 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-using namespace bc::system;
-using namespace po;
+constexpr auto prefix_standard = "standard";
+constexpr auto prefix_witness = "witness";
+constexpr auto prefix_two_factor_authentication = "2fa";
+constexpr auto prefix_two_factor_authentication_witness = "2faw";
 
-static auto electrum_standard = "standard";
-static auto electrum_witness = "witness";
-static auto electrum_two_factor_authentication = "dual";
 
 electrum::electrum()
-  : value_(wallet::electrum::seed::standard)
-{
-}
-
-electrum::electrum(const std::string& token)
-{
-    std::stringstream(token) >> *this;
-}
-
-electrum::electrum(wallet::electrum::seed& electrum)
-  : value_(electrum)
+  : value_(type::standard)
 {
 }
 
@@ -56,7 +44,17 @@ electrum::electrum(const electrum& other)
 {
 }
 
-electrum::operator wallet::electrum::seed() const
+electrum::electrum(const std::string& token)
+{
+    std::stringstream(token) >> *this;
+}
+
+electrum::electrum(const type& value)
+  : value_(value)
+{
+}
+
+electrum::operator const type&() const
 {
     return value_;
 }
@@ -66,22 +64,16 @@ std::istream& operator>>(std::istream& input, electrum& argument)
     std::string text;
     input >> text;
 
-    if (text == electrum_standard)
-    {
-        argument.value_ = wallet::electrum::seed::standard;
-    }
-    else if (text == electrum_witness)
-    {
-        argument.value_ = wallet::electrum::seed::witness;
-    }
-    else if (text == electrum_two_factor_authentication)
-    {
-        argument.value_ = wallet::electrum::seed::two_factor_authentication;
-    }
+    if (text == prefix_standard)
+        argument.value_ = electrum::type::standard;
+    else if (text == prefix_witness)
+        argument.value_ = electrum::type::witness;
+    else if (text == prefix_two_factor_authentication)
+        argument.value_ = electrum::type::two_factor_authentication;
+    else if (text == prefix_two_factor_authentication_witness)
+        argument.value_ = electrum::type::two_factor_authentication_witness;
     else
-    {
-        BOOST_THROW_EXCEPTION(invalid_option_value(text));
-    }
+        throw system::istream_exception(text);
 
     return input;
 }
@@ -90,22 +82,23 @@ std::ostream& operator<<(std::ostream& output, const electrum& argument)
 {
     std::string text;
 
-    if (argument.value_ == wallet::electrum::seed::standard)
+    switch (argument.value_)
     {
-        text = electrum_standard;
-    }
-    else if (argument.value_ == wallet::electrum::seed::witness)
-    {
-        text = electrum_witness;
-    }
-    else if (argument.value_ == wallet::electrum::seed::two_factor_authentication)
-    {
-        text = electrum_two_factor_authentication;
-    }
-    else
-    {
-        BITCOIN_ASSERT_MSG(false, "Unexpected electrum value.");
-    }
+        case electrum::type::standard:
+            text = prefix_standard;
+            break;
+        case electrum::type::witness:
+            text = prefix_witness;
+            break;
+        case electrum::type::two_factor_authentication:
+            text = prefix_two_factor_authentication;
+            break;
+        case electrum::type::two_factor_authentication_witness:
+            text = prefix_two_factor_authentication_witness;
+            break;
+        default:
+            throw system::ostream_exception("electrum");
+    };
 
     output << text;
     return output;

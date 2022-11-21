@@ -28,48 +28,25 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-/**
- * Serialization helper to convert between base58 string and bitcoin payment
- * and stealth address.
- */
+// TODO: drop stealth and just use wallet::payment_address as primitive.
+
 class BCX_API address
 {
 public:
+    typedef std::string type;
 
-    /**
-     * Default constructor.
-     */
-    address()
-    {
-    }
+    address();
+    address(const address& other);
+    address(const std::string& token);
 
-    /**
-     * Initialization constructor.
-     * @param[in]  base58  The value to initialize with.
-     */
-    address(const std::string& base58);
+    operator const type&() const;
 
-    /**
-     * Overload cast to internal type.
-     * @return  This object's value cast to internal type reference.
-     */
-    operator const std::string&() const;
-
-    /**
-     * Overload stream in. Throws if input is invalid.
-     * @param[in]   input     The input stream to read the value from.
-     * @param[out]  argument  The object to receive the read value.
-     * @return                The input stream reference.
-     */
-    friend std::istream& operator>>(std::istream& input,
-        address& argument);
+    friend std::istream& operator>>(std::istream& input, address& argument);
+    friend std::ostream& operator<<(std::ostream& output,
+        const address& argument);
 
 private:
-
-    /**
-     * The state of this object.
-     */
-    std::string value_;
+    type value_;
 };
 
 } // namespace explorer

@@ -34,7 +34,7 @@ console_result message_validate::invoke(std::ostream& output,
     // Bound parameters.
     const auto& address = get_payment_address_argument();
     const auto& sign = get_signature_argument();
-    const auto& message = get_message_argument();
+    const data_chunk& message = get_message_argument();
 
     if (!verify_message(message, address, sign))
     {

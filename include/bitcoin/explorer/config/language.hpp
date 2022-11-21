@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_BIP39_LANGUAGE_HPP
-#define BX_BIP39_LANGUAGE_HPP
+#ifndef BX_LANGUAGE_HPP
+#define BX_LANGUAGE_HPP
 
 #include <iostream>
 #include <string>
@@ -28,66 +28,26 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-/**
- * Serialization helper to convert between dictionary and string.
- */
+// Enumeration mapper.
+
 class BCX_API language
 {
 public:
+    typedef system::wallet::language type;
 
-    /**
-     * Default constructor.
-     */
     language();
-
-    /**
-     * Initialization constructor.
-     * @param[in]  token  The value to initialize with.
-     */
-    language(const std::string& token);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  languages  The value to initialize with.
-     */
-    language(system::wallet::dictionary_list& languages);
-
-    /**
-     * Copy constructor.
-     * @param[in]  other  The object to copy into self on construct.
-     */
     language(const language& other);
+    language(const std::string& token);
+    language(const type& value);
 
-    /**
-     * Overload cast to internal type.
-     * @return  This object's value cast to internal type.
-     */
-    operator const system::wallet::dictionary_list() const;
+    operator const type&() const;
 
-    /**
-     * Overload stream in. Throws if input is invalid.
-     * @param[in]   input     The input stream to read the value from.
-     * @param[out]  argument  The object to receive the read value.
-     * @return                The input stream reference.
-     */
-    friend std::istream& operator>>(std::istream& input,
-        language& argument);
-
-    /**
-     * Overload stream out.
-     * @param[in]   output    The output stream to write the value to.
-     * @param[out]  argument  The object from which to obtain the value.
-     * @return                The output stream reference.
-     */
+    friend std::istream& operator>>(std::istream& input, language& argument);
     friend std::ostream& operator<<(std::ostream& output,
         const language& argument);
 
 private:
-
-    /**
-     * The state of this object.
-     */
-    system::wallet::dictionary_list value_;
+    type value_;
 };
 
 } // namespace config

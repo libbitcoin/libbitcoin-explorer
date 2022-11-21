@@ -18,46 +18,62 @@
  */
 #include <bitcoin/explorer/commands/ec-add-secrets.hpp>
 
-#include <iostream>
-#include <bitcoin/system.hpp>
-#include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
-
-
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::config;
+using namespace bc::system::wallet;
 
 console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& secrets = get_secrets_argument();
 
-    ec_secret sum(null_hash);
-    for (auto const& secret: secrets)
+    if (secrets.empty())
     {
-        // Initialize sum on first pass.
-        if (sum == null_hash)
-        {
-            sum = secret;
-            continue;
-        }
+        output << base16(null_hash) << std::endl;
+        return console_result::okay;
+    }
 
+    // Secrets can be invalid, this should be handled.
+    // The test cases are providing base16 but WIF is expected.
+    // ec_private reads/writes WIF but ec_public reads/writes base16.
+    // This should probably be rationalized at some point.
+    // This would also simplify out serialization, vs. encode_based16(ec_secret).
+    
+    // TODO: create a wallet::wif class and use this for wif serialialization
+    // and deserialization. Create a constructor to take this in ec_private and
+    // then change string in/out in ec_private handle base16, for consistency with
+    // ec_public, and to provide a way to convert secrets using classes. Provide
+    // an ec_private cast override for the wif class. Model this wif after hd_public
+    // and private. Could provide wif construction for hd and ek classes, but this
+    // isn't necessary, since wif will cast to ec_secret, which they shold already
+    // accept.
+
+    // TODO: the test cases don't use >>, so they can introduce invalid objects.
+    // So all objects need to be tested for validity in bx invoke handlers,
+    // as these can be used independently via setters just as the test cases.
+    // The setters shouldn't throw, but an invalid paramter could cause
+    // premature termination. This would require consistent bool() operators.
+    // Probably better to demonstrate validity testing in the handlers.
+
+    ec_secret sum(secrets.front());
+
+    for (auto secret = std::next(secrets.begin()); secret != secrets.end(); ++secret)
+    {
         // Elliptic curve function (INTEGER + INTEGER) % curve-order.
-        if (!system::ec_add(sum, secret))
+        if (!system::ec_add(sum, *secret))
         {
             error << BX_EC_ADD_SECRETS_OUT_OF_RANGE << std::endl;
             return console_result::failure;
         }
     }
 
-    // We don't use ec_private serialization (WIF) here.
-    output << config::ec_private(sum) << std::endl;
+    output << base16(sum) << std::endl;
     return console_result::okay;
 }
-
 
 } //namespace commands
 } //namespace explorer

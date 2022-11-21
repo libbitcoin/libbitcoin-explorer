@@ -43,63 +43,35 @@
     #define BCX_INTERNAL BC_HELPER_DLL_LOCAL
 #endif
 
-/**
- * The name of this program.
- */
+/// The name of this program.
 #define BX_PROGRAM_NAME "bx"
 
-/**
- * Delimiter for use in word splitting serialized input and output points.
- */
+/// Delimiter for use in word splitting serialized input and output points.
 #define BX_TX_POINT_DELIMITER ":"
 
-/**
- * Default delimiter for use in word splitting and joining operations.
- */
+/// Default delimiter for use in word splitting and joining operations.
 #define BX_SENTENCE_DELIMITER " "
 
-/**
- * Environment variable prefix for integrated environment variables.
- */
+/// Environment variable prefix for integrated environment variables.
 #define BX_ENVIRONMENT_VARIABLE_PREFIX "BX_"
 
-/**
- * Conventional command line argument sentinel for indicating that a file
- * should be read from STDIN or written to STDOUT.
- */
+/// Conventional command line argument sentinel for indicating that a file
+/// should be read from STDIN or written to STDOUT.
+
 #define BX_STDIO_PATH_SENTINEL "-"
 
 namespace libbitcoin {
 namespace explorer {
 
-/**
- * Space-saving namespaces.
- */
 namespace ph = std::placeholders;
 namespace po = boost::program_options;
 namespace pt = boost::property_tree;
 
-/**
- * Space-saving, clarifying and/or differentiating external type equivalents.
- */
 typedef boost::format format;
 typedef bc::system::chain::transaction tx_type;
 typedef bc::system::chain::input tx_input_type;
 typedef bc::system::chain::output tx_output_type;
 
-/**
- * The minimum safe length of a seed in bits (multiple of 8).
- */
-BC_CONSTEXPR size_t minimum_seed_bits = 128;
-
-/**
- * The minimum safe length of a seed in bytes (16).
- */
-BC_CONSTEXPR size_t minimum_seed_size = minimum_seed_bits / bc::byte_bits;
-
-/**
- * Suppported output encoding engines.
- */
 enum class encoding_engine
 {
     info,

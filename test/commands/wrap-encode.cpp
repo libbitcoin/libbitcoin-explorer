@@ -21,31 +21,14 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
+BOOST_AUTO_TEST_SUITE(obsolete)
 BOOST_AUTO_TEST_SUITE(wrap_encode__invoke)
 
-// vectors
-#define BX_WRAP_ENCODE_PAYLOAD "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006"
-
-// expectations
-#define BX_WRAP_ENCODE_WRAPPED_V0 "00031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd0065b09d03c"
-#define BX_WRAP_ENCODE_WRAPPED_V42 "2a031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006298eebe4"
-
-BOOST_AUTO_TEST_CASE(wrap_encode__invoke__version_0__okay_output)
+BOOST_AUTO_TEST_CASE(wrap_encode__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(wrap_encode);
-    command.set_payload_argument({ BX_WRAP_ENCODE_PAYLOAD });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_WRAP_ENCODE_WRAPPED_V0 "\n");
-}
-
-BOOST_AUTO_TEST_CASE(wrap_encode__invoke__version_42__okay_output)
-{
-    BX_DECLARE_COMMAND(wrap_encode);
-    command.set_version_option(42);
-    command.set_payload_argument({ BX_WRAP_ENCODE_PAYLOAD });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_WRAP_ENCODE_WRAPPED_V42 "\n");
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_WRAP_ENCODE_OBSOLETE "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

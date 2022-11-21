@@ -37,22 +37,8 @@ console_result stealth_encode::invoke(std::ostream& output,
     // Bound parameters.
     const auto version = get_version_option();
     const auto& filter = get_filter_option();
-    const auto& scan_pubkey = get_scan_pubkey_argument();
-    const auto& spend_pubkeys = get_spend_pubkeys_argument();
-    const auto& signatures = get_signatures_option();
-
-    const size_t maximum = std::max(size_t(1), spend_pubkeys.size());
-
-    if (signatures > maximum)
-    {
-        error << BX_STEALTH_ENCODE_SIGNATURES_OVERFLOW << std::endl;
-        return console_result::failure;
-    }
-
-    // TODO: finish stealth multisig implemetation.
-    // Issue a warning but don't prevent experimentation.
-    if (spend_pubkeys.size() > 1u)
-        error << BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED << std::endl;
+    const auto& scan = get_scan_pubkey_argument();
+    const ec_compressed& spend = get_spend_pubkey_argument();
 
     if (filter.size() > stealth_address::max_filter_bits)
     {
@@ -60,9 +46,7 @@ console_result stealth_encode::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    const auto spend_points = cast<ec_public, ec_compressed>(spend_pubkeys);
-    const stealth_address address(filter, scan_pubkey, spend_points,
-        signatures, version);
+    const stealth_address address(filter, scan, { spend }, 0, version);
 
     output << address << std::endl;
     return console_result::okay;

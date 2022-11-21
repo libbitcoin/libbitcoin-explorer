@@ -51,7 +51,7 @@ console_result fetch_filter::invoke(std::ostream& output,
     // Bound parameters.
     const auto height = get_height_option();
     const hash_digest& hash = get_hash_option();
-    const encoding& encoding = get_format_option();
+    const encoding_engine encoding = get_format_option();
     const auto connection = get_connection(*this);
 
     obelisk_client client(connection.retries);
@@ -63,16 +63,16 @@ console_result fetch_filter::invoke(std::ostream& output,
 
     callback_state state(error, output, encoding);
 
-    // This enables json-style array formatting.
-    const auto json = encoding == encoding_engine::json;
+    ////// This enables json-style array formatting.
+    ////const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, json](const code& ec,
+    auto on_done = [&state](const code& ec,
         const message::compact_filter& response)
     {
         if (!state.succeeded(ec))
             return;
 
-        state.output(property_tree(response, json));
+        state.output(property_tree(response));
     };
 
     // Height is ignored if both are specified.

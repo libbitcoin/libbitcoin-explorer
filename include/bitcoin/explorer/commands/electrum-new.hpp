@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -55,10 +54,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_ELECTRUM_NEW_INVALID_SEED \
-    "The seed size is not supported."
-#define BX_ELECTRUM_REQUIRES_ICU \
-    "The command requires an ICU build."
+#define BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE \
+    "The entropy size is not 17 to 64 bytes."
 
 /**
  * Class to implement the electrum-new command.
@@ -75,7 +72,6 @@ public:
     {
         return "electrum-new";
     }
-
 
     /**
      * Destructor.
@@ -105,7 +101,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a mnemonic seed (Electrum) from entropy. WARNING: mnemonic should be created from properly generated entropy.";
+        return "Create an Electrum mnemonic from entropy. After the mnemonic is created, entropy round-trips with the electrum-decode command.";
     }
 
     /**
@@ -116,7 +112,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SEED", 1);
+            .add("ENTROPY", 1);
     }
 
     /**
@@ -128,7 +124,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_seed_argument(), "SEED", variables, input, raw);
+        load_input(get_entropy_argument(), "ENTROPY", variables, input, raw);
     }
 
     /**
@@ -152,19 +148,19 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "prefix,p",
-            value<explorer::config::electrum>(&option_.prefix),
-            "The electrum seed type identifier to use. Options are 'standard', 'witness', and 'dual' (for two factor authentication), defaults to 'standard'."
-        )
-        (
             "language,l",
             value<explorer::config::language>(&option_.language),
-            "The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'pt', 'ja', 'zh_Hans' and 'any', defaults to 'en'."
+            "The dictionary to generate the mnemonic from. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'."
         )
         (
-            "SEED",
-            value<system::config::base16>(&argument_.seed),
-            "The Base16 entropy from which the mnemonic is created. If not specified the entropy is read from STDIN."
+            "prefix,p",
+            value<explorer::config::electrum>(&option_.prefix),
+            "The electrum seed type. Options are 'standard', 'witness', and '2fa', and '2faw', defaults to 'standard'."
+        )
+        (
+            "ENTROPY",
+            value<system::config::base16>(&argument_.entropy),
+            "The 17 to 64 bytes of Base16 entropy from which the mnemonic is derived. If not specified the entropy is read from STDIN."
         );
 
         return options;
@@ -190,37 +186,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SEED argument.
+     * Get the value of the ENTROPY argument.
      */
-    virtual system::config::base16& get_seed_argument()
+    virtual system::config::base16& get_entropy_argument()
     {
-        return argument_.seed;
+        return argument_.entropy;
     }
 
     /**
-     * Set the value of the SEED argument.
+     * Set the value of the ENTROPY argument.
      */
-    virtual void set_seed_argument(
+    virtual void set_entropy_argument(
         const system::config::base16& value)
     {
-        argument_.seed = value;
-    }
-
-    /**
-     * Get the value of the prefix option.
-     */
-    virtual explorer::config::electrum& get_prefix_option()
-    {
-        return option_.prefix;
-    }
-
-    /**
-     * Set the value of the prefix option.
-     */
-    virtual void set_prefix_option(
-        const explorer::config::electrum& value)
-    {
-        option_.prefix = value;
+        argument_.entropy = value;
     }
 
     /**
@@ -240,6 +219,23 @@ public:
         option_.language = value;
     }
 
+    /**
+     * Get the value of the prefix option.
+     */
+    virtual explorer::config::electrum& get_prefix_option()
+    {
+        return option_.prefix;
+    }
+
+    /**
+     * Set the value of the prefix option.
+     */
+    virtual void set_prefix_option(
+        const explorer::config::electrum& value)
+    {
+        option_.prefix = value;
+    }
+
 private:
 
     /**
@@ -250,11 +246,11 @@ private:
     struct argument
     {
         argument()
-          : seed()
+          : entropy()
         {
         }
 
-        system::config::base16 seed;
+        system::config::base16 entropy;
     } argument_;
 
     /**
@@ -265,13 +261,13 @@ private:
     struct option
     {
         option()
-          : prefix(),
-            language()
+          : language(),
+            prefix()
         {
         }
 
-        explorer::config::electrum prefix;
         explorer::config::language language;
+        explorer::config::electrum prefix;
     } option_;
 };
 

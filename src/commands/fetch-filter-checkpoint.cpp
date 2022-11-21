@@ -52,7 +52,7 @@ console_result fetch_filter_checkpoint::invoke(
 {
     // Bound parameters.
     const hash_digest& hash = get_hash_argument();
-    const encoding& encoding = get_format_option();
+    const encoding_engine encoding = get_format_option();
     const auto connection = get_connection(*this);
 
     obelisk_client client(connection.retries);

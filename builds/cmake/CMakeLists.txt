@@ -34,7 +34,7 @@ else ()
   set( VERSION "${PACKAGE_VERSION}" )
 endif ()
 
-set( CMAKE_CXX_STANDARD 11 )
+set( CMAKE_CXX_STANDARD 20 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 # Add compiler options
@@ -44,9 +44,6 @@ add_compile_options( "-Wall" )
 
 # Warn on extra stuff.
 add_compile_options( "-Wextra" )
-
-# Be really annoying.
-add_compile_options( "-Wpedantic" )
 
 # Disallow warning on style order of declarations.
 add_compile_options( "-Wno-reorder" )
@@ -59,6 +56,9 @@ add_compile_options( "-Wno-missing-braces" )
 
 # Ignore comments within comments or commenting of backslash extended lines.
 add_compile_options( "-Wno-comment" )
+
+# Suppress warning for copy of implicitly generated copy constructor.
+add_compile_options( "-Wno-deprecated-copy" )
 
 # Clean up bx generated code.
 add_compile_options( "-Wno-unused-parameter" )
@@ -98,9 +98,15 @@ if (BUILD_SHARED_LIBS)
     add_definitions( -DBOOST_ALL_DYN_LINK )
 endif()
 
+if (BUILD_SHARED_LIBS)
+    set( Boost_USE_STATIC_LIBS "off" )
+else()
+    set( Boost_USE_STATIC_LIBS "on" )
+endif()
+
 # Find boost
 #------------------------------------------------------------------------------
-find_package( Boost 1.72.0 REQUIRED COMPONENTS
+find_package( Boost 1.76.0 REQUIRED COMPONENTS
     unit_test_framework )
 
 set( boost_unit_test_framework_LIBS "-lboost_unit_test_framework" )
@@ -199,18 +205,24 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/commands/address-to-key.cpp"
     "../../src/commands/base16-decode.cpp"
     "../../src/commands/base16-encode.cpp"
+    "../../src/commands/base32-decode.cpp"
+    "../../src/commands/base32-encode.cpp"
     "../../src/commands/base58-decode.cpp"
     "../../src/commands/base58-encode.cpp"
     "../../src/commands/base58check-decode.cpp"
     "../../src/commands/base58check-encode.cpp"
     "../../src/commands/base64-decode.cpp"
     "../../src/commands/base64-encode.cpp"
+    "../../src/commands/bech32-decode.cpp"
+    "../../src/commands/bech32-encode.cpp"
     "../../src/commands/bitcoin160.cpp"
     "../../src/commands/bitcoin256.cpp"
     "../../src/commands/broadcast-tx.cpp"
     "../../src/commands/btc-to-satoshi.cpp"
     "../../src/commands/cert-new.cpp"
     "../../src/commands/cert-public.cpp"
+    "../../src/commands/checked-decode.cpp"
+    "../../src/commands/checked-encode.cpp"
     "../../src/commands/ec-add-secrets.cpp"
     "../../src/commands/ec-add.cpp"
     "../../src/commands/ec-decompress.cpp"
@@ -229,8 +241,10 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/commands/ek-public.cpp"
     "../../src/commands/ek-to-address.cpp"
     "../../src/commands/ek-to-ec.cpp"
+    "../../src/commands/electrum-decode.cpp"
     "../../src/commands/electrum-new.cpp"
     "../../src/commands/electrum-to-seed.cpp"
+    "../../src/commands/entropy.cpp"
     "../../src/commands/fetch-balance.cpp"
     "../../src/commands/fetch-block-hashes.cpp"
     "../../src/commands/fetch-block-height.cpp"
@@ -265,7 +279,6 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/commands/message-validate.cpp"
     "../../src/commands/mnemonic-decode.cpp"
     "../../src/commands/mnemonic-encode.cpp"
-    "../../src/commands/mnemonic-new.cpp"
     "../../src/commands/mnemonic-to-seed.cpp"
     "../../src/commands/put-tx.cpp"
     "../../src/commands/qrcode.cpp"
@@ -275,6 +288,7 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/commands/script-encode.cpp"
     "../../src/commands/script-to-address.cpp"
     "../../src/commands/script-to-key.cpp"
+    "../../src/commands/script-to-witness.cpp"
     "../../src/commands/seed.cpp"
     "../../src/commands/send-tx.cpp"
     "../../src/commands/settings.cpp"
@@ -304,21 +318,18 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/commands/wrap-decode.cpp"
     "../../src/commands/wrap-encode.cpp"
     "../../src/config/address.cpp"
-    "../../src/config/address_format.cpp"
     "../../src/config/algorithm.cpp"
     "../../src/config/btc.cpp"
     "../../src/config/byte.cpp"
-    "../../src/config/cert_key.cpp"
-    "../../src/config/ec_private.cpp"
+    "../../src/config/bytes.cpp"
     "../../src/config/electrum.cpp"
     "../../src/config/encoding.cpp"
     "../../src/config/endorsement.cpp"
-    "../../src/config/hashtype.cpp"
     "../../src/config/hd_key.cpp"
     "../../src/config/language.cpp"
-    "../../src/config/raw.cpp"
+    "../../src/config/sighash.cpp"
     "../../src/config/signature.cpp"
-    "../../src/config/wrapper.cpp" )
+    "../../src/config/witness.cpp" )
 
 # ${CANONICAL_LIB_NAME} project specific include directories.
 #------------------------------------------------------------------------------
@@ -387,18 +398,24 @@ if (with-tests)
         "../../test/commands/address-to-key.cpp"
         "../../test/commands/base16-decode.cpp"
         "../../test/commands/base16-encode.cpp"
+        "../../test/commands/base32-decode.cpp"
+        "../../test/commands/base32-encode.cpp"
         "../../test/commands/base58-decode.cpp"
         "../../test/commands/base58-encode.cpp"
         "../../test/commands/base58check-decode.cpp"
         "../../test/commands/base58check-encode.cpp"
         "../../test/commands/base64-decode.cpp"
         "../../test/commands/base64-encode.cpp"
+        "../../test/commands/bech32-decode.cpp"
+        "../../test/commands/bech32-encode.cpp"
         "../../test/commands/bitcoin160.cpp"
         "../../test/commands/bitcoin256.cpp"
         "../../test/commands/broadcast-tx.cpp"
         "../../test/commands/btc-to-satoshi.cpp"
         "../../test/commands/cert-new.cpp"
         "../../test/commands/cert-public.cpp"
+        "../../test/commands/checked-decode.cpp"
+        "../../test/commands/checked-encode.cpp"
         "../../test/commands/command.hpp"
         "../../test/commands/ec-add-secrets.cpp"
         "../../test/commands/ec-add.cpp"
@@ -418,8 +435,10 @@ if (with-tests)
         "../../test/commands/ek-public.cpp"
         "../../test/commands/ek-to-address.cpp"
         "../../test/commands/ek-to-ec.cpp"
+        "../../test/commands/electrum-decode.cpp"
         "../../test/commands/electrum-new.cpp"
         "../../test/commands/electrum-to-seed.cpp"
+        "../../test/commands/entropy.cpp"
         "../../test/commands/fetch-balance.cpp"
         "../../test/commands/fetch-block.cpp"
         "../../test/commands/fetch-header.cpp"
@@ -449,7 +468,6 @@ if (with-tests)
         "../../test/commands/message-validate.cpp"
         "../../test/commands/mnemonic-decode.cpp"
         "../../test/commands/mnemonic-encode.cpp"
-        "../../test/commands/mnemonic-new.cpp"
         "../../test/commands/mnemonic-to-seed.cpp"
         "../../test/commands/put-tx.cpp"
         "../../test/commands/qrcode.cpp"
@@ -459,6 +477,7 @@ if (with-tests)
         "../../test/commands/script-encode.cpp"
         "../../test/commands/script-to-address.cpp"
         "../../test/commands/script-to-key.cpp"
+        "../../test/commands/script-to-witness.cpp"
         "../../test/commands/seed.cpp"
         "../../test/commands/send-tx.cpp"
         "../../test/commands/settings.cpp"

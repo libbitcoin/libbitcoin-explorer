@@ -29,21 +29,20 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/cert_key.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -51,6 +50,12 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+/**
+ * Various localizable strings.
+ */
+#define BX_WRAP_DECODE_OBSOLETE \
+    "This command is obsolete. Use checked-decode instead."
 
 /**
  * Class to implement the wrap-decode command.
@@ -66,14 +71,6 @@ public:
     static const char* symbol()
     {
         return "wrap-decode";
-    }
-
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    static const char* formerly()
-    {
-        return "unwrap";
     }
 
     /**
@@ -108,14 +105,22 @@ public:
     }
 
     /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    virtual bool obsolete()
+    {
+        return true;
+    }
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
     virtual system::arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("WRAPPED", 1);
+        return get_argument_metadata();
     }
 
     /**
@@ -126,8 +131,6 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_wrapped_argument(), "WRAPPED", variables, input, raw);
     }
 
     /**
@@ -149,16 +152,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
-        )
-        (
-            "WRAPPED",
-            value<explorer::config::wrapper>(&argument_.wrapped),
-            "The Base16 data to unwrap. If not specified the value is read from STDIN."
         );
 
         return options;
@@ -183,40 +176,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the WRAPPED argument.
-     */
-    virtual explorer::config::wrapper& get_wrapped_argument()
-    {
-        return argument_.wrapped;
-    }
-
-    /**
-     * Set the value of the WRAPPED argument.
-     */
-    virtual void set_wrapped_argument(
-        const explorer::config::wrapper& value)
-    {
-        argument_.wrapped = value;
-    }
-
-    /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
-    }
-
 private:
 
     /**
@@ -227,11 +186,9 @@ private:
     struct argument
     {
         argument()
-          : wrapped()
         {
         }
 
-        explorer::config::wrapper wrapped;
     } argument_;
 
     /**
@@ -242,11 +199,9 @@ private:
     struct option
     {
         option()
-          : format()
         {
         }
 
-        explorer::config::encoding format;
     } option_;
 };
 

@@ -21,14 +21,14 @@
 #include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::explorer::config;
 using namespace bc::system;
+using namespace bc::explorer::config;
 
 console_result base16_decode::invoke(std::ostream& output,
     std::ostream& error)
@@ -36,8 +36,8 @@ console_result base16_decode::invoke(std::ostream& output,
     // Bound parameters.
     const auto& base16 = get_base16_argument();
 
-    // Do not add terminator to raw (non-textual) output stream.
-    output << raw(base16) /* << std::endl */;
+    // Do not add terminator to bytes (non-textual) output stream.
+    output << bytes(base16) /* << std::endl */;
     return console_result::okay;
 }
 

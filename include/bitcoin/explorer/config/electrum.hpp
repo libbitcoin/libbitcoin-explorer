@@ -28,66 +28,26 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-/**
- * Serialization helper to convert between electrum seed prefix and string.
- */
+// Enumeration mapper.
+
 class BCX_API electrum
 {
 public:
+    typedef system::wallet::electrum::seed_prefix type;
 
-    /**
-     * Default constructor.
-     */
     electrum();
-
-    /**
-     * Initialization constructor.
-     * @param[in]  token  The value to initialize with.
-     */
-    electrum(const std::string& token);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  electrum seed types  The value to initialize with.
-     */
-    electrum(system::wallet::electrum::seed& electrum);
-
-    /**
-     * Copy constructor.
-     * @param[in]  other  The object to copy into self on construct.
-     */
     electrum(const electrum& other);
+    electrum(const std::string& token);
+    electrum(const type& value);
 
-    /**
-     * Overload cast to internal type.
-     * @return  This object's value cast to internal type.
-     */
-    operator system::wallet::electrum::seed() const;
+    operator const type&() const;
 
-    /**
-     * Overload stream in. Throws if input is invalid.
-     * @param[in]   input     The input stream to read the value from.
-     * @param[out]  argument  The object to receive the read value.
-     * @return                The input stream reference.
-     */
-    friend std::istream& operator>>(std::istream& input,
-        electrum& argument);
-
-    /**
-     * Overload stream out.
-     * @param[in]   output    The output stream to write the value to.
-     * @param[out]  argument  The object from which to obtain the value.
-     * @return                The output stream reference.
-     */
+    friend std::istream& operator>>(std::istream& input, electrum& argument);
     friend std::ostream& operator<<(std::ostream& output,
         const electrum& argument);
 
 private:
-
-    /**
-     * The state of this object.
-     */
-    system::wallet::electrum::seed value_;
+    type value_;
 };
 
 } // namespace config
