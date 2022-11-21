@@ -17,12 +17,9 @@
 #                            accesses this feature, so if you do not intend to
 #                            use passphrase normalization this dependency can
 #                            be avoided.
-# --with-mbedtls          Compile with MbedTLS Support
-#                            Provides a websockets implementation for query.
 # --build-icu              Builds ICU libraries.
 # --build-boost            Builds Boost libraries.
 # --build-zmq              Builds ZeroMQ libraries.
-# --build-mbedtls          Builds MbedTLS libraries.
 # --build-dir=<path>       Location of downloaded and intermediate files.
 # --prefix=<absolute-path> Library install location (defaults to /usr/local).
 # --disable-shared         Disables shared library builds.
@@ -51,16 +48,12 @@ SEQUENTIAL=1
 if [[ $GIT_CLONE_PARAMS ]]; then
     display_message "Using shell-defined GIT_CLONE_PARAMS value."
 else
-    GIT_CLONE_PARAMS=""
+    GIT_CLONE_PARAMS="--depth 1 --single-branch"
 fi
 
 # The default build directory.
 #------------------------------------------------------------------------------
 BUILD_DIR="build-libbitcoin-explorer"
-
-# Git clone parameters.
-#------------------------------------------------------------------------------
-GIT_CLONE_PARAMS="--depth 1 --single-branch"
 
 PRESUMED_CI_PROJECT_PATH=$(pwd)
 
@@ -73,11 +66,6 @@ ICU_ARCHIVE="icu4c-68_2-src.tgz"
 #------------------------------------------------------------------------------
 ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.3.4/zeromq-4.3.4.tar.gz"
 ZMQ_ARCHIVE="zeromq-4.3.4.tar.gz"
-
-# MBEDTLS archive.
-#------------------------------------------------------------------------------
-MBEDTLS_URL="https://tls.mbed.org/download/mbedtls-2.12.0-apache.tgz"
-MBEDTLS_ARCHIVE="mbedtls-2.12.0-apache.tgz"
 
 # Boost archive.
 #------------------------------------------------------------------------------
@@ -245,12 +233,9 @@ display_help()
     display_message "                             accesses this feature, so if you do not intend to "
     display_message "                             use passphrase normalization this dependency can "
     display_message "                             be avoided."
-    display_message "  --with-mbedtls          Compile with MbedTLS Support"
-    display_message "                             Provides a websockets implementation for query."
     display_message "  --build-icu              Builds ICU libraries."
     display_message "  --build-boost            Builds Boost libraries."
     display_message "  --build-zmq              Build ZeroMQ libraries."
-    display_message "  --build-mbedtls          Builds MbedTLS libraries."
     display_message "  --build-dir=<path>       Location of downloaded and intermediate files."
     display_message "  --prefix=<absolute-path> Library install location (defaults to /usr/local)."
     display_message "  --disable-shared         Disables shared library builds."
@@ -282,7 +267,6 @@ parse_command_line_options()
             # Custom build options (in the form of --build-<option>).
             (--build-icu)           BUILD_ICU="yes";;
             (--build-zmq)           BUILD_ZMQ="yes";;
-            (--build-mbedtls)       BUILD_MBEDTLS="yes";;
             (--build-boost)         BUILD_BOOST="yes";;
 
             # Unique script options.
@@ -339,7 +323,7 @@ set_os_specific_compiler_settings()
 
 link_to_standard_library()
 {
-    if [[ ($OS == Linux && $CC == "clang") || ($OS == OpenBSD) ]]; then
+    if [[ ($OS == Linux && $CC == clang*) || ($OS == OpenBSD) ]]; then
         export LDLIBS="-l$STDLIB $LDLIBS"
         export CXXFLAGS="-stdlib=lib$STDLIB $CXXFLAGS"
     fi
@@ -432,7 +416,6 @@ display_configuration()
     display_message "WITH_ICU              : $WITH_ICU"
     display_message "BUILD_ICU             : $BUILD_ICU"
     display_message "BUILD_ZMQ             : $BUILD_ZMQ"
-    display_message "BUILD_MBEDTLS         : $BUILD_MBEDTLS"
     display_message "BUILD_BOOST           : $BUILD_BOOST"
     display_message "BUILD_DIR             : $BUILD_DIR"
     display_message "PREFIX                : $PREFIX"
@@ -663,7 +646,7 @@ initialize_boost_configuration()
         BOOST_TOOLSET="toolset=$CC"
     fi
 
-    if [[ ($OS == Linux && $CC == "clang") || ($OS == OpenBSD) ]]; then
+    if [[ ($OS == Linux && $CC == clang*) || ($OS == OpenBSD) ]]; then
         STDLIB_FLAG="-stdlib=lib$STDLIB"
         BOOST_CXXFLAGS="cxxflags=$STDLIB_FLAG"
         BOOST_LINKFLAGS="linkflags=$STDLIB_FLAG"
@@ -786,8 +769,6 @@ build_all()
     build_from_tarball "$ICU_ARCHIVE" source "$PARALLEL" "$BUILD_ICU" "${ICU_OPTIONS[@]}" "$@"
     unpack_from_tarball "$ZMQ_ARCHIVE" "$ZMQ_URL" gzip "$BUILD_ZMQ"
     build_from_tarball "$ZMQ_ARCHIVE" . "$PARALLEL" "$BUILD_ZMQ" "${ZMQ_OPTIONS[@]}" "$@"
-    unpack_from_tarball "$MBEDTLS_ARCHIVE" "$MBEDTLS_URL" gzip "$BUILD_MBEDTLS"
-    build_from_tarball "$MBEDTLS_ARCHIVE" . "$PARALLEL" "$BUILD_MBEDTLS" "${MBEDTLS_OPTIONS[@]}" "$@"
     unpack_from_tarball "$BOOST_ARCHIVE" "$BOOST_URL" bzip2 "$BUILD_BOOST"
     build_from_tarball_boost "$BOOST_ARCHIVE" "$PARALLEL" "$BUILD_BOOST" "${BOOST_OPTIONS[@]}"
     create_from_github libbitcoin secp256k1 version8
@@ -848,13 +829,10 @@ ICU_OPTIONS=(
 #------------------------------------------------------------------------------
 BOOST_OPTIONS=(
 "--with-chrono" \
-"--with-date_time" \
-"--with-filesystem" \
 "--with-iostreams" \
 "--with-json" \
 "--with-locale" \
 "--with-program_options" \
-"--with-regex" \
 "--with-system" \
 "--with-thread" \
 "--with-test")
