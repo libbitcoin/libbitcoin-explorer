@@ -1,10 +1,8 @@
-[![Build Status](https://travis-ci.org/libbitcoin/libbitcoin-explorer.svg?branch=master)](https://travis-ci.org/libbitcoin/libbitcoin-explorer)
+[![Build Status](https://github.com/libbitcoin/libbitcoin-explorer/actions/workflows/ci.yml/badge.svg?branch=version3)](https://github.com/libbitcoin/libbitcoin-explorer/actions/workflows/ci.yml)
 
-[![Coverage Status](https://coveralls.io/repos/libbitcoin/libbitcoin-explorer/badge.svg)](https://coveralls.io/r/libbitcoin/libbitcoin-explorer)
+[![Coverage Status](https://coveralls.io/repos/libbitcoin/libbitcoin-explorer/badge.svg?branch=version3)](https://coveralls.io/r/libbitcoin/libbitcoin-explorer?branch=version3)
 
-*The automated build often fails on generating test metrics due to performance limits on Travis.*
-
-# Bitcoin Explorer
+# Libbitcoin Explorer
 
 *The Bitcoin Command Line Tool*
 
@@ -14,135 +12,116 @@
 
 **License Overview**
 
-All files in this repository fall under the license specified in [COPYING](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/COPYING). The project is licensed as [AGPL with a lesser clause](https://wiki.unsystem.net/en/index.php/Libbitcoin/License). It may be used within a proprietary project, but the core library and any changes to it must be published on-line. Source code for this library must always remain free for everybody to access.
+All files in this repository fall under the license specified in [COPYING](COPYING). The project is licensed as [AGPL with a lesser clause](https://wiki.unsystem.net/en/index.php/Libbitcoin/License). It may be used within a proprietary project, but the core library and any changes to it must be published online. Source code for this library must always remain free for everybody to access.
 
 **About Libbitcoin**
 
-The libbitcoin toolkit is a set of cross platform C++ libraries for building bitcoin applications. The toolkit consists of several libraries, most of which depend on the foundational [libbitcoin](https://github.com/libbitcoin/libbitcoin) library. Each library's repository can be cloned and built using common [Automake](http://www.gnu.org/software/automake) instructions.
+The libbitcoin toolkit is a set of cross platform C++ libraries for building bitcoin applications. The toolkit consists of several libraries, most of which depend on the foundational [libbitcoin-system](https://github.com/libbitcoin/libbitcoin-system) library. Each library's repository can be cloned and built using common [automake](http://www.gnu.org/software/automake) 1.14+ instructions or [cmake](https://cmake.org) 3.5+ instructions. There are no packages yet in distribution however each library includes an installation script (described below) which is regularly verified via [github actions](https://github.com/features/actions).
 
 **About Libbitcoin Explorer**
 
-BX is a command line tool for working with Bitcoin. It can be built as a single portable executable for Linux, macOS or Windows and is available for download as a signed single executable for each. BX exposes over 80 commands and supports network communication with [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server) or its predecessor [Obelisk](https://github.com/spesmilo/obelisk), and the P2P Bitcoin network. BX is well documented and supports simple and advanced scenarios, including stealth and multisig.
+Libbitcoin Explorer (BX) is a command line tool for working with Bitcoin. It can be built as a single portable executable for Linux, macOS or Windows and is available for download as a signed single executable for each. BX exposes over 80 commands and supports network communication with [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server) or its predecessor [Obelisk](https://github.com/spesmilo/obelisk), and the P2P Bitcoin network. BX is well documented and supports simple and advanced scenarios, including stealth and multisig.
 
 ## Installation
 
-BX can be built from sources or downloaded as a signed portable [single file executable](https://github.com/libbitcoin/libbitcoin-explorer/wiki/Download-BX).
+Libbitcoin Explorer (BX) can be built from sources or downloaded as a signed portable [single file executable](https://github.com/libbitcoin/libbitcoin-explorer/wiki/Download-BX).
 
-On Linux and Macintosh BX is built using Autotools as follows and depends on [libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client).
+On Linux and macOS libbitcoin-explorer can be build using Autotools and cmake. This process is accomplished via the provided installation scripts `install.sh` or `install-cmake.sh`. These scripts provide a basis for installation of the dependencies of the project. Both support the use of the argument `--help` for further parameterization.
 
-```sh
-$ ./autogen.sh
-$ ./configure
-$ make
-$ sudo make install # optional
-$ sudo ldconfig     # optional
-```
+Installation of libbitcoin-explorer comes with requirements listed below.
+
+ * C++11 compiler, currently minimum [GCC 4.8.0](https://gcc.gnu.org/projects/cxx0x.html) or Clang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html)
+ * [Autoconf](https://www.gnu.org/software/autoconf/)
+ * [Automake](https://www.gnu.org/software/automake/) 1.14+
+ * [libtool](https://www.gnu.org/software/libtool/)
+ * [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/)
+ * [git](https://git-scm.com/)
+ * [wget](https://www.gnu.org/software/wget/)
+
+Use of `install-cmake.sh` additionally requires [cmake](https://cmake.org) 3.5+.
+
+A minimal libbitcoin-explorer build requires boost 1.72.0 to 1.76.0i, libsecp256k1, and [zmq](http://www.zeromq.org) 4.3.4. The [libbitcoin/secp256k1](https://github.com/libbitcoin/secp256k1/tree/version7) repository is forked from [bitcoin-core/secp256k1](https://github.com/bitcoin-core/secp256k1) in order to control for changes and to incorporate the necessary Visual Studio build. The original repository can be used directly but recent changes to the public interface may cause build breaks. The `--enable-module-recovery` switch is required. Both of these are able to be provided via the installation script(s).
 
 Detailed instructions are provided below.
-* [Debian/Ubuntu](#debianubuntu)
-* [CentOS7](#centos-7)
-* [Macintosh](#macintosh)
-* [Windows](#windows)
+
+  * [Debian/Ubuntu](#debianubuntu)
+  * [Macintosh](#macintosh)
+  * [Install Script Execution](#install-script-execution)
+  * [Windows](#windows)
 
 ### Debian/Ubuntu
 
-Libbitcoin requires a C++11 compiler, currently minimum [GCC 4.8.0](https://gcc.gnu.org/projects/cxx0x.html) or Clang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html).
+Below is a breakdown of preparation required to install libbitcoin-explorer. Once an appropriate [compiler](http://en.wikipedia.org/wiki/Compiler) and [build system](http://wikipedia.org/wiki/GNU_build_system) are in place, proceed to [Install Script Execution](#installscript) below to perform installation.
+
+#### Compiler
+
+The current minimum verified compilers for this project are [gcc](https://en.wikipedia.org/wiki/GNU_Compiler_Collection) 9.4.0 and [clang](https://en.wikipedia.org/wiki/Clang) 11.0.0.
 
 To see your GCC version:
 ```sh
 $ g++ --version
 ```
 ```
-g++ (Ubuntu 4.8.2-19ubuntu1) 4.8.2
-Copyright (C) 2013 Free Software Foundation, Inc.
+g++ (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0
+Copyright (C) 2019 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
-If necessary, upgrade your compiler as follows:
+If necessary, upgrade your GCC compiler as follows:
 ```sh
-$ sudo apt-get install g++-4.8
-$ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
-$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50
-$ sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.8 50
+$ sudo apt install g++-9
+$ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9.4 50
+$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9.4 50
+$ sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-9.4 50
 ```
-Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and git:
-```sh
-$ sudo apt-get install build-essential autoconf automake libtool pkg-config git
-```
-Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development package:
-```sh
-$ sudo apt-get install libboost-all-dev
-```
-Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package.
-```sh
-$ sudo apt-get install libzmq3-dev
-```
-If no satisfying libzmq3-dev package exists in your chosen environment, the compilation can be performed with the following instructions:
-```sh
-$ mkdir build-zeromq-4.2.0
-$ pushd build-zeromq-4.2.0
-$ wget https://github.com/zeromq/libzmq/releases/download/v4.2.0/zeromq-4.2.0.tar.gz
-$ tar --extract --file zeromq-4.2.0.tar.gz --gz --strip-components=1
-$ ./autogen.sh
-$ ./configure
-$ make
-$ sudo make install
-$ sudo ldconfig
-$ popd
-```
-Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
-```sh
-$ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
-$ chmod +x install.sh
-```
-Finally install BX with default [build options](#build-notes-for-linux--macos):
-```sh
-$ sudo ./install.sh
-```
-Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
 
-### CentOS 7
+To see your clang version:
+```sh
+$ clang++ --version
+```
+```
+Ubuntu clang version 11.0.0-2~ubuntu20.04.1
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/bin
+```
+If necessary, upgrade your clang compiler as follows:
+```sh
+$ sudo apt install clang-11
+$ sudo update-alternatives --install /usr/bin/clang++ /usr/bin/clang++-11 50
+$ sudo update-alternatives --install /usr/bin/clang /usr/bin/clang-11 50
+```
 
-Libbitcoin requires a C++11 compiler, currently minimum [GCC 4.8.0](https://gcc.gnu.org/projects/cxx0x.html) or Clang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html).
+#### Build System
 
-Note that CentOS 7 provides an option to install Boost 1.53.0, which is older than the required version.  For this configuration, boost will be compiled by the installer.
+Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) (Automake minimum 1.14) and git:
+```sh
+$ sudo apt install build-essential autoconf automake libtool pkg-config git
+```
 
-Similarly, the default installation of CentOS 7 does not provide an option to install zeromq, so it will also be compiled by the installer.
+#### Boost (Not Recommended)
 
-To see your GCC version:
+Next install the [Boost](http://www.boost.org) (1.72.0 - 1.76.0) development package. This can be accomplished via parameterization of the installation script during libbitcoin-explorer installation and it is recommended to the reader that this approach be used.
+
+Due to the current state of packaging, boost is not provided by the standard packaging system at the required minimum version. This requires either manual source compilation (as is controlled within the installation scripts) or trusting a 3rd party [Personal Package Archive](https://launchpad.net/ubuntu/+ppas). Verification of the build is done against the sources (required for proper use of ICU).
+
+A user may find [Martin Hierholzer's PPA](https://launchpad.net/~mhier/+archive/ubuntu/libboost-latest) useful. This is left for the adventurous reader.
+
+#### ZMQ
+
+Next install the [ZMQ](http://www.zeromq.org) (4.3.4) development package. This can be accomplished via parameterization of the installation script during libbitcoin-protocol installation or via the `libzmq3-dev` package as follows:
+
 ```sh
-$ g++ --version
+$ sudo apt install libzmq3-dev
 ```
-```
-g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-28)
-Copyright (C) 2015 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-```
-If necessary, upgrade your compiler as follows:
-```sh
-$ sudo yum install gcc-c++
-```
-Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and wget, bzip2 and git:
-```sh
-$ sudo yum install autoconf automake libtool pkgconfig wget bzip2 git
-```
-Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
-```sh
-$ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
-$ chmod +x install.sh
-```
-Finally install BX with the following [build options](#build-notes-for-linux--macos):
-```sh
-$ sudo ./install.sh --build-zmq --build-boost
-```
-Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
 
 ### Macintosh
 
-The macOS installation differs from Linux in the installation of the compiler and packaged dependencies. BX supports both [Homebrew](http://brew.sh) and [MacPorts](https://www.macports.org) package managers. Both require Apple's [Xcode](https://developer.apple.com/xcode) command line tools. Neither requires Xcode as the tools may be installed independently.
+The macOS preparation differs from Linux the supported compiler and manner of dependency installation.
 
-BX compiles with Clang on macOS and requires C++11 support. Installation has been verified using Clang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html). This version or newer should be installed as part of the Xcode command line tools.
+#### Compiler
+
+Libbitcoin compiles with [clang](https://clang.llvm.org) on macOS and requires C++11 support. Installation has been verified using Clang based on [LLVM 14](http://llvm.org/t/llvm-14-0-6-release). This version or newer should be installed as part of the Xcode command line tools.
 
 To see your Clang/LLVM  version:
 ```sh
@@ -159,131 +138,64 @@ If required update your version of the command line tools as follows:
 $ xcode-select --install
 ```
 
-#### Using Homebrew
+#### Build System
 
-First install [Homebrew](https://brew.sh).
-```sh
-$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
-Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and [wget](http://www.gnu.org/software/wget):
+Libbitcoin supports both [Homebrew](http://brew.sh) and [MacPorts](https://www.macports.org) package managers. Both require Apple's [Xcode](https://developer.apple.com/xcode) command line tools. Neither requires Xcode as the tools may be installed independently.
+
+##### Using Homebrew
+
+First install [Homebrew](https://brew.sh). 
+
+Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) (Automake minimum 1.14) and [wget](http://www.gnu.org/software/wget):
 ```sh
 $ brew install autoconf automake libtool pkgconfig wget
 ```
-Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development package:
-```sh
-$ brew install boost
-```
-Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package:
-```sh
-$ brew install zeromq
-```
-Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
-```sh
-$ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
-$ chmod +x install.sh
-```
-Finally install BX with default [build options](#build-notes-for-linux--macos):
-```sh
-$ ./install.sh
-```
-Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
 
-##### Installing from Formula
-
-Instead of building, Bitcoin Explorer can be installed from a formula:
-```sh
-$ brew install libbitcoin-explorer
-```
-or
-```sh
-$ brew install bx
-```
-
-#### Using MacPorts
+##### Using MacPorts
 
 First install [MacPorts](https://www.macports.org/install.php).
 
-Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and [wget](http://www.gnu.org/software/wget):
+Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) (Automake minimum 1.14) and [wget](http://www.gnu.org/software/wget):
 ```sh
 $ sudo port install autoconf automake libtool pkgconfig wget
 ```
-Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development package. The `-` options remove MacPort defaults that are not Boost defaults:
-```sh
-$ sudo port install boost -no_single -no_static -python27
-```
-Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package. This package does not appear to be available via MacPorts, and so follows compilation instructions:
-```sh
-$ mkdir build-zeromq-4.2.0
-$ pushd build-zeromq-4.2.0
-$ wget https://github.com/zeromq/libzmq/releases/download/v4.2.0/zeromq-4.2.0.tar.gz
-$ tar --extract --file zeromq-4.2.0.tar.gz --gz --strip-components=1
-$ ./autogen.sh
-$ ./configure
-$ make
-$ sudo make install
-$ popd
-```
-Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
-```sh
-$ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
-$ chmod +x install.sh
-```
-Finally install BX with default [build options](#build-notes-for-linux--macos):
-```sh
-$ ./install.sh
-```
-Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
 
-### Build Notes for Linux / macOS
+#### Boost (Not Recommended)
 
-Any set of `./configure` options can be passed via the build script, several examples follow.
+As above, it has been noted that the installation scripts can control the installation of boost from sources. This is desirable due to package system support changes. Installation from Homebrew or MacPorts may be accomplished, however significant parameterization may be required due to version requirements. This is left to the adventerous reader.
 
-Building for minimum size and with debug symbols stripped:
-```sh
-$ sudo ./install.sh CXXFLAGS="-Os -s"
-```
+#### ZMQ
 
-> The `-s` option is not supported by the Clang compiler. Instead use the command `$ strip bs` after the build.
-
-Building without NDEBUG (i.e. with debug assertions) defined:
-```sh
-$ sudo ./install.sh --disable-ndebug
-```
-Building without building tests:
-```sh
-$ sudo ./install.sh --without-tests
-```
-Building from a specified directory, such as `/home/me/mybuild`:
-```sh
-$ sudo ./install.sh --build-dir=/home/me/mybuild
-```
-Building into a directory other than `/usr/local`, such as `/home/me/myprefix`:
-```sh
-$ ./install.sh --prefix=/home/me/myprefix
-```
-Building and linking with a private copy of the Boost dependency:
-```sh
-$ ./install.sh --build-boost --prefix=/home/me/myprefix
-```
-Building and linking with a private copy of the ZeroMQ dependency:
-```sh
-$ ./install.sh --build-zmq --prefix=/home/me/myprefix
-```
-
-Building a statically-linked executable:
-```sh
-$ ./install.sh --disable-shared --build-boost --build-zmq --prefix=/home/me/myprefix
-```
-Building a small statically-linked executable most quickly:
-```sh
-$ ./install.sh CXXFLAGS="-Os -s" --without-tests --disable-shared --build-boost --build-zmq --prefix=/home/me/myprefix
-```
-Building with bash-completion support:
-
-> If your target system does not have it pre-installed you must first install the [bash-completion](http://bash-completion.alioth.debian.org) package. Packages are available for common package managers, including apt-get, homebrew and macports.
+Next install the [ZMQ](http://www.zeromq.org) (4.3.4) development package. This can be accomplished via parameterization of the installation script during libbitcoin-protocol installation or via [Homebrew](https://formulae.brew.sh) as follows:
 
 ```sh
-$ sudo ./install.sh --with-bash-completion-dir
+$ brew install zeromq
+```
+
+### Install Script Execution
+
+The [autotools install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and [cmake install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install-cmake.sh) are written so that the manual build steps for each dependency can be inferred by a developer.
+
+You can run either install script from any directory on your system. By default this will build libbitcoin-explorer in a subdirectory named `build-libbitcoin-explorer` and install it to `/usr/local/`. The install script requires `sudo` only if you do not have access to the installation location, which you can change using the `--prefix` option on the installer command line.
+
+The build script clones, builds and installs six unpackaged repositories, namely:
+
+- [libbitcoin/secp256k1](https://github.com/libbitcoin/secp256k1)
+- [libbitcoin/libbitcoin-system](https://github.com/libbitcoin/libbitcoin-system)
+- [libbitcoin/libbitcoin-protocol](https://github.com/libbitcoin/libbitcoin-protocol)
+- [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
+- [libbitcoin/libbitcoin-network](https://github.com/libbitcoin/libbitcoin-network)
+- [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
+
+The script builds from the head of their `version7` and `version3` branches respectively. The `master` branch is a staging area for changes. The version branches are considered release quality.
+
+The below provides examples for install script execution. The use of `./install.sh` may be substituted with `./install-cmake.sh` in order to use cmake tools to build the libbitcoin repositories. It should be noted that autotools is still required for [libbitcoin/secp256k1](https://github.com/libbitcoin/secp256k1) and most other install script managed dependencies.
+
+#### Build Options
+
+Any set of `./configure` options can be passed via the build script, for example:
+```sh
+$ CFLAGS="-Og -g" ./install.sh --prefix=/home/me/myprefix
 ```
 
 #### Compiling with ICU (International Components for Unicode)
@@ -293,34 +205,73 @@ Since the addition of [BIP-39](https://github.com/bitcoin/bips/blob/master/bip-0
 $ ./install.sh --with-icu
 ```
 
-#### Compiling with QR Code Support
-
-Since the addition of [qrcode](https://github.com/evoskuil/libbitcoin/blob/master/src/wallet/qrcode.cpp) support, libbitcoin conditionally incorporates `qrencode`. This requires compiling with the `--with-qrencode` option.
-```sh
-$ ./install.sh --with-qrencode
-```
-
-Since the addition of [png](https://github.com/evoskuil/libbitcoin/blob/master/src/utility/png.cpp) support, libbitcoin conditionally incorporates `libpng` (which in turn requires `zlib`). This requires compiling with the `--with-png` option.
-```sh
-$ ./install.sh --with-png
-```
-
-> There is a bug in the PNG library when using space optimization levels such as `CXXFLAGS=-Os` which will show up in a test run failure.
-
-#### Building ICU, ZLib, PNG, QREncode ZeroMQ and/or Boost
+#### Building ICU, Boost and/or ZMQ
 
 The installer can download and install any or all of these dependencies. ICU is a large package that is not typically preinstalled at a sufficient level. Using these builds ensures compiler and configuration compatibility across all of the build components. It is recommended to use a prefix directory when building these components.
 ```sh
-$ ./install.sh --with-icu --with-png --with-qrencode --build-icu --build-zlib --build-png --build-qrencode --build-boost --build-zmq --prefix=/home/me/myprefix
+$ ./install.sh --with-icu --build-icu --build-boost --build-zmq --prefix=/home/me/myprefix
 ```
 
 ### Windows
 
-Visual Studio solutions are maintained for all libbitcoin libraries and dependencies. See the [libbitcoin](https://github.com/libbitcoin/libbitcoin/blob/master/README.md#windows) repository general information about building the Visual Studio solutions. To build Libbitcoin Explorer you must also download and build its **libbitcoin dependencies**, as these are not yet packaged.
+Visual Studio solutions are maintained for all libbitcoin libraries. NuGet packages exist for dependencies. ICU is integrated into Windows and therefore not required as an additional dependency when using ICU features.
 
-Build these solutions in order:
+> The libbitcoin execution environment supports `Windows XP Service Pack 2` and newer.
 
-1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
+#### Supported Compilers
+
+Libbitcoin requires a C++11 compiler, which means Visual Studio 2013 (with a pre-release compiler update) or later. Download and install one of the following free tools as necessary:
+
+* [Visual Studio 2022 Community](https://www.visualstudio.com/downloads)
+
+#### NuGet Repository
+
+Dependencies apart from the libbitcoin libraries are available as [NuGet packages](https://www.nuget.org):
+
+* Packages maintained by [sergey.shandar](http://www.nuget.org/profiles/sergey.shandar)
+ * [boost](http://www.nuget.org/packages/boost)
+ * [boost\_chrono-vc141](http://www.nuget.org/packages/boost_chrono-vc141)
+ * [boost\_date\_time-vc141](http://www.nuget.org/packages/boost_date_time-vc141)
+ * [boost\_filesystem-vc141](http://www.nuget.org/packages/boost_filesystem-vc141)
+ * [boost\_iostreams-vc141](http://www.nuget.org/packages/boost_iostreams-vc141)
+ * [boost\_locale-vc141](http://www.nuget.org/packages/boost_locale-vc141)
+ * [boost\_log_setup-vc141](http://www.nuget.org/packages/boost_log_setup-vc141)
+ * [boost\_log-vc141](http://www.nuget.org/packages/boost_log-vc141)
+ * [boost\_program\_options-vc141](http://www.nuget.org/packages/boost_program_options-vc141)
+ * [boost\_regex-vc141](http://www.nuget.org/packages/boost_regex-vc141)
+ * [boost\_system-vc141](http://www.nuget.org/packages/boost_system-vc141)
+ * [boost\_thread-vc141](http://www.nuget.org/packages/boost_thread-vc141)
+ * [boost\_unit\_test\_framework-vc141](http://www.nuget.org/packages/boost_unit_test_framework-vc141)
+* Packages maintained by [evoskuil](http://www.nuget.org/profiles/evoskuil)
+ * [secp256k1\_vc141](http://www.nuget.org/packages/secp256k1_vc141)
+ * [libzmq\_vc141](http://www.nuget.org/packages/libzmq_vc141)
+
+The packages can be viewed using the [NuGet package manager](http://docs.nuget.org/docs/start-here/managing-nuget-packages-using-the-dialog) from the libbitcoin solution. The package manager will prompt for download of any missing packages.
+
+The libbitcoin solution files are configured with references to these packages. The location of the NuGet repository is controlled by the [nuget.config](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/builds/msvc/nuget.config) file `repositoryPath` setting **and** the `NuGetPackageRoot` element of **each** [\[project\].props](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/builds/msvc/vs2022/libbitcoin-explorer/libbitcoin-explorer.props) file.
+
+#### Build Libbitcoin Projects
+
+Visual Studio solutions are maintained for all libbitcoin libraries.
+
+After cloning the the repository the libbitcoin build can be performed from within Visual Studio or using the `build_all.bat` script provided in the `builds\msvc\build\` subdirectory. The script automatically downloads all required NuGet packages.
+
+> Tip: The `build_all.bat` script builds *all* valid configurations for *all* compilers. The build time can be significantly reduced by disabling all but the desired configuration in `build_base.bat` and `build_all.bat`.
+
+The libbitcoin dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currently disabled in the build scripts but you will encounter numerous errors if you build then manually.
+
+Note that all dependencies must be fulfilled. This can be accomplished by building libbitcoin repository projects in the following order:
+
+1. [libbitcoin/libbitcoin-system](https://github.com/libbitcoin/libbitcoin-system)
 2. [libbitcoin/libbitcoin-protocol](https://github.com/libbitcoin/libbitcoin-protocol)
 3. [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
-4. [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
+4. [libbitcoin/libbitcoin-network](https://github.com/libbitcoin/libbitcoin-network)
+5. [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
+
+#### Optional: Building secp256k1
+
+The secp256k1 package above is maintained using the same [Visual Studio template](https://github.com/evoskuil/visual-studio-template) as all libbitcoin libraries. If so desired it can be built locally, in the same manner as libbitcoin.
+
+* [libbitcoin/secp256k1/version7](https://github.com/libbitcoin/secp256k1/tree/version7/builds/msvc)
+
+This change is properly accomplished by disabling the "NuGet Dependencies" in the Visual Studio properties user interface and then importing `secp256k1.import.props`, which references `secp256k1.import.xml`.
