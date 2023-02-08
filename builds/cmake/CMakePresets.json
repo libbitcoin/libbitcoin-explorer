@@ -1,0 +1,202 @@
+{
+    "version": 5,
+    "configurePresets": [
+        {
+            "name": "nix-base",
+            "description": "Factored base settings for non-windows *nix based platforms.",
+            "hidden": true,
+            "installDir": "${sourceParentDir}/../../prefix/${presetName}",
+            "binaryDir": "${sourceParentDir}/../obj/${presetName}",
+            "condition": {
+                "type": "inList",
+                "string": "${hostSystemName}",
+                "list": [
+                  "Darwin",
+                  "Linux"
+                ]
+            },
+            "cacheVariables": {
+                "CMAKE_PREFIX_PATH": {
+                  "type": "PATH",
+                  "value": "${sourceParentDir}/../../prefix/${presetName}"
+                },
+                "CMAKE_LIBRARY_PATH": {
+                  "type": "PATH",
+                  "value": "${sourceParentDir}/../../prefix/${presetName}/lib:$env{CMAKE_LIBRARY_PATH}"
+                }
+            }
+        },
+        {
+            "name": "gnu-debug",
+            "description": "Factored debug settings.",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_FLAGS": "$env{CMAKE_C_FLAGS} -Og -g --coverage",
+                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} -Og -g --coverage",
+                "enable-ndebug": {
+                  "type": "BOOL",
+                  "value": "OFF"
+                }
+            }
+        },
+        {
+            "name": "gnu-release",
+            "description": "Factored release settings.",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_FLAGS": "$env{CMAKE_C_FLAGS} -O3",
+                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} -O3",
+                "enable-ndebug": {
+                  "type": "BOOL",
+                  "value": "ON"
+                }
+            }
+        },
+        {
+            "name": "static",
+            "description": "Factored static linking settings.",
+            "hidden": true,
+            "cacheVariables": {
+                "BUILD_SHARED_LIBS": {
+                  "type": "BOOL",
+                  "value": "OFF"
+                }
+            }
+        },
+        {
+            "name": "shared",
+            "description": "Factored shared/dynamic linking settings.",
+            "hidden": true,
+            "cacheVariables": {
+                "BUILD_SHARED_LIBS": {
+                  "type": "BOOL",
+                  "value": "ON"
+                }
+            }
+        },
+        {
+            "name": "gnu-optimized-size",
+            "description": "Factored size optimization settings.",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_FLAGS": "$env{CMAKE_C_FLAGS} -Os -s",
+                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} -Os -s"
+            }
+        },
+        {
+            "name": "nix-gnu-debug-static",
+            "displayName": "*nix/GNU/Debug/Static",
+            "description": "Debug build with static linking.",
+            "hidden": false,
+            "inherits": [
+                "static",
+                "gnu-debug",
+                "nix-base"
+            ]
+        },
+        {
+            "name": "nix-gnu-debug-shared",
+            "displayName": "*nix/GNU/Debug/Shared",
+            "description": "Debug build with shared linking.",
+            "hidden": false,
+            "inherits": [
+                "shared",
+                "gnu-debug",
+                "nix-base"
+            ]
+        },
+        {
+            "name": "nix-gnu-release-static",
+            "displayName": "*nix/GNU/Release/Static",
+            "description": "Release build with static linking and standard optimizations.",
+            "hidden": false,
+            "inherits": [
+                "static",
+                "gnu-release",
+                "nix-base"
+            ]
+        },
+        {
+            "name": "nix-gnu-release-shared",
+            "displayName": "*nix/GNU/Release/Shared",
+            "description": "Release build with shared linking and standard optimizations.",
+            "hidden": false,
+            "inherits": [
+                "shared",
+                "gnu-release",
+                "nix-base"
+            ]
+        },
+        {
+            "name": "nix-gnu-release-static-size",
+            "displayName": "*nix/GNU/Release/Static/Size",
+            "description": "Release build with static linking and optimizations for size.",
+            "hidden": false,
+            "inherits": [
+                "gnu-optimized-size",
+                "static",
+                "gnu-release",
+                "nix-base"
+            ]
+        },
+        {
+            "name": "nix-gnu-release-shared-size",
+            "displayName": "*nix/GNU/Release/Shared/Size",
+            "description": "Release build with shared linking and optimizations for size.",
+            "hidden": false,
+            "inherits": [
+                "gnu-optimized-size",
+                "shared",
+                "gnu-release",
+                "nix-base"
+            ]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "nix-target-list",
+            "hidden": true,
+            "targets": [
+                "bitcoin-explorer",
+                "bx",
+                "libbitcoin-explorer-test"
+            ]
+        },
+        {
+            "name": "nix-gnu-debug-static",
+            "displayName": "*nix/GNU/Debug/Static",
+            "inherits": [ "nix-target-list" ],
+            "configurePreset": "nix-gnu-debug-static"
+        },
+        {
+            "name": "nix-gnu-debug-shared",
+            "displayName": "*nix/GNU/Debug/Shared",
+            "inherits": [ "nix-target-list" ],
+            "configurePreset": "nix-gnu-debug-shared"
+        },
+        {
+            "name": "nix-gnu-release-static",
+            "displayName": "*nix/GNU/Release/Static",
+            "inherits": [ "nix-target-list" ],
+            "configurePreset": "nix-gnu-release-static"
+        },
+        {
+            "name": "nix-gnu-release-shared",
+            "displayName": "*nix/GNU/Release/Shared",
+            "inherits": [ "nix-target-list" ],
+            "configurePreset": "nix-gnu-release-shared"
+        },
+        {
+            "name": "nix-gnu-release-static-size",
+            "displayName": "*nix/GNU/Release/Static/Size",
+            "inherits": [ "nix-target-list" ],
+            "configurePreset": "nix-gnu-release-static-size"
+        },
+        {
+            "name": "nix-gnu-release-shared-size",
+            "displayName": "*nix/GNU/Release/Shared/Size",
+            "inherits": [ "nix-target-list" ],
+            "configurePreset": "nix-gnu-release-shared-size"
+        }
+    ]
+}
