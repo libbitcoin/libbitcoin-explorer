@@ -165,7 +165,7 @@ jobs:
         if: ${{ matrix.coverage == 'cov' }}
         run: |
           lcov --directory . --capture --output-file coverage.info
-          lcov --remove coverage.info "/usr/*" "../prefix/*" "${{ github.workspace }}/examples/*" "${{ github.workspace }}/test/*" --output-file coverage.info
+          lcov --remove coverage.info "/usr/*" "${{ env.LIBBITCOIN_SRC_PATH }}/prefix/*" "${{ github.workspace }}/examples/*" "${{ github.workspace }}/test/*" --output-file coverage.info
           lcov --list coverage.info
 
       - name: Coveralls.io Upload
@@ -380,7 +380,7 @@ jobs:
         if: ${{ matrix.coverage == 'cov' }}
         run: |
           lcov --directory . --capture --output-file coverage.info
-          lcov --remove coverage.info "/usr/*" "../prefix/*" "${{ github.workspace }}/examples/*" "${{ github.workspace }}/test/*" --output-file coverage.info
+          lcov --remove coverage.info "/usr/*" "${{ env.LIBBITCOIN_SRC_PATH }}/prefix/*" "${{ github.workspace }}/examples/*" "${{ github.workspace }}/test/*" --output-file coverage.info
           lcov --list coverage.info
 
       - name: Coveralls.io Upload
@@ -567,7 +567,7 @@ jobs:
         if: ${{ matrix.coverage == 'cov' }}
         run: |
           lcov --directory . --capture --output-file coverage.info
-          lcov --remove coverage.info "/usr/*" "../prefix/*" "${{ github.workspace }}/examples/*" "${{ github.workspace }}/test/*" --output-file coverage.info
+          lcov --remove coverage.info "/usr/*" "${{ env.LIBBITCOIN_SRC_PATH }}/prefix/*" "${{ github.workspace }}/examples/*" "${{ github.workspace }}/test/*" --output-file coverage.info
           lcov --list coverage.info
 
       - name: Coveralls.io Upload
