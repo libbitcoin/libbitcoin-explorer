@@ -793,7 +793,7 @@ build_all()
     create_from_github libbitcoin libbitcoin-network version3 "yes"
     build_from_github libbitcoin-network "$PARALLEL" false "yes" "${BITCOIN_NETWORK_OPTIONS[@]}" "$@"
     if [[ ! ($CI == true) ]]; then
-        create_from_github libbitcoin libbitcoin-explorer version3
+        create_from_github libbitcoin libbitcoin-explorer version3 "yes"
         build_from_github libbitcoin-explorer "$PARALLEL" true "yes" "${BITCOIN_EXPLORER_OPTIONS[@]}" "$@"
     else
         push_directory "$PRESUMED_CI_PROJECT_PATH"
