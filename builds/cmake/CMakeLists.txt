@@ -16,6 +16,8 @@ enable_testing()
 list( APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/modules" )
 include(CheckIncludeFiles)
 include(CheckSymbolExists)
+include(CheckCXXCompilerFlag)
+include(CheckCXXSourceCompiles)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -40,32 +42,77 @@ set( CMAKE_CXX_STANDARD_REQUIRED ON )
 # Add compiler options
 #------------------------------------------------------------------------------
 # Warn on all stuff.
-add_compile_options( "-Wall" )
+check_cxx_compiler_flag( "-Wall" HAS_FLAG_WALL )
+if ( HAS_FLAG_WALL )
+    add_compile_options( "-Wall" )
+else()
+    message( FATAL_ERROR "Compiler does not support -Wall" )
+endif()
 
 # Warn on extra stuff.
-add_compile_options( "-Wextra" )
+check_cxx_compiler_flag( "-Wextra" HAS_FLAG_WEXTRA )
+if ( HAS_FLAG_WEXTRA )
+    add_compile_options( "-Wextra" )
+else()
+    message( FATAL_ERROR "Compiler does not support -Wextra" )
+endif()
 
 # Disallow warning on style order of declarations.
-add_compile_options( "-Wno-reorder" )
+check_cxx_compiler_flag( "-Wno-reorder" HAS_FLAG_WNO-REORDER )
+if ( HAS_FLAG_WNO-REORDER )
+    add_compile_options( "-Wno-reorder" )
+else()
+    message( FATAL_ERROR "Compiler does not support -Wno-reorder" )
+endif()
 
 # Suppress warning for incomplete field initialization.
-add_compile_options( "-Wno-missing-field-initializers" )
+check_cxx_compiler_flag( "-Wno-missing-field-initializers" HAS_FLAG_WNO-MISSING-FIELD-INITIALIZERS )
+if ( HAS_FLAG_WNO-MISSING-FIELD-INITIALIZERS )
+    add_compile_options( "-Wno-missing-field-initializers" )
+else()
+    message( FATAL_ERROR "Compiler does not support -Wno-missing-field-initializers" )
+endif()
 
 # Conform to style.
-add_compile_options( "-Wno-missing-braces" )
+check_cxx_compiler_flag( "-Wno-missing-braces" HAS_FLAG_WNO-MISSING-BRACES )
+if ( HAS_FLAG_WNO-MISSING-BRACES )
+    add_compile_options( "-Wno-missing-braces" )
+else()
+    message( FATAL_ERROR "Compiler does not support -Wno-missing-braces" )
+endif()
 
 # Ignore comments within comments or commenting of backslash extended lines.
-add_compile_options( "-Wno-comment" )
+check_cxx_compiler_flag( "-Wno-comment" HAS_FLAG_WNO-COMMENT )
+if ( HAS_FLAG_WNO-COMMENT )
+    add_compile_options( "-Wno-comment" )
+else()
+    message( FATAL_ERROR "Compiler does not support -Wno-comment" )
+endif()
 
 # Suppress warning for copy of implicitly generated copy constructor.
-add_compile_options( "-Wno-deprecated-copy" )
+check_cxx_compiler_flag( "-Wno-deprecated-copy" HAS_FLAG_WNO-DEPRECATED-COPY )
+if ( HAS_FLAG_WNO-DEPRECATED-COPY )
+    add_compile_options( "-Wno-deprecated-copy" )
+else()
+    message( FATAL_ERROR "Compiler does not support -Wno-deprecated-copy" )
+endif()
 
 # Clean up bx generated code.
-add_compile_options( "-Wno-unused-parameter" )
+check_cxx_compiler_flag( "-Wno-unused-parameter" HAS_FLAG_WNO-UNUSED-PARAMETER )
+if ( HAS_FLAG_WNO-UNUSED-PARAMETER )
+    add_compile_options( "-Wno-unused-parameter" )
+else()
+    message( FATAL_ERROR "Compiler does not support -Wno-unused-parameter" )
+endif()
 
 # Conflict in stdlib under clang.
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    add_compile_options( "-Wno-mismatched-tags" )
+    check_cxx_compiler_flag( "-Wno-mismatched-tags" HAS_FLAG_WNO-MISMATCHED-TAGS )
+    if ( HAS_FLAG_WNO-MISMATCHED-TAGS )
+        add_compile_options( "-Wno-mismatched-tags" )
+    else()
+        message( FATAL_ERROR "Compiler does not support -Wno-mismatched-tags" )
+    endif()
 endif()
 
 # Implement -Dbash-completiondir and output ${bash-completiondir} and declare bash-completiondir.
