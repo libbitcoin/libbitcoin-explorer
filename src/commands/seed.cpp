@@ -30,21 +30,8 @@ using namespace bc::config;
 
 console_result seed::invoke(std::ostream& output, std::ostream& error)
 {
-    const auto bit_length = get_bit_length_option();
-
-    // These are soft requirements for security and rationality.
-    // We use bit vs. byte length input as the more familiar convention.
-    if (bit_length < minimum_seed_size * byte_bits ||
-        bit_length % byte_bits != 0)
-    {
-        error << BX_SEED_BIT_LENGTH_UNSUPPORTED << std::endl;
-        return console_result::failure;
-    }
-
-    const auto seed = new_seed(bit_length);
-
-    output << base16(seed) << std::endl;
-    return console_result::okay;
+    error << BX_SEED_OBSOLETE << std::endl;
+    return console_result::failure;
 }
 
 } //namespace commands
