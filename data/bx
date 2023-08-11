@@ -69,7 +69,6 @@ _bx()
         script-decode
         script-encode
         script-to-address
-        seed
         send-tx
         send-tx-node
         send-tx-p2p
