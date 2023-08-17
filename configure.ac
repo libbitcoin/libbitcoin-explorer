@@ -13,7 +13,7 @@
 AC_PREREQ([2.65])
 
 # Process command-line arguments and perform initialization and verification.
-AC_INIT([libbitcoin-explorer], [3.7.0], [eric@voskuil.org])
+AC_INIT([libbitcoin-explorer], [3.8.0], [eric@voskuil.org])
 
 # Do compilation tests.
 AC_LANG(C++)
@@ -304,13 +304,13 @@ AS_CASE([${enable_isystem}],[yes],
 
 AC_MSG_NOTICE([bash_completion_BUILD_CPPFLAGS : ${bash_completion_BUILD_CPPFLAGS}])
 
-# Require bitcoin-client of at least version 3.7.0 and output ${bitcoin_client_CPPFLAGS/LIBS/PKG}.
+# Require bitcoin-client of at least version 3.8.0 and output ${bitcoin_client_CPPFLAGS/LIBS/PKG}.
 #------------------------------------------------------------------------------
-PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 3.7.0],
-    [bitcoin_client_INCLUDEDIR="`$PKG_CONFIG --variable=includedir "libbitcoin-client >= 3.7.0" 2>/dev/null`"
-     bitcoin_client_OTHER_CFLAGS="`$PKG_CONFIG --cflags-only-other "libbitcoin-client >= 3.7.0" 2>/dev/null`"],
-    [AC_MSG_ERROR([libbitcoin-client >= 3.7.0 is required but was not found.])])
-AC_SUBST([bitcoin_client_PKG], ['libbitcoin-client >= 3.7.0'])
+PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 3.8.0],
+    [bitcoin_client_INCLUDEDIR="`$PKG_CONFIG --variable=includedir "libbitcoin-client >= 3.8.0" 2>/dev/null`"
+     bitcoin_client_OTHER_CFLAGS="`$PKG_CONFIG --cflags-only-other "libbitcoin-client >= 3.8.0" 2>/dev/null`"],
+    [AC_MSG_ERROR([libbitcoin-client >= 3.8.0 is required but was not found.])])
+AC_SUBST([bitcoin_client_PKG], ['libbitcoin-client >= 3.8.0'])
 AC_SUBST([bitcoin_client_CPPFLAGS], [${bitcoin_client_CFLAGS}])
 AS_IF([test x${bitcoin_client_INCLUDEDIR} != "x"],
     [AC_SUBST([bitcoin_client_ISYS_CPPFLAGS], ["-isystem${bitcoin_client_INCLUDEDIR} ${bitcoin_client_OTHER_CFLAGS}"])],
@@ -327,13 +327,13 @@ AS_CASE([${enable_isystem}],[yes],
 
 AC_MSG_NOTICE([bitcoin_client_BUILD_CPPFLAGS : ${bitcoin_client_BUILD_CPPFLAGS}])
 
-# Require bitcoin-network of at least version 3.7.0 and output ${bitcoin_network_CPPFLAGS/LIBS/PKG}.
+# Require bitcoin-network of at least version 3.8.0 and output ${bitcoin_network_CPPFLAGS/LIBS/PKG}.
 #------------------------------------------------------------------------------
-PKG_CHECK_MODULES([bitcoin_network], [libbitcoin-network >= 3.7.0],
-    [bitcoin_network_INCLUDEDIR="`$PKG_CONFIG --variable=includedir "libbitcoin-network >= 3.7.0" 2>/dev/null`"
-     bitcoin_network_OTHER_CFLAGS="`$PKG_CONFIG --cflags-only-other "libbitcoin-network >= 3.7.0" 2>/dev/null`"],
-    [AC_MSG_ERROR([libbitcoin-network >= 3.7.0 is required but was not found.])])
-AC_SUBST([bitcoin_network_PKG], ['libbitcoin-network >= 3.7.0'])
+PKG_CHECK_MODULES([bitcoin_network], [libbitcoin-network >= 3.8.0],
+    [bitcoin_network_INCLUDEDIR="`$PKG_CONFIG --variable=includedir "libbitcoin-network >= 3.8.0" 2>/dev/null`"
+     bitcoin_network_OTHER_CFLAGS="`$PKG_CONFIG --cflags-only-other "libbitcoin-network >= 3.8.0" 2>/dev/null`"],
+    [AC_MSG_ERROR([libbitcoin-network >= 3.8.0 is required but was not found.])])
+AC_SUBST([bitcoin_network_PKG], ['libbitcoin-network >= 3.8.0'])
 AC_SUBST([bitcoin_network_CPPFLAGS], [${bitcoin_network_CFLAGS}])
 AS_IF([test x${bitcoin_network_INCLUDEDIR} != "x"],
     [AC_SUBST([bitcoin_network_ISYS_CPPFLAGS], ["-isystem${bitcoin_network_INCLUDEDIR} ${bitcoin_network_OTHER_CFLAGS}"])],
