@@ -21,6 +21,7 @@
 # --build-boost            Builds Boost libraries.
 # --build-zmq              Builds ZeroMQ libraries.
 # --build-dir=<path>       Location of downloaded and intermediate files.
+# --preset=<label>         CMakePreset label.
 # --prefix=<absolute-path> Library install location (defaults to /usr/local).
 # --disable-shared         Disables shared library builds.
 # --disable-static         Disables static library builds.
@@ -39,6 +40,11 @@
 
 # Define constants.
 #==============================================================================
+
+# Declare associative array for computed presets.
+#------------------------------------------------------------------------------
+declare -A REPO_PRESET
+
 # Sentinel for comparison of sequential build.
 #------------------------------------------------------------------------------
 SEQUENTIAL=1
@@ -237,6 +243,7 @@ display_help()
     display_message "  --build-boost            Builds Boost libraries."
     display_message "  --build-zmq              Build ZeroMQ libraries."
     display_message "  --build-dir=<path>       Location of downloaded and intermediate files."
+    display_message "  --preset=<label>         CMakePreset label."
     display_message "  --prefix=<absolute-path> Library install location (defaults to /usr/local)."
     display_message "  --disable-shared         Disables shared library builds."
     display_message "  --disable-static         Disables static library builds."
@@ -271,6 +278,7 @@ parse_command_line_options()
 
             # Unique script options.
             (--build-dir=*)         BUILD_DIR="${OPTION#*=}";;
+            (--preset=*)            PRESET_ID="${OPTION#*=}";;
 
             # Handle ndebug declarations due to disabled argument passthrough
             (--enable-ndebug)       ENABLE_NDEBUG="yes";;
@@ -348,6 +356,54 @@ normalize_static_and_shared_options()
 
 handle_custom_options()
 {
+    if [[
+        ($PRESET_ID != "nix-base") &&
+        ($PRESET_ID != "gnu-debug") &&
+        ($PRESET_ID != "gnu-release") &&
+        ($PRESET_ID != "static") &&
+        ($PRESET_ID != "shared") &&
+        ($PRESET_ID != "gnu-optimized-size") &&
+        ($PRESET_ID != "nix-gnu-debug-static") &&
+        ($PRESET_ID != "nix-gnu-debug-shared") &&
+        ($PRESET_ID != "nix-gnu-release-static") &&
+        ($PRESET_ID != "nix-gnu-release-shared") &&
+        ($PRESET_ID != "nix-gnu-release-static-size") &&
+        ($PRESET_ID != "nix-gnu-release-shared-size")]]; then
+        display_error "Unsupported preset: $PRESET_ID"
+        display_error "Supported values are:"
+        display_error "  nix-base"
+        display_error "  gnu-debug"
+        display_error "  gnu-release"
+        display_error "  static"
+        display_error "  shared"
+        display_error "  gnu-optimized-size"
+        display_error "  nix-gnu-debug-static"
+        display_error "  nix-gnu-debug-shared"
+        display_error "  nix-gnu-release-static"
+        display_error "  nix-gnu-release-shared"
+        display_error "  nix-gnu-release-static-size"
+        display_error "  nix-gnu-release-shared-size"
+        display_error ""
+        display_help
+        exit 1
+    fi
+
+    BASE_PRESET_ID="$PRESET_ID"
+    REPO_PRESET[libbitcoin-explorer]="$PRESET_ID"
+    display_message "REPO_PRESET[libbitcoin-explorer]=${REPO_PRESET[libbitcoin-explorer]}"
+    REPO_PRESET[libbitcoin-network]="$BASE_PRESET_ID"
+    display_message "REPO_PRESET[libbitcoin-network]=${REPO_PRESET[libbitcoin-network]}"
+    REPO_PRESET[libbitcoin-client]="$BASE_PRESET_ID"
+    display_message "REPO_PRESET[libbitcoin-client]=${REPO_PRESET[libbitcoin-client]}"
+    REPO_PRESET[libbitcoin-protocol]="$BASE_PRESET_ID"
+    display_message "REPO_PRESET[libbitcoin-protocol]=${REPO_PRESET[libbitcoin-protocol]}"
+    if [[ $WITH_ICU ]]; then
+        REPO_PRESET[libbitcoin-system]="$BASE_PRESET_ID-with_icu"
+    else
+        REPO_PRESET[libbitcoin-system]="$BASE_PRESET_ID-without_icu"
+    fi
+    display_message "REPO_PRESET[libbitcoin-system]=${REPO_PRESET[libbitcoin-system]}"
+
     CUMULATIVE_FILTERED_ARGS=""
     CUMULATIVE_FILTERED_ARGS_CMAKE=""
 
@@ -411,6 +467,7 @@ remove_install_options()
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/--enable-*/}")
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/--disable-*/}")
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/--prefix=*/}")
+    CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/--preset=*/}")
 }
 
 set_prefix()
@@ -480,6 +537,7 @@ display_configuration()
     display_message "BUILD_ZMQ             : $BUILD_ZMQ"
     display_message "BUILD_BOOST           : $BUILD_BOOST"
     display_message "BUILD_DIR                      : $BUILD_DIR"
+    display_message "PRESET_ID                      : $PRESET_ID"
     display_message "CUMULATIVE_FILTERED_ARGS       : $CUMULATIVE_FILTERED_ARGS"
     display_message "CUMULATIVE_FILTERED_ARGS_CMAKE : $CUMULATIVE_FILTERED_ARGS_CMAKE"
     display_message "PREFIX                : $PREFIX"
@@ -715,15 +773,21 @@ cmake_tests()
 cmake_project_directory()
 {
     local PROJ_NAME=$1
-    local JOBS=$2
-    local TEST=$3
-    shift 3
+    local PRESET=$2
+    local JOBS=$3
+    local TEST=$4
+    shift 4
 
     push_directory "$PROJ_NAME"
     local PROJ_CONFIG_DIR
     PROJ_CONFIG_DIR=$(pwd)
 
-    cmake $@ builds/cmake
+    push_directory "builds/cmake"
+    display_message "Preparing cmake --preset=$PRESET $@"
+    cmake --preset=$PRESET $@
+    popd
+
+    push_directory "obj/$PRESET"
     make_jobs "$JOBS"
 
     if [[ $TEST == true ]]; then
@@ -733,16 +797,18 @@ cmake_project_directory()
     make install
     configure_links
     pop_directory
+    pop_directory
 }
 
 build_from_github_cmake()
 {
     local REPO=$1
-    local JOBS=$2
-    local TEST=$3
-    local BUILD=$4
-    local OPTIONS=$5
-    shift 5
+    local PRESET=$2
+    local JOBS=$3
+    local TEST=$4
+    local BUILD=$5
+    local OPTIONS=$6
+    shift 6
 
     if [[ ! ($BUILD) || ($BUILD == "no") ]]; then
         return
@@ -754,7 +820,7 @@ build_from_github_cmake()
     display_heading_message "Prepairing to build $REPO"
 
     # Build the local repository clone.
-    cmake_project_directory "$REPO" "$JOBS" "$TEST" "${CONFIGURATION[@]}"
+    cmake_project_directory "$REPO" "$PRESET" "$JOBS" "$TEST" "${CONFIGURATION[@]}"
 }
 
 # Because boost ICU static lib detection assumes in incorrect ICU path.
@@ -917,20 +983,26 @@ build_all()
     create_from_github libbitcoin secp256k1 version8 "yes"
     build_from_github secp256k1 "$PARALLEL" false "yes" "${SECP256K1_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS
     create_from_github libbitcoin libbitcoin-system master "yes"
-    build_from_github_cmake libbitcoin-system "$PARALLEL" false "yes" "${BITCOIN_SYSTEM_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
+    display_message "libbitcoin-system PRESET ${REPO_PRESET[libbitcoin-system]}"
+    build_from_github_cmake libbitcoin-system ${REPO_PRESET[libbitcoin-system]} "$PARALLEL" false "yes" "${BITCOIN_SYSTEM_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
     create_from_github libbitcoin libbitcoin-protocol master "yes"
-    build_from_github_cmake libbitcoin-protocol "$PARALLEL" false "yes" "${BITCOIN_PROTOCOL_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
+    display_message "libbitcoin-protocol PRESET ${REPO_PRESET[libbitcoin-protocol]}"
+    build_from_github_cmake libbitcoin-protocol ${REPO_PRESET[libbitcoin-protocol]} "$PARALLEL" false "yes" "${BITCOIN_PROTOCOL_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
     create_from_github libbitcoin libbitcoin-client master "yes"
-    build_from_github_cmake libbitcoin-client "$PARALLEL" false "yes" "${BITCOIN_CLIENT_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
+    display_message "libbitcoin-client PRESET ${REPO_PRESET[libbitcoin-client]}"
+    build_from_github_cmake libbitcoin-client ${REPO_PRESET[libbitcoin-client]} "$PARALLEL" false "yes" "${BITCOIN_CLIENT_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
     create_from_github libbitcoin libbitcoin-network master "yes"
-    build_from_github_cmake libbitcoin-network "$PARALLEL" false "yes" "${BITCOIN_NETWORK_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
+    display_message "libbitcoin-network PRESET ${REPO_PRESET[libbitcoin-network]}"
+    build_from_github_cmake libbitcoin-network ${REPO_PRESET[libbitcoin-network]} "$PARALLEL" false "yes" "${BITCOIN_NETWORK_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
     if [[ ! ($CI == true) ]]; then
         create_from_github libbitcoin libbitcoin-explorer master "yes"
-        build_from_github_cmake libbitcoin-explorer "$PARALLEL" true "yes" "${BITCOIN_EXPLORER_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
+        display_message "libbitcoin-explorer PRESET ${REPO_PRESET[libbitcoin-explorer]}"
+        build_from_github_cmake libbitcoin-explorer ${REPO_PRESET[libbitcoin-explorer]} "$PARALLEL" true             "yes" "${BITCOIN_EXPLORER_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
     else
         push_directory "$PRESUMED_CI_PROJECT_PATH"
         push_directory ".."
-        build_from_github_cmake libbitcoin-explorer "$PARALLEL" true "yes" "${BITCOIN_EXPLORER_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
+        display_message "libbitcoin-explorer PRESET ${REPO_PRESET[libbitcoin-explorer]}"
+        build_from_github_cmake libbitcoin-explorer ${REPO_PRESET[libbitcoin-explorer]} "$PARALLEL" true "yes" "${BITCOIN_EXPLORER_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
         pop_directory
         pop_directory
     fi

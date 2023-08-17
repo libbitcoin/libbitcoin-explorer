@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-#  Copyright (c) 2014-2020 libbitcoin-explorer developers (see COPYING).
+#  Copyright (c) 2014-2023 libbitcoin-explorer developers (see COPYING).
 #
 #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 #
@@ -575,6 +575,12 @@ create_from_github()
     local ACCOUNT=$1
     local REPO=$2
     local BRANCH=$3
+    local BUILD=$4
+	shift 4
+
+    if [[ ! ($BUILD) || ($BUILD == "no") ]]; then
+        return
+    fi
 
     FORK="$ACCOUNT/$REPO"
 
@@ -602,8 +608,13 @@ build_from_github()
     local REPO=$1
     local JOBS=$2
     local TEST=$3
-    local OPTIONS=$4
-    shift 4
+    local BUILD=$4
+    local OPTIONS=$5
+    shift 5
+
+    if [[ ! ($BUILD) || ($BUILD == "no") ]]; then
+        return
+    fi
 
     # Join generated and command line options.
     local CONFIGURATION=("${OPTIONS[@]}" "$@")
@@ -771,23 +782,23 @@ build_all()
     build_from_tarball "$ZMQ_ARCHIVE" . "$PARALLEL" "$BUILD_ZMQ" "${ZMQ_OPTIONS[@]}" "$@"
     unpack_from_tarball "$BOOST_ARCHIVE" "$BOOST_URL" bzip2 "$BUILD_BOOST"
     build_from_tarball_boost "$BOOST_ARCHIVE" "$PARALLEL" "$BUILD_BOOST" "${BOOST_OPTIONS[@]}"
-    create_from_github libbitcoin secp256k1 version8
-    build_from_github secp256k1 "$PARALLEL" false "${SECP256K1_OPTIONS[@]}" "$@"
-    create_from_github libbitcoin libbitcoin-system master
-    build_from_github libbitcoin-system "$PARALLEL" false "${BITCOIN_SYSTEM_OPTIONS[@]}" "$@"
-    create_from_github libbitcoin libbitcoin-protocol master
-    build_from_github libbitcoin-protocol "$PARALLEL" false "${BITCOIN_PROTOCOL_OPTIONS[@]}" "$@"
-    create_from_github libbitcoin libbitcoin-client master
-    build_from_github libbitcoin-client "$PARALLEL" false "${BITCOIN_CLIENT_OPTIONS[@]}" "$@"
-    create_from_github libbitcoin libbitcoin-network master
-    build_from_github libbitcoin-network "$PARALLEL" false "${BITCOIN_NETWORK_OPTIONS[@]}" "$@"
+    create_from_github libbitcoin secp256k1 version8 "yes"
+    build_from_github secp256k1 "$PARALLEL" false "yes" "${SECP256K1_OPTIONS[@]}" "$@"
+    create_from_github libbitcoin libbitcoin-system master "yes"
+    build_from_github libbitcoin-system "$PARALLEL" false "yes" "${BITCOIN_SYSTEM_OPTIONS[@]}" "$@"
+    create_from_github libbitcoin libbitcoin-protocol master "yes"
+    build_from_github libbitcoin-protocol "$PARALLEL" false "yes" "${BITCOIN_PROTOCOL_OPTIONS[@]}" "$@"
+    create_from_github libbitcoin libbitcoin-client master "yes"
+    build_from_github libbitcoin-client "$PARALLEL" false "yes" "${BITCOIN_CLIENT_OPTIONS[@]}" "$@"
+    create_from_github libbitcoin libbitcoin-network master "yes"
+    build_from_github libbitcoin-network "$PARALLEL" false "yes" "${BITCOIN_NETWORK_OPTIONS[@]}" "$@"
     if [[ ! ($CI == true) ]]; then
-        create_from_github libbitcoin libbitcoin-explorer master
-        build_from_github libbitcoin-explorer "$PARALLEL" true "${BITCOIN_EXPLORER_OPTIONS[@]}" "$@"
+        create_from_github libbitcoin libbitcoin-explorer master "yes"
+        build_from_github libbitcoin-explorer "$PARALLEL" true "yes" "${BITCOIN_EXPLORER_OPTIONS[@]}" "$@"
     else
         push_directory "$PRESUMED_CI_PROJECT_PATH"
         push_directory ".."
-        build_from_github libbitcoin-explorer "$PARALLEL" true "${BITCOIN_EXPLORER_OPTIONS[@]}" "$@"
+        build_from_github libbitcoin-explorer "$PARALLEL" true "yes" "${BITCOIN_EXPLORER_OPTIONS[@]}" "$@"
         pop_directory
         pop_directory
     fi
@@ -824,6 +835,11 @@ ICU_OPTIONS=(
 "--disable-layoutex" \
 "--disable-tests" \
 "--disable-samples")
+
+# Define zmq options.
+#------------------------------------------------------------------------------
+ZMQ_OPTIONS=(
+"--disable-Werror")
 
 # Define boost options.
 #------------------------------------------------------------------------------
@@ -886,8 +902,14 @@ BITCOIN_EXPLORER_OPTIONS=(
 # Build the primary library and all dependencies.
 #==============================================================================
 display_configuration
-create_directory "$BUILD_DIR"
-push_directory "$BUILD_DIR"
+
+if [[ ! ($CI == true) ]]; then
+    create_directory "$BUILD_DIR"
+    push_directory "$BUILD_DIR"
+else
+    push_directory "$BUILD_DIR"
+fi
+
 initialize_git
 time build_all "${CONFIGURE_OPTIONS[@]}"
 pop_directory
