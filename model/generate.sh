@@ -1,6 +1,6 @@
 #!/bin/sh
 ###############################################################################
-# Copyright (c) 2014-2019 libbitcoin developers (see COPYING).
+# Copyright (c) 2014-2023 libbitcoin developers (see COPYING).
 #
 # Generate libbitcoin build artifacts from XML + GSL.
 #
