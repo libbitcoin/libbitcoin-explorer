@@ -32,7 +32,7 @@ else ()
   set( libdir "\${exec_prefix}/lib" )
   set( includedir "\${exec_prefix}/include" )
 
-  set( PACKAGE_VERSION "3.7.0" )
+  set( PACKAGE_VERSION "3.8.0" )
   set( VERSION "${PACKAGE_VERSION}" )
 endif ()
 
@@ -183,11 +183,11 @@ endif()
 
 # Find bitcoin-client
 #------------------------------------------------------------------------------
-find_package( Bitcoin-Client 3.7.0 REQUIRED )
+find_package( Bitcoin-Client 3.8.0 REQUIRED )
 
 # Find bitcoin-network
 #------------------------------------------------------------------------------
-find_package( Bitcoin-Network 3.7.0 REQUIRED )
+find_package( Bitcoin-Network 3.8.0 REQUIRED )
 
 # Find dl
 #------------------------------------------------------------------------------
