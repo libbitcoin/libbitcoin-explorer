@@ -332,11 +332,6 @@
     <define name="BX_ELECTRUM_TO_SEED_PASSPHRASE_ICU" value="This is not an ICU build, so the passphrase is limited to ascii characters." />
   </command>
 
-  <command symbol="entropy" formerly="seed" output="base16" category="WALLET" description="Generate pseudorandom entropy.">
-    <option name="bits" type="uint16_t" default="192" description="The length of the entropy in bits. The value must be at least 128 and is rounded up to a whole byte, defaults to 192." />
-    <define name="BX_ENTROPY_SHORT_BIT_LENGTH" value="The entropy bit length is not at least 128." />
-  </command>
-
   <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>

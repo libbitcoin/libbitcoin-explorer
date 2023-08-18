@@ -68,7 +68,6 @@
 #include <bitcoin/explorer/commands/electrum-decode.hpp>
 #include <bitcoin/explorer/commands/electrum-new.hpp>
 #include <bitcoin/explorer/commands/electrum-to-seed.hpp>
-#include <bitcoin/explorer/commands/entropy.hpp>
 #include <bitcoin/explorer/commands/fetch-balance.hpp>
 #include <bitcoin/explorer/commands/fetch-block.hpp>
 #include <bitcoin/explorer/commands/fetch-block-hashes.hpp>
@@ -113,6 +112,7 @@
 #include <bitcoin/explorer/commands/script-to-address.hpp>
 #include <bitcoin/explorer/commands/script-to-key.hpp>
 #include <bitcoin/explorer/commands/script-to-witness.hpp>
+#include <bitcoin/explorer/commands/seed.hpp>
 #include <bitcoin/explorer/commands/seed.hpp>
 #include <bitcoin/explorer/commands/send-tx.hpp>
 #include <bitcoin/explorer/commands/settings.hpp>

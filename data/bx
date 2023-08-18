@@ -50,7 +50,6 @@ _bx()
         electrum-decode
         electrum-new
         electrum-to-seed
-        entropy
         fetch-balance
         fetch-block
         fetch-block-hashes
