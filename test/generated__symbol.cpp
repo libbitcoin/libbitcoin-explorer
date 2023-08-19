@@ -253,11 +253,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__electrum_to_seed__returns_expected_value
     BOOST_REQUIRE_EQUAL(electrum_to_seed::symbol(), "electrum-to-seed");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__entropy__returns_expected_value)
-{
-    BOOST_REQUIRE_EQUAL(entropy::symbol(), "entropy");
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_balance__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(fetch_balance::symbol(), "fetch-balance");
@@ -476,6 +471,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__script_to_key__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__script_to_witness__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(script_to_witness::symbol(), "script-to-witness");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__seed__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(seed::symbol(), "seed");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__seed__returns_expected_value)

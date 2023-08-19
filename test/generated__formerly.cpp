@@ -93,11 +93,6 @@ BOOST_AUTO_TEST_CASE(generated__formerly__ec_to_public_was_pubkey__returns_objec
     BOOST_REQUIRE_EQUAL(formerly("pubkey"), ec_to_public::symbol());
 }
 
-BOOST_AUTO_TEST_CASE(generated__formerly__entropy_was_seed__returns_object)
-{
-    BOOST_REQUIRE_EQUAL(formerly("seed"), entropy::symbol());
-}
-
 BOOST_AUTO_TEST_CASE(generated__formerly__fetch_height_was_fetch_last_height__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("fetch-last-height"), fetch_height::symbol());

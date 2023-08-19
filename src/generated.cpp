@@ -81,7 +81,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<electrum_decode>());
     func(make_shared<electrum_new>());
     func(make_shared<electrum_to_seed>());
-    func(make_shared<entropy>());
     func(make_shared<fetch_balance>());
     func(make_shared<fetch_block>());
     func(make_shared<fetch_block_hashes>());
@@ -126,6 +125,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<script_to_address>());
     func(make_shared<script_to_key>());
     func(make_shared<script_to_witness>());
+    func(make_shared<seed>());
     func(make_shared<seed>());
     func(make_shared<send_tx>());
     func(make_shared<settings>());
@@ -248,8 +248,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<electrum_new>();
     if (symbol == electrum_to_seed::symbol())
         return make_shared<electrum_to_seed>();
-    if (symbol == entropy::symbol())
-        return make_shared<entropy>();
     if (symbol == fetch_balance::symbol())
         return make_shared<fetch_balance>();
     if (symbol == fetch_block::symbol())
@@ -340,6 +338,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<script_to_witness>();
     if (symbol == seed::symbol())
         return make_shared<seed>();
+    if (symbol == seed::symbol())
+        return make_shared<seed>();
     if (symbol == send_tx::symbol())
         return make_shared<send_tx>();
     if (symbol == settings::symbol())
@@ -426,8 +426,6 @@ std::string formerly(const string& former)
         return ec_to_ek::symbol();
     if (former == ec_to_public::formerly())
         return ec_to_public::symbol();
-    if (former == entropy::formerly())
-        return entropy::symbol();
     if (former == fetch_height::formerly())
         return fetch_height::symbol();
     if (former == fetch_public_key::formerly())
