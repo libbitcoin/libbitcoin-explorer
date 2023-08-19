@@ -126,7 +126,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<script_to_key>());
     func(make_shared<script_to_witness>());
     func(make_shared<seed>());
-    func(make_shared<seed>());
     func(make_shared<send_tx>());
     func(make_shared<settings>());
     func(make_shared<sha160>());
@@ -336,8 +335,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<script_to_key>();
     if (symbol == script_to_witness::symbol())
         return make_shared<script_to_witness>();
-    if (symbol == seed::symbol())
-        return make_shared<seed>();
     if (symbol == seed::symbol())
         return make_shared<seed>();
     if (symbol == send_tx::symbol())

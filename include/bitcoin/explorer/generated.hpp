@@ -113,7 +113,6 @@
 #include <bitcoin/explorer/commands/script-to-key.hpp>
 #include <bitcoin/explorer/commands/script-to-witness.hpp>
 #include <bitcoin/explorer/commands/seed.hpp>
-#include <bitcoin/explorer/commands/seed.hpp>
 #include <bitcoin/explorer/commands/send-tx.hpp>
 #include <bitcoin/explorer/commands/settings.hpp>
 #include <bitcoin/explorer/commands/sha160.hpp>
