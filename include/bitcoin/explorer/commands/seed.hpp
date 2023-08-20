@@ -55,7 +55,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_SEED_OBSOLETE \
-    "This command is obsolete. Use the entropy command instead."
+    "This command is obsolete."
 
 /**
  * Class to implement the seed command.

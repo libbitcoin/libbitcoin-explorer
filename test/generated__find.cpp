@@ -478,11 +478,6 @@ BOOST_AUTO_TEST_CASE(generated__find__seed__returns_object)
     BOOST_REQUIRE(find("seed") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__seed__returns_object)
-{
-    BOOST_REQUIRE(find("seed") != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__send_tx__returns_object)
 {
     BOOST_REQUIRE(find("send-tx") != nullptr);

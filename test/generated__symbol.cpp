@@ -478,11 +478,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__seed__returns_expected_value)
     BOOST_REQUIRE_EQUAL(seed::symbol(), "seed");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__seed__returns_expected_value)
-{
-    BOOST_REQUIRE_EQUAL(seed::symbol(), "seed");
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__send_tx__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(send_tx::symbol(), "send-tx");
