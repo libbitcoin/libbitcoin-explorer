@@ -397,6 +397,7 @@ set_with_boost_prefix()
         # ax_boost_base.m4 appends /include and adds to BOOST_CPPFLAGS
         # ax_boost_base.m4 searches for /lib /lib64 and adds to BOOST_LDFLAGS
         with_boost="--with-boost=$PREFIX"
+        export BOOST_ROOT="$PREFIX"
     fi
 }
 
@@ -417,6 +418,7 @@ display_configuration()
     display_message "BUILD_ICU             : $BUILD_ICU"
     display_message "BUILD_ZMQ             : $BUILD_ZMQ"
     display_message "BUILD_BOOST           : $BUILD_BOOST"
+    display_message "BOOST_ROOT            : $BOOST_ROOT"
     display_message "BUILD_DIR             : $BUILD_DIR"
     display_message "PREFIX                : $PREFIX"
     display_message "DISABLE_SHARED        : $DISABLE_SHARED"
