@@ -187,9 +187,10 @@ jobs:
 
       - name: Coveralls.io Upload
         if: ${{ matrix.coverage == 'cov' }}
-        uses: pmienk/coveralls-github-action@master
+        uses: coverallsapp/github-action@v2.2.3
         with:
-          path-to-lcov: "./coverage.info"
+          format: lcov
+          files: "./coverage.info"
           github-token: ${{ secrets.github_token }}
 
       - name: Failure display available binaries
@@ -420,9 +421,10 @@ jobs:
 
       - name: Coveralls.io Upload
         if: ${{ matrix.coverage == 'cov' }}
-        uses: pmienk/coveralls-github-action@master
+        uses: coverallsapp/github-action@v2.2.3
         with:
-          path-to-lcov: "./coverage.info"
+          format: lcov
+          files: "./coverage.info"
           github-token: ${{ secrets.github_token }}
 
       - name: Failure display available binaries
@@ -622,9 +624,10 @@ jobs:
 
       - name: Coveralls.io Upload
         if: ${{ matrix.coverage == 'cov' }}
-        uses: pmienk/coveralls-github-action@master
+        uses: coverallsapp/github-action@v2.2.3
         with:
-          path-to-lcov: "./coverage.info"
+          format: lcov
+          files: "./coverage.info"
           github-token: ${{ secrets.github_token }}
 
       - name: Failure display available binaries
@@ -719,7 +722,7 @@ jobs:
 
     steps:
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v2
         with:
           msbuild-architecture: x64
 
@@ -749,7 +752,7 @@ jobs:
           }
 
       - name: Execute build
-        run: .\build.cmd .. ${{ matrix.platform }} ${{ matrix.configuration }} ${{ matrix.version }}
+        run: .\build.cmd .. ${{ matrix.platform }} ${{ matrix.configuration }} x64 ${{ matrix.version }}
 
       - name: Execute tests
         shell: powershell
