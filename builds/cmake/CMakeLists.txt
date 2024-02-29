@@ -557,6 +557,7 @@ if (with-tests)
 
     add_test( NAME libbitcoin-explorer-test COMMAND libbitcoin-explorer-test
             --run_test=generated,obsolete,offline,config,stub
+            --log_level=warning
             --show_progress=no
             --detect_memory_leak=0
             --report_level=no
