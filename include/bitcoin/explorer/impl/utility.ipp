@@ -28,11 +28,9 @@
 namespace libbitcoin {
 namespace explorer {
 
-// TODO: bool raw parameter obsoleted.
-// config::bytes type will automatically deserialize as raw data.
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
-    po::variables_map& variables, std::istream& input, bool)
+    po::variables_map& variables, std::istream& input)
 {
     if (variables.find(name) == variables.end())
         if (!system::deserialize(parameter, input))
@@ -41,7 +39,7 @@ void load_input(Value& parameter, const std::string& name,
 
 template <typename Value>
 void load_path(Value& parameter, const std::string& name,
-    po::variables_map& variables, bool raw)
+    po::variables_map& variables)
 {
     // The path is not set as an argument so we can't load from file.
     auto variable = variables.find(name);

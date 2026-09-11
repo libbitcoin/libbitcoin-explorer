@@ -135,8 +135,7 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_payment_address_argument(), "PAYMENT_ADDRESS", variables, input, raw);
+        load_input(get_payment_address_argument(), "PAYMENT_ADDRESS", variables, input);
     }
 
     /**

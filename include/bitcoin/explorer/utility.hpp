@@ -33,11 +33,10 @@ namespace explorer {
  * @param[in]  name       The parameter name.
  * @param[in]  variables  The loaded variables.
  * @param[in]  input      The input stream for loading the parameter.
- * @param[in]  raw        True if the input is raw (should not be trimmed).
  */
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
-    po::variables_map& variables, std::istream& input, bool raw);
+    po::variables_map& variables, std::istream& input);
 
 /**
  * Load file contents as parameter fallback. Obtain the path from the parameter
@@ -45,11 +44,10 @@ void load_input(Value& parameter, const std::string& name,
  * @param      <Value>    The type of the parameter to load.
  * @param[in]  name       The parameter name.
  * @param[in]  variables  The loaded variables.
- * @param[in]  raw        True if the file is raw (should not be trimmed).
  */
 template <typename Value>
 void load_path(Value& parameter, const std::string& name,
-    po::variables_map& variables, bool raw);
+    po::variables_map& variables);
 
 /**
  * Write a value to a file in the specified path and otherwise to the
