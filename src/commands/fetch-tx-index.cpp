@@ -20,49 +20,19 @@
 #include <bitcoin/explorer/commands/fetch-tx-index.hpp>
 
 #include <iostream>
-#include <boost/format.hpp>
 #include <bitcoin/system.hpp>
-#include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/display.hpp>
-#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::client;
-using namespace bc::explorer::config;
 using namespace bc::system;
 
-console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
+console_result fetch_tx_index::invoke(std::ostream&, std::ostream& error)
 {
-    // Bound parameters.
-    const encoding_engine  encoding = get_format_option();
-    const auto& hash = get_hash_argument();
-    const auto connection = get_connection(*this);
-
-    obelisk_client client(connection.retries);
-    if (!client.connect(connection))
-    {
-        display_connection_failure(error, connection.server);
-        return console_result::failure;
-    }
-
-    callback_state state(error, output, encoding);
-
-    auto on_done = [&state, &hash](const code& ec, size_t height, size_t index)
-    {
-        if (!state.succeeded(ec))
-            return;
-
-        state.output(system::property_tree(hash, height, index));
-    };
-
-    client.blockchain_fetch_transaction_index(on_done, hash);
-    client.wait();
-
-    return state.get_result();
+    error << BX_FETCH_TX_INDEX_NOT_IMPLEMENTED << std::endl;
+    return console_result::failure;
 }
 
 } //namespace commands

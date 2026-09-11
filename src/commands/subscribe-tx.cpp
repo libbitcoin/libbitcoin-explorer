@@ -19,50 +19,20 @@
 
 #include <bitcoin/explorer/commands/subscribe-tx.hpp>
 
-#include <cstddef>
 #include <iostream>
-#include <bitcoin/client.hpp>
-#include <bitcoin/explorer/callback_state.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/display.hpp>
-#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::client;
-using namespace bc::explorer::config;
 using namespace bc::system;
 
-console_result subscribe_tx::invoke(std::ostream& output, std::ostream& error)
+console_result subscribe_tx::invoke(std::ostream&, std::ostream& error)
 {
-    // Bound parameters.
-    const encoding_engine  encoding = get_format_option();
-    const auto& server_url = get_server_url_argument();
-    const auto duration_seconds = get_duration_option();
-    auto connection = get_connection(*this);
-
-    if (!server_url.empty())
-        connection.transaction_server = server_url;
-
-    callback_state state(error, output, encoding);
-
-    auto on_transaction = [&state](const chain::transaction& tx)
-    {
-        state.output(encode_hash(tx.hash()));
-    };
-
-    obelisk_client client(connection.retries);
-    if (!client.subscribe_transaction(connection.transaction_server,
-        on_transaction))
-    {
-        output << BX_SUBSCRIBE_TX_FAILED << std::endl;
-        return console_result::failure;
-    }
-
-    client.monitor(duration_seconds * 1000);
-    return console_result::okay;
+    error << BX_SUBSCRIBE_TX_NOT_IMPLEMENTED << std::endl;
+    return console_result::failure;
 }
 
 } //namespace commands

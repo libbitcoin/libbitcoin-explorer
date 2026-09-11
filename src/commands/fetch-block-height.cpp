@@ -19,48 +19,20 @@
 
 #include <bitcoin/explorer/commands/fetch-block-height.hpp>
 
-#include <cstddef>
 #include <iostream>
-#include <bitcoin/client.hpp>
-#include <bitcoin/explorer/callback_state.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/display.hpp>
-#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::client;
-using namespace bc::explorer::config;
+
 using namespace bc::system;
 
-console_result fetch_block_height::invoke(std::ostream& output, std::ostream& error)
+console_result fetch_block_height::invoke(std::ostream&, std::ostream& error)
 {
-    // Bound parameters.
-    const hash_digest& hash = get_hash_argument();
-    auto connection = get_connection(*this);
-
-    obelisk_client client(connection.retries);
-    if (!client.connect(connection))
-    {
-        display_connection_failure(error, connection.server);
-        return console_result::failure;
-    }
-
-    callback_state state(error, output);
-
-    auto on_done = [&state](const code& ec, size_t height)
-    {
-        if (!state.succeeded(ec))
-            return;
-
-        state.output(height);
-    };
-
-    client.blockchain_fetch_block_height(on_done, hash);
-    client.wait();
-
-    return state.get_result();
+    error << BX_FETCH_BLOCK_HEIGHT_NOT_IMPLEMENTED << std::endl;
+    return console_result::failure;
 }
 
 } //namespace commands

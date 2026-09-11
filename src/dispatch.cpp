@@ -20,12 +20,9 @@
 
 #include <iostream>
 #include <string>
-#include <boost/core/null_deleter.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/command.hpp>
-#include <bitcoin/explorer/commands/broadcast-tx.hpp>
-#include <bitcoin/explorer/commands/put-tx.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -40,8 +37,6 @@ using namespace boost;
 using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace boost::system;
-
-static const auto mode = std::ofstream::out | std::ofstream::app;
 
 // Swap Unicode input stream for binary stream in Windows builds.
 static std::istream& get_command_input(command& command, std::istream& input)
@@ -124,22 +119,6 @@ console_result dispatch_command(int argc, const char* argv[],
     {
         command->write_help(output);
         return console_result::okay;
-    }
-
-    // TODO: move log determination into generated command static.
-    if ((target == commands::put_tx::symbol()) ||
-        (target == commands::broadcast_tx::symbol()))
-    {
-        auto debug_file = command->get_network_debug_file_setting().string();
-        auto error_file = command->get_network_error_file_setting().string();
-
-        auto debug_log = boost::make_shared<ofstream>(debug_file, mode);
-        auto error_log = boost::make_shared<ofstream>(error_file, mode);
-
-        log::stream console_out(&output, null_deleter());
-        log::stream console_err(&error, null_deleter());
-
-        log::initialize(debug_log, error_log, console_out, console_err, false);
     }
 
     return command->invoke(out, err);

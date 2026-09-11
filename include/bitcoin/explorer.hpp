@@ -14,8 +14,6 @@
  * Maintainers: Do not include this header internal to this library.
  */
 
-#include <bitcoin/client.hpp>
-#include <bitcoin/network.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -23,7 +21,6 @@
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/parser.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 #include <bitcoin/explorer/version.hpp>
 #include <bitcoin/explorer/commands/address-decode.hpp>

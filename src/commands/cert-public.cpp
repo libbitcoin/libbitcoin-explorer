@@ -16,38 +16,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include <bitcoin/explorer/commands/cert-public.hpp>
 
-#include <bitcoin/protocol.hpp>
+#include <iostream>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::protocol;
 using namespace bc::system;
-using namespace bc::system::config;
 
-console_result cert_public::invoke(std::ostream& output, std::ostream& error)
+console_result cert_public::invoke(std::ostream&, std::ostream& error)
 {
-    // Bound parameters.
-    const auto& private_key = get_private_key_argument();
-
-    // Generate the public key from the private key (if valid).
-    zmq::certificate certificate(private_key);
-
-    // Certificate generation uses null_hash key as a sentinel for generation
-    // of a new keypair, so it must be excluded here if the user entered it.
-    if (!private_key || !certificate)
-    {
-        error << BX_CERT_PUBLIC_INVALID << std::endl;
-        return console_result::failure;
-    }
-
-    output << certificate.public_key() << std::endl;
-    return console_result::okay;
+    error << BX_CERT_PUBLIC_NOT_IMPLEMENTED << std::endl;
+    return console_result::failure;
 }
 
 } //namespace commands

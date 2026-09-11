@@ -28,7 +28,6 @@
 
 #define BX_USING_NAMESPACES()
 using namespace bc; \
-using namespace bc::client; \
 using namespace bc::explorer; \
 using namespace bc::explorer::commands; \
 using namespace bc::explorer::config;
@@ -55,56 +54,9 @@ using namespace bc::system;
 #define BX_FIRST_TESTNET_KEY \
 "1abf6c34c4370673aee3ce1c1e6c16de549cc6baa065ff3e4b23414b1dc2eca7"
 
-// FIXME: v4 server(s) are required for network testing.
-// Default network parameters, uses libbitcoin community node.
-#define BX_MAINNET_HOST "mainnet.libbitcoin.net"
-#define BX_MAINNET_PORT 8333
-#define BX_TESTNET_HOST "testnet2.libbitcoin.net"
-#define BX_TESTNET_PORT 28333
-#define BX_NETWORK_RETRY 0
-#define BX_NETWORK_TIMEOUT 5
-#define BX_NETWORK_HANDSHAKE 15
-
-// Libbitcoin Server (mainnet), uses libbitcoin community server.
-#define BX_MAINNET_QUERY "tcp://mainnet.libbitcoin.net:9091"
-#define BX_MAINNET_HEARTBEAT "tcp://mainnet.libbitcoin.net:9092"
-#define BX_MAINNET_BLOCK "tcp://mainnet.libbitcoin.net:9093"
-#define BX_MAINNET_TRANSACTION "tcp://mainnet.libbitcoin.net:9094"
-
-// Libbitcoin Server (testnet), uses libbitcoin community server.
-#define BX_TESTNET_QUERY "tcp://testnet2.libbitcoin.net:29091"
-#define BX_TESTNET_HEARTBEAT "tcp://testnet2.libbitcoin.net:29092"
-#define BX_TESTNET_BLOCK "tcp://testnet2.libbitcoin.net:29093"
-#define BX_TESTNET_TRANSACTION "tcp://testnet2.libbitcoin.net:29094"
-
 #define BX_DECLARE_COMMAND(extension) \
     std::stringstream output, error; \
     extension command
-
-#define BX_DECLARE_PEER_COMMAND(extension) \
-    BX_DECLARE_COMMAND(extension); \
-    command.set_network_debug_file_setting({ "debug.log" }); \
-    command.set_network_error_file_setting({ "error.log" }); \
-    command.set_network_hosts_file_setting({ "hosts.cache" }); \
-    command.set_network_connect_retries_setting(BX_NETWORK_RETRY); \
-    command.set_network_connect_timeout_seconds_setting(BX_NETWORK_TIMEOUT); \
-    command.set_network_channel_handshake_seconds_setting(BX_NETWORK_HANDSHAKE);
-
-#define BX_DECLARE_CLIENT_COMMAND(extension) \
-    BX_DECLARE_COMMAND(extension); \
-    command.set_server_url_setting({ BX_MAINNET_QUERY }); \
-    command.set_server_block_url_setting({ BX_MAINNET_BLOCK }); \
-    command.set_server_transaction_url_setting({ BX_MAINNET_TRANSACTION }); \
-    command.set_server_connect_retries_setting(BX_NETWORK_RETRY); \
-    command.set_server_connect_timeout_seconds_setting(BX_NETWORK_TIMEOUT)
-
-#define BX_DECLARE_CLIENT_TESTNET_COMMAND(extension) \
-    BX_DECLARE_COMMAND(extension); \
-    command.set_server_url_setting({ BX_TESTNET_QUERY }); \
-    command.set_server_block_url_setting({ BX_TESTNET_BLOCK }); \
-    command.set_server_transaction_url_setting({ BX_TESTNET_TRANSACTION }); \
-    command.set_server_connect_retries_setting(BX_NETWORK_RETRY); \
-    command.set_server_connect_timeout_seconds_setting(BX_NETWORK_TIMEOUT)
 
 // serializer results
 #define BX_SERIALIZE_COPY_ROUND_TRIP(serializer, value) \

@@ -21,25 +21,14 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(network)
+BOOST_AUTO_TEST_SUITE(stub)
 BOOST_AUTO_TEST_SUITE(watch_key__invoke)
 
-BOOST_AUTO_TEST_CASE(watch_key__invoke__one_second_duration__okay)
+BOOST_AUTO_TEST_CASE(watch_key__invoke__always__failure_error)
 {
-    BX_DECLARE_CLIENT_COMMAND(watch_key);
-    command.set_duration_option(1);
-    command.set_hash_argument({ BX_FIRST_KEY });
-    // Timeout is returned when duration is elapsed.
+    BX_DECLARE_COMMAND(watch_key);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-}
-
-BOOST_AUTO_TEST_CASE(watch_key__invoke__testnet_one_second_duration__okay)
-{
-    BX_DECLARE_CLIENT_TESTNET_COMMAND(watch_key);
-    command.set_duration_option(1);
-    command.set_hash_argument({ BX_FIRST_TESTNET_KEY });
-    // Timeout is returned when duration is elapsed.
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_WATCH_KEY_NOT_IMPLEMENTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

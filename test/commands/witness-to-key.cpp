@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(witness_to_key__invoke__test_list__valid_expected)
 {
     for (const auto& test: test_vectors)
     {
-        BX_DECLARE_CLIENT_COMMAND(commands::witness_to_key);
+        BX_DECLARE_COMMAND(commands::witness_to_key);
         command.set_witness_address_argument({ test.address });
         BX_REQUIRE_OKAY(command.invoke(output, error));
         BX_REQUIRE_OUTPUT(test.key);

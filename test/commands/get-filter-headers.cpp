@@ -17,32 +17,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Sponsored in part by Digital Contract Design, LLC
-
 #include "command.hpp"
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(network)
+BOOST_AUTO_TEST_SUITE(stub)
 BOOST_AUTO_TEST_SUITE(get_filter_headers__invoke)
 
-#define BLOCK_49291_HASH "0000000018b07dca1b28b4b5a119f6d6e71698ce1ed96f143f54179ce177a19c"
-
-BOOST_AUTO_TEST_CASE(get_filter_headers__invoke__mainnet__success)
+BOOST_AUTO_TEST_CASE(get_filter_headers__invoke__always__failure_error)
 {
-    BX_DECLARE_PEER_COMMAND(get_filter_headers);
-
-    // Send p2p log output to /dev/null.
-    log::initialize();
-
-    command.set_host_option(BX_MAINNET_HOST);
-    command.set_port_option(BX_MAINNET_PORT);
-    command.set_hash_argument({ BLOCK_49291_HASH });
-    command.set_height_argument(49250);
-//    command.set_filter_type_argument(0);
-
-    // Currently expecting failure due to service bit absence
+    BX_DECLARE_COMMAND(get_filter_headers);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_GET_FILTER_HEADERS_NOT_IMPLEMENTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -21,17 +21,14 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
+BOOST_AUTO_TEST_SUITE(stub)
 BOOST_AUTO_TEST_SUITE(cert_new__invoke)
 
-// Because this uses interal random generation we cannot test value result.
-BOOST_AUTO_TEST_CASE(cert_new__invoke__always__okay)
+BOOST_AUTO_TEST_CASE(cert_new__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(cert_new);
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-
-    // zeromq base85 encoded keys are 40 characters and we add a line feed.
-    BOOST_REQUIRE_EQUAL(output.str().size(), 41u);
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_CERT_NEW_NOT_IMPLEMENTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

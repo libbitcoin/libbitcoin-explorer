@@ -23,19 +23,9 @@
 #include <string>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/client.hpp>
 
 namespace libbitcoin {
 namespace explorer {
-
-/**
- * Get client connection settings for the given command.
- * @param      <Command>  The bx command type.
- * @param[in]  command    The bx command instance.
- * return                 The connetion settings for the command.
- */
-template <typename Command>
-client::connection_settings get_connection(const Command& command);
 
 /**
  * If the variable is not yet loaded, load from stdin as fallback.

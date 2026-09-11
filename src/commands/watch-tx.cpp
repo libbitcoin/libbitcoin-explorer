@@ -23,19 +23,14 @@
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
 using namespace bc::system;
 
-console_result watch_tx::invoke(std::ostream& output, std::ostream& error)
+console_result watch_tx::invoke(std::ostream&, std::ostream& error)
 {
-    // Bound parameters.
-    //const auto& hash = get_hash_argument();
-    //const encoding_engine encoding = get_format_option();
-
     error << BX_WATCH_TX_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }

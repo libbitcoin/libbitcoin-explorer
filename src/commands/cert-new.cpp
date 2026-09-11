@@ -16,36 +16,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include <bitcoin/explorer/commands/cert-new.hpp>
 
-#include <bitcoin/protocol.hpp>
+#include <iostream>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::protocol;
 using namespace bc::system;
-using namespace bc::system::config;
 
-console_result cert_new::invoke(std::ostream& output, std::ostream& error)
+console_result cert_new::invoke(std::ostream&, std::ostream& error)
 {
-    // TODO: update settings implementation so '#' character can be allowed.
-    // BUGBUG: Removal of '#' by certificate reduces keyspace/security.
-
-    // Create a new Curve ZMQ certificate.
-    zmq::certificate certificate;
-
-    if (!certificate)
-    {
-        error << BX_CERT_NEW_FAILURE << std::endl;
-        return console_result::failure;
-    }
-
-    output << certificate.private_key() << std::endl;
-    return console_result::okay;
+    error << BX_CERT_NEW_NOT_IMPLEMENTED << std::endl;
+    return console_result::failure;
 }
 
 } //namespace commands

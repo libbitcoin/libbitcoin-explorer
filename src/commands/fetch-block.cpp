@@ -21,62 +21,19 @@
 
 #include <iostream>
 #include <bitcoin/system.hpp>
-#include <bitcoin/client.hpp>
-#include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/display.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
-#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::client;
-using namespace bc::explorer::config;
 using namespace bc::system;
 
-console_result fetch_block::invoke(std::ostream& output, std::ostream& error)
+console_result fetch_block::invoke(std::ostream&, std::ostream& error)
 {
-    // Bound parameters.
-    const auto height = get_height_option();
-    const hash_digest& hash = get_hash_option();
-    const encoding_engine encoding = get_format_option();
-    const auto connection = get_connection(*this);
-
-    obelisk_client client(connection.retries);
-    if (!client.connect(connection))
-    {
-        display_connection_failure(error, connection.server);
-        return console_result::failure;
-    }
-
-    callback_state state(error, output, encoding);
-
-    // This enables json-style array formatting.
-    const auto json = encoding == encoding_engine::json;
-
-    auto on_done = [&state, json](const code& ec,
-        const chain::block& block)
-    {
-        if (!state.succeeded(ec))
-            return;
-
-        state.output(property_tree(block, json));
-    };
-
-    // Height is ignored if both are specified.
-    // Use the null_hash as sentinel to determine whether to use height or hash.
-    if (hash == null_hash)
-        client.blockchain_fetch_block(on_done, height);
-    else
-        client.blockchain_fetch_block(on_done, hash);
-
-    client.wait();
-
-    return state.get_result();
+    error << BX_FETCH_BLOCK_NOT_IMPLEMENTED << std::endl;
+    return console_result::failure;
 }
-
 
 } //namespace commands
 } //namespace explorer
