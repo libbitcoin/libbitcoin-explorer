@@ -37,7 +37,8 @@ using namespace boost::program_options;
 using namespace boost::system;
 
 // Swap Unicode input stream for binary stream in Windows builds.
-static std::istream& get_command_input(command& command, std::istream& input)
+static std::istream& get_command_input([[maybe_unused]] command& command,
+    std::istream& input)
 {
 #ifdef _MSC_VER
     if (command.requires_raw_input())
@@ -53,7 +54,8 @@ static std::istream& get_command_input(command& command, std::istream& input)
 }
 
 // Swap Unicode output stream for binary stream in Windows builds.
-static std::ostream& get_command_output(command& command, std::ostream& output)
+static std::ostream& get_command_output([[maybe_unused]] command& command,
+    std::ostream& output)
 {
 #ifdef _MSC_VER
     if (command.requires_raw_output())
