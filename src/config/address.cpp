@@ -60,14 +60,6 @@ std::istream& operator>>(std::istream& input, address& argument)
         return input;
     }
 
-    // Deprecated.
-    system::wallet::stealth_address stealth(text);
-    if (stealth)
-    {
-        argument.value_ = text;
-        return input;
-    }
-
     // TODO: add witness address.
 
     throw istream_exception(text);
