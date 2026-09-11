@@ -1,5 +1,5 @@
 ###############################################################################
-#  Copyright (c) 2014-2023 libbitcoin-explorer developers (see COPYING).
+#  Copyright (c) 2014-2026 libbitcoin-explorer developers (see COPYING).
 #
 #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 #
@@ -32,8 +32,8 @@ doc_DATA = \
 # src/libbitcoin-explorer.la => ${libdir}
 #------------------------------------------------------------------------------
 lib_LTLIBRARIES = src/libbitcoin-explorer.la
-src_libbitcoin_explorer_la_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_BUILD_CPPFLAGS} ${bitcoin_network_BUILD_CPPFLAGS}
-src_libbitcoin_explorer_la_LIBADD = ${bitcoin_client_LIBS} ${bitcoin_network_LIBS} ${dl_LIBS}
+src_libbitcoin_explorer_la_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_network_BUILD_CPPFLAGS}
+src_libbitcoin_explorer_la_LIBADD = ${bitcoin_network_LIBS}
 src_libbitcoin_explorer_la_SOURCES = \
     src/callback_state.cpp \
     src/dispatch.cpp \
@@ -87,7 +87,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/electrum-decode.cpp \
     src/commands/electrum-new.cpp \
     src/commands/electrum-to-seed.cpp \
-    src/commands/entropy.cpp \
     src/commands/fetch-balance.cpp \
     src/commands/fetch-block-hashes.cpp \
     src/commands/fetch-block-height.cpp \
@@ -179,8 +178,8 @@ src_libbitcoin_explorer_la_SOURCES = \
 if WITH_CONSOLE
 
 bin_PROGRAMS = console/bx
-console_bx_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_BUILD_CPPFLAGS} ${bitcoin_network_BUILD_CPPFLAGS}
-console_bx_LDADD = src/libbitcoin-explorer.la ${bitcoin_client_LIBS} ${bitcoin_network_LIBS} ${dl_LIBS}
+console_bx_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_network_BUILD_CPPFLAGS}
+console_bx_LDADD = src/libbitcoin-explorer.la ${bitcoin_network_LIBS}
 console_bx_SOURCES = \
     console/main.cpp
 
@@ -193,8 +192,8 @@ if WITH_TESTS
 TESTS = libbitcoin-explorer-test_runner.sh
 
 check_PROGRAMS = test/libbitcoin-explorer-test
-test_libbitcoin_explorer_test_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_BUILD_CPPFLAGS} ${bitcoin_network_BUILD_CPPFLAGS}
-test_libbitcoin_explorer_test_LDADD = src/libbitcoin-explorer.la ${boost_unit_test_framework_LIBS} ${bitcoin_client_LIBS} ${bitcoin_network_LIBS} ${dl_LIBS}
+test_libbitcoin_explorer_test_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_network_BUILD_CPPFLAGS}
+test_libbitcoin_explorer_test_LDADD = src/libbitcoin-explorer.la ${boost_unit_test_framework_LIBS} ${bitcoin_network_LIBS}
 test_libbitcoin_explorer_test_SOURCES = \
     test/generated__broadcast.cpp \
     test/generated__find.cpp \
@@ -247,7 +246,6 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/electrum-decode.cpp \
     test/commands/electrum-new.cpp \
     test/commands/electrum-to-seed.cpp \
-    test/commands/entropy.cpp \
     test/commands/fetch-balance.cpp \
     test/commands/fetch-block.cpp \
     test/commands/fetch-header.cpp \
@@ -384,7 +382,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/electrum-decode.hpp \
     include/bitcoin/explorer/commands/electrum-new.hpp \
     include/bitcoin/explorer/commands/electrum-to-seed.hpp \
-    include/bitcoin/explorer/commands/entropy.hpp \
     include/bitcoin/explorer/commands/fetch-balance.hpp \
     include/bitcoin/explorer/commands/fetch-block-hashes.hpp \
     include/bitcoin/explorer/commands/fetch-block-height.hpp \

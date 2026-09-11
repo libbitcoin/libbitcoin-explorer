@@ -1,6 +1,6 @@
 #!/bin/sh
 ###############################################################################
-#  Copyright (c) 2014-2023 libbitcoin-explorer developers (see COPYING).
+#  Copyright (c) 2014-2026 libbitcoin-explorer developers (see COPYING).
 #
 #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 #
@@ -10,6 +10,7 @@
 #==============================================================================
 BOOST_UNIT_TEST_OPTIONS=\
 "--run_test=generated,obsolete,offline,config,stub "\
+"--log_level=warning "\
 "--show_progress=no "\
 "--detect_memory_leak=0 "\
 "--report_level=no "\

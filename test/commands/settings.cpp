@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "        error_file error.log\n" \
 "        hosts_file my.hosts\n" \
 "        identifier 10\n" \
-"        seeds seed1.libbitcoin.org:8333,seed2.libbitcoin.org:8333\n" \
+"        seeds seed1.libbitcoin.net:8333,seed2.libbitcoin.net:8333\n" \
 "    }\n" \
 "    server\n" \
 "    {\n" \
@@ -122,7 +122,7 @@ BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
     command.set_network_hosts_file_setting("my.hosts");
     command.set_network_debug_file_setting("debug.log");
     command.set_network_error_file_setting("error.log");
-    command.set_network_seeds_setting({ { "seed1.libbitcoin.org:8333" }, { "seed2.libbitcoin.org:8333" } });
+    command.set_network_seeds_setting({ { "seed1.libbitcoin.net:8333" }, { "seed2.libbitcoin.net:8333" } });
     command.set_server_url_setting({ "https://mainnet.obelisk.net:42" });
     command.set_server_block_url_setting({ "https://mainnet.obelisk.net:43" });
     command.set_server_transaction_url_setting({ "https://mainnet.obelisk.net:44" });

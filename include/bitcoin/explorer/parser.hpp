@@ -57,8 +57,8 @@ public:
     virtual system::options_metadata load_environment();
 
 protected:
-    virtual void load_command_variables(system::variables_map& variables,
-        std::istream& input, int argc, const char* argv[]);
+    virtual void load_command_variables(std::istream& input, int argc,
+        const char* argv[]);
 
     // Expose polymorphic load_command_variables method from base.
     using system::config::parser::load_command_variables;

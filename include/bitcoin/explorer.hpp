@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Copyright (c) 2014-2023 libbitcoin-explorer developers (see COPYING).
+// Copyright (c) 2014-2025 libbitcoin-explorer developers (see COPYING).
 //
 //        GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 //
@@ -71,7 +71,6 @@
 #include <bitcoin/explorer/commands/electrum-decode.hpp>
 #include <bitcoin/explorer/commands/electrum-new.hpp>
 #include <bitcoin/explorer/commands/electrum-to-seed.hpp>
-#include <bitcoin/explorer/commands/entropy.hpp>
 #include <bitcoin/explorer/commands/fetch-balance.hpp>
 #include <bitcoin/explorer/commands/fetch-block-hashes.hpp>
 #include <bitcoin/explorer/commands/fetch-block-height.hpp>

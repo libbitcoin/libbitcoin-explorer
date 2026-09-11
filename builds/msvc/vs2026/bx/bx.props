@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <_PropertySheetDisplayName>Libbitcoin Explorer Test Common Settings</_PropertySheetDisplayName>
+    <_PropertySheetDisplayName>Bitcoin Explorer Common Settings</_PropertySheetDisplayName>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
@@ -13,12 +13,9 @@
     <ClCompile>
       <EnablePREfast>false</EnablePREfast>
     </ClCompile>
-    <PostBuildEvent Condition="'$(DebugOrRelease)' == 'release'">
-      <Command>"$(TargetPath)" --log_level=warning --run_test=* --show_progress=no --build_info=yes</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
 
-  <!-- Dependencies -->
+  <!-- Extensions -->
 
   <ImportGroup Label="PropertySheets">
     <Import Project="$(SolutionDir)libbitcoin-system.import.props" />
@@ -68,8 +65,8 @@
     <Message Text="Linkage-_system   : $(Linkage-libbitcoin-system)" Importance="high"/>
     <Message Text="Linkage-_protocol : $(Linkage-libbitcoin-protocol)" Importance="high"/>
     <Message Text="Linkage-_client   : $(Linkage-libbitcoin-client)" Importance="high"/>
-    <Message Text="Linkage-_explorer : $(Linkage-libbitcoin-explorer)" Importance="high"/>
     <Message Text="Linkage-_network  : $(Linkage-libbitcoin-network)" Importance="high"/>
+    <Message Text="Linkage-_explorer : $(Linkage-libbitcoin-explorer)" Importance="high"/>
   </Target>
 
 </Project>

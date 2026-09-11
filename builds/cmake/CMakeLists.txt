@@ -1,5 +1,5 @@
 ###############################################################################
-#  Copyright (c) 2014-2023 libbitcoin-explorer developers (see COPYING).
+#  Copyright (c) 2014-2025 libbitcoin-explorer developers (see COPYING).
 #
 #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 #
@@ -7,7 +7,7 @@
 
 # libbitcoin-explorer project configuration.
 #------------------------------------------------------------------------------
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.18 FATAL_ERROR)
 
 project(libbitcoin-explorer LANGUAGES C CXX)
 
@@ -18,6 +18,7 @@ include(CheckIncludeFiles)
 include(CheckSymbolExists)
 include(CheckCXXCompilerFlag)
 include(CheckCXXSourceCompiles)
+include(CheckLinkerFlag)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -32,6 +33,8 @@ else ()
   set( libdir "\${exec_prefix}/lib" )
   set( includedir "\${exec_prefix}/include" )
 
+  set( CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib" )
+
   set( PACKAGE_VERSION "4.0.0" )
   set( VERSION "${PACKAGE_VERSION}" )
 endif ()
@@ -44,7 +47,7 @@ set( CMAKE_CXX_STANDARD_REQUIRED ON )
 # Warn on all stuff.
 check_cxx_compiler_flag( "-Wall" HAS_FLAG_WALL )
 if ( HAS_FLAG_WALL )
-    add_compile_options( "-Wall" )
+    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wall> )
 else()
     message( FATAL_ERROR "Compiler does not support -Wall" )
 endif()
@@ -52,7 +55,7 @@ endif()
 # Warn on extra stuff.
 check_cxx_compiler_flag( "-Wextra" HAS_FLAG_WEXTRA )
 if ( HAS_FLAG_WEXTRA )
-    add_compile_options( "-Wextra" )
+    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wextra> )
 else()
     message( FATAL_ERROR "Compiler does not support -Wextra" )
 endif()
@@ -60,7 +63,7 @@ endif()
 # Disallow warning on style order of declarations.
 check_cxx_compiler_flag( "-Wno-reorder" HAS_FLAG_WNO-REORDER )
 if ( HAS_FLAG_WNO-REORDER )
-    add_compile_options( "-Wno-reorder" )
+    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-reorder> )
 else()
     message( FATAL_ERROR "Compiler does not support -Wno-reorder" )
 endif()
@@ -68,7 +71,7 @@ endif()
 # Suppress warning for incomplete field initialization.
 check_cxx_compiler_flag( "-Wno-missing-field-initializers" HAS_FLAG_WNO-MISSING-FIELD-INITIALIZERS )
 if ( HAS_FLAG_WNO-MISSING-FIELD-INITIALIZERS )
-    add_compile_options( "-Wno-missing-field-initializers" )
+    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-missing-field-initializers> )
 else()
     message( FATAL_ERROR "Compiler does not support -Wno-missing-field-initializers" )
 endif()
@@ -76,7 +79,7 @@ endif()
 # Conform to style.
 check_cxx_compiler_flag( "-Wno-missing-braces" HAS_FLAG_WNO-MISSING-BRACES )
 if ( HAS_FLAG_WNO-MISSING-BRACES )
-    add_compile_options( "-Wno-missing-braces" )
+    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-missing-braces> )
 else()
     message( FATAL_ERROR "Compiler does not support -Wno-missing-braces" )
 endif()
@@ -84,7 +87,7 @@ endif()
 # Ignore comments within comments or commenting of backslash extended lines.
 check_cxx_compiler_flag( "-Wno-comment" HAS_FLAG_WNO-COMMENT )
 if ( HAS_FLAG_WNO-COMMENT )
-    add_compile_options( "-Wno-comment" )
+    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-comment> )
 else()
     message( FATAL_ERROR "Compiler does not support -Wno-comment" )
 endif()
@@ -92,7 +95,7 @@ endif()
 # Suppress warning for copy of implicitly generated copy constructor.
 check_cxx_compiler_flag( "-Wno-deprecated-copy" HAS_FLAG_WNO-DEPRECATED-COPY )
 if ( HAS_FLAG_WNO-DEPRECATED-COPY )
-    add_compile_options( "-Wno-deprecated-copy" )
+    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-deprecated-copy> )
 else()
     message( FATAL_ERROR "Compiler does not support -Wno-deprecated-copy" )
 endif()
@@ -100,7 +103,7 @@ endif()
 # Clean up bx generated code.
 check_cxx_compiler_flag( "-Wno-unused-parameter" HAS_FLAG_WNO-UNUSED-PARAMETER )
 if ( HAS_FLAG_WNO-UNUSED-PARAMETER )
-    add_compile_options( "-Wno-unused-parameter" )
+    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-unused-parameter> )
 else()
     message( FATAL_ERROR "Compiler does not support -Wno-unused-parameter" )
 endif()
@@ -109,7 +112,7 @@ endif()
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     check_cxx_compiler_flag( "-Wno-mismatched-tags" HAS_FLAG_WNO-MISMATCHED-TAGS )
     if ( HAS_FLAG_WNO-MISMATCHED-TAGS )
-        add_compile_options( "-Wno-mismatched-tags" )
+        add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-mismatched-tags> )
     else()
         message( FATAL_ERROR "Compiler does not support -Wno-mismatched-tags" )
     endif()
@@ -153,16 +156,12 @@ endif()
 
 # Find boost
 #------------------------------------------------------------------------------
-find_package( Boost 1.76.0 REQUIRED COMPONENTS
+find_package( Boost 1.86.0 REQUIRED COMPONENTS
     unit_test_framework )
 
 set( boost_unit_test_framework_LIBS "-lboost_unit_test_framework" )
 
-if (enable-ndebug)
-    set( Boost_LIBRARY_DIR "${Boost_LIBRARY_DIR_DEBUG}" )
-else ()
-    set( Boost_LIBRARY_DIR "${Boost_LIBRARY_DIR_RELEASE}" )
-endif()
+set( Boost_LIBRARY_DIR $<IF:$<BOOL:${enable-ndebug}>,"${Boost_LIBRARY_DIR_RELEASE}","${Boost_LIBRARY_DIR_DEBUG}">)
 
 set( boost_CPPFLAGS "-I${Boost_INCLUDE_DIR}" )
 set( boost_LDFLAGS "-L${Boost_LIBRARY_DIR}" )
@@ -187,51 +186,77 @@ if ((${CMAKE_SYSTEM_NAME} MATCHES "Linux"))
     find_package( Dl REQUIRED )
 endif()
 
-# Define project common includes directories
+# Define project common includes for build.
 #------------------------------------------------------------------------------
 if (BUILD_SHARED_LIBS)
-    include_directories( SYSTEM
-        ${bitcoin_client_INCLUDE_DIRS}
-        ${bitcoin_network_INCLUDE_DIRS}
-        ${dl_INCLUDE_DIRS} )
+    set( bitcoin_client_FOR_BUILD_INCLUDE_DIRS ${bitcoin_client_INCLUDE_DIRS} CACHE STRING "Placeholder" )
+    set( bitcoin_network_FOR_BUILD_INCLUDE_DIRS ${bitcoin_network_INCLUDE_DIRS} CACHE STRING "Placeholder" )
 else()
-    include_directories( SYSTEM
-        ${bitcoin_client_STATIC_INCLUDE_DIRS}
-        ${bitcoin_network_STATIC_INCLUDE_DIRS}
-        ${dl_INCLUDE_DIRS} )
+    set( bitcoin_client_FOR_BUILD_INCLUDE_DIRS ${bitcoin_client_STATIC_INCLUDE_DIRS} CACHE STRING "Placeholder" )
+    set( bitcoin_network_FOR_BUILD_INCLUDE_DIRS ${bitcoin_network_STATIC_INCLUDE_DIRS} CACHE STRING "Placeholder" )
+endif()
+
+# Define project common includes directories
+#------------------------------------------------------------------------------
+include_directories( SYSTEM
+    ${bitcoin_client_FOR_BUILD_INCLUDE_DIRS}
+    ${bitcoin_network_FOR_BUILD_INCLUDE_DIRS}
+    ${dl_INCLUDE_DIRS} )
+
+# Define project common library directories for build.
+#------------------------------------------------------------------------------
+if (BUILD_SHARED_LIBS)
+    set( bitcoin_client_FOR_BUILD_LIBRARY_DIRS ${bitcoin_client_LIBRARY_DIRS} CACHE STRING "Placeholder" )
+    set( bitcoin_network_FOR_BUILD_LIBRARY_DIRS ${bitcoin_network_LIBRARY_DIRS} CACHE STRING "Placeholder" )
+else()
+    set( bitcoin_client_FOR_BUILD_LIBRARY_DIRS ${bitcoin_client_STATIC_LIBRARY_DIRS} CACHE STRING "Placeholder" )
+    set( bitcoin_network_FOR_BUILD_LIBRARY_DIRS ${bitcoin_network_STATIC_LIBRARY_DIRS} CACHE STRING "Placeholder" )
 endif()
 
 # Define project common library directories
 #------------------------------------------------------------------------------
-if (BUILD_SHARED_LIBS)
-    link_directories(
-        ${bitcoin_client_LIBRARY_DIRS}
-        ${bitcoin_network_LIBRARY_DIRS}
-        ${dl_LIBRARY_DIRS} )
-else()
-    link_directories(
-        ${bitcoin_client_STATIC_LIBRARY_DIRS}
-        ${bitcoin_network_STATIC_LIBRARY_DIRS}
-        ${dl_LIBRARY_DIRS} )
+link_directories(
+    ${bitcoin_client_FOR_BUILD_LIBRARY_DIRS}
+    ${bitcoin_network_FOR_BUILD_LIBRARY_DIRS}
+    ${dl_LIBRARY_DIRS} )
+
+# Define project common linker flags.
+#------------------------------------------------------------------------------
+check_linker_flag(CXX "-no_fixup_chains" "no_fixup_chains_FOUND")
+
+if (no_fixup_chains_FOUND)
+    add_link_options("-no_fixup_chains")
 endif()
 
-# Define project common libraries/linker flags.
+check_linker_flag(CXX "-fstack-protector" "fstack_protector_FOUND")
+
+if (fstack_protector_FOUND)
+    add_link_options("-fstack-protector")
+endif()
+
+check_linker_flag(CXX "-fstack-protector-all" "fstack_protector_all_FOUND")
+
+if (fstack_protector_all_FOUND)
+    add_link_options("-fstack-protector-all")
+endif()
+
+
+# Define common library usage for build.
 #------------------------------------------------------------------------------
 if (BUILD_SHARED_LIBS)
-    link_libraries(
-        "-fstack-protector"
-        "-fstack-protector-all"
-        ${bitcoin_client_LIBRARIES}
-        ${bitcoin_network_LIBRARIES}
-        ${dl_LIBRARIES} )
+    set( bitcoin_client_FOR_BUILD_LIBRARIES ${bitcoin_client_LIBRARIES} CACHE STRING "Placeholder" )
+    set( bitcoin_network_FOR_BUILD_LIBRARIES ${bitcoin_network_LIBRARIES} CACHE STRING "Placeholder" )
 else()
-    link_libraries(
-        "-fstack-protector"
-        "-fstack-protector-all"
-        ${bitcoin_client_STATIC_LIBRARIES}
-        ${bitcoin_network_STATIC_LIBRARIES}
-        ${dl_LIBRARIES} )
+    set( bitcoin_client_FOR_BUILD_LIBRARIES ${bitcoin_client_STATIC_LIBRARIES} CACHE STRING "Placeholder" )
+    set( bitcoin_network_FOR_BUILD_LIBRARIES ${bitcoin_network_STATIC_LIBRARIES} CACHE STRING "Placeholder" )
 endif()
+
+# Define project common libraries.
+#------------------------------------------------------------------------------
+link_libraries(
+    ${bitcoin_client_FOR_BUILD_LIBRARIES}
+    ${bitcoin_network_FOR_BUILD_LIBRARIES}
+    ${dl_LIBRARIES} )
 
 add_definitions(
     -DSYSCONFDIR=\"${sysconfdir}\" )
@@ -291,7 +316,6 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/commands/electrum-decode.cpp"
     "../../src/commands/electrum-new.cpp"
     "../../src/commands/electrum-to-seed.cpp"
-    "../../src/commands/entropy.cpp"
     "../../src/commands/fetch-balance.cpp"
     "../../src/commands/fetch-block-hashes.cpp"
     "../../src/commands/fetch-block-height.cpp"
@@ -378,38 +402,43 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/config/signature.cpp"
     "../../src/config/witness.cpp" )
 
-# ${CANONICAL_LIB_NAME} project specific include directories.
+# ${CANONICAL_LIB_NAME} project specific include directory normalization for build.
 #------------------------------------------------------------------------------
 if (BUILD_SHARED_LIBS)
-    target_include_directories( ${CANONICAL_LIB_NAME} PRIVATE
-        "../../include"
-        ${bitcoin_client_INCLUDE_DIRS}
-        ${bitcoin_network_INCLUDE_DIRS}
-        ${dl_INCLUDE_DIRS} )
+    set( bitcoin_client_FOR_BUILD_INCLUDE_DIRS ${bitcoin_client_INCLUDE_DIRS} CACHE STRING "Placeholder" )
+    set( bitcoin_network_FOR_BUILD_INCLUDE_DIRS ${bitcoin_network_INCLUDE_DIRS} CACHE STRING "Placeholder" )
 else()
-    target_include_directories( ${CANONICAL_LIB_NAME} PRIVATE
-        "../../include"
-        ${bitcoin_client_STATIC_INCLUDE_DIRS}
-        ${bitcoin_network_STATIC_INCLUDE_DIRS}
-        ${dl_INCLUDE_DIRS} )
+    set( bitcoin_client_FOR_BUILD_INCLUDE_DIRS ${bitcoin_client_STATIC_INCLUDE_DIRS} CACHE STRING "Placeholder" )
+    set( bitcoin_network_FOR_BUILD_INCLUDE_DIRS ${bitcoin_network_STATIC_INCLUDE_DIRS} CACHE STRING "Placeholder" )
 endif()
+
+# ${CANONICAL_LIB_NAME} project specific include directories.
+#------------------------------------------------------------------------------
+target_include_directories( ${CANONICAL_LIB_NAME} PRIVATE
+    "../../include"
+    ${bitcoin_client_FOR_BUILD_INCLUDE_DIRS}
+    ${bitcoin_network_FOR_BUILD_INCLUDE_DIRS}
+    ${dl_INCLUDE_DIRS} )
 
 target_include_directories( ${CANONICAL_LIB_NAME} PUBLIC
 "../../include" )
 
-# ${CANONICAL_LIB_NAME} project specific libraries/linker flags.
+# ${CANONICAL_LIB_NAME} project specific libraries noramalization for build.
 #------------------------------------------------------------------------------
 if (BUILD_SHARED_LIBS)
-    target_link_libraries( ${CANONICAL_LIB_NAME}
-        ${bitcoin_client_LIBRARIES}
-        ${bitcoin_network_LIBRARIES}
-        ${dl_LIBRARIES} )
+    set( bitcoin_client_FOR_BUILD_LIBRARIES ${bitcoin_client_LIBRARIES} CACHE STRING "Placeholder" )
+    set( bitcoin_network_FOR_BUILD_LIBRARIES ${bitcoin_network_LIBRARIES} CACHE STRING "Placeholder" )
 else()
-    target_link_libraries( ${CANONICAL_LIB_NAME}
-        ${bitcoin_client_STATIC_LIBRARIES}
-        ${bitcoin_network_STATIC_LIBRARIES}
-        ${dl_LIBRARIES} )
+    set( bitcoin_client_FOR_BUILD_LIBRARIES ${bitcoin_client_STATIC_LIBRARIES} CACHE STRING "Placeholder" )
+    set( bitcoin_network_FOR_BUILD_LIBRARIES ${bitcoin_network_STATIC_LIBRARIES} CACHE STRING "Placeholder" )
 endif()
+
+# ${CANONICAL_LIB_NAME} project specific libraries/linker flags.
+#------------------------------------------------------------------------------
+target_link_libraries( ${CANONICAL_LIB_NAME}
+    ${bitcoin_client_FOR_BUILD_LIBRARIES}
+    ${bitcoin_network_FOR_BUILD_LIBRARIES}
+    ${dl_LIBRARIES} )
 
 # Define bx project.
 #------------------------------------------------------------------------------
@@ -485,7 +514,6 @@ if (with-tests)
         "../../test/commands/electrum-decode.cpp"
         "../../test/commands/electrum-new.cpp"
         "../../test/commands/electrum-to-seed.cpp"
-        "../../test/commands/entropy.cpp"
         "../../test/commands/fetch-balance.cpp"
         "../../test/commands/fetch-block.cpp"
         "../../test/commands/fetch-header.cpp"
@@ -556,6 +584,7 @@ if (with-tests)
 
     add_test( NAME libbitcoin-explorer-test COMMAND libbitcoin-explorer-test
             --run_test=generated,obsolete,offline,config,stub
+            --log_level=warning
             --show_progress=no
             --detect_memory_leak=0
             --report_level=no

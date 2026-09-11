@@ -67,15 +67,15 @@ options_metadata parser::load_environment()
     return environment;
 }
 
-void parser::load_command_variables(system::variables_map& variables,
-    std::istream& input, int argc, const char* argv[])
+void parser::load_command_variables(std::istream& input, int argc,
+    const char* argv[])
 {
-    system::config::parser::load_command_variables(variables, argc, argv);
+    system::config::parser::load_command_variables(argc, argv);
 
     // Don't load rest if help is specified.
     // For variable with stdin or file fallback load the input stream.
-    if (!get_option(variables, BX_HELP_VARIABLE))
-        instance_.load_fallbacks(input, variables);
+    if (!get_option(BX_HELP_VARIABLE))
+        instance_.load_fallbacks(input, variables_);
 }
 
 bool parser::parse(std::string& out_error, std::istream& input,
@@ -83,28 +83,24 @@ bool parser::parse(std::string& out_error, std::istream& input,
 {
     try
     {
-        system::variables_map variables;
-
         // Must store before environment in order for commands to supercede.
-        load_command_variables(variables, input, argc, argv);
+        load_command_variables(input, argc, argv);
 
         // Don't load rest if help is specified.
-        if (!get_option(variables, BX_HELP_VARIABLE))
+        if (!get_option(BX_HELP_VARIABLE))
         {
             // Must store before configuration in order to specify the path.
-            load_environment_variables(variables,
-                BX_ENVIRONMENT_VARIABLE_PREFIX);
+            load_environment_variables(BX_ENVIRONMENT_VARIABLE_PREFIX);
 
             // Is lowest priority, which will cause confusion if there is
             // composition between them, which therefore should be avoided.
-            /* auto file = */ load_configuration_variables(variables,
-                BX_CONFIG_VARIABLE);
+            /* auto file = */ load_configuration_variables(BX_CONFIG_VARIABLE);
 
             // Set variable defaults, send notifications and update bound vars.
-            notify(variables);
+            notify(variables_);
 
             // Set the instance defaults from config values.
-            instance_.set_defaults_from_config(variables);
+            instance_.set_defaults_from_config(variables_);
         }
         else
         {

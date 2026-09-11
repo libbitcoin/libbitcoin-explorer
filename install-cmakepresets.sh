@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-#  Copyright (c) 2014-2023 libbitcoin-explorer developers (see COPYING).
+#  Copyright (c) 2014-2026 libbitcoin-explorer developers (see COPYING).
 #
 #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 #
@@ -8,16 +8,6 @@
 # Script to build and install libbitcoin-explorer.
 #
 # Script options:
-# --with-icu               Compile with International Components for Unicode.
-#                            Since the addition of BIP-39 and later BIP-38
-#                            support, libbitcoin conditionally incorporates ICU
-#                            to provide BIP-38 and BIP-39 passphrase
-#                            normalization features. Currently
-#                            libbitcoin-explorer is the only other library that
-#                            accesses this feature, so if you do not intend to
-#                            use passphrase normalization this dependency can
-#                            be avoided.
-# --build-icu              Builds ICU libraries.
 # --build-boost            Builds Boost libraries.
 # --build-zmq              Builds ZeroMQ libraries.
 # --build-dir=<path>       Location of downloaded and intermediate files.
@@ -26,7 +16,7 @@
 # --disable-shared         Disables shared library builds.
 # --disable-static         Disables static library builds.
 # --verbose                Display verbose output (defaults to quiet on called tooling).
-# --help                   Display usage, overriding script execution.
+# --help, -h               Display usage, overriding script execution.
 #
 # Verified on Ubuntu 14.04, requires gcc-4.8 or newer.
 # Verified on OSX 10.10, using MacPorts and Homebrew repositories, requires
@@ -40,6 +30,15 @@
 
 # Define constants.
 #==============================================================================
+# Branches for github dependencies.
+#------------------------------------------------------------------------------
+SECP256K1_BRANCH="v0.7.0"
+BITCOIN_SYSTEM_BRANCH="master"
+BITCOIN_PROTOCOL_BRANCH="master"
+BITCOIN_CLIENT_BRANCH="master"
+BITCOIN_NETWORK_BRANCH="master"
+BITCOIN_EXPLORER_BRANCH="master"
+
 
 # Declare associative array for computed presets.
 #------------------------------------------------------------------------------
@@ -59,24 +58,19 @@ fi
 
 # The default build directory.
 #------------------------------------------------------------------------------
-BUILD_DIR="build-libbitcoin-explorer"
+BUILD_SRC_DIR="build-libbitcoin-explorer"
 
 PRESUMED_CI_PROJECT_PATH=$(pwd)
 
-# ICU archive.
-#------------------------------------------------------------------------------
-ICU_URL="https://github.com/unicode-org/icu/releases/download/release-68-2/icu4c-68_2-src.tgz"
-ICU_ARCHIVE="icu4c-68_2-src.tgz"
-
 # ZMQ archive.
 #------------------------------------------------------------------------------
-ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.3.4/zeromq-4.3.4.tar.gz"
-ZMQ_ARCHIVE="zeromq-4.3.4.tar.gz"
+ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.3.5/zeromq-4.3.5.tar.gz"
+ZMQ_ARCHIVE="zeromq-4.3.5.tar.gz"
 
 # Boost archive.
 #------------------------------------------------------------------------------
-BOOST_URL="http://downloads.sourceforge.net/project/boost/boost/1.78.0/boost_1_78_0.tar.bz2"
-BOOST_ARCHIVE="boost_1_78_0.tar.bz2"
+BOOST_URL="https://archives.boost.io/release/1.86.0/source/boost_1_86_0.tar.bz2"
+BOOST_ARCHIVE="boost_1_86_0.tar.bz2"
 
 
 # Define utility functions.
@@ -166,13 +160,13 @@ make_jobs()
     shift 1
 
     VERBOSITY=""
-    if [[ DISPLAY_VERBOSE ]]; then
+    if [[ $DISPLAY_VERBOSE ]]; then
         VERBOSITY="VERBOSE=1"
     fi
 
     SEQUENTIAL=1
     # Avoid setting -j1 (causes problems on single threaded systems [TRAVIS]).
-    if [[ $JOBS > $SEQUENTIAL ]]; then
+    if [[ $JOBS -gt $SEQUENTIAL ]]; then
         make -j"$JOBS" "$@" $VERBOSITY
     else
         make "$@" $VERBOSITY
@@ -230,24 +224,15 @@ display_help()
     display_message "Usage: ./install.sh [OPTION]..."
     display_message "Manage the installation of libbitcoin-explorer."
     display_message "Script options:"
-    display_message "  --with-icu               Compile with International Components for Unicode."
-    display_message "                             Since the addition of BIP-39 and later BIP-38 "
-    display_message "                             support, libbitcoin conditionally incorporates ICU "
-    display_message "                             to provide BIP-38 and BIP-39 passphrase "
-    display_message "                             normalization features. Currently "
-    display_message "                             libbitcoin-explorer is the only other library that "
-    display_message "                             accesses this feature, so if you do not intend to "
-    display_message "                             use passphrase normalization this dependency can "
-    display_message "                             be avoided."
-    display_message "  --build-icu              Builds ICU libraries."
-    display_message "  --build-boost            Builds Boost libraries."
     display_message "  --build-zmq              Build ZeroMQ libraries."
+    display_message "  --build-boost            Build Boost libraries."
+    display_message "  --build-secp256k1        Build libsecp256k1 libraries."
     display_message "  --build-dir=<path>       Location of downloaded and intermediate files."
     display_message "  --preset=<label>         CMakePreset label."
     display_message "  --prefix=<absolute-path> Library install location (defaults to /usr/local)."
     display_message "  --disable-shared         Disables shared library builds."
     display_message "  --disable-static         Disables static library builds."
-    display_message "  --help                   Display usage, overriding script execution."
+    display_message "  --help, -h               Display usage, overriding script execution."
     display_message ""
     display_message "All unrecognized options provided shall be passed as configuration options for "
     display_message "all dependencies."
@@ -260,7 +245,7 @@ parse_command_line_options()
     for OPTION in "$@"; do
         case $OPTION in
             # Standard script options.
-            (--help)                DISPLAY_HELP="yes";;
+            (--help|-h)             DISPLAY_HELP="yes";;
             (--verbose)             DISPLAY_VERBOSE="yes";;
 
             # Standard build options.
@@ -269,15 +254,14 @@ parse_command_line_options()
             (--disable-static)      DISABLE_STATIC="yes";;
 
             # Common project options.
-            (--with-icu)            WITH_ICU="yes";;
 
-            # Custom build options (in the form of --build-<option>).
-            (--build-icu)           BUILD_ICU="yes";;
-            (--build-zmq)           BUILD_ZMQ="yes";;
-            (--build-boost)         BUILD_BOOST="yes";;
+            # Custom build options.
+            (--build-zmq)                              BUILD_ZMQ="yes";;
+            (--build-boost)                            BUILD_BOOST="yes";;
+            (--build-secp256k1)                        BUILD_SECP256K1="yes";;
 
             # Unique script options.
-            (--build-dir=*)         BUILD_DIR="${OPTION#*=}";;
+            (--build-dir=*)         BUILD_SRC_DIR="${OPTION#*=}";;
             (--preset=*)            PRESET_ID="${OPTION#*=}";;
 
             # Handle ndebug declarations due to disabled argument passthrough
@@ -362,13 +346,10 @@ handle_custom_options()
         ($PRESET_ID != "gnu-release") &&
         ($PRESET_ID != "static") &&
         ($PRESET_ID != "shared") &&
-        ($PRESET_ID != "gnu-optimized-size") &&
         ($PRESET_ID != "nix-gnu-debug-static") &&
         ($PRESET_ID != "nix-gnu-debug-shared") &&
         ($PRESET_ID != "nix-gnu-release-static") &&
-        ($PRESET_ID != "nix-gnu-release-shared") &&
-        ($PRESET_ID != "nix-gnu-release-static-size") &&
-        ($PRESET_ID != "nix-gnu-release-shared-size")]]; then
+        ($PRESET_ID != "nix-gnu-release-shared")]]; then
         display_error "Unsupported preset: $PRESET_ID"
         display_error "Supported values are:"
         display_error "  nix-base"
@@ -376,13 +357,10 @@ handle_custom_options()
         display_error "  gnu-release"
         display_error "  static"
         display_error "  shared"
-        display_error "  gnu-optimized-size"
         display_error "  nix-gnu-debug-static"
         display_error "  nix-gnu-debug-shared"
         display_error "  nix-gnu-release-static"
         display_error "  nix-gnu-release-shared"
-        display_error "  nix-gnu-release-static-size"
-        display_error "  nix-gnu-release-shared-size"
         display_error ""
         display_help
         exit 1
@@ -397,11 +375,7 @@ handle_custom_options()
     display_message "REPO_PRESET[libbitcoin-client]=${REPO_PRESET[libbitcoin-client]}"
     REPO_PRESET[libbitcoin-protocol]="$BASE_PRESET_ID"
     display_message "REPO_PRESET[libbitcoin-protocol]=${REPO_PRESET[libbitcoin-protocol]}"
-    if [[ $WITH_ICU ]]; then
-        REPO_PRESET[libbitcoin-system]="$BASE_PRESET_ID-with_icu"
-    else
-        REPO_PRESET[libbitcoin-system]="$BASE_PRESET_ID-without_icu"
-    fi
+    REPO_PRESET[libbitcoin-system]="$BASE_PRESET_ID"
     display_message "REPO_PRESET[libbitcoin-system]=${REPO_PRESET[libbitcoin-system]}"
 
     CUMULATIVE_FILTERED_ARGS=""
@@ -444,12 +418,6 @@ handle_custom_options()
         else
             export CMAKE_LIBRARY_PATH="${PREFIX}/lib:${CMAKE_LIBRARY_PATH}"
         fi
-    fi
-
-    # Process ICU
-    if [[ $WITH_ICU ]]; then
-        CUMULATIVE_FILTERED_ARGS+=" --with-icu"
-        CUMULATIVE_FILTERED_ARGS_CMAKE+=" -Dwith-icu=yes"
     fi
 }
 
@@ -507,15 +475,9 @@ set_pkgconfigdir()
 set_with_boost_prefix()
 {
     if [[ $BUILD_BOOST ]]; then
-        # Boost has no pkg-config, m4 searches in the following order:
-        # --with-boost=<path>, /usr, /usr/local, /opt, /opt/local, $BOOST_ROOT.
-        # We use --with-boost to prioritize the --prefix path when we build it.
-        # Otherwise standard paths suffice for Linux, Homebrew and MacPorts.
-        # ax_boost_base.m4 appends /include and adds to BOOST_CPPFLAGS
-        # ax_boost_base.m4 searches for /lib /lib64 and adds to BOOST_LDFLAGS
-        #
-        # cmake does not process this argument, so it has been zeroed out.
-        with_boost=""
+        # Boost detection via FindBoost.cmake provides for path hint via
+	# $BOOT_ROOT environment variable only.
+        export BOOST_ROOT="$PREFIX"
     fi
 }
 
@@ -532,11 +494,11 @@ display_configuration()
     display_message "CXXFLAGS              : $CXXFLAGS"
     display_message "LDFLAGS               : $LDFLAGS"
     display_message "LDLIBS                : $LDLIBS"
-    display_message "WITH_ICU              : $WITH_ICU"
-    display_message "BUILD_ICU             : $BUILD_ICU"
     display_message "BUILD_ZMQ             : $BUILD_ZMQ"
     display_message "BUILD_BOOST           : $BUILD_BOOST"
-    display_message "BUILD_DIR                      : $BUILD_DIR"
+    display_message "BUILD_SECP256K1       : $BUILD_SECP256K1"
+    display_message "BOOST_ROOT            : $BOOST_ROOT"
+    display_message "BUILD_SRC_DIR                  : $BUILD_SRC_DIR"
     display_message "PRESET_ID                      : $PRESET_ID"
     display_message "CUMULATIVE_FILTERED_ARGS       : $CUMULATIVE_FILTERED_ARGS"
     display_message "CUMULATIVE_FILTERED_ARGS_CMAKE : $CUMULATIVE_FILTERED_ARGS_CMAKE"
@@ -558,11 +520,14 @@ initialize_icu_packages()
         # Update PKG_CONFIG_PATH for ICU package installations on OSX.
         # OSX provides libicucore.dylib with no pkgconfig and doesn't support
         # renaming or important features, so we can't use that.
-        local HOMEBREW_ICU_PKG_CONFIG="/usr/local/opt/icu4c/lib/pkgconfig"
+        local HOMEBREW_USR_ICU_PKG_CONFIG="/usr/local/opt/icu4c/lib/pkgconfig"
+        local HOMEBREW_OPT_ICU_PKG_CONFIG="/opt/homebrew/opt/icu4c/lib/pkgconfig"
         local MACPORTS_ICU_PKG_CONFIG="/opt/local/lib/pkgconfig"
 
-        if [[ -d "$HOMEBREW_ICU_PKG_CONFIG" ]]; then
-            export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$HOMEBREW_ICU_PKG_CONFIG"
+        if [[ -d "$HOMEBREW_USR_ICU_PKG_CONFIG" ]]; then
+            export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$HOMEBREW_USR_ICU_PKG_CONFIG"
+        elif [[ -d "$HOMEBREW_OPT_ICU_PKG_CONFIG" ]]; then
+            export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$HOMEBREW_OPT_ICU_PKG_CONFIG"
         elif [[ -d "$MACPORTS_ICU_PKG_CONFIG" ]]; then
             export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$MACPORTS_ICU_PKG_CONFIG"
         fi
@@ -602,7 +567,7 @@ unpack_from_tarball()
     local COMPRESSION=$3
     local BUILD=$4
 
-    display_heading_message "Prepairing to aquire $ARCHIVE"
+    display_heading_message "Preparing to acquire $ARCHIVE"
 
     if [[ ! ($BUILD) ]]; then
         display_message "Skipping unpack of $ARCHIVE..."
@@ -648,7 +613,7 @@ build_from_tarball()
         return
     fi
 
-    display_heading_message "Prepairing to build $ARCHIVE"
+    display_heading_message "Preparing to build $ARCHIVE"
 
     # Because ICU tools don't know how to locate internal dependencies.
     if [[ ($ARCHIVE == "$ICU_ARCHIVE") ]]; then
@@ -692,8 +657,6 @@ clone_from_github()
 
 create_from_github()
 {
-    push_directory "$BUILD_SRC_DIR"
-
     local ACCOUNT=$1
     local REPO=$2
     local BRANCH=$3
@@ -706,7 +669,7 @@ create_from_github()
 
     FORK="$ACCOUNT/$REPO"
 
-    display_heading_message "Prepairing to aquire $FORK/$BRANCH"
+    display_heading_message "Preparing to acquire $FORK/$BRANCH"
 
     if [[ -d "$REPO" ]]; then
         if [[ true ]]; then
@@ -720,8 +683,6 @@ create_from_github()
         display_message "Cloning $FORK/$BRANCH..."
         clone_from_github "$FORK" "$BRANCH"
     fi
-
-    pop_directory
 }
 
 # Standard build from github.
@@ -741,7 +702,7 @@ build_from_github()
     # Join generated and command line options.
     local CONFIGURATION=("${OPTIONS[@]}" "$@")
 
-    display_heading_message "Prepairing to build $REPO"
+    display_heading_message "Preparing to build $REPO"
 
     # Build the local repository clone.
     make_project_directory "$REPO" "$JOBS" "$TEST" "${CONFIGURATION[@]}"
@@ -755,13 +716,8 @@ cmake_tests()
 
     # Build and run unit tests relative to the primary directory.
     # VERBOSE=1 ensures test runner output sent to console (gcc).
-    make -j"$JOBS" test "VERBOSE=1"
+    CTEST_OUTPUT_ON_FAILURE=ON make -j"$JOBS" test "VERBOSE=1"
     local RESULT=$?
-
-    # Test runners emit to the test.log file.
-    if [[ -e "test.log" ]]; then
-        cat "test.log"
-    fi
 
     if [[ $RESULT -ne 0 ]]; then
         exit $RESULT
@@ -784,7 +740,7 @@ cmake_project_directory()
 
     push_directory "builds/cmake"
     display_message "Preparing cmake --preset=$PRESET $@"
-    cmake --preset=$PRESET $@
+    cmake -LA --preset=$PRESET $@
     popd
 
     push_directory "obj/$PRESET"
@@ -817,7 +773,7 @@ build_from_github_cmake()
     # Join generated and command line options.
     local CONFIGURATION=("${OPTIONS[@]}" "$@")
 
-    display_heading_message "Prepairing to build $REPO"
+    display_heading_message "Preparing to build $REPO"
 
     # Build the local repository clone.
     cmake_project_directory "$REPO" "$PRESET" "$JOBS" "$TEST" "${CONFIGURATION[@]}"
@@ -903,7 +859,7 @@ build_from_tarball_boost()
         return
     fi
 
-    display_heading_message "Prepairing to build $ARCHIVE"
+    display_heading_message "Preparing to build $ARCHIVE"
 
     local TARGET="build-$ARCHIVE"
 
@@ -912,13 +868,22 @@ build_from_tarball_boost()
     initialize_boost_configuration
     initialize_boost_icu_configuration
 
+    guessed_toolset=`./tools/build/src/engine/build.sh --guess-toolset`
+    CXXFLAGS="-w" ./tools/build/src/engine/build.sh ${guessed_toolset} --cxxflags="-w"
+    cp tools/build/src/engine/b2 .
+    if [[ (x"$BOOST_CXXFLAGS" == "x") ]]; then
+        BOOST_CXXFLAGS="cxxflags=${BOOST_FLAGS[@]}"
+    else
+        BOOST_CXXFLAGS="$BOOST_CXXFLAGS ${BOOST_FLAGS[@]}"
+    fi
+
     display_message "Libbitcoin boost configuration."
     display_message "--------------------------------------------------------------------"
     display_message "variant               : release"
     display_message "threading             : multi"
     display_message "toolset               : $CC"
-    display_message "cxxflags              : $STDLIB_FLAG"
-    display_message "linkflags             : $STDLIB_FLAG"
+    display_message "boost cxxflags        : $BOOST_CXXFLAGS"
+    display_message "boost linkflags       : $BOOST_LINKFLAGS"
     display_message "link                  : $BOOST_LINK"
     display_message "boost.locale.iconv    : $BOOST_ICU_ICONV"
     display_message "boost.locale.posix    : $BOOST_ICU_POSIX"
@@ -932,9 +897,11 @@ build_from_tarball_boost()
     display_message "--reconfigure         : [ignore cached configuration]"
     display_message "--prefix              : $PREFIX"
     display_message "BOOST_OPTIONS         : $*"
+    display_message "cxxflags (ignored)    : $CXXFLAGS"
     display_message "--------------------------------------------------------------------"
 
     ./bootstrap.sh \
+        "--with-bjam=./b2" \
         "--prefix=$PREFIX" \
         "--with-icu=$ICU_PREFIX"
 
@@ -945,13 +912,14 @@ build_from_tarball_boost()
     # "-sICU_LINK=${ICU_LIBS[*]}"
 
     ./b2 install \
-        "cxxstd=11" \
+        "cxxstd=20" \
         "variant=release" \
         "threading=multi" \
         "$BOOST_TOOLSET" \
         "$BOOST_CXXFLAGS" \
         "$BOOST_LINKFLAGS" \
         "link=$BOOST_LINK" \
+        "warnings=off" \
         "boost.locale.iconv=$BOOST_ICU_ICONV" \
         "boost.locale.posix=$BOOST_ICU_POSIX" \
         "-sNO_BZIP2=1" \
@@ -974,28 +942,49 @@ build_from_tarball_boost()
 #==============================================================================
 build_all()
 {
-    unpack_from_tarball "$ICU_ARCHIVE" "$ICU_URL" gzip "$BUILD_ICU"
-    build_from_tarball "$ICU_ARCHIVE" source "$PARALLEL" "$BUILD_ICU" "${ICU_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS
     unpack_from_tarball "$ZMQ_ARCHIVE" "$ZMQ_URL" gzip "$BUILD_ZMQ"
+    local SAVE_CPPFLAGS="$CPPFLAGS"
+    export CPPFLAGS="$CPPFLAGS ${ZMQ_FLAGS[@]}"
     build_from_tarball "$ZMQ_ARCHIVE" . "$PARALLEL" "$BUILD_ZMQ" "${ZMQ_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS
+    export CPPFLAGS=$SAVE_CPPFLAGS
     unpack_from_tarball "$BOOST_ARCHIVE" "$BOOST_URL" bzip2 "$BUILD_BOOST"
+    local SAVE_CPPFLAGS="$CPPFLAGS"
+    export CPPFLAGS="$CPPFLAGS ${BOOST_FLAGS[@]}"
     build_from_tarball_boost "$BOOST_ARCHIVE" "$PARALLEL" "$BUILD_BOOST" "${BOOST_OPTIONS[@]}"
-    create_from_github libbitcoin secp256k1 version8 "yes"
-    build_from_github secp256k1 "$PARALLEL" false "yes" "${SECP256K1_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS
-    create_from_github libbitcoin libbitcoin-system master "yes"
+    export CPPFLAGS=$SAVE_CPPFLAGS
+    create_from_github bitcoin-core secp256k1 ${SECP256K1_BRANCH} "$BUILD_SECP256K1"
+    local SAVE_CPPFLAGS="$CPPFLAGS"
+    export CPPFLAGS="$CPPFLAGS ${SECP256K1_FLAGS[@]}"
+    build_from_github secp256k1 "$PARALLEL" false "$BUILD_SECP256K1" "${SECP256K1_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS
+    export CPPFLAGS=$SAVE_CPPFLAGS
+    create_from_github libbitcoin libbitcoin-system ${BITCOIN_SYSTEM_BRANCH} "yes"
+    local SAVE_CPPFLAGS="$CPPFLAGS"
+    export CPPFLAGS="$CPPFLAGS ${BITCOIN_SYSTEM_FLAGS[@]}"
     display_message "libbitcoin-system PRESET ${REPO_PRESET[libbitcoin-system]}"
     build_from_github_cmake libbitcoin-system ${REPO_PRESET[libbitcoin-system]} "$PARALLEL" false "yes" "${BITCOIN_SYSTEM_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
-    create_from_github libbitcoin libbitcoin-protocol master "yes"
+    export CPPFLAGS=$SAVE_CPPFLAGS
+    create_from_github libbitcoin libbitcoin-protocol ${BITCOIN_PROTOCOL_BRANCH} "yes"
+    local SAVE_CPPFLAGS="$CPPFLAGS"
+    export CPPFLAGS="$CPPFLAGS ${BITCOIN_PROTOCOL_FLAGS[@]}"
     display_message "libbitcoin-protocol PRESET ${REPO_PRESET[libbitcoin-protocol]}"
     build_from_github_cmake libbitcoin-protocol ${REPO_PRESET[libbitcoin-protocol]} "$PARALLEL" false "yes" "${BITCOIN_PROTOCOL_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
-    create_from_github libbitcoin libbitcoin-client master "yes"
+    export CPPFLAGS=$SAVE_CPPFLAGS
+    create_from_github libbitcoin libbitcoin-client ${BITCOIN_CLIENT_BRANCH} "yes"
+    local SAVE_CPPFLAGS="$CPPFLAGS"
+    export CPPFLAGS="$CPPFLAGS ${BITCOIN_CLIENT_FLAGS[@]}"
     display_message "libbitcoin-client PRESET ${REPO_PRESET[libbitcoin-client]}"
     build_from_github_cmake libbitcoin-client ${REPO_PRESET[libbitcoin-client]} "$PARALLEL" false "yes" "${BITCOIN_CLIENT_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
-    create_from_github libbitcoin libbitcoin-network master "yes"
+    export CPPFLAGS=$SAVE_CPPFLAGS
+    create_from_github libbitcoin libbitcoin-network ${BITCOIN_NETWORK_BRANCH} "yes"
+    local SAVE_CPPFLAGS="$CPPFLAGS"
+    export CPPFLAGS="$CPPFLAGS ${BITCOIN_NETWORK_FLAGS[@]}"
     display_message "libbitcoin-network PRESET ${REPO_PRESET[libbitcoin-network]}"
     build_from_github_cmake libbitcoin-network ${REPO_PRESET[libbitcoin-network]} "$PARALLEL" false "yes" "${BITCOIN_NETWORK_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
+    export CPPFLAGS=$SAVE_CPPFLAGS
+    local SAVE_CPPFLAGS="$CPPFLAGS"
+    export CPPFLAGS="$CPPFLAGS ${BITCOIN_EXPLORER_FLAGS[@]}"
     if [[ ! ($CI == true) ]]; then
-        create_from_github libbitcoin libbitcoin-explorer master "yes"
+        create_from_github libbitcoin libbitcoin-explorer ${BITCOIN_EXPLORER_BRANCH} "yes"
         display_message "libbitcoin-explorer PRESET ${REPO_PRESET[libbitcoin-explorer]}"
         build_from_github_cmake libbitcoin-explorer ${REPO_PRESET[libbitcoin-explorer]} "$PARALLEL" true             "yes" "${BITCOIN_EXPLORER_OPTIONS[@]}" $CUMULATIVE_FILTERED_ARGS_CMAKE "$@"
     else
@@ -1006,6 +995,7 @@ build_all()
         pop_directory
         pop_directory
     fi
+    export CPPFLAGS=$SAVE_CPPFLAGS
 }
 
 
@@ -1027,20 +1017,26 @@ set_with_boost_prefix
 
 remove_install_options
 
+# Define build flags.
+#==============================================================================
+# Define zmq flags.
+#------------------------------------------------------------------------------
+ZMQ_FLAGS=(
+"-w")
+
+# Define boost flags.
+#------------------------------------------------------------------------------
+BOOST_FLAGS=(
+"-Wno-enum-constexpr-conversion")
+
+# Define secp256k1 flags.
+#------------------------------------------------------------------------------
+SECP256K1_FLAGS=(
+"-w")
+
+
 # Define build options.
 #==============================================================================
-# Define icu options.
-#------------------------------------------------------------------------------
-ICU_OPTIONS=(
-"--enable-rpath" \
-"--enable-tools" \
-"--disable-extras" \
-"--disable-icuio" \
-"--disable-layout" \
-"--disable-layoutex" \
-"--disable-tests" \
-"--disable-samples")
-
 # Define zmq options.
 #------------------------------------------------------------------------------
 ZMQ_OPTIONS=(
@@ -1049,13 +1045,11 @@ ZMQ_OPTIONS=(
 # Define boost options.
 #------------------------------------------------------------------------------
 BOOST_OPTIONS=(
-"--with-chrono" \
 "--with-iostreams" \
-"--with-json" \
 "--with-locale" \
 "--with-program_options" \
-"--with-system" \
 "--with-thread" \
+"--with-url" \
 "--with-test")
 
 # Define secp256k1 options.
@@ -1109,10 +1103,10 @@ BITCOIN_EXPLORER_OPTIONS=(
 display_configuration
 
 if [[ ! ($CI == true) ]]; then
-    create_directory "$BUILD_DIR"
-    push_directory "$BUILD_DIR"
+    create_directory "$BUILD_SRC_DIR"
+    push_directory "$BUILD_SRC_DIR"
 else
-    push_directory "$BUILD_DIR"
+    push_directory "$BUILD_SRC_DIR"
 fi
 
 initialize_git

@@ -1,5 +1,5 @@
 ###############################################################################
-#  Copyright (c) 2014-2023 libbitcoin-explorer developers (see COPYING).
+#  Copyright (c) 2014-2026 libbitcoin-explorer developers (see COPYING).
 #
 #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 #
@@ -215,6 +215,12 @@ AS_CASE([${CC}], [*clang*],
     [AX_CHECK_COMPILE_FLAG([-Wno-mismatched-tags],
         [CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags"])])
 
+# Address -undefined dynamic_lookup MacOS error.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*],
+    [AX_CHECK_LINK_FLAG([-no_fixup_chains],
+        [LDFLAGS="$LDFLAGS -no_fixup_chains"])])
+
 # Protect stack.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*],
@@ -236,17 +242,17 @@ AS_CASE([${CC}], [*],
 
 # Check dependencies.
 #==============================================================================
-# Require Boost of at least version 1.76.0 and output ${boost_CPPFLAGS/LDFLAGS}.
+# Require Boost of at least version 1.86.0 and output ${boost_CPPFLAGS/LDFLAGS}.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*],
-    [AX_BOOST_BASE([1.76.0],
+    [AX_BOOST_BASE([1.86.0],
         [AC_SUBST([boost_CPPFLAGS], [${BOOST_CPPFLAGS}])
          AC_SUBST([boost_ISYS_CPPFLAGS], [`echo ${BOOST_CPPFLAGS} | $SED s/^-I/-isystem/g | $SED s/' -I'/' -isystem'/g`])
          AC_SUBST([boost_LDFLAGS], [${BOOST_LDFLAGS}])
          AC_MSG_NOTICE([boost_CPPFLAGS : ${boost_CPPFLAGS}])
          AC_MSG_NOTICE([boost_ISYS_CPPFLAGS : ${boost_ISYS_CPPFLAGS}])
          AC_MSG_NOTICE([boost_LDFLAGS : ${boost_LDFLAGS}])],
-        [AC_MSG_ERROR([Boost 1.76.0 or later is required but was not found.])])])
+        [AC_MSG_ERROR([Boost 1.86.0 or later is required but was not found.])])])
 
 AS_CASE([${enable_isystem}],[yes],
     [AC_SUBST([boost_BUILD_CPPFLAGS], [${boost_ISYS_CPPFLAGS}])],
@@ -263,18 +269,15 @@ AS_CASE([${with_tests}], [yes],
 # Require bash-completion of at least version 2.0.0 and output ${bash_completion_CPPFLAGS/LIBS/PKG}.
 #------------------------------------------------------------------------------
 AS_CASE([${bash_completiondir}], [yes],
-    [PKG_CHECK_MODULES([bash_completion], [bash-completion >= 2.0.0],
-        [bash_completion_INCLUDEDIR="`$PKG_CONFIG --variable=includedir "bash-completion >= 2.0.0" 2>/dev/null`"
-         bash_completion_OTHER_CFLAGS="`$PKG_CONFIG --cflags-only-other "bash-completion >= 2.0.0" 2>/dev/null`"
-         bash_completiondir="`$PKG_CONFIG --variable=completionsdir "bash-completion >= 2.0.0" 2>/dev/null`"],
-        [bash_completion_INCLUDEDIR=""
-         bash_completion_OTHER_CFLAGS=""
-         bash_completiondir="${datadir}/bash-completion/completions"])
+    [PKG_CHECK_MODULES([bash_completion], [bash-completion >= 2.0.0], [],
+        [
+          bash_completion_INCLUDEDIR=""
+          bash_completion_OTHER_CFLAGS=""
+          bash_completiondir="${datadir}/bash-completion/completions"
+        ])
      AC_SUBST([bash_completion_PKG], ['bash-completion >= 2.0.0'])
      AC_SUBST([bash_completion_CPPFLAGS], [${bash_completion_CFLAGS}])
-     AS_IF([test x${bash_completion_INCLUDEDIR} != "x"],
-        [AC_SUBST([bash_completion_ISYS_CPPFLAGS], ["-isystem${bash_completion_INCLUDEDIR} ${bash_completion_OTHER_CFLAGS}"])],
-        [AC_SUBST([bash_completion_ISYS_CPPFLAGS], [${bash_completion_OTHER_CFLAGS}])])
+     AC_SUBST([bash_completion_ISYS_CPPFLAGS], [`echo ${bash_completion_CPPFLAGS} | $SED s/^-I/-isystem/g | $SED s/' -I'/' -isystem'/g`]])
      AC_MSG_NOTICE([bash_completion_CPPFLAGS : ${bash_completion_CPPFLAGS}])
      AC_MSG_NOTICE([bash_completion_ISYS_CPPFLAGS : ${bash_completion_ISYS_CPPFLAGS}])
      AC_MSG_NOTICE([bash_completion_OTHER_CFLAGS : ${bash_completion_OTHER_CFLAGS}])
@@ -288,40 +291,15 @@ AS_CASE([${enable_isystem}],[yes],
 
 AC_MSG_NOTICE([bash_completion_BUILD_CPPFLAGS : ${bash_completion_BUILD_CPPFLAGS}])
 
-# Require bitcoin-client of at least version 4.0.0 and output ${bitcoin_client_CPPFLAGS/LIBS/PKG}.
-#------------------------------------------------------------------------------
-PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 4.0.0],
-    [bitcoin_client_INCLUDEDIR="`$PKG_CONFIG --variable=includedir "libbitcoin-client >= 4.0.0" 2>/dev/null`"
-     bitcoin_client_OTHER_CFLAGS="`$PKG_CONFIG --cflags-only-other "libbitcoin-client >= 4.0.0" 2>/dev/null`"],
-    [AC_MSG_ERROR([libbitcoin-client >= 4.0.0 is required but was not found.])])
-AC_SUBST([bitcoin_client_PKG], ['libbitcoin-client >= 4.0.0'])
-AC_SUBST([bitcoin_client_CPPFLAGS], [${bitcoin_client_CFLAGS}])
-AS_IF([test x${bitcoin_client_INCLUDEDIR} != "x"],
-    [AC_SUBST([bitcoin_client_ISYS_CPPFLAGS], ["-isystem${bitcoin_client_INCLUDEDIR} ${bitcoin_client_OTHER_CFLAGS}"])],
-    [AC_SUBST([bitcoin_client_ISYS_CPPFLAGS], [${bitcoin_client_OTHER_CFLAGS}])])
-AC_MSG_NOTICE([bitcoin_client_CPPFLAGS : ${bitcoin_client_CPPFLAGS}])
-AC_MSG_NOTICE([bitcoin_client_ISYS_CPPFLAGS : ${bitcoin_client_ISYS_CPPFLAGS}])
-AC_MSG_NOTICE([bitcoin_client_OTHER_CFLAGS : ${bitcoin_client_OTHER_CFLAGS}])
-AC_MSG_NOTICE([bitcoin_client_INCLUDEDIR : ${bitcoin_client_INCLUDEDIR}])
-AC_MSG_NOTICE([bitcoin_client_LIBS : ${bitcoin_client_LIBS}])
-
-AS_CASE([${enable_isystem}],[yes],
-    [AC_SUBST([bitcoin_client_BUILD_CPPFLAGS], [${bitcoin_client_ISYS_CPPFLAGS}])],
-    [AC_SUBST([bitcoin_client_BUILD_CPPFLAGS], [${bitcoin_client_CPPFLAGS}])])
-
-AC_MSG_NOTICE([bitcoin_client_BUILD_CPPFLAGS : ${bitcoin_client_BUILD_CPPFLAGS}])
-
 # Require bitcoin-network of at least version 4.0.0 and output ${bitcoin_network_CPPFLAGS/LIBS/PKG}.
 #------------------------------------------------------------------------------
-PKG_CHECK_MODULES([bitcoin_network], [libbitcoin-network >= 4.0.0],
-    [bitcoin_network_INCLUDEDIR="`$PKG_CONFIG --variable=includedir "libbitcoin-network >= 4.0.0" 2>/dev/null`"
-     bitcoin_network_OTHER_CFLAGS="`$PKG_CONFIG --cflags-only-other "libbitcoin-network >= 4.0.0" 2>/dev/null`"],
-    [AC_MSG_ERROR([libbitcoin-network >= 4.0.0 is required but was not found.])])
+PKG_CHECK_MODULES([bitcoin_network], [libbitcoin-network >= 4.0.0], [],
+    [
+      AC_MSG_ERROR([libbitcoin-network >= 4.0.0 is required but was not found.])
+    ])
 AC_SUBST([bitcoin_network_PKG], ['libbitcoin-network >= 4.0.0'])
 AC_SUBST([bitcoin_network_CPPFLAGS], [${bitcoin_network_CFLAGS}])
-AS_IF([test x${bitcoin_network_INCLUDEDIR} != "x"],
-    [AC_SUBST([bitcoin_network_ISYS_CPPFLAGS], ["-isystem${bitcoin_network_INCLUDEDIR} ${bitcoin_network_OTHER_CFLAGS}"])],
-    [AC_SUBST([bitcoin_network_ISYS_CPPFLAGS], [${bitcoin_network_OTHER_CFLAGS}])])
+AC_SUBST([bitcoin_network_ISYS_CPPFLAGS], [`echo ${bitcoin_network_CPPFLAGS} | $SED s/^-I/-isystem/g | $SED s/' -I'/' -isystem'/g`]])
 AC_MSG_NOTICE([bitcoin_network_CPPFLAGS : ${bitcoin_network_CPPFLAGS}])
 AC_MSG_NOTICE([bitcoin_network_ISYS_CPPFLAGS : ${bitcoin_network_ISYS_CPPFLAGS}])
 AC_MSG_NOTICE([bitcoin_network_OTHER_CFLAGS : ${bitcoin_network_OTHER_CFLAGS}])
@@ -333,18 +311,6 @@ AS_CASE([${enable_isystem}],[yes],
     [AC_SUBST([bitcoin_network_BUILD_CPPFLAGS], [${bitcoin_network_CPPFLAGS}])])
 
 AC_MSG_NOTICE([bitcoin_network_BUILD_CPPFLAGS : ${bitcoin_network_BUILD_CPPFLAGS}])
-
-# Require dl if on linux and output ${dl_LIBS}.
-#------------------------------------------------------------------------------
-
-AS_CASE([${host_os}],
-    [*linux*],
-    [AC_CHECK_LIB([dl], [dlopen],
-        [AC_SUBST([dl_LIBS], [-ldl])],
-        [AC_MSG_ERROR([dl library is required but was not found.])])],
-    [AC_SUBST([dl_LIBS], [])])
-
-AC_MSG_NOTICE([dl_LIBS : ${dl_LIBS}])
 
 
 # Process outputs into templates.
