@@ -8,34 +8,34 @@
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="include">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000003}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\bitcoin">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000004}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\bitcoin\explorer">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000005}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\bitcoin\explorer\commands">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000006}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\bitcoin\explorer\config">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000007}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\bitcoin\explorer\impl">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000008}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resource">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000009}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000000}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\commands">
+    <Filter Include="include\bitcoin">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000001}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\config">
+    <Filter Include="include\bitcoin\explorer">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\bitcoin\explorer\commands">
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000003}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\bitcoin\explorer\config">
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\bitcoin\explorer\impl">
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000007}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\commands">
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000008}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\config">
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000009}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -444,14 +444,14 @@
     <ClCompile Include="..\..\..\..\src\parser.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\prop_tree.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\builds\msvc\resource.h">
+      <Filter>resource</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer.hpp">
       <Filter>include\bitcoin</Filter>
     </ClInclude>
@@ -869,23 +869,14 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\parser.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\prop_tree.hpp">
-      <Filter>include\bitcoin\explorer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\version.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\resource.h">
-      <Filter>resource</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\include\bitcoin\explorer\impl\prop_tree.ipp">
-      <Filter>include\bitcoin\explorer\impl</Filter>
-    </None>
     <None Include="..\..\..\..\include\bitcoin\explorer\impl\utility.ipp">
       <Filter>include\bitcoin\explorer\impl</Filter>
     </None>
@@ -895,7 +886,7 @@
     <Natvis Include="..\..\debug.natvis" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\resource.rc">
+    <ResourceCompile Include="..\..\..\..\builds\msvc\resource.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
   </ItemGroup>

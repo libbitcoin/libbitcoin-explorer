@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Copyright (c) 2014-2025 libbitcoin-explorer developers (see COPYING).
+// Copyright (c) 2014-2026 libbitcoin-explorer developers (see COPYING).
 //
 //        GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 //
@@ -14,6 +14,7 @@
  * Maintainers: Do not include this header internal to this library.
  */
 
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>

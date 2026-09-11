@@ -4,15 +4,6 @@
             "path": "../../../libbitcoin-system"
         },
         {
-            "path": "../../../libbitcoin-protocol"
-        },
-        {
-            "path": "../../../libbitcoin-client"
-        },
-        {
-            "path": "../../../libbitcoin-network"
-        },
-        {
             "path": "../../../libbitcoin-explorer"
         }
     ],

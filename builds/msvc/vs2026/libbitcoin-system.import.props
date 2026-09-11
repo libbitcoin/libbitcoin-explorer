@@ -20,7 +20,10 @@
     <!--<Option-512>false</Option-512>-->
     <!--<Option-256>true</Option-256>-->
     <!--<Option-128>true</Option-128>-->
-    <Option-sha>false</Option-sha>
+    <Option-sha Condition="'$(Option-sha)' == ''">false</Option-sha>
+    <Option-secp256k1 Condition="'$(Option-secp256k1)' == ''">true</Option-secp256k1>
+    <Option-ultrafast Condition="'$(Option-ultrafast)' == ''">false</Option-ultrafast>
+    <Option-cuda Condition="'$(Option-cuda)' == ''">false</Option-cuda>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -34,8 +37,11 @@
 
   <!-- Messages -->
 
-  <Target Name="OptionInfo" BeforeTargets="PrepareForBuild">
+  <Target Name="SystemOptionInfo" BeforeTargets="PrepareForBuild">
     <Message Text="Option-sha        : $(Option-sha)" Importance="high"/>
+    <Message Text="Option-secp256k1  : $(Option-secp256k1)" Importance="high"/>
+    <Message Text="Option-ultrafast  : $(Option-ultrafast)" Importance="high"/>
+    <Message Text="Option-cuda       : $(Option-cuda)" Importance="high"/>
     <!--<Message Text="Option-512        : $(Option-512)" Importance="high"/>-->
     <!--<Message Text="Option-256        : $(Option-256)" Importance="high"/>-->
     <!--<Message Text="Option-128        : $(Option-128)" Importance="high"/>-->
@@ -48,7 +54,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libbitcoin-system\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <!-- NOMINMAX enables use of std::min/max without conflict. -->
       <!-- WIN32_LEAN_AND_MEAN avoids inclusion of certain headers, winsock.h conflicts with boost and protocol use of winsock2.h. -->
-      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;NOMINMAX;_WIN32_WINNT=0x0602;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;NOMINMAX;_WIN32_WINNT=0x0A00;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Linkage-libbitcoin-system)' == 'static' Or '$(Linkage-libbitcoin-system)' == 'ltcg'">BC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="$(Configuration.IndexOf('Debug')) != -1">_CRTDBG_MAP_ALLOC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!-- Enable use of CPU intrinsics. -->

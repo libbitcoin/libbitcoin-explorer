@@ -1,665 +1,413 @@
 ###############################################################################
-#  Copyright (c) 2014-2025 libbitcoin-explorer developers (see COPYING).
+#  Copyright (c) 2014-2026 libbitcoin-explorer developers (see COPYING).
 #
 #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 #
 ###############################################################################
+cmake_minimum_required(VERSION 3.30 FATAL_ERROR)
 
-# libbitcoin-explorer project configuration.
-#------------------------------------------------------------------------------
-cmake_minimum_required(VERSION 3.18 FATAL_ERROR)
+find_package(Git QUIET)
 
-project(libbitcoin-explorer LANGUAGES C CXX)
+set( GIT_COMMIT_HASH "unknown" )
+set( GIT_COMMIT_HEIGHT 0 )
+set( GIT_DIRTY 0 )
+set( GIT_ORIGIN_URL "https://github.com/libbitcoin/libbitcoin-explorer" )
 
-enable_testing()
+if ( GIT_EXECUTABLE )
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_COMMIT_HASH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET )
 
-list( APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/modules" )
-include(CheckIncludeFiles)
-include(CheckSymbolExists)
-include(CheckCXXCompilerFlag)
-include(CheckCXXSourceCompiles)
-include(CheckLinkerFlag)
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} rev-list --count HEAD
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_COMMIT_HEIGHT
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET )
 
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+    if ( NOT GIT_COMMIT_HEIGHT )
+        set( GIT_COMMIT_HEIGHT 0 )
+    endif()
 
-if (MSVC)
-  set( CANONICAL_LIB_NAME libbitcoin-explorer )
-else ()
-  set( CANONICAL_LIB_NAME bitcoin-explorer )
-  find_package( PkgConfig REQUIRED )
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} remote get-url origin
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_ORIGIN_URL
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET )
 
-  set( prefix "${CMAKE_PREFIX_PATH}" )
-  set( exec_prefix "\${prefix}" )
-  set( libdir "\${exec_prefix}/lib" )
-  set( includedir "\${exec_prefix}/include" )
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} status --porcelain
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_STATUS
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET )
 
-  set( CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib" )
-
-  set( PACKAGE_VERSION "4.0.0" )
-  set( VERSION "${PACKAGE_VERSION}" )
-endif ()
-
-set( CMAKE_CXX_STANDARD 20 )
-set( CMAKE_CXX_STANDARD_REQUIRED ON )
-
-# Add compiler options
-#------------------------------------------------------------------------------
-# Warn on all stuff.
-check_cxx_compiler_flag( "-Wall" HAS_FLAG_WALL )
-if ( HAS_FLAG_WALL )
-    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wall> )
-else()
-    message( FATAL_ERROR "Compiler does not support -Wall" )
-endif()
-
-# Warn on extra stuff.
-check_cxx_compiler_flag( "-Wextra" HAS_FLAG_WEXTRA )
-if ( HAS_FLAG_WEXTRA )
-    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wextra> )
-else()
-    message( FATAL_ERROR "Compiler does not support -Wextra" )
-endif()
-
-# Disallow warning on style order of declarations.
-check_cxx_compiler_flag( "-Wno-reorder" HAS_FLAG_WNO-REORDER )
-if ( HAS_FLAG_WNO-REORDER )
-    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-reorder> )
-else()
-    message( FATAL_ERROR "Compiler does not support -Wno-reorder" )
-endif()
-
-# Suppress warning for incomplete field initialization.
-check_cxx_compiler_flag( "-Wno-missing-field-initializers" HAS_FLAG_WNO-MISSING-FIELD-INITIALIZERS )
-if ( HAS_FLAG_WNO-MISSING-FIELD-INITIALIZERS )
-    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-missing-field-initializers> )
-else()
-    message( FATAL_ERROR "Compiler does not support -Wno-missing-field-initializers" )
-endif()
-
-# Conform to style.
-check_cxx_compiler_flag( "-Wno-missing-braces" HAS_FLAG_WNO-MISSING-BRACES )
-if ( HAS_FLAG_WNO-MISSING-BRACES )
-    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-missing-braces> )
-else()
-    message( FATAL_ERROR "Compiler does not support -Wno-missing-braces" )
-endif()
-
-# Ignore comments within comments or commenting of backslash extended lines.
-check_cxx_compiler_flag( "-Wno-comment" HAS_FLAG_WNO-COMMENT )
-if ( HAS_FLAG_WNO-COMMENT )
-    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-comment> )
-else()
-    message( FATAL_ERROR "Compiler does not support -Wno-comment" )
-endif()
-
-# Suppress warning for copy of implicitly generated copy constructor.
-check_cxx_compiler_flag( "-Wno-deprecated-copy" HAS_FLAG_WNO-DEPRECATED-COPY )
-if ( HAS_FLAG_WNO-DEPRECATED-COPY )
-    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-deprecated-copy> )
-else()
-    message( FATAL_ERROR "Compiler does not support -Wno-deprecated-copy" )
-endif()
-
-# Clean up bx generated code.
-check_cxx_compiler_flag( "-Wno-unused-parameter" HAS_FLAG_WNO-UNUSED-PARAMETER )
-if ( HAS_FLAG_WNO-UNUSED-PARAMETER )
-    add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-unused-parameter> )
-else()
-    message( FATAL_ERROR "Compiler does not support -Wno-unused-parameter" )
-endif()
-
-# Conflict in stdlib under clang.
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    check_cxx_compiler_flag( "-Wno-mismatched-tags" HAS_FLAG_WNO-MISMATCHED-TAGS )
-    if ( HAS_FLAG_WNO-MISMATCHED-TAGS )
-        add_compile_options( $<$<COMPILE_LANGUAGE:CXX>:-Wno-mismatched-tags> )
-    else()
-        message( FATAL_ERROR "Compiler does not support -Wno-mismatched-tags" )
+    if ( GIT_STATUS )
+        set( GIT_DIRTY 1 )
     endif()
 endif()
 
-# Implement -Dbash-completiondir and output ${bash-completiondir} and declare bash-completiondir.
-#------------------------------------------------------------------------------
-set( bash-completiondir "no" CACHE BOOL "Install bash completion support, optionally specifying the directory. This option may require elevated permissions." )
+set( LIBBITCOIN_VERSION_MAJOR 4 )
+set( LIBBITCOIN_VERSION_MINOR 0 )
+set( LIBBITCOIN_VERSION_PATCH ${GIT_COMMIT_HEIGHT} )
 
-# Implement -Dpkgconfigdir and output ${pkgconfigdir}.
-#------------------------------------------------------------------------------
-set( pkgconfigdir "${libdir}/pkgconfig" CACHE PATH "Path to pkgconfig directory." )
+project( libbitcoin-explorer
+  VERSION ${LIBBITCOIN_VERSION_MAJOR}.${LIBBITCOIN_VERSION_MINOR}.${LIBBITCOIN_VERSION_PATCH}
+  DESCRIPTION "Bitcoin Command Line Tool"
+  LANGUAGES C CXX )
 
-# Implement -Dwith-tests and declare with-tests.
-#------------------------------------------------------------------------------
-set( with-tests "yes" CACHE BOOL "Compile with unit tests." )
 
-# Implement -Dwith-console and declare with-console.
-#------------------------------------------------------------------------------
-set( with-console "yes" CACHE BOOL "Compile console application." )
+set( repository_root_dir "${CMAKE_CURRENT_SOURCE_DIR}/../.." )
 
-# Implement -Denable-ndebug and define NDEBUG.
-#------------------------------------------------------------------------------
-set( enable-ndebug "yes" CACHE BOOL "Compile without debug assertions." )
-
-if (enable-ndebug)
-    add_definitions( -DNDEBUG )
+if ( MSVC )
+  set( CMAKE_STATIC_LIBRARY_PREFIX "lib" )
+  set( CMAKE_SHARED_LIBRARY_PREFIX "lib" )
 endif()
 
-# Inherit -Denable-shared and define BOOST_ALL_DYN_LINK.
 #------------------------------------------------------------------------------
-if (BUILD_SHARED_LIBS)
-    add_definitions( -DBOOST_ALL_DYN_LINK )
-endif()
+# Project options.
+#------------------------------------------------------------------------------
+option( with-tests "Compile with unit tests." ON )
+option( with-console "Compile with console application." ON )
 
-if (BUILD_SHARED_LIBS)
-    set( Boost_USE_STATIC_LIBS "off" )
+#------------------------------------------------------------------------------
+# Dependencies.
+#------------------------------------------------------------------------------
+if ( BUILD_SHARED_LIBS )
+  set( libbitcoin-system_USE_STATIC_LIBS "OFF" )
+  set( Boost_USE_STATIC_LIBS "OFF" )
 else()
-    set( Boost_USE_STATIC_LIBS "on" )
+  set( libbitcoin-system_USE_STATIC_LIBS "ON" )
+  set( Boost_USE_STATIC_LIBS "ON" )
 endif()
 
-# Find boost
+find_package( libbitcoin-system 4.0.0 REQUIRED )
+
+find_package( Boost 1.86.0 REQUIRED
+  COMPONENTS
+    unit_test_framework
+)
+
 #------------------------------------------------------------------------------
-find_package( Boost 1.86.0 REQUIRED COMPONENTS
-    unit_test_framework )
-
-set( boost_unit_test_framework_LIBS "-lboost_unit_test_framework" )
-
-set( Boost_LIBRARY_DIR $<IF:$<BOOL:${enable-ndebug}>,"${Boost_LIBRARY_DIR_RELEASE}","${Boost_LIBRARY_DIR_DEBUG}">)
-
-set( boost_CPPFLAGS "-I${Boost_INCLUDE_DIR}" )
-set( boost_LDFLAGS "-L${Boost_LIBRARY_DIR}" )
-
-# Find bash-completion
+# Compiler options.
 #------------------------------------------------------------------------------
-if (bash-completiondir)
-    find_package( Bash-Completion 2.0.0 REQUIRED )
+include(CheckCCompilerFlag)
+include(CheckCXXCompilerFlag)
+include(CheckCXXSourceCompiles)
+
+check_cxx_compiler_flag( "-Wall" HAS_FLAG_WALL )
+if ( !HAS_FLAG_WALL )
+    message( FATAL_ERROR "Compiler does not support '-Wall'." )
 endif()
 
-# Find bitcoin-client
-#------------------------------------------------------------------------------
-find_package( Bitcoin-Client 4.0.0 REQUIRED )
-
-# Find bitcoin-network
-#------------------------------------------------------------------------------
-find_package( Bitcoin-Network 4.0.0 REQUIRED )
-
-# Find dl
-#------------------------------------------------------------------------------
-if ((${CMAKE_SYSTEM_NAME} MATCHES "Linux"))
-    find_package( Dl REQUIRED )
+check_cxx_compiler_flag( "-Wextra" HAS_FLAG_WEXTRA )
+if ( !HAS_FLAG_WEXTRA )
+    message( FATAL_ERROR "Compiler does not support '-Wextra'." )
 endif()
 
-# Define project common includes for build.
-#------------------------------------------------------------------------------
-if (BUILD_SHARED_LIBS)
-    set( bitcoin_client_FOR_BUILD_INCLUDE_DIRS ${bitcoin_client_INCLUDE_DIRS} CACHE STRING "Placeholder" )
-    set( bitcoin_network_FOR_BUILD_INCLUDE_DIRS ${bitcoin_network_INCLUDE_DIRS} CACHE STRING "Placeholder" )
-else()
-    set( bitcoin_client_FOR_BUILD_INCLUDE_DIRS ${bitcoin_client_STATIC_INCLUDE_DIRS} CACHE STRING "Placeholder" )
-    set( bitcoin_network_FOR_BUILD_INCLUDE_DIRS ${bitcoin_network_STATIC_INCLUDE_DIRS} CACHE STRING "Placeholder" )
+check_cxx_compiler_flag( "-Wno-reorder" HAS_FLAG_WNO-REORDER )
+if ( !HAS_FLAG_WNO-REORDER )
+    message( FATAL_ERROR "Compiler does not support '-Wno-reorder'." )
 endif()
 
-# Define project common includes directories
-#------------------------------------------------------------------------------
-include_directories( SYSTEM
-    ${bitcoin_client_FOR_BUILD_INCLUDE_DIRS}
-    ${bitcoin_network_FOR_BUILD_INCLUDE_DIRS}
-    ${dl_INCLUDE_DIRS} )
-
-# Define project common library directories for build.
-#------------------------------------------------------------------------------
-if (BUILD_SHARED_LIBS)
-    set( bitcoin_client_FOR_BUILD_LIBRARY_DIRS ${bitcoin_client_LIBRARY_DIRS} CACHE STRING "Placeholder" )
-    set( bitcoin_network_FOR_BUILD_LIBRARY_DIRS ${bitcoin_network_LIBRARY_DIRS} CACHE STRING "Placeholder" )
-else()
-    set( bitcoin_client_FOR_BUILD_LIBRARY_DIRS ${bitcoin_client_STATIC_LIBRARY_DIRS} CACHE STRING "Placeholder" )
-    set( bitcoin_network_FOR_BUILD_LIBRARY_DIRS ${bitcoin_network_STATIC_LIBRARY_DIRS} CACHE STRING "Placeholder" )
+check_cxx_compiler_flag( "-Wno-missing-field-initializers" HAS_FLAG_WNO-MISSING-FIELD-INITIALIZERS )
+if ( !HAS_FLAG_WNO-MISSING-FIELD-INITIALIZERS )
+    message( FATAL_ERROR "Compiler does not support '-Wno-missing-field-initializers'." )
 endif()
 
-# Define project common library directories
-#------------------------------------------------------------------------------
-link_directories(
-    ${bitcoin_client_FOR_BUILD_LIBRARY_DIRS}
-    ${bitcoin_network_FOR_BUILD_LIBRARY_DIRS}
-    ${dl_LIBRARY_DIRS} )
-
-# Define project common linker flags.
-#------------------------------------------------------------------------------
-check_linker_flag(CXX "-no_fixup_chains" "no_fixup_chains_FOUND")
-
-if (no_fixup_chains_FOUND)
-    add_link_options("-no_fixup_chains")
+check_cxx_compiler_flag( "-Wno-missing-braces" HAS_FLAG_WNO-MISSING-BRACES )
+if ( !HAS_FLAG_WNO-MISSING-BRACES )
+    message( FATAL_ERROR "Compiler does not support '-Wno-missing-braces'." )
 endif()
 
-check_linker_flag(CXX "-fstack-protector" "fstack_protector_FOUND")
-
-if (fstack_protector_FOUND)
-    add_link_options("-fstack-protector")
+check_cxx_compiler_flag( "-Wno-comment" HAS_FLAG_WNO-COMMENT )
+if ( !HAS_FLAG_WNO-COMMENT )
+    message( FATAL_ERROR "Compiler does not support '-Wno-comment'." )
 endif()
 
-check_linker_flag(CXX "-fstack-protector-all" "fstack_protector_all_FOUND")
-
-if (fstack_protector_all_FOUND)
-    add_link_options("-fstack-protector-all")
+check_cxx_compiler_flag( "-Wno-deprecated-copy" HAS_FLAG_WNO-DEPRECATED-COPY )
+if ( !HAS_FLAG_WNO-DEPRECATED-COPY )
+    message( FATAL_ERROR "Compiler does not support '-Wno-deprecated-copy'." )
 endif()
 
-
-# Define common library usage for build.
-#------------------------------------------------------------------------------
-if (BUILD_SHARED_LIBS)
-    set( bitcoin_client_FOR_BUILD_LIBRARIES ${bitcoin_client_LIBRARIES} CACHE STRING "Placeholder" )
-    set( bitcoin_network_FOR_BUILD_LIBRARIES ${bitcoin_network_LIBRARIES} CACHE STRING "Placeholder" )
-else()
-    set( bitcoin_client_FOR_BUILD_LIBRARIES ${bitcoin_client_STATIC_LIBRARIES} CACHE STRING "Placeholder" )
-    set( bitcoin_network_FOR_BUILD_LIBRARIES ${bitcoin_network_STATIC_LIBRARIES} CACHE STRING "Placeholder" )
+if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" )
+  check_cxx_compiler_flag( "-Wno-mismatched-tags" HAS_FLAG_WNO-MISMATCHED-TAGS )
+  if ( !HAS_FLAG_WNO-MISMATCHED-TAGS )
+      message( FATAL_ERROR "Compiler does not support '-Wno-mismatched-tags'." )
+  endif()
 endif()
 
-# Define project common libraries.
-#------------------------------------------------------------------------------
-link_libraries(
-    ${bitcoin_client_FOR_BUILD_LIBRARIES}
-    ${bitcoin_network_FOR_BUILD_LIBRARIES}
-    ${dl_LIBRARIES} )
-
-add_definitions(
-    -DSYSCONFDIR=\"${sysconfdir}\" )
-
-# Define ${CANONICAL_LIB_NAME} project.
-#------------------------------------------------------------------------------
-add_library( ${CANONICAL_LIB_NAME}
-    "../../src/callback_state.cpp"
-    "../../src/dispatch.cpp"
-    "../../src/display.cpp"
-    "../../src/generated.cpp"
-    "../../src/parser.cpp"
-    "../../src/prop_tree.cpp"
-    "../../src/utility.cpp"
-    "../../src/commands/address-decode.cpp"
-    "../../src/commands/address-embed.cpp"
-    "../../src/commands/address-encode.cpp"
-    "../../src/commands/address-to-key.cpp"
-    "../../src/commands/base16-decode.cpp"
-    "../../src/commands/base16-encode.cpp"
-    "../../src/commands/base32-decode.cpp"
-    "../../src/commands/base32-encode.cpp"
-    "../../src/commands/base58-decode.cpp"
-    "../../src/commands/base58-encode.cpp"
-    "../../src/commands/base58check-decode.cpp"
-    "../../src/commands/base58check-encode.cpp"
-    "../../src/commands/base64-decode.cpp"
-    "../../src/commands/base64-encode.cpp"
-    "../../src/commands/bech32-decode.cpp"
-    "../../src/commands/bech32-encode.cpp"
-    "../../src/commands/bitcoin160.cpp"
-    "../../src/commands/bitcoin256.cpp"
-    "../../src/commands/broadcast-tx.cpp"
-    "../../src/commands/btc-to-satoshi.cpp"
-    "../../src/commands/cert-new.cpp"
-    "../../src/commands/cert-public.cpp"
-    "../../src/commands/checked-decode.cpp"
-    "../../src/commands/checked-encode.cpp"
-    "../../src/commands/ec-add-secrets.cpp"
-    "../../src/commands/ec-add.cpp"
-    "../../src/commands/ec-decompress.cpp"
-    "../../src/commands/ec-multiply-secrets.cpp"
-    "../../src/commands/ec-multiply.cpp"
-    "../../src/commands/ec-new.cpp"
-    "../../src/commands/ec-to-address.cpp"
-    "../../src/commands/ec-to-ek.cpp"
-    "../../src/commands/ec-to-public.cpp"
-    "../../src/commands/ec-to-wif.cpp"
-    "../../src/commands/ec-to-witness.cpp"
-    "../../src/commands/ek-address.cpp"
-    "../../src/commands/ek-new.cpp"
-    "../../src/commands/ek-public-to-address.cpp"
-    "../../src/commands/ek-public-to-ec.cpp"
-    "../../src/commands/ek-public.cpp"
-    "../../src/commands/ek-to-address.cpp"
-    "../../src/commands/ek-to-ec.cpp"
-    "../../src/commands/electrum-decode.cpp"
-    "../../src/commands/electrum-new.cpp"
-    "../../src/commands/electrum-to-seed.cpp"
-    "../../src/commands/fetch-balance.cpp"
-    "../../src/commands/fetch-block-hashes.cpp"
-    "../../src/commands/fetch-block-height.cpp"
-    "../../src/commands/fetch-block.cpp"
-    "../../src/commands/fetch-filter-checkpoint.cpp"
-    "../../src/commands/fetch-filter-headers.cpp"
-    "../../src/commands/fetch-filter.cpp"
-    "../../src/commands/fetch-header.cpp"
-    "../../src/commands/fetch-height.cpp"
-    "../../src/commands/fetch-history.cpp"
-    "../../src/commands/fetch-public-key.cpp"
-    "../../src/commands/fetch-tx-index.cpp"
-    "../../src/commands/fetch-tx.cpp"
-    "../../src/commands/fetch-utxo.cpp"
-    "../../src/commands/get-filter-checkpoint.cpp"
-    "../../src/commands/get-filter-headers.cpp"
-    "../../src/commands/get-filters.cpp"
-    "../../src/commands/hd-new.cpp"
-    "../../src/commands/hd-private.cpp"
-    "../../src/commands/hd-public.cpp"
-    "../../src/commands/hd-to-address.cpp"
-    "../../src/commands/hd-to-ec.cpp"
-    "../../src/commands/hd-to-public.cpp"
-    "../../src/commands/hd-to-wif.cpp"
-    "../../src/commands/help.cpp"
-    "../../src/commands/input-set.cpp"
-    "../../src/commands/input-sign.cpp"
-    "../../src/commands/input-validate.cpp"
-    "../../src/commands/match-neutrino-address.cpp"
-    "../../src/commands/match-neutrino-script.cpp"
-    "../../src/commands/message-sign.cpp"
-    "../../src/commands/message-validate.cpp"
-    "../../src/commands/mnemonic-decode.cpp"
-    "../../src/commands/mnemonic-encode.cpp"
-    "../../src/commands/mnemonic-to-seed.cpp"
-    "../../src/commands/put-tx.cpp"
-    "../../src/commands/qrcode.cpp"
-    "../../src/commands/ripemd160.cpp"
-    "../../src/commands/satoshi-to-btc.cpp"
-    "../../src/commands/script-decode.cpp"
-    "../../src/commands/script-encode.cpp"
-    "../../src/commands/script-to-address.cpp"
-    "../../src/commands/script-to-key.cpp"
-    "../../src/commands/script-to-witness.cpp"
-    "../../src/commands/seed.cpp"
-    "../../src/commands/send-tx.cpp"
-    "../../src/commands/settings.cpp"
-    "../../src/commands/sha160.cpp"
-    "../../src/commands/sha256.cpp"
-    "../../src/commands/sha512.cpp"
-    "../../src/commands/stealth-decode.cpp"
-    "../../src/commands/stealth-encode.cpp"
-    "../../src/commands/stealth-public.cpp"
-    "../../src/commands/stealth-secret.cpp"
-    "../../src/commands/stealth-shared.cpp"
-    "../../src/commands/subscribe-block.cpp"
-    "../../src/commands/subscribe-tx.cpp"
-    "../../src/commands/token-new.cpp"
-    "../../src/commands/tx-decode.cpp"
-    "../../src/commands/tx-encode.cpp"
-    "../../src/commands/tx-sign.cpp"
-    "../../src/commands/uri-decode.cpp"
-    "../../src/commands/uri-encode.cpp"
-    "../../src/commands/validate-tx.cpp"
-    "../../src/commands/version.cpp"
-    "../../src/commands/watch-key.cpp"
-    "../../src/commands/watch-tx.cpp"
-    "../../src/commands/wif-to-ec.cpp"
-    "../../src/commands/wif-to-public.cpp"
-    "../../src/commands/witness-to-key.cpp"
-    "../../src/commands/wrap-decode.cpp"
-    "../../src/commands/wrap-encode.cpp"
-    "../../src/config/address.cpp"
-    "../../src/config/algorithm.cpp"
-    "../../src/config/btc.cpp"
-    "../../src/config/byte.cpp"
-    "../../src/config/bytes.cpp"
-    "../../src/config/electrum.cpp"
-    "../../src/config/encoding.cpp"
-    "../../src/config/endorsement.cpp"
-    "../../src/config/hd_key.cpp"
-    "../../src/config/language.cpp"
-    "../../src/config/sighash.cpp"
-    "../../src/config/signature.cpp"
-    "../../src/config/witness.cpp" )
-
-# ${CANONICAL_LIB_NAME} project specific include directory normalization for build.
-#------------------------------------------------------------------------------
-if (BUILD_SHARED_LIBS)
-    set( bitcoin_client_FOR_BUILD_INCLUDE_DIRS ${bitcoin_client_INCLUDE_DIRS} CACHE STRING "Placeholder" )
-    set( bitcoin_network_FOR_BUILD_INCLUDE_DIRS ${bitcoin_network_INCLUDE_DIRS} CACHE STRING "Placeholder" )
-else()
-    set( bitcoin_client_FOR_BUILD_INCLUDE_DIRS ${bitcoin_client_STATIC_INCLUDE_DIRS} CACHE STRING "Placeholder" )
-    set( bitcoin_network_FOR_BUILD_INCLUDE_DIRS ${bitcoin_network_STATIC_INCLUDE_DIRS} CACHE STRING "Placeholder" )
+check_cxx_compiler_flag( "-fstack-protector-all" HAS_FLAG_FSTACK-PROTECTOR-ALL )
+if ( !HAS_FLAG_FSTACK-PROTECTOR-ALL )
+    message( FATAL_ERROR "Compiler does not support '-fstack-protector-all'." )
 endif()
 
-# ${CANONICAL_LIB_NAME} project specific include directories.
-#------------------------------------------------------------------------------
-target_include_directories( ${CANONICAL_LIB_NAME} PRIVATE
-    "../../include"
-    ${bitcoin_client_FOR_BUILD_INCLUDE_DIRS}
-    ${bitcoin_network_FOR_BUILD_INCLUDE_DIRS}
-    ${dl_INCLUDE_DIRS} )
-
-target_include_directories( ${CANONICAL_LIB_NAME} PUBLIC
-"../../include" )
-
-# ${CANONICAL_LIB_NAME} project specific libraries noramalization for build.
-#------------------------------------------------------------------------------
-if (BUILD_SHARED_LIBS)
-    set( bitcoin_client_FOR_BUILD_LIBRARIES ${bitcoin_client_LIBRARIES} CACHE STRING "Placeholder" )
-    set( bitcoin_network_FOR_BUILD_LIBRARIES ${bitcoin_network_LIBRARIES} CACHE STRING "Placeholder" )
-else()
-    set( bitcoin_client_FOR_BUILD_LIBRARIES ${bitcoin_client_STATIC_LIBRARIES} CACHE STRING "Placeholder" )
-    set( bitcoin_network_FOR_BUILD_LIBRARIES ${bitcoin_network_STATIC_LIBRARIES} CACHE STRING "Placeholder" )
+check_cxx_compiler_flag( "-Wno-ignored-attributes" HAS_FLAG_WNO-IGNORED-ATTRIBUTES )
+if ( !HAS_FLAG_WNO-IGNORED-ATTRIBUTES )
+    message( FATAL_ERROR "Compiler does not support '-Wno-ignored-attributes'." )
 endif()
 
-# ${CANONICAL_LIB_NAME} project specific libraries/linker flags.
-#------------------------------------------------------------------------------
-target_link_libraries( ${CANONICAL_LIB_NAME}
-    ${bitcoin_client_FOR_BUILD_LIBRARIES}
-    ${bitcoin_network_FOR_BUILD_LIBRARIES}
-    ${dl_LIBRARIES} )
-
-# Define bx project.
-#------------------------------------------------------------------------------
-if (with-console)
-    add_executable( bx
-        "../../console/libbitcoin.ico"
-        "../../console/main.cpp" )
-
-#     bx project specific include directories.
-#------------------------------------------------------------------------------
-    target_include_directories( bx PRIVATE
-        "../../include" )
-
-#     bx project specific libraries/linker flags.
-#------------------------------------------------------------------------------
-    target_link_libraries( bx
-        ${CANONICAL_LIB_NAME} )
-
+check_cxx_compiler_flag( "-Wno-long-long" HAS_FLAG_WNO-LONG-LONG )
+if ( !HAS_FLAG_WNO-LONG-LONG )
+    message( FATAL_ERROR "Compiler does not support '-Wno-long-long'." )
 endif()
 
-# Define libbitcoin-explorer-test project.
-#------------------------------------------------------------------------------
-if (with-tests)
-    add_executable( libbitcoin-explorer-test
-        "../../test/generated__broadcast.cpp"
-        "../../test/generated__find.cpp"
-        "../../test/generated__formerly.cpp"
-        "../../test/generated__symbol.cpp"
-        "../../test/main.cpp"
-        "../../test/commands/address-decode.cpp"
-        "../../test/commands/address-embed.cpp"
-        "../../test/commands/address-encode.cpp"
-        "../../test/commands/address-to-key.cpp"
-        "../../test/commands/base16-decode.cpp"
-        "../../test/commands/base16-encode.cpp"
-        "../../test/commands/base32-decode.cpp"
-        "../../test/commands/base32-encode.cpp"
-        "../../test/commands/base58-decode.cpp"
-        "../../test/commands/base58-encode.cpp"
-        "../../test/commands/base58check-decode.cpp"
-        "../../test/commands/base58check-encode.cpp"
-        "../../test/commands/base64-decode.cpp"
-        "../../test/commands/base64-encode.cpp"
-        "../../test/commands/bech32-decode.cpp"
-        "../../test/commands/bech32-encode.cpp"
-        "../../test/commands/bitcoin160.cpp"
-        "../../test/commands/bitcoin256.cpp"
-        "../../test/commands/broadcast-tx.cpp"
-        "../../test/commands/btc-to-satoshi.cpp"
-        "../../test/commands/cert-new.cpp"
-        "../../test/commands/cert-public.cpp"
-        "../../test/commands/checked-decode.cpp"
-        "../../test/commands/checked-encode.cpp"
-        "../../test/commands/command.hpp"
-        "../../test/commands/ec-add-secrets.cpp"
-        "../../test/commands/ec-add.cpp"
-        "../../test/commands/ec-decompress.cpp"
-        "../../test/commands/ec-multiply-secrets.cpp"
-        "../../test/commands/ec-multiply.cpp"
-        "../../test/commands/ec-new.cpp"
-        "../../test/commands/ec-to-address.cpp"
-        "../../test/commands/ec-to-ek.cpp"
-        "../../test/commands/ec-to-public.cpp"
-        "../../test/commands/ec-to-wif.cpp"
-        "../../test/commands/ec-to-witness.cpp"
-        "../../test/commands/ek-address.cpp"
-        "../../test/commands/ek-new.cpp"
-        "../../test/commands/ek-public-to-address.cpp"
-        "../../test/commands/ek-public-to-ec.cpp"
-        "../../test/commands/ek-public.cpp"
-        "../../test/commands/ek-to-address.cpp"
-        "../../test/commands/ek-to-ec.cpp"
-        "../../test/commands/electrum-decode.cpp"
-        "../../test/commands/electrum-new.cpp"
-        "../../test/commands/electrum-to-seed.cpp"
-        "../../test/commands/fetch-balance.cpp"
-        "../../test/commands/fetch-block.cpp"
-        "../../test/commands/fetch-header.cpp"
-        "../../test/commands/fetch-height.cpp"
-        "../../test/commands/fetch-history.cpp"
-        "../../test/commands/fetch-public-key.cpp"
-        "../../test/commands/fetch-tx-index.cpp"
-        "../../test/commands/fetch-tx.cpp"
-        "../../test/commands/fetch-utxo.cpp"
-        "../../test/commands/get-filter-checkpoint.cpp"
-        "../../test/commands/get-filter-headers.cpp"
-        "../../test/commands/get-filters.cpp"
-        "../../test/commands/hd-new.cpp"
-        "../../test/commands/hd-private.cpp"
-        "../../test/commands/hd-public.cpp"
-        "../../test/commands/hd-to-address.cpp"
-        "../../test/commands/hd-to-ec.cpp"
-        "../../test/commands/hd-to-public.cpp"
-        "../../test/commands/hd-to-wif.cpp"
-        "../../test/commands/help.cpp"
-        "../../test/commands/input-set.cpp"
-        "../../test/commands/input-sign.cpp"
-        "../../test/commands/input-validate.cpp"
-        "../../test/commands/match-neutrino-address.cpp"
-        "../../test/commands/match-neutrino-script.cpp"
-        "../../test/commands/message-sign.cpp"
-        "../../test/commands/message-validate.cpp"
-        "../../test/commands/mnemonic-decode.cpp"
-        "../../test/commands/mnemonic-encode.cpp"
-        "../../test/commands/mnemonic-to-seed.cpp"
-        "../../test/commands/put-tx.cpp"
-        "../../test/commands/qrcode.cpp"
-        "../../test/commands/ripemd160.cpp"
-        "../../test/commands/satoshi-to-btc.cpp"
-        "../../test/commands/script-decode.cpp"
-        "../../test/commands/script-encode.cpp"
-        "../../test/commands/script-to-address.cpp"
-        "../../test/commands/script-to-key.cpp"
-        "../../test/commands/script-to-witness.cpp"
-        "../../test/commands/seed.cpp"
-        "../../test/commands/send-tx.cpp"
-        "../../test/commands/settings.cpp"
-        "../../test/commands/sha160.cpp"
-        "../../test/commands/sha256.cpp"
-        "../../test/commands/sha512.cpp"
-        "../../test/commands/stealth-decode.cpp"
-        "../../test/commands/stealth-encode.cpp"
-        "../../test/commands/stealth-public.cpp"
-        "../../test/commands/stealth-secret.cpp"
-        "../../test/commands/stealth-shared.cpp"
-        "../../test/commands/subscribe-block.cpp"
-        "../../test/commands/subscribe-tx.cpp"
-        "../../test/commands/token-new.cpp"
-        "../../test/commands/tx-decode.cpp"
-        "../../test/commands/tx-encode.cpp"
-        "../../test/commands/tx-sign.cpp"
-        "../../test/commands/uri-decode.cpp"
-        "../../test/commands/uri-encode.cpp"
-        "../../test/commands/validate-tx.cpp"
-        "../../test/commands/watch-key.cpp"
-        "../../test/commands/watch-tx.cpp"
-        "../../test/commands/wif-to-ec.cpp"
-        "../../test/commands/wif-to-public.cpp"
-        "../../test/commands/witness-to-key.cpp"
-        "../../test/commands/wrap-decode.cpp"
-        "../../test/commands/wrap-encode.cpp"
-        "../../test/config/address.cpp" )
-
-    add_test( NAME libbitcoin-explorer-test COMMAND libbitcoin-explorer-test
-            --run_test=generated,obsolete,offline,config,stub
-            --log_level=warning
-            --show_progress=no
-            --detect_memory_leak=0
-            --report_level=no
-            --build_info=yes )
-
-#     libbitcoin-explorer-test project specific include directories.
-#------------------------------------------------------------------------------
-    target_include_directories( libbitcoin-explorer-test PRIVATE
-        "../../include" )
-
-#     libbitcoin-explorer-test project specific libraries/linker flags.
-#------------------------------------------------------------------------------
-    target_link_libraries( libbitcoin-explorer-test
-        ${CANONICAL_LIB_NAME}
-        ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY} )
-
+if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" )
+  check_cxx_compiler_flag( "-fno-var-tracking-assignments" HAS_FLAG_FNO-VAR-TRACKING-ASSIGNMENTS )
+  if ( !HAS_FLAG_FNO-VAR-TRACKING-ASSIGNMENTS )
+      message( FATAL_ERROR "Compiler does not support '-fno-var-tracking-assignments'." )
+  endif()
 endif()
 
-# Manage pkgconfig installation.
 #------------------------------------------------------------------------------
-configure_file(
-  "../../libbitcoin-explorer.pc.in"
-  "libbitcoin-explorer.pc" @ONLY )
-
-install( FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/libbitcoin-explorer.pc"
-    DESTINATION "${pkgconfigdir}" )
-
-# Manage installation of docs.
+# Linker options.
 #------------------------------------------------------------------------------
-install( FILES
-    "../../AUTHORS"
-    "../../COPYING"
-    "../../ChangeLog"
-    "../../INSTALL"
-    "../../NEWS"
-    "../../README"
-    DESTINATION share/doc/libbitcoin-explorer )
+include(CheckLinkerFlag)
 
-# Manage ${CANONICAL_LIB_NAME} installation.
 #------------------------------------------------------------------------------
-install( TARGETS ${CANONICAL_LIB_NAME}
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-    PUBLIC_HEADER DESTINATION include )
+# libbitcoin-explorer library
+#------------------------------------------------------------------------------
+add_library( libbitcoin-explorer )
+add_library( bitcoin::explorer ALIAS libbitcoin-explorer )
 
-# Manage bx installation.
+target_compile_features( libbitcoin-explorer
+  PUBLIC
+    cxx_std_20
+)
+
+target_compile_options( libbitcoin-explorer
+  PRIVATE
+    -Wall
+    -Wextra
+    $<$<COMPILE_LANGUAGE:CXX>:-Wno-reorder>
+    $<$<COMPILE_LANGUAGE:CXX>:-Wno-missing-field-initializers>
+    $<$<COMPILE_LANGUAGE:CXX>:-Wno-missing-braces>
+    $<$<COMPILE_LANGUAGE:CXX>:-Wno-comment>
+    $<$<COMPILE_LANGUAGE:CXX>:-Wno-deprecated-copy>
+    $<$<CXX_COMPILER_ID:Clang>:-Wno-mismatched-tags>
+    $<$<COMPILE_LANGUAGE:CXX>:-fstack-protector-all>
+)
+
+file( GLOB_RECURSE libbitcoin_explorer_HEADERS CONFIGURE_DEPENDS
+  "${CMAKE_CURRENT_SOURCE_DIR}/../../include/*.h"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../../include/*.hpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../../include/*.ipp"
+)
+
+file( GLOB_RECURSE libbitcoin_explorer_SOURCES CONFIGURE_DEPENDS
+  "${CMAKE_CURRENT_SOURCE_DIR}/../../src/*.c"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../../src/*.cpp"
+)
+
+target_sources( libbitcoin-explorer
+  PUBLIC
+    FILE_SET HEADERS
+    BASE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../include"
+    FILES
+      ${libbitcoin_explorer_HEADERS}
+  PRIVATE
+    ${libbitcoin_explorer_SOURCES}
+)
+
+target_include_directories( libbitcoin-explorer
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>
+    $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries( libbitcoin-explorer
+  PUBLIC
+    bitcoin::system
+)
+
+set_target_properties( libbitcoin-explorer
+  PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+    EXPORT_NAME explorer
+    OUTPUT_NAME bitcoin-explorer
+)
+
 #------------------------------------------------------------------------------
-if (with-console)
-    install( TARGETS bx
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-        PUBLIC_HEADER DESTINATION include )
+# libbitcoin-explorer-test tests
+#------------------------------------------------------------------------------
+if ( with-tests )
+  add_executable( libbitcoin-explorer-test )
+
+  enable_testing()
+
+  add_test( NAME libbitcoin-explorer-test
+    COMMAND libbitcoin-explorer-test
+    --run_test=*
+    --log_level=warning
+    --show_progress=no
+    --detect_memory_leak=0
+    --report_level=no
+    --build_info=yes
+  )
+
+  target_compile_features( libbitcoin-explorer-test
+    PUBLIC
+      cxx_std_20
+  )
+
+  target_compile_options( libbitcoin-explorer-test
+    PRIVATE
+      -Wall
+      -Wextra
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-reorder>
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-missing-field-initializers>
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-missing-braces>
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-comment>
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-deprecated-copy>
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-ignored-attributes>
+      $<$<CXX_COMPILER_ID:Clang>:-Wno-mismatched-tags>
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-long-long>
+      $<$<CXX_COMPILER_ID:GNU>:-fno-var-tracking-assignments>
+      $<$<COMPILE_LANGUAGE:CXX>:-fstack-protector-all>
+  )
+
+  file( GLOB_RECURSE libbitcoin_explorer_test_HEADERS CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../test/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../test/*.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../test/*.ipp"
+  )
+
+  file( GLOB_RECURSE libbitcoin_explorer_test_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../test/*.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../test/*.cpp"
+  )
+
+  target_sources( libbitcoin-explorer-test
+    PRIVATE
+      FILE_SET HEADERS
+      BASE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../test"
+      FILES
+        ${libbitcoin_explorer_test_HEADERS}
+    PRIVATE
+      ${libbitcoin_explorer_test_SOURCES}
+  )
+
+  target_include_directories( libbitcoin-explorer-test
+    PRIVATE
+      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../test>
+  )
+
+  target_link_libraries( libbitcoin-explorer-test
+    PRIVATE
+      Boost::unit_test_framework
+      bitcoin::explorer
+  )
+
+  set_target_properties( libbitcoin-explorer-test
+    PROPERTIES
+      VERSION ${PROJECT_VERSION}
+      SOVERSION ${PROJECT_VERSION_MAJOR}
+  )
 endif()
 
-# Manage include installation.
 #------------------------------------------------------------------------------
-install( DIRECTORY "../../include/bitcoin"
-    DESTINATION include )
+# bitcoin-explorer executable
+#------------------------------------------------------------------------------
+if ( with-console )
+  add_executable( bitcoin-explorer )
 
-# Manage data installation for bash_completion prefixed product.
-#------------------------------------------------------------------------------
-if (bash-completiondir)
-    install( FILES
-        "../../data/bx"
-        DESTINATION etc/libbitcoin )
+  target_compile_features( bitcoin-explorer
+    PUBLIC
+      cxx_std_20
+  )
+
+  target_compile_options( bitcoin-explorer
+    PRIVATE
+      -Wall
+      -Wextra
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-reorder>
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-missing-field-initializers>
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-missing-braces>
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-comment>
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-deprecated-copy>
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-ignored-attributes>
+      $<$<CXX_COMPILER_ID:Clang>:-Wno-mismatched-tags>
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-long-long>
+      $<$<CXX_COMPILER_ID:GNU>:-fno-var-tracking-assignments>
+      $<$<COMPILE_LANGUAGE:CXX>:-fstack-protector-all>
+  )
+
+  file( GLOB_RECURSE bitcoin_explorer_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../console/*.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../console/*.cpp"
+  )
+
+  target_sources( bitcoin-explorer
+    PRIVATE
+      ${bitcoin_explorer_SOURCES}
+  )
+
+  target_link_libraries( bitcoin-explorer
+    PRIVATE
+      bitcoin::explorer
+  )
+
+  set_target_properties( bitcoin-explorer
+    PROPERTIES
+      VERSION ${PROJECT_VERSION}
+      SOVERSION ${PROJECT_VERSION_MAJOR}
+      EXPORT_NAME explorer
+      OUTPUT_NAME bx
+  )
 endif()
 
-# Manage data installation for sysconf prefixed product.
 #------------------------------------------------------------------------------
-if (with-console)
-    install( FILES
-        "../../data/bx.cfg"
-        DESTINATION etc/libbitcoin )
-endif()
+# Installation routine.
+#------------------------------------------------------------------------------
+include( GNUInstallDirs )
+include( CMakePackageConfigHelpers )
 
+install( TARGETS libbitcoin-explorer
+  EXPORT libbitcoin-explorer-targets
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  FILE_SET HEADERS
+)
+
+install( EXPORT libbitcoin-explorer-targets
+  NAMESPACE bitcoin::
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/libbitcoin-explorer
+  FILE libbitcoin-explorer-targets.cmake
+)
+
+configure_package_config_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/libbitcoin-explorer-config.cmake.in
+  ${CMAKE_CURRENT_BINARY_DIR}/libbitcoin-explorer-config.cmake
+  INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/libbitcoin-explorer
+)
+
+write_basic_package_version_file(
+  "${CMAKE_CURRENT_BINARY_DIR}/libbitcoin-explorer-config-version.cmake"
+  VERSION ${PACKAGE_VERSION}
+  COMPATIBILITY SameMajorVersion
+)
+
+install(
+  FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/libbitcoin-explorer-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/libbitcoin-explorer-config-version.cmake
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/libbitcoin-explorer
+)
+if ( with-console )
+  install( TARGETS bitcoin-explorer
+    EXPORT bitcoin-explorer-targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    FILE_SET HEADERS
+  )
+
+endif()

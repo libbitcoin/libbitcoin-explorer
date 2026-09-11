@@ -1,41 +1,71 @@
-.deps
-.libs
-*.am~
-*.sh~
-*.la
-*.lo
+###############################################################################
+#  Copyright (c) 2014-2026 libbitcoin-explorer developers (see COPYING).
+#
+#         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
+#
+###############################################################################
+
+# c/c++ compiled objects
 *.o
+
+# python bytecode
 *.pyc
-*.swp
+
+# gnu
+.deps
 Makefile
 Makefile.in
-libbitcoin-explorer.pc
+.libs
+*.la
+*.lo
+builds/gnu/aclocal.m4
+builds/gnu/autom4te.cache
+builds/gnu/build-aux
+builds/gnu/config.*
+builds/gnu/configure
+builds/gnu/libtool
+builds/gnu/.dirstamp
 
-/aclocal.m4
-/autom4te.cache
-/build-aux
-/config.*
-/configure
-/libtool
-.dirstamp
+# pkg-config pc file from .pc.in
+builds/gnu/*.pc
 
-.cproject
-.project
-
-console/bx
-/obj/
-/bin/
-/bx-build/
-/release/staging/bx-*
-/release/bx
-/release/bx.exe
-*.zpl
-
-build-libbitcoin-explorer
-libbitcoin_explorer_test_runner.sh.log
-libbitcoin_explorer_test_runner.sh.trs
-test-suite.log
-test.log
-test/libbitcoin_explorer_test
+# msbuild/msvc
+/.vs
 *.db
+*.db-shm
+*.db-wal
 *.vsidx
+*.lock
+
+# backup files
+*~
+
+# vim swap files
+.*.swp
+
+# common build directories
+bin
+build
+obj
+
+# KDevelop IDE
+/*.kdev4
+
+# Eclipse/CDT
+/.cproject
+
+# Eclipse/CDT
+/.project
+
+# Eclipse/CDT
+/.settings
+
+# NetBeans
+/nbproject
+
+# GitNexus tool.
+.gitnexus
+AI agent tooling
+.claude
+AGENTS.md
+CLAUDE.md
