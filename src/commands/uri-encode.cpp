@@ -54,7 +54,7 @@ using namespace bc::system::wallet;
      if (!message.empty())
          uri.set_message(message);
 
-     if (request)
+     if (!request.host().empty())
          uri.set_r(request.to_string());
 
      output << uri.encoded() << std::endl;

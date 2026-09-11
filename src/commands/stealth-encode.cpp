@@ -40,7 +40,7 @@ console_result stealth_encode::invoke(std::ostream& output,
     const auto& scan = get_scan_pubkey_argument();
     const ec_compressed& spend = get_spend_pubkey_argument();
 
-    if (filter.size() > stealth_address::max_filter_bits)
+    if (binary(filter).bits() > stealth_address::max_filter_bits)
     {
         error << BX_STEALTH_ENCODE_FILTER_TOO_LONG << std::endl;
         return console_result::failure;

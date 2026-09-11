@@ -34,7 +34,7 @@ console_result script_encode::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& script = get_script_argument();
 
-    const auto encoded_script = script.to_data();
+    const auto encoded_script = script.to_data(false);
 
     output << base16(encoded_script) << std::endl;
     return console_result::okay;

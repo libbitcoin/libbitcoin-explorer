@@ -50,7 +50,7 @@ console_result ek_address::invoke(std::ostream& output, std::ostream& error)
 
     // This cannot fail because the token has been validated.
     create_key_pair(unused, point, token, bytes, version, compressed);
-    const payment_address address({ point, compressed }, version);
+    const payment_address address(ec_public{ point, compressed }, version);
 
     output << address << std::endl;
     return console_result::okay;
