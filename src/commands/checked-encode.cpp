@@ -24,8 +24,8 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result checked_encode::invoke(std::ostream& output,
-    std::ostream& error)
+console_result checked_encode::invoke(std::ostream&,
+    std::ostream&)
 {
     return console_result::failure;
 }

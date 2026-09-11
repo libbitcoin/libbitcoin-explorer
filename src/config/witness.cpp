@@ -64,11 +64,11 @@ std::istream& operator>>(std::istream& input, witness& argument)
     input >> text;
 
     if (text == witness_p2kh_hash)
-        argument.value_ = witness::type::version_0_p2kh;
+        argument.value_ = witness::type::version0_p2kh;
     else if (text == witness_p2sh_hash)
-        argument.value_ = witness::type::version_0_p2sh;
+        argument.value_ = witness::type::version0_p2sh;
     else
-        throw system::istream_exception(text);
+        throw istream_exception(text);
 
     return input;
 }
@@ -77,16 +77,16 @@ std::ostream& operator<<(std::ostream& output, const witness& argument)
 {
     std::string text;
 
-    if (argument.value_ == witness::type::version_0_p2kh)
+    if (argument.value_ == witness::type::version0_p2kh)
         text = witness_p2kh_hash;
-    else if (argument.value_ == witness::type::version_0_p2sh)
+    else if (argument.value_ == witness::type::version0_p2sh)
         text = witness_p2sh_hash;
     else if (argument.value_ == witness::type::unknown)
         text = witness_unknown;
     else if (argument.value_ == witness::type::invalid)
         text = witness_invalid;
     else
-        throw system::ostream_exception("witness");
+        throw ostream_exception("witness");
 
     output << text;
     return output;

@@ -19,7 +19,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -34,8 +34,6 @@ namespace explorer {
 #define BX_PROGRAM_NAME "bx"
 #define BX_HELP_VARIABLE "help"
 #define BX_CONFIG_VARIABLE "config"
-BC_DECLARE_CONFIG_DEFAULT_PATH("libbitcoin" / BX_PROGRAM_NAME ".cfg")
-
 /**
  * Base class for definition of each Bitcoin Explorer command.
  */
@@ -118,10 +116,10 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual system::console_result invoke(std::ostream& output,
-        std::ostream& error)
+    virtual console_result invoke(std::ostream&,
+        std::ostream&)
     {
-        return system::console_result::failure;
+        return console_result::failure;
     }
 
     /**
@@ -129,7 +127,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded argument definitions.
      */
-    virtual system::arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return argument_metadata_;
     }
@@ -138,15 +136,14 @@ public:
      * Load environment variable definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_environment(system::options_metadata& definitions)
+    virtual void load_environment(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
         (
             /* This composes with the command line options. */
             BX_CONFIG_VARIABLE,
-            value<boost::filesystem::path>()
-                ->composing()->default_value(config_default_path()),
+            value<std::filesystem::path>()->composing(),
             "$(config_description)"
         );
     }
@@ -156,8 +153,8 @@ public:
      * @param[in]  input      The input stream for loading the parameters.
      * @param[in]  variables  The loaded variables.
      */
-    BCX_API virtual void load_fallbacks(std::istream& input,
-        po::variables_map& variables)
+    BCX_API virtual void load_fallbacks(std::istream&,
+        po::variables_map&)
     {
     }
 
@@ -166,7 +163,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded option definitions.
      */
-    virtual system::options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         return option_metadata_;
     }
@@ -175,7 +172,7 @@ public:
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_settings(system::options_metadata& definitions)
+    virtual void load_settings(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -201,7 +198,7 @@ public:
      * @param[in]  input      The input stream for loading the parameter.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void load_stream(std::istream& input, po::variables_map& variables)
+    virtual void load_stream(std::istream&, po::variables_map&)
     {
     }
 
@@ -209,7 +206,7 @@ public:
      * Set variable defaults from configuration variable values.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void set_defaults_from_config(po::variables_map& variables)
+    virtual void set_defaults_from_config(po::variables_map&)
     {
     }
 
@@ -232,7 +229,7 @@ public:
     /**
      * Get command line argument metadata.
      */
-    virtual system::arguments_metadata& get_argument_metadata()
+    virtual arguments_metadata& get_argument_metadata()
     {
         return argument_metadata_;
     }
@@ -240,7 +237,7 @@ public:
     /**
      * Get command line option metadata.
      */
-    virtual system::options_metadata& get_option_metadata()
+    virtual options_metadata& get_option_metadata()
     {
         return option_metadata_;
     }
@@ -285,12 +282,12 @@ private:
     /**
      * Command line argument metadata.
      */
-    system::arguments_metadata argument_metadata_;
+    arguments_metadata argument_metadata_;
 
     /**
      * Command line option metadata.
      */
-    system::options_metadata option_metadata_;
+    options_metadata option_metadata_;
 
     /**
      * Environment variable bound variables.
@@ -304,7 +301,7 @@ private:
         }
 
 .# There is no reason to expose the config path, as the config has been read.
-.#      boost::filesystem::path config;
+.#      std::filesystem::path config;
     } environment_;
 
     /**

@@ -30,7 +30,7 @@ namespace commands {
 using namespace bc::explorer::config;
 using namespace bc::system;
 
-console_result btc_to_satoshi::invoke(std::ostream& output, std::ostream& error)
+console_result btc_to_satoshi::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto& btc = get_btc_argument();

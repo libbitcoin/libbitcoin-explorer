@@ -41,7 +41,7 @@ public:
     hd_key(const type& value);
 
     // TODO: remove.
-    uint32_t hd_key::version() const;
+    uint32_t version() const;
 
     operator const type&() const;
 

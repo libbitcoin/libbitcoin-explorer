@@ -33,8 +33,8 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -117,7 +116,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual system::arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("PASSPHRASE", 1)
@@ -126,14 +125,13 @@ public:
 
     /**
      * Load parameter fallbacks from file or input as appropriate.
-     * @param[in]  input  The input stream for loading the parameters.
-     * @param[in]         The loaded variables.
+     * @param[in]  input      The input stream for loading the parameters.
+     * @param[in]  variables  The loaded variables.
      */
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_ec_private_key_argument(), "EC_PRIVATE_KEY", variables, input, raw);
+        load_input(get_ec_private_key_argument(), "EC_PRIVATE_KEY", variables, input);
     }
 
     /**
@@ -141,7 +139,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual system::options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -153,7 +151,7 @@ public:
         )
         (
             BX_CONFIG_VARIABLE ",c",
-            value<boost::filesystem::path>(),
+            value<std::filesystem::path>(),
             "The path to the configuration settings file."
         )
         (
@@ -173,7 +171,7 @@ public:
         )
         (
             "EC_PRIVATE_KEY",
-            value<system::wallet::ec_private>(&argument_.ec_private_key),
+            value<explorer::config::ec_private>(&argument_.ec_private_key),
             "The EC private key to encrypt. If not specified the key is read from STDIN."
         );
 
@@ -200,7 +198,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual system::console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -225,7 +223,7 @@ public:
     /**
      * Get the value of the EC_PRIVATE_KEY argument.
      */
-    virtual system::wallet::ec_private& get_ec_private_key_argument()
+    virtual explorer::config::ec_private& get_ec_private_key_argument()
     {
         return argument_.ec_private_key;
     }
@@ -234,7 +232,7 @@ public:
      * Set the value of the EC_PRIVATE_KEY argument.
      */
     virtual void set_ec_private_key_argument(
-        const system::wallet::ec_private& value)
+        const explorer::config::ec_private& value)
     {
         argument_.ec_private_key = value;
     }
@@ -289,7 +287,7 @@ private:
         }
 
         std::string passphrase;
-        system::wallet::ec_private ec_private_key;
+        explorer::config::ec_private ec_private_key;
     } argument_;
 
     /**

@@ -52,7 +52,7 @@ hd_key::hd_key(const type& value)
 // TODO: remove.
 uint32_t hd_key::version() const
 {
-    return system::from_big_endian_unsafe<uint32_t>(value_.begin());
+    return system::unsafe_from_big_endian<uint32_t>(value_.data());
 }
 
 hd_key::operator const type&() const
@@ -68,7 +68,7 @@ std::istream& operator>>(std::istream& input, hd_key& argument)
     system::data_chunk out;
     if (!system::decode_base58(out, text) ||
         out.size() != system::wallet::hd_key_size)
-        throw system::istream_exception(text);
+        throw istream_exception(text);
 
     std::copy(out.begin(), out.end(), argument.value_.begin());
     return input;

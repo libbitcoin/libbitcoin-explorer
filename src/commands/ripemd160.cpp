@@ -29,12 +29,12 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::config;
 
-console_result ripemd160::invoke(std::ostream& output, std::ostream& error)
+console_result ripemd160::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const data_chunk& data = get_base16_argument();
 
-    const auto hash = ripemd160_hash(data);
+    const auto hash = rmd160_hash(data);
 
     output << base16(hash) << std::endl;
     return console_result::okay;

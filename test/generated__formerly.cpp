@@ -173,11 +173,6 @@ BOOST_AUTO_TEST_CASE(generated__formerly__send_tx_was_sendtx_obelisk__returns_ob
     BOOST_REQUIRE_EQUAL(formerly("sendtx-obelisk"), send_tx::symbol());
 }
 
-BOOST_AUTO_TEST_CASE(generated__formerly__stealth_decode_was_stealth_show_addr__returns_object)
-{
-    BOOST_REQUIRE_EQUAL(formerly("stealth-show-addr"), stealth_decode::symbol());
-}
-
 BOOST_AUTO_TEST_CASE(generated__formerly__stealth_public_was_stealth_uncover__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("stealth-uncover"), stealth_public::symbol());

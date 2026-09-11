@@ -42,19 +42,20 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     const ec_secret& private_key = get_ec_private_key_argument();
     const script& contract = get_contract_argument();
 
-    if (index >= tx.inputs().size())
+    if (index >= tx.inputs())
     {
         error << BX_INPUT_SIGN_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    uint8_t hash_type = (machine::sighash_algorithm)sign_type;
+    uint8_t hash_type = (chain::coverage)sign_type;
     if (anyone_can_pay)
-        hash_type |= machine::sighash_algorithm::anyone_can_pay;
+        hash_type |= chain::coverage::anyone_can_pay;
 
     endorsement endorse;
-    if (!chain::script::create_endorsement(endorse, private_key, contract, tx,
-        index, hash_type))
+
+    if (!tx.create_endorsement(endorse, private_key, contract, index, 0,
+        hash_type, chain::script_version::unversioned, chain::flags::all_rules))
     {
         error << BX_INPUT_SIGN_FAILED << std::endl;
         return console_result::failure;

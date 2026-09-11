@@ -16,31 +16,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include <bitcoin/explorer/commands/address-decode.hpp>
 
 #include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::explorer::config;
 using namespace bc::system;
 
-console_result address_decode::invoke(std::ostream& output,
-    std::ostream& error)
+console_result address_decode::invoke(std::ostream&, std::ostream&)
 {
-    // Bound parameters.
-    const auto& address = get_payment_address_argument();
-    const encoding_engine encoding = get_format_option();
-
-    ////const config::wrapper wrapped(address);
-    ////write_stream(output, property_tree(wrapped), encoding);
-
-    return console_result::okay;
+    return console_result::failure;
 }
 
 } //namespace commands

@@ -33,8 +33,8 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -111,18 +110,18 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual system::arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata();
     }
 
     /**
      * Load parameter fallbacks from file or input as appropriate.
-     * @param[in]  input  The input stream for loading the parameters.
-     * @param[in]         The loaded variables.
+     * @param[in]  input      The input stream for loading the parameters.
+     * @param[in]  variables  The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input,
-        po::variables_map& variables)
+    virtual void load_fallbacks(std::istream&,
+        po::variables_map&)
     {
     }
 
@@ -131,7 +130,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual system::options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -143,13 +142,8 @@ public:
         )
         (
             BX_CONFIG_VARIABLE ",c",
-            value<boost::filesystem::path>(),
+            value<std::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "script_version,s",
-            value<explorer::config::byte>(&option_.script_version)->default_value(5),
-            "The pay-to-script-hash payment address version, defaults to 5. This is used to differentiate output addresses."
         )
         (
             "lock_time,l",
@@ -164,12 +158,12 @@ public:
         (
             "input,i",
             value<std::vector<system::config::input>>(&option_.inputs),
-            "The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value."
+            "The set of transaction inputs encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit index of the output being spent. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value."
         )
         (
             "output,o",
             value<std::vector<system::config::output>>(&option_.outputs),
-            "The set of transaction output data encoded as TARGET:SATOSHI:ENTROPY. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 64 bit spend amount in satoshi. ENTROPY is required for stealth outputs and not used otherwise. The same entropy should NOT be used for multiple outputs."
+            "The set of transaction outputs encoded as SCRIPT:SATOSHI. SCRIPT is the output script. SATOSHI is the 64 bit spend amount in satoshi."
         );
 
         return options;
@@ -181,13 +175,6 @@ public:
      */
     virtual void set_defaults_from_config(po::variables_map& variables)
     {
-        const auto& option_script_version = variables["script_version"];
-        const auto& option_script_version_config = variables["wallet.pay_to_script_hash_version"];
-        if (option_script_version.defaulted() && !option_script_version_config.defaulted())
-        {
-            option_.script_version = option_script_version_config.as<explorer::config::byte>();
-        }
-
         const auto& option_version = variables["version"];
         const auto& option_version_config = variables["wallet.transaction_version"];
         if (option_version.defaulted() && !option_version_config.defaulted())
@@ -202,27 +189,10 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual system::console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
-
-    /**
-     * Get the value of the script_version option.
-     */
-    virtual explorer::config::byte& get_script_version_option()
-    {
-        return option_.script_version;
-    }
-
-    /**
-     * Set the value of the script_version option.
-     */
-    virtual void set_script_version_option(
-        const explorer::config::byte& value)
-    {
-        option_.script_version = value;
-    }
 
     /**
      * Get the value of the lock_time option.
@@ -315,15 +285,13 @@ private:
     struct option
     {
         option()
-          : script_version(),
-            lock_time(),
+          : lock_time(),
             version(),
             inputs(),
             outputs()
         {
         }
 
-        explorer::config::byte script_version;
         uint32_t lock_time;
         uint32_t version;
         std::vector<system::config::input> inputs;

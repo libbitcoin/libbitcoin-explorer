@@ -25,7 +25,7 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result hd_to_address::invoke(std::ostream& output, std::ostream& error)
+console_result hd_to_address::invoke(std::ostream&, std::ostream& error)
 {
     error << BX_HD_TO_ADDRESS_OBSOLETE << std::endl;
     return console_result::failure;

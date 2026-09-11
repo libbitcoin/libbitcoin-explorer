@@ -25,12 +25,14 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::config;
 
-console_result address_to_key::invoke(std::ostream& output, std::ostream& error)
+console_result address_to_key::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto& address = get_payment_address_argument();
 
-    const auto key = address.output_script().to_payments_key();
+    const auto key = sha256_hash(address.output_script(
+        get_wallet_pay_to_public_key_hash_version_setting(),
+        get_wallet_pay_to_script_hash_version_setting()).to_data(false));
 
     output << base16(key) << std::endl;
     return console_result::okay;

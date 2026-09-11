@@ -28,7 +28,7 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
-// TODO: drop stealth and just use wallet::payment_address as primitive.
+// TODO: use wallet::payment_address as primitive.
 
 class BCX_API address
 {

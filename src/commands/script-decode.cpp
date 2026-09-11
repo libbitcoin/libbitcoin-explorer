@@ -29,7 +29,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::config;
 
-console_result script_decode::invoke(std::ostream& output, std::ostream& error)
+console_result script_decode::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto& base16 = get_base16_argument();

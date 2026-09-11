@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__max_money_satoshi__okay_output)
 {
     BX_DECLARE_COMMAND(commands::satoshi_to_btc);
     auto satoshi = system::settings(
-        system::config::settings::mainnet).max_money();
+        system::chain::selection::mainnet).max_money();
     command.set_satoshi_argument(satoshi);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("20999999.9769\n");

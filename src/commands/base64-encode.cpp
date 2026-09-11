@@ -25,7 +25,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::config;
 
-console_result base64_encode::invoke(std::ostream& output, std::ostream& error)
+console_result base64_encode::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto& data = get_data_argument();

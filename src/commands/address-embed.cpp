@@ -33,18 +33,18 @@ using namespace bc::system::chain;
 using namespace bc::system::wallet;
 
 console_result address_embed::invoke(std::ostream& output,
-    std::ostream& error)
+    std::ostream&)
 {
     // Bound parameters.
     const data_chunk& data = get_data_argument();
     const auto version = get_version_option();
 
     // Create script from hash of data.
-    const auto ops = script::to_pay_key_hash_pattern(ripemd160_hash(data));
+    const auto ops = script::to_pay_key_hash_pattern(rmd160_hash(data));
     const script script(ops);
 
     // Make ripemd hash of serialized script.
-    const auto hash = ripemd160_hash(script.to_data(false));
+    const auto hash = rmd160_hash(script.to_data(false));
 
     // Make address (money sent here is lost, unless data is public key).
     output << payment_address(hash, version) << std::endl;

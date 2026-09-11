@@ -33,8 +33,8 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -109,7 +108,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual system::arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("CHECKED", 1);
@@ -117,14 +116,13 @@ public:
 
     /**
      * Load parameter fallbacks from file or input as appropriate.
-     * @param[in]  input  The input stream for loading the parameters.
-     * @param[in]         The loaded variables.
+     * @param[in]  input      The input stream for loading the parameters.
+     * @param[in]  variables  The loaded variables.
      */
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_checked_argument(), "CHECKED", variables, input, raw);
+        load_input(get_checked_argument(), "CHECKED", variables, input);
     }
 
     /**
@@ -132,7 +130,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual system::options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -144,13 +142,8 @@ public:
         )
         (
             BX_CONFIG_VARIABLE ",c",
-            value<boost::filesystem::path>(),
+            value<std::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
             "CHECKED",
@@ -165,7 +158,7 @@ public:
      * Set variable defaults from configuration variable values.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void set_defaults_from_config(po::variables_map& variables)
+    virtual void set_defaults_from_config(po::variables_map&)
     {
     }
 
@@ -175,7 +168,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual system::console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -195,23 +188,6 @@ public:
         const system::config::base16& value)
     {
         argument_.checked = value;
-    }
-
-    /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
     }
 
 private:
@@ -239,11 +215,9 @@ private:
     struct option
     {
         option()
-          : format()
         {
         }
 
-        explorer::config::encoding format;
     } option_;
 };
 

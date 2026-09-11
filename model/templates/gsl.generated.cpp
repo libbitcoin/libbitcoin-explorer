@@ -28,7 +28,6 @@ namespace explorer {
 
 using namespace std;
 using namespace po;
-using namespace boost::filesystem;
 using namespace commands;
 
 void broadcast(const function<void(shared_ptr<command>)> func)

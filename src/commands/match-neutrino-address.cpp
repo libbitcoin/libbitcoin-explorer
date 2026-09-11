@@ -22,33 +22,27 @@
 #include <bitcoin/explorer/commands/match-neutrino-address.hpp>
 
 #include <iostream>
-#include <cstdint>
 #include <bitcoin/system.hpp>
-#include <bitcoin/explorer/config/signature.hpp>
-#include <bitcoin/explorer/utility.hpp>
+#include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::explorer::config;
 using namespace bc::system;
-using namespace bc::system::wallet;
 
-console_result match_neutrino_address::invoke(std::ostream& output,
-    std::ostream& error)
+console_result match_neutrino_address::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
-    const message::compact_filter& filter = get_compact_filter_argument();
-    const auto& address = get_address_argument();
-
-    if (filter.filter_type() != neutrino_filter_type)
+    const neutrino::block_filter filter
     {
-        output << BX_FILTER_TYPE_UNRECOGNIZED << std::endl;
-        return console_result::failure;
-    }
+        get_block_hash_argument(),
+        get_client_filter_argument()
+    };
 
-    if (!neutrino::match_filter(filter, address))
+    if (!neutrino::match_filter(filter, get_address_argument(),
+        get_wallet_pay_to_public_key_hash_version_setting(),
+        get_wallet_pay_to_script_hash_version_setting()))
     {
         output << BX_FILTER_MATCH_ADDRESS_FAILURE << std::endl;
         return console_result::invalid;

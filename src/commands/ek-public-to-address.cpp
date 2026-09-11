@@ -30,7 +30,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result ek_public_to_address::invoke(std::ostream& output,
+console_result ek_public_to_address::invoke(std::ostream&,
     std::ostream& error)
 {
 #ifdef WITH_ICU

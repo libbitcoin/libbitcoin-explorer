@@ -33,8 +33,8 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -56,6 +55,8 @@ namespace commands {
  */
 #define BX_CERT_PUBLIC_INVALID \
     "The private key is not valid."
+#define BX_CERT_PUBLIC_NOT_IMPLEMENTED \
+    "This command is not yet implemented."
 
 /**
  * Class to implement the cert-public command.
@@ -109,7 +110,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual system::arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("PRIVATE_KEY", 1);
@@ -117,14 +118,13 @@ public:
 
     /**
      * Load parameter fallbacks from file or input as appropriate.
-     * @param[in]  input  The input stream for loading the parameters.
-     * @param[in]         The loaded variables.
+     * @param[in]  input      The input stream for loading the parameters.
+     * @param[in]  variables  The loaded variables.
      */
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_private_key_argument(), "PRIVATE_KEY", variables, input, raw);
+        load_input(get_private_key_argument(), "PRIVATE_KEY", variables, input);
     }
 
     /**
@@ -132,7 +132,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual system::options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -144,12 +144,12 @@ public:
         )
         (
             BX_CONFIG_VARIABLE ",c",
-            value<boost::filesystem::path>(),
+            value<std::filesystem::path>(),
             "The path to the configuration settings file."
         )
         (
             "PRIVATE_KEY",
-            value<protocol::zmq::sodium>(&argument_.private_key),
+            value<system::config::base85>(&argument_.private_key),
             "The private key from which to derive the public key."
         );
 
@@ -160,7 +160,7 @@ public:
      * Set variable defaults from configuration variable values.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void set_defaults_from_config(po::variables_map& variables)
+    virtual void set_defaults_from_config(po::variables_map&)
     {
     }
 
@@ -170,7 +170,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual system::console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -178,7 +178,7 @@ public:
     /**
      * Get the value of the PRIVATE_KEY argument.
      */
-    virtual protocol::zmq::sodium& get_private_key_argument()
+    virtual system::config::base85& get_private_key_argument()
     {
         return argument_.private_key;
     }
@@ -187,7 +187,7 @@ public:
      * Set the value of the PRIVATE_KEY argument.
      */
     virtual void set_private_key_argument(
-        const protocol::zmq::sodium& value)
+        const system::config::base85& value)
     {
         argument_.private_key = value;
     }
@@ -206,7 +206,7 @@ private:
         {
         }
 
-        protocol::zmq::sodium private_key;
+        system::config::base85 private_key;
     } argument_;
 
     /**

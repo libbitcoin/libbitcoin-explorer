@@ -21,21 +21,11 @@
 
 #include <iostream>
 #include <string>
-#include <boost/property_tree/ptree.hpp>
+#include <boost/json.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/client.hpp>
 
 namespace libbitcoin {
 namespace explorer {
-
-/**
- * Get client connection settings for the given command.
- * @param      <Command>  The bx command type.
- * @param[in]  command    The bx command instance.
- * return                 The connetion settings for the command.
- */
-template <typename Command>
-client::connection_settings get_connection(const Command& command);
 
 /**
  * If the variable is not yet loaded, load from stdin as fallback.
@@ -43,11 +33,10 @@ client::connection_settings get_connection(const Command& command);
  * @param[in]  name       The parameter name.
  * @param[in]  variables  The loaded variables.
  * @param[in]  input      The input stream for loading the parameter.
- * @param[in]  raw        True if the input is raw (should not be trimmed).
  */
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
-    po::variables_map& variables, std::istream& input, bool raw);
+    po::variables_map& variables, std::istream& input);
 
 /**
  * Load file contents as parameter fallback. Obtain the path from the parameter
@@ -55,11 +44,10 @@ void load_input(Value& parameter, const std::string& name,
  * @param      <Value>    The type of the parameter to load.
  * @param[in]  name       The parameter name.
  * @param[in]  variables  The loaded variables.
- * @param[in]  raw        True if the file is raw (should not be trimmed).
  */
 template <typename Value>
 void load_path(Value& parameter, const std::string& name,
-    po::variables_map& variables, bool raw);
+    po::variables_map& variables);
 
 /**
  * Write a value to a file in the specified path and otherwise to the
@@ -75,14 +63,13 @@ void write_file(std::ostream& output, const std::string& path,
     const Instance& instance, bool terminate=true);
 
 /**
- * Serialize a property tree using a specified encoding.
+ * Serialize a json value.
  * @param[out] output  The output stream to write to.
- * @param[in]  tree    The property tree to serialize.
- * @param[in]  engine  The stream writing engine type to use, defaults to info.
+ * @param[in]  value   The json value to serialize.
  * @return             The output stream (for convenience).
  */
-BCX_API std::ostream& write_stream(std::ostream& output, const pt::ptree& tree,
-    encoding_engine engine=encoding_engine::info);
+BCX_API std::ostream& write_stream(std::ostream& output,
+    const boost::json::value& value);
 
 } // namespace explorer
 } // namespace libbitcoin

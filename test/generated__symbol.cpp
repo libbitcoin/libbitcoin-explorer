@@ -503,16 +503,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__sha512__returns_expected_value)
     BOOST_REQUIRE_EQUAL(sha512::symbol(), "sha512");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_decode__returns_expected_value)
-{
-    BOOST_REQUIRE_EQUAL(stealth_decode::symbol(), "stealth-decode");
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_encode__returns_expected_value)
-{
-    BOOST_REQUIRE_EQUAL(stealth_encode::symbol(), "stealth-encode");
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__stealth_public__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(stealth_public::symbol(), "stealth-public");

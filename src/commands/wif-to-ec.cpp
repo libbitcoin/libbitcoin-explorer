@@ -29,7 +29,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::config;
 
-console_result wif_to_ec::invoke(std::ostream& output, std::ostream& error)
+console_result wif_to_ec::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const ec_secret& secret = get_wif_argument();

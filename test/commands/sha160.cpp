@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_SUITE(sha160__invoke)
 
 BOOST_AUTO_TEST_CASE(sha160__invoke__always__okay_output)
 {
-    BX_DECLARE_COMMAND(sha160);
+    BX_DECLARE_COMMAND(commands::sha160);
     command.set_base16_argument({ "900df00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("ec5386a03e88b5ac9328f4eabe5103e601906daa\n");

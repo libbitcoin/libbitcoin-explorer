@@ -33,7 +33,7 @@ using namespace bc::system;
 using namespace bc::system::wallet;
 
 // This doesn't have to be WIF, but it incorporates the compression context.
-console_result message_sign::invoke(std::ostream& output, std::ostream& error)
+console_result message_sign::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto& secret = get_wif_argument();

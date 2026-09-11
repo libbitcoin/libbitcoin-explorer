@@ -20,49 +20,19 @@
 #include <bitcoin/explorer/commands/validate-tx.hpp>
 
 #include <iostream>
-#include <bitcoin/client.hpp>
-#include <bitcoin/explorer/callback_state.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/display.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
-#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::client;
-using namespace bc::explorer::config;
 using namespace bc::system;
 
-console_result validate_tx::invoke(std::ostream& output,
-    std::ostream& error)
+console_result validate_tx::invoke(std::ostream&, std::ostream& error)
 {
-    // Bound parameters.
-    const auto& transaction = get_transaction_argument();
-    const auto connection = get_connection(*this);
-
-    obelisk_client client(connection.retries);
-    if (!client.connect(connection))
-    {
-        display_connection_failure(error, connection.server);
-        return console_result::failure;
-    }
-
-    callback_state state(error, output);
-
-    auto on_done = [&state](const code& error)
-    {
-        if (state.succeeded(error))
-            state.output(BX_VALIDATE_TX_VALID);
-        else
-            state.output(format(BX_VALIDATE_TX_INVALID) % error.message());
-    };
-
-    client.transaction_pool_validate2(on_done, transaction);
-    client.wait();
-
-    return state.get_result();
+    error << BX_VALIDATE_TX_NOT_IMPLEMENTED << std::endl;
+    return console_result::failure;
 }
 
 } //namespace commands

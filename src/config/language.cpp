@@ -58,16 +58,16 @@ std::istream& operator>>(std::istream& input, language& argument)
     std::string text;
     input >> text;
 
-    argument = system::wallet::languages::from_name(text);
+    argument = system::words::languages::from_name(text);
     return input;
 }
 
 std::ostream& operator<<(std::ostream& output, const language& argument)
 {
-    const auto text = system::wallet::languages::to_name(argument);
+    const auto text = system::words::languages::to_name(argument);
 
     if (text.empty())
-        throw system::ostream_exception("language");
+        throw ostream_exception("language");
 
     output << text;
     return output;

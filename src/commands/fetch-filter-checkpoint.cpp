@@ -17,71 +17,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Sponsored in part by Digital Contract Design, LLC
-
 #include <bitcoin/explorer/commands/fetch-filter-checkpoint.hpp>
 
-#include <cstddef>
-#include <cstdint>
-#include <csignal>
-#include <future>
 #include <iostream>
-#include <mutex>
-#include <boost/filesystem.hpp>
-#include <boost/format.hpp>
-#include <boost/core/null_deleter.hpp>
-#include <bitcoin/network.hpp>
-#include <bitcoin/explorer/callback_state.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/display.hpp>
-#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace boost;
-using namespace bc::client;
-using namespace bc::explorer::config;
-using namespace bc::network;
 using namespace bc::system;
-using namespace std::placeholders;
 
-console_result fetch_filter_checkpoint::invoke(
-    std::ostream& output, std::ostream& error)
+console_result fetch_filter_checkpoint::invoke(std::ostream&, std::ostream& error)
 {
-    // Bound parameters.
-    const hash_digest& hash = get_hash_argument();
-    const encoding_engine encoding = get_format_option();
-    const auto connection = get_connection(*this);
-
-    obelisk_client client(connection.retries);
-    if (!client.connect(connection))
-    {
-        display_connection_failure(error, connection.server);
-        return console_result::failure;
-    }
-
-    callback_state state(error, output, encoding);
-
-    // This enables json-style array formatting.
-    const auto json = encoding == encoding_engine::json;
-
-    auto on_done = [&state, json](const code& ec,
-        const message::compact_filter_checkpoint& response)
-    {
-        if (!state.succeeded(ec))
-            return;
-
-        state.output(property_tree(response, json));
-    };
-
-    client.blockchain_fetch_compact_filter_checkpoint(on_done,
-        neutrino_filter_type, hash);
-
-    client.wait();
-
-    return state.get_result();
+    error << BX_FETCH_FILTER_CHECKPOINT_NOT_IMPLEMENTED << std::endl;
+    return console_result::failure;
 }
 
 } //namespace commands

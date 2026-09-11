@@ -16,31 +16,24 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include <bitcoin/explorer/commands/tx-decode.hpp>
 
 #include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/json.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::explorer::config;
 using namespace bc::system;
 
-console_result tx_decode::invoke(std::ostream& output, std::ostream& error)
+console_result tx_decode::invoke(std::ostream& output, std::ostream&)
 {
-    // Bound parameters.
-    const encoding_engine  encoding = get_format_option();
-    const auto& transaction = get_transaction_argument();
-
-    // This enables json-style array formatting.
-    const auto json = encoding == encoding_engine::json;
-
-    write_stream(output, property_tree(transaction, json), encoding);
-
+    write_stream(output, value_from(chain::transaction{ get_transaction_argument() }));
     return console_result::okay;
 }
 

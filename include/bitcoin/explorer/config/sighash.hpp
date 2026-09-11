@@ -33,7 +33,7 @@ namespace config {
 class BCX_API sighash
 {
 public:
-    typedef system::machine::sighash_algorithm type;
+    typedef system::chain::coverage type;
 
     sighash();
     sighash(const sighash& other);

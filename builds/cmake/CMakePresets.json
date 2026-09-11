@@ -5,24 +5,28 @@
             "name": "nix-base",
             "description": "Factored base settings for non-windows *nix based platforms.",
             "hidden": true,
-            "installDir": "${sourceParentDir}/../../prefix/${presetName}",
+            "installDir": "${sourceParentDir}/../../../prefix/${presetName}",
             "binaryDir": "${sourceParentDir}/../obj/${presetName}",
             "condition": {
                 "type": "inList",
                 "string": "${hostSystemName}",
                 "list": [
-                  "Darwin",
-                  "Linux"
+                    "Darwin",
+                    "Linux"
                 ]
             },
             "cacheVariables": {
                 "CMAKE_PREFIX_PATH": {
                   "type": "PATH",
-                  "value": "${sourceParentDir}/../../prefix/${presetName}"
+                  "value": "${sourceParentDir}/../../../prefix/${presetName}"
+                },
+                "CMAKE_INSTALL_PREFIX_PATH": {
+                  "type": "PATH",
+                  "value": "${sourceParentDir}/../../../prefix/${presetName}"
                 },
                 "CMAKE_LIBRARY_PATH": {
                   "type": "PATH",
-                  "value": "${sourceParentDir}/../../prefix/${presetName}/lib:$env{CMAKE_LIBRARY_PATH}"
+                  "value": "${sourceParentDir}/../../../prefix/${presetName}/lib:$env{CMAKE_LIBRARY_PATH}"
                 }
             }
         },
@@ -31,12 +35,9 @@
             "description": "Factored debug settings.",
             "hidden": true,
             "cacheVariables": {
-                "CMAKE_C_FLAGS": "$env{CMAKE_C_FLAGS} -Og -g --coverage",
-                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} -Og -g --coverage",
-                "enable-ndebug": {
-                  "type": "BOOL",
-                  "value": "OFF"
-                }
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_FLAGS": "$env{CMAKE_C_FLAGS} -Og -g1 --coverage -fprofile-update=atomic",
+                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} -Og -g1 --coverage -fprofile-update=atomic"
             }
         },
         {
@@ -44,12 +45,9 @@
             "description": "Factored release settings.",
             "hidden": true,
             "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
                 "CMAKE_C_FLAGS": "$env{CMAKE_C_FLAGS} -O3",
-                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} -O3",
-                "enable-ndebug": {
-                  "type": "BOOL",
-                  "value": "ON"
-                }
+                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} -O3"
             }
         },
         {
@@ -72,15 +70,6 @@
                   "type": "BOOL",
                   "value": "ON"
                 }
-            }
-        },
-        {
-            "name": "gnu-optimized-size",
-            "description": "Factored size optimization settings.",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_C_FLAGS": "$env{CMAKE_C_FLAGS} -Os -s",
-                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} -Os -s"
             }
         },
         {
@@ -126,30 +115,6 @@
                 "gnu-release",
                 "nix-base"
             ]
-        },
-        {
-            "name": "nix-gnu-release-static-size",
-            "displayName": "*nix/GNU/Release/Static/Size",
-            "description": "Release build with static linking and optimizations for size.",
-            "hidden": false,
-            "inherits": [
-                "gnu-optimized-size",
-                "static",
-                "gnu-release",
-                "nix-base"
-            ]
-        },
-        {
-            "name": "nix-gnu-release-shared-size",
-            "displayName": "*nix/GNU/Release/Shared/Size",
-            "description": "Release build with shared linking and optimizations for size.",
-            "hidden": false,
-            "inherits": [
-                "gnu-optimized-size",
-                "shared",
-                "gnu-release",
-                "nix-base"
-            ]
         }
     ],
     "buildPresets": [
@@ -157,9 +122,9 @@
             "name": "nix-target-list",
             "hidden": true,
             "targets": [
-                "bitcoin-explorer",
-                "bx",
-                "libbitcoin-explorer-test"
+                "libbitcoin-explorer",
+                "libbitcoin-explorer-test",
+                "bitcoin-explorer"
             ]
         },
         {
@@ -185,18 +150,6 @@
             "displayName": "*nix/GNU/Release/Shared",
             "inherits": [ "nix-target-list" ],
             "configurePreset": "nix-gnu-release-shared"
-        },
-        {
-            "name": "nix-gnu-release-static-size",
-            "displayName": "*nix/GNU/Release/Static/Size",
-            "inherits": [ "nix-target-list" ],
-            "configurePreset": "nix-gnu-release-static-size"
-        },
-        {
-            "name": "nix-gnu-release-shared-size",
-            "displayName": "*nix/GNU/Release/Shared/Size",
-            "inherits": [ "nix-target-list" ],
-            "configurePreset": "nix-gnu-release-shared-size"
         }
     ]
 }

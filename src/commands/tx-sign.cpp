@@ -31,7 +31,7 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result tx_sign::invoke(std::ostream& output, std::ostream& error)
+console_result tx_sign::invoke(std::ostream&, std::ostream& error)
 {
     // Bound parameters.
     //const auto& transactions = get_transactions_argument();

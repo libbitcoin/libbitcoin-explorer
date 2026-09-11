@@ -21,11 +21,12 @@
 
 #include <cstdint>
 #include <cstddef>
+#include <map>
+#include <string>
 #include <boost/dynamic_bitset.hpp>
 #include <boost/format.hpp>
 #include <boost/program_options.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <bitcoin/client.hpp>
+#include <bitcoin/system.hpp>
 
 // We use the generic helper definitions in libbitcoin to define BCX_API
 // and BCX_INTERNAL. BCX_API is used for the public API symbols. It either DLL
@@ -65,18 +66,22 @@ namespace explorer {
 
 namespace ph = std::placeholders;
 namespace po = boost::program_options;
-namespace pt = boost::property_tree;
 
 typedef boost::format format;
+typedef std::map<std::string, std::string> settings_list;
 typedef bc::system::chain::transaction tx_type;
 typedef bc::system::chain::input tx_input_type;
 typedef bc::system::chain::output tx_output_type;
 
-enum class encoding_engine
+/// The minimum safe length of a seed in bytes (128 bits).
+constexpr size_t minimum_seed_size = 16;
+
+/// Console result codes, positive values are domain-specific.
+enum console_result : int
 {
-    info,
-    json,
-    xml
+    failure = -1,
+    okay = 0,
+    invalid = 1
 };
 
 } // namespace explorer

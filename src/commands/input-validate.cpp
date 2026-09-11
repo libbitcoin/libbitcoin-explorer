@@ -39,7 +39,7 @@ console_result input_validate::invoke(std::ostream& output,
     const auto& contract = get_contract_argument();
     const endorsement& endorse = get_endorsement_argument();
 
-    if (index >= tx.inputs().size())
+    if (index >= tx.inputs())
     {
         error << BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
@@ -49,10 +49,11 @@ console_result input_validate::invoke(std::ostream& output,
     ec_signature signature;
 
     if (endorse.empty() || !public_key.to_data(point) ||
-        !parse_signature(signature, { endorse.begin(), endorse.end() - 1 },
+        !ecdsa::decode_signature(signature, { endorse.begin(), endorse.end() - 1 },
             strict) ||
-        !script::check_signature(signature, endorse.back(), point, contract, tx,
-            index))
+        !tx.check_signature(signature, point, contract, index, 0,
+            endorse.back(), chain::script_version::unversioned,
+            chain::flags::all_rules))
     {
         // We do not return a failure here, as this is a validity test.
         output << BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT << std::endl;

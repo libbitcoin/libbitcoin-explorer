@@ -18,58 +18,17 @@
  */
 
 #include "command.hpp"
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/info_parser.hpp>
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(network)
+BOOST_AUTO_TEST_SUITE(stub)
 BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 
-// These amounts may change at any time, making these particular tests fragile.
-
-// Vector: github.com/spesmilo/sx/blob/master/README.md
-#define BX_FETCH_BALANCE_SX_DEMO1_KEY "a0e0be1350a3d3eaa3f381e3aa78f64d16e712c1bfffc7d7ca3b9b5f7409adf8" // 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
-#define BX_FETCH_BALANCE_SX_DEMO1_KEY_XML \
-"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"    \
-"<balance><key>a0e0be1350a3d3eaa3f381e3aa78f64d16e712c1bfffc7d7ca3b9b5f7409adf8</key><received>100000</received><spent>100000</spent></balance>\n"
-
-// Vector: github.com/spesmilo/sx/blob/master/README.md
-#define BX_FETCH_BALANCE_SX_DEMO2_KEY "0550bf9055a9a10e453f7ee6cf584ab61307f64a62aa0b3dba11068cf4ac7efe" // 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe
-#define BX_FETCH_BALANCE_SX_DEMO2_KEY_XML \
-"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
-"<balance><key>0550bf9055a9a10e453f7ee6cf584ab61307f64a62aa0b3dba11068cf4ac7efe</key><received>90000</received><spent>0</spent></balance>\n"
-
-#define BX_FETCH_BALANCE_TESTNET_DEMO_KEY "1abf6c34c4370673aee3ce1c1e6c16de549cc6baa065ff3e4b23414b1dc2eca7" // n3GNqMveyvaPvUbH469vDRadqpJMPc84JA
-#define BX_FETCH_BALANCE_TESTNET_DEMO_KEY_XML \
-"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
-"<balance><key>1abf6c34c4370673aee3ce1c1e6c16de549cc6baa065ff3e4b23414b1dc2eca7</key><received>66930771</received><spent>0</spent></balance>\n"
-
-BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo1_xml__okay_output)
+BOOST_AUTO_TEST_CASE(fetch_balance__invoke__always__failure_error)
 {
-    BX_DECLARE_CLIENT_COMMAND(fetch_balance);
-    command.set_format_option({ "xml" });
-    command.set_hash_argument({ BX_FETCH_BALANCE_SX_DEMO1_KEY });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_SX_DEMO1_KEY_XML);
-}
-
-BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo2_xml__okay_output)
-{
-    BX_DECLARE_CLIENT_COMMAND(fetch_balance);
-    command.set_format_option({ "xml" });
-    command.set_hash_argument({ BX_FETCH_BALANCE_SX_DEMO2_KEY });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_SX_DEMO2_KEY_XML);
-}
-
-BOOST_AUTO_TEST_CASE(fetch_balance__invoke__testnet_demo_xml__okay_output)
-{
-    BX_DECLARE_CLIENT_TESTNET_COMMAND(fetch_balance);
-    command.set_format_option({ "xml" });
-    command.set_hash_argument({ BX_FETCH_BALANCE_TESTNET_DEMO_KEY });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_TESTNET_DEMO_KEY_XML);
+    BX_DECLARE_COMMAND(fetch_balance);
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_FETCH_BALANCE_NOT_IMPLEMENTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

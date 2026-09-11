@@ -28,7 +28,7 @@ using namespace bc::system;
 using namespace bc::explorer::config;
 
 console_result base32_decode::invoke(std::ostream& output,
-    std::ostream& error)
+    std::ostream&)
 {
     // Bound parameters.
     const auto& base32 = get_base32_argument();

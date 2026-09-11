@@ -30,7 +30,7 @@ using namespace bc::system;
 using namespace bc::system::config;
 
 console_result base58_decode::invoke(std::ostream& output,
-    std::ostream& error)
+    std::ostream&)
 {
     // Bound parameters.
     const auto& base58 = get_base58_argument();

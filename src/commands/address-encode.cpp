@@ -30,7 +30,7 @@ using namespace bc::system;
 using namespace bc::system::wallet;
 
 console_result address_encode::invoke(std::ostream& output,
-    std::ostream& error)
+    std::ostream&)
 {
     // Bound parameters.
     const auto& ripemd160 = get_ripemd160_argument();

@@ -24,40 +24,22 @@
 #include <boost/any.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/client.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 
-template <typename Command>
-client::connection_settings get_connection(const Command& command)
-{
-    return
-    {
-        command.get_server_connect_retries_setting(),
-        command.get_server_url_setting(),
-        command.get_server_block_url_setting(),
-        command.get_server_transaction_url_setting(),
-        command.get_server_socks_proxy_setting(),
-        command.get_server_server_public_key_setting(),
-        command.get_server_client_private_key_setting()
-    };
-}
-
-// TODO: bool raw parameter obsoleted.
-// config::bytes type will automatically deserialize as raw data.
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
-    po::variables_map& variables, std::istream& input, bool)
+    po::variables_map& variables, std::istream& input)
 {
     if (variables.find(name) == variables.end())
         if (!system::deserialize(parameter, input))
-            throw system::istream_exception(name);
+            throw istream_exception(name);
 }
 
 template <typename Value>
 void load_path(Value& parameter, const std::string& name,
-    po::variables_map& variables, bool raw)
+    po::variables_map& variables)
 {
     // The path is not set as an argument so we can't load from file.
     auto variable = variables.find(name);
@@ -77,7 +59,7 @@ void load_path(Value& parameter, const std::string& name,
 
     system::ifstream file(path, std::ios::binary);
     if (!file.good() || !system::deserialize(parameter, file))
-        throw system::istream_exception(path);
+        throw istream_exception(path);
 }
 
 template <typename Instance>

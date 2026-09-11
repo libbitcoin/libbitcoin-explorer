@@ -21,22 +21,14 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(network)
+BOOST_AUTO_TEST_SUITE(stub)
 BOOST_AUTO_TEST_SUITE(subscribe_tx__invoke)
 
-BOOST_AUTO_TEST_CASE(subscribe_tx__invoke__one_second_duration__okay)
+BOOST_AUTO_TEST_CASE(subscribe_tx__invoke__always__failure_error)
 {
-    BX_DECLARE_CLIENT_COMMAND(subscribe_tx);
-    command.set_duration_option(1);
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-}
-
-BOOST_AUTO_TEST_CASE(subscribe_tx__invoke__testnet_one_second_duration__okay)
-{
-    BX_DECLARE_CLIENT_TESTNET_COMMAND(subscribe_tx);
-    command.set_duration_option(1);
-    command.set_server_url_argument({ BX_TESTNET_TRANSACTION });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_DECLARE_COMMAND(subscribe_tx);
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_SUBSCRIBE_TX_NOT_IMPLEMENTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

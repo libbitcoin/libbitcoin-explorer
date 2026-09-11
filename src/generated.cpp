@@ -31,7 +31,6 @@ namespace explorer {
 
 using namespace std;
 using namespace po;
-using namespace boost::filesystem;
 using namespace commands;
 
 void broadcast(const function<void(shared_ptr<command>)> func)
@@ -131,8 +130,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
-    func(make_shared<stealth_decode>());
-    func(make_shared<stealth_encode>());
     func(make_shared<stealth_public>());
     func(make_shared<stealth_secret>());
     func(make_shared<stealth_shared>());
@@ -347,10 +344,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<sha256>();
     if (symbol == sha512::symbol())
         return make_shared<sha512>();
-    if (symbol == stealth_decode::symbol())
-        return make_shared<stealth_decode>();
-    if (symbol == stealth_encode::symbol())
-        return make_shared<stealth_encode>();
     if (symbol == stealth_public::symbol())
         return make_shared<stealth_public>();
     if (symbol == stealth_secret::symbol())
@@ -455,8 +448,6 @@ std::string formerly(const string& former)
         return script_to_address::symbol();
     if (former == send_tx::formerly())
         return send_tx::symbol();
-    if (former == stealth_decode::formerly())
-        return stealth_decode::symbol();
     if (former == stealth_public::formerly())
         return stealth_public::symbol();
     if (former == stealth_secret::formerly())

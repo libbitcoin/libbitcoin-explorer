@@ -33,8 +33,8 @@ using namespace bc::system::wallet;
 ////<define name="BX_MNEMONIC_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
 ////<define name="BX_MNEMONIC_DECODE_INVALID_WORDS_ICU" value="The mnemonic is not from the specified dictionary. This is not an ICU build. Ensure that the mnemonic is prenormalized." />
 
-console_result mnemonic_decode::invoke(std::ostream& output,
-    std::ostream& error)
+console_result mnemonic_decode::invoke(std::ostream&,
+    std::ostream&)
 {
     ////// Bound parameters.
     ////const dictionary_list& language = get_language_option();

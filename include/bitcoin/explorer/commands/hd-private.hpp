@@ -33,8 +33,8 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -56,6 +55,8 @@ namespace commands {
  */
 #define BX_HD_PRIVATE_INVALID_DERIVED_KEY \
     "The derived key is invalid."
+#define BX_HD_PRIVATE_VERSION_MISMATCH \
+    "The key version does not match the secret version option."
 
 /**
  * Class to implement the hd-private command.
@@ -109,22 +110,21 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual system::arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HD_PRIVATE_KEY", 1);
+            .add("HD_KEY", 1);
     }
 
     /**
      * Load parameter fallbacks from file or input as appropriate.
-     * @param[in]  input  The input stream for loading the parameters.
-     * @param[in]         The loaded variables.
+     * @param[in]  input      The input stream for loading the parameters.
+     * @param[in]  variables  The loaded variables.
      */
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_hd_private_key_argument(), "HD_PRIVATE_KEY", variables, input, raw);
+        load_input(get_hd_key_argument(), "HD_KEY", variables, input);
     }
 
     /**
@@ -132,7 +132,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual system::options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -144,7 +144,7 @@ public:
         )
         (
             BX_CONFIG_VARIABLE ",c",
-            value<boost::filesystem::path>(),
+            value<std::filesystem::path>(),
             "The path to the configuration settings file."
         )
         (
@@ -158,8 +158,18 @@ public:
             "The HD index, defaults to 0."
         )
         (
-            "HD_PRIVATE_KEY",
-            value<system::wallet::hd_private>(&argument_.hd_private_key),
+            "secret_version,s",
+            value<uint32_t>(&option_.secret_version)->default_value(76066276),
+            "The expected version for an HD private key, defaults to 76066276."
+        )
+        (
+            "public_version,p",
+            value<uint32_t>(&option_.public_version)->default_value(76067358),
+            "The expected version for an HD public key, defaults to 76067358."
+        )
+        (
+            "HD_KEY",
+            value<explorer::config::hd_key>(&argument_.hd_key),
             "The parent HD private key. If not specified the key is read from STDIN."
         );
 
@@ -172,6 +182,19 @@ public:
      */
     virtual void set_defaults_from_config(po::variables_map& variables)
     {
+        const auto& option_secret_version = variables["secret_version"];
+        const auto& option_secret_version_config = variables["wallet.hd_secret_version"];
+        if (option_secret_version.defaulted() && !option_secret_version_config.defaulted())
+        {
+            option_.secret_version = option_secret_version_config.as<uint32_t>();
+        }
+
+        const auto& option_public_version = variables["public_version"];
+        const auto& option_public_version_config = variables["wallet.hd_public_version"];
+        if (option_public_version.defaulted() && !option_public_version_config.defaulted())
+        {
+            option_.public_version = option_public_version_config.as<uint32_t>();
+        }
     }
 
     /**
@@ -180,26 +203,26 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual system::console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
 
     /**
-     * Get the value of the HD_PRIVATE_KEY argument.
+     * Get the value of the HD_KEY argument.
      */
-    virtual system::wallet::hd_private& get_hd_private_key_argument()
+    virtual explorer::config::hd_key& get_hd_key_argument()
     {
-        return argument_.hd_private_key;
+        return argument_.hd_key;
     }
 
     /**
-     * Set the value of the HD_PRIVATE_KEY argument.
+     * Set the value of the HD_KEY argument.
      */
-    virtual void set_hd_private_key_argument(
-        const system::wallet::hd_private& value)
+    virtual void set_hd_key_argument(
+        const explorer::config::hd_key& value)
     {
-        argument_.hd_private_key = value;
+        argument_.hd_key = value;
     }
 
     /**
@@ -236,6 +259,40 @@ public:
         option_.index = value;
     }
 
+    /**
+     * Get the value of the secret_version option.
+     */
+    virtual uint32_t& get_secret_version_option()
+    {
+        return option_.secret_version;
+    }
+
+    /**
+     * Set the value of the secret_version option.
+     */
+    virtual void set_secret_version_option(
+        const uint32_t& value)
+    {
+        option_.secret_version = value;
+    }
+
+    /**
+     * Get the value of the public_version option.
+     */
+    virtual uint32_t& get_public_version_option()
+    {
+        return option_.public_version;
+    }
+
+    /**
+     * Set the value of the public_version option.
+     */
+    virtual void set_public_version_option(
+        const uint32_t& value)
+    {
+        option_.public_version = value;
+    }
+
 private:
 
     /**
@@ -246,11 +303,11 @@ private:
     struct argument
     {
         argument()
-          : hd_private_key()
+          : hd_key()
         {
         }
 
-        system::wallet::hd_private hd_private_key;
+        explorer::config::hd_key hd_key;
     } argument_;
 
     /**
@@ -262,12 +319,16 @@ private:
     {
         option()
           : hard(),
-            index()
+            index(),
+            secret_version(),
+            public_version()
         {
         }
 
         bool hard;
         uint32_t index;
+        uint32_t secret_version;
+        uint32_t public_version;
     } option_;
 };
 

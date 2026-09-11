@@ -24,7 +24,7 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result seed::invoke(std::ostream& output, std::ostream& error)
+console_result seed::invoke(std::ostream&, std::ostream& error)
 {
     error << BX_SEED_OBSOLETE << std::endl;
     return console_result::failure;

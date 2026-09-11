@@ -33,8 +33,8 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -54,8 +53,6 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FILTER_TYPE_UNRECOGNIZED \
-    "The filter provided contains an unrecognized type."
 #define BX_FILTER_MATCH_ADDRESS_SUCCESS \
     "Address matched filter."
 #define BX_FILTER_MATCH_ADDRESS_FAILURE \
@@ -105,7 +102,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Determine whether the provided filter probabilistically matches the provided payment address.";
+        return "Determine whether the provided client filter probabilistically matches the provided payment address.";
     }
 
     /**
@@ -113,23 +110,23 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual system::arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("COMPACT_FILTER", 1)
+            .add("BLOCK_HASH", 1)
+            .add("CLIENT_FILTER", 1)
             .add("ADDRESS", 1);
     }
 
     /**
      * Load parameter fallbacks from file or input as appropriate.
-     * @param[in]  input  The input stream for loading the parameters.
-     * @param[in]         The loaded variables.
+     * @param[in]  input      The input stream for loading the parameters.
+     * @param[in]  variables  The loaded variables.
      */
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_address_argument(), "ADDRESS", variables, input, raw);
+        load_input(get_address_argument(), "ADDRESS", variables, input);
     }
 
     /**
@@ -137,7 +134,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual system::options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -149,13 +146,18 @@ public:
         )
         (
             BX_CONFIG_VARIABLE ",c",
-            value<boost::filesystem::path>(),
+            value<std::filesystem::path>(),
             "The path to the configuration settings file."
         )
         (
-            "COMPACT_FILTER",
-            value<system::config::compact_filter>(&argument_.compact_filter)->required(),
-            "The neutrino filter to be evaluated."
+            "BLOCK_HASH",
+            value<system::config::hash256>(&argument_.block_hash)->required(),
+            "The hash of the block from which the client filter was derived."
+        )
+        (
+            "CLIENT_FILTER",
+            value<system::config::base16>(&argument_.client_filter)->required(),
+            "The BIP158 client filter to be evaluated."
         )
         (
             "ADDRESS",
@@ -170,7 +172,7 @@ public:
      * Set variable defaults from configuration variable values.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void set_defaults_from_config(po::variables_map& variables)
+    virtual void set_defaults_from_config(po::variables_map&)
     {
     }
 
@@ -180,26 +182,43 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual system::console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
 
     /**
-     * Get the value of the COMPACT_FILTER argument.
+     * Get the value of the BLOCK_HASH argument.
      */
-    virtual system::config::compact_filter& get_compact_filter_argument()
+    virtual system::config::hash256& get_block_hash_argument()
     {
-        return argument_.compact_filter;
+        return argument_.block_hash;
     }
 
     /**
-     * Set the value of the COMPACT_FILTER argument.
+     * Set the value of the BLOCK_HASH argument.
      */
-    virtual void set_compact_filter_argument(
-        const system::config::compact_filter& value)
+    virtual void set_block_hash_argument(
+        const system::config::hash256& value)
     {
-        argument_.compact_filter = value;
+        argument_.block_hash = value;
+    }
+
+    /**
+     * Get the value of the CLIENT_FILTER argument.
+     */
+    virtual system::config::base16& get_client_filter_argument()
+    {
+        return argument_.client_filter;
+    }
+
+    /**
+     * Set the value of the CLIENT_FILTER argument.
+     */
+    virtual void set_client_filter_argument(
+        const system::config::base16& value)
+    {
+        argument_.client_filter = value;
     }
 
     /**
@@ -229,12 +248,14 @@ private:
     struct argument
     {
         argument()
-          : compact_filter(),
+          : block_hash(),
+            client_filter(),
             address()
         {
         }
 
-        system::config::compact_filter compact_filter;
+        system::config::hash256 block_hash;
+        system::config::base16 client_filter;
         system::wallet::payment_address address;
     } argument_;
 

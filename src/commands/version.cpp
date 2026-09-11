@@ -19,53 +19,20 @@
 
 #include <bitcoin/explorer/commands/version.hpp>
 
-#include <bitcoin/client.hpp>
-#include <bitcoin/explorer/callback_state.hpp>
-#include <bitcoin/explorer/display.hpp>
+#include <iostream>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/version.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::client;
-using namespace bc::explorer::config;
 using namespace bc::system;
 
-console_result version::invoke(std::ostream& output,
-    std::ostream& error)
+console_result version::invoke(std::ostream&, std::ostream& error)
 {
-    // Bound parameters.
-    const auto connection = get_connection(*this);
-
-    obelisk_client client(connection.retries);
-    if (!client.connect(connection))
-    {
-        display_connection_failure(error, connection.server);
-        return console_result::failure;
-    }
-
-    callback_state state(error, output);
-
-    auto on_done = [&state](const code& error, const std::string& version)
-    {
-        if (!state.succeeded(error))
-        {
-            state.output(format(BX_VERSION_FAILED) % error.message());
-            return;
-        }
-
-        static const std::string explorer_version{ LIBBITCOIN_EXPLORER_VERSION };
-
-        state.output(format(BX_SERVER_VERSION) % version);
-        state.output(format(BX_EXPLORER_VERSION) % explorer_version);
-    };
-
-    client.server_version(on_done);
-    client.wait();
-
-    return state.get_result();
+    error << BX_VERSION_NOT_IMPLEMENTED << std::endl;
+    return console_result::failure;
 }
 
 } //namespace commands

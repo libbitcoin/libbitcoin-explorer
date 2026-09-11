@@ -33,8 +33,8 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -109,7 +108,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual system::arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("POINT", 1)
@@ -118,14 +117,13 @@ public:
 
     /**
      * Load parameter fallbacks from file or input as appropriate.
-     * @param[in]  input  The input stream for loading the parameters.
-     * @param[in]         The loaded variables.
+     * @param[in]  input      The input stream for loading the parameters.
+     * @param[in]  variables  The loaded variables.
      */
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_secret_argument(), "SECRET", variables, input, raw);
+        load_input(get_secret_argument(), "SECRET", variables, input);
     }
 
     /**
@@ -133,7 +131,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual system::options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -145,7 +143,7 @@ public:
         )
         (
             BX_CONFIG_VARIABLE ",c",
-            value<boost::filesystem::path>(),
+            value<std::filesystem::path>(),
             "The path to the configuration settings file."
         )
         (
@@ -155,7 +153,7 @@ public:
         )
         (
             "SECRET",
-            value<system::wallet::ec_private>(&argument_.secret),
+            value<explorer::config::ec_private>(&argument_.secret),
             "The Base16 EC secret to add. If not specified the secret is read from STDIN."
         );
 
@@ -166,7 +164,7 @@ public:
      * Set variable defaults from configuration variable values.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void set_defaults_from_config(po::variables_map& variables)
+    virtual void set_defaults_from_config(po::variables_map&)
     {
     }
 
@@ -176,7 +174,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual system::console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -201,7 +199,7 @@ public:
     /**
      * Get the value of the SECRET argument.
      */
-    virtual system::wallet::ec_private& get_secret_argument()
+    virtual explorer::config::ec_private& get_secret_argument()
     {
         return argument_.secret;
     }
@@ -210,7 +208,7 @@ public:
      * Set the value of the SECRET argument.
      */
     virtual void set_secret_argument(
-        const system::wallet::ec_private& value)
+        const explorer::config::ec_private& value)
     {
         argument_.secret = value;
     }
@@ -231,7 +229,7 @@ private:
         }
 
         system::wallet::ec_public point;
-        system::wallet::ec_private secret;
+        explorer::config::ec_private secret;
     } argument_;
 
     /**

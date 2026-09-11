@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Copyright (c) 2014-2023 libbitcoin-explorer developers (see COPYING).
+// Copyright (c) 2014-2026 libbitcoin-explorer developers (see COPYING).
 //
 //        GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 //
@@ -14,16 +14,14 @@
  * Maintainers: Do not include this header internal to this library.
  */
 
-#include <bitcoin/client.hpp>
-#include <bitcoin/network.hpp>
-#include <bitcoin/explorer/callback_state.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/dispatch.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
+#include <bitcoin/explorer/json.hpp>
 #include <bitcoin/explorer/parser.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 #include <bitcoin/explorer/version.hpp>
 #include <bitcoin/explorer/commands/address-decode.hpp>
@@ -71,7 +69,6 @@
 #include <bitcoin/explorer/commands/electrum-decode.hpp>
 #include <bitcoin/explorer/commands/electrum-new.hpp>
 #include <bitcoin/explorer/commands/electrum-to-seed.hpp>
-#include <bitcoin/explorer/commands/entropy.hpp>
 #include <bitcoin/explorer/commands/fetch-balance.hpp>
 #include <bitcoin/explorer/commands/fetch-block-hashes.hpp>
 #include <bitcoin/explorer/commands/fetch-block-height.hpp>
@@ -122,8 +119,6 @@
 #include <bitcoin/explorer/commands/sha160.hpp>
 #include <bitcoin/explorer/commands/sha256.hpp>
 #include <bitcoin/explorer/commands/sha512.hpp>
-#include <bitcoin/explorer/commands/stealth-decode.hpp>
-#include <bitcoin/explorer/commands/stealth-encode.hpp>
 #include <bitcoin/explorer/commands/stealth-public.hpp>
 #include <bitcoin/explorer/commands/stealth-secret.hpp>
 #include <bitcoin/explorer/commands/stealth-shared.hpp>
@@ -149,8 +144,8 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>

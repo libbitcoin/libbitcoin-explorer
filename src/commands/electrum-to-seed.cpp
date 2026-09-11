@@ -35,8 +35,8 @@ using namespace bc::system::wallet;
 ////<define name="BX_ELECTRUM_TO_SEED_INVALID_WORDS_ICU" value="The mnemonic is not from the specified dictionary. This is not an ICU build, so ensure that the mnemonic is prenormalized. Non-dictionary mnemonics are not supported." />
 ////<define name="BX_ELECTRUM_TO_SEED_PASSPHRASE_ICU" value="This is not an ICU build, so the passphrase is limited to ascii characters." />
 
-console_result electrum_to_seed::invoke(std::ostream& output,
-    std::ostream& error)
+console_result electrum_to_seed::invoke(std::ostream&,
+    std::ostream&)
 {
 ////#ifdef WITH_ICU
 ////    // Bound parameters.

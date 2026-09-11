@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- |  Copyright (c) 2014-2023 libbitcoin-explorer developers (see COPYING).
+ |  Copyright (c) 2014-2026 libbitcoin-explorer developers (see COPYING).
  |
  |         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
  |
@@ -12,12 +12,76 @@
     <ProjectName>libbitcoin-explorer</ProjectName>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugDLL|ARM">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|ARM">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLTCG|ARM">
+      <Configuration>DebugLTCG</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLTCG|ARM">
+      <Configuration>ReleaseLTCG</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLIB|ARM">
+      <Configuration>DebugLIB</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLIB|ARM">
+      <Configuration>ReleaseLIB</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugDLL|ARM64">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|ARM64">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLTCG|ARM64">
+      <Configuration>DebugLTCG</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLTCG|ARM64">
+      <Configuration>ReleaseLTCG</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLIB|ARM64">
+      <Configuration>DebugLIB</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLIB|ARM64">
+      <Configuration>ReleaseLIB</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="DebugDLL|Win32">
       <Configuration>DebugDLL</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseDLL|Win32">
       <Configuration>ReleaseDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLTCG|Win32">
+      <Configuration>DebugLTCG</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLTCG|Win32">
+      <Configuration>ReleaseLTCG</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLIB|Win32">
+      <Configuration>DebugLIB</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLIB|Win32">
+      <Configuration>ReleaseLIB</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="DebugDLL|x64">
@@ -28,14 +92,6 @@
       <Configuration>ReleaseDLL</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugLTCG|Win32">
-      <Configuration>DebugLTCG</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseLTCG|Win32">
-      <Configuration>ReleaseLTCG</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="DebugLTCG|x64">
       <Configuration>DebugLTCG</Configuration>
       <Platform>x64</Platform>
@@ -43,14 +99,6 @@
     <ProjectConfiguration Include="ReleaseLTCG|x64">
       <Configuration>ReleaseLTCG</Configuration>
       <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugLIB|Win32">
-      <Configuration>DebugLIB</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseLIB|Win32">
-      <Configuration>ReleaseLIB</Configuration>
-      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="DebugLIB|x64">
       <Configuration>DebugLIB</Configuration>
@@ -73,7 +121,6 @@
     <Import Project="$(ProjectDir)$(ProjectName).props" />
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\callback_state.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-embed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-encode.cpp" />
@@ -119,7 +166,6 @@
     <ClCompile Include="..\..\..\..\src\commands\electrum-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\electrum-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\electrum-to-seed.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\entropy.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-balance.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block-hashes.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block-height.cpp" />
@@ -170,8 +216,6 @@
     <ClCompile Include="..\..\..\..\src\commands\sha160.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sha256.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sha512.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\stealth-decode.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\stealth-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-secret.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-shared.cpp" />
@@ -197,8 +241,8 @@
     <ClCompile Include="..\..\..\..\src\config\btc.cpp" />
     <ClCompile Include="..\..\..\..\src\config\byte.cpp" />
     <ClCompile Include="..\..\..\..\src\config\bytes.cpp" />
+    <ClCompile Include="..\..\..\..\src\config\ec_private.cpp" />
     <ClCompile Include="..\..\..\..\src\config\electrum.cpp" />
-    <ClCompile Include="..\..\..\..\src\config\encoding.cpp" />
     <ClCompile Include="..\..\..\..\src\config\endorsement.cpp" />
     <ClCompile Include="..\..\..\..\src\config\hd_key.cpp" />
     <ClCompile Include="..\..\..\..\src\config\language.cpp" />
@@ -208,13 +252,13 @@
     <ClCompile Include="..\..\..\..\src\dispatch.cpp" />
     <ClCompile Include="..\..\..\..\src\display.cpp" />
     <ClCompile Include="..\..\..\..\src\generated.cpp" />
+    <ClCompile Include="..\..\..\..\src\json.cpp" />
     <ClCompile Include="..\..\..\..\src\parser.cpp" />
-    <ClCompile Include="..\..\..\..\src\prop_tree.cpp" />
     <ClCompile Include="..\..\..\..\src\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\builds\msvc\resource.h" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\callback_state.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\command.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-embed.hpp" />
@@ -261,7 +305,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-to-seed.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\entropy.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-balance.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-hashes.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-height.hpp" />
@@ -312,8 +355,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha160.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha256.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha512.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-decode.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-secret.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-shared.hpp" />
@@ -339,8 +380,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\btc.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\byte.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\bytes.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\ec_private.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\electrum.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\encoding.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\endorsement.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\hd_key.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\language.hpp" />
@@ -352,52 +393,46 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\dispatch.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\display.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\generated.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\json.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\parser.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\prop_tree.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\version.hpp" />
-    <ClInclude Include="..\..\resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\include\bitcoin\explorer\impl\prop_tree.ipp" />
     <None Include="..\..\..\..\include\bitcoin\explorer\impl\utility.ipp" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\resource.rc" />
+    <ResourceCompile Include="..\..\..\..\builds\msvc\resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="$(NuGetPackageRoot)boost.1.78.0\build\boost.targets" Condition="Exists('$(NuGetPackageRoot)boost.1.78.0\build\boost.targets')" />
-    <Import Project="$(NuGetPackageRoot)boost_chrono-vc143.1.78.0\build\boost_chrono-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_chrono-vc143.1.78.0\build\boost_chrono-vc143.targets')" />
-    <Import Project="$(NuGetPackageRoot)boost_container-vc143.1.78.0\build\boost_container-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_container-vc143.1.78.0\build\boost_container-vc143.targets')" />
-    <Import Project="$(NuGetPackageRoot)boost_iostreams-vc143.1.78.0\build\boost_iostreams-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_iostreams-vc143.1.78.0\build\boost_iostreams-vc143.targets')" />
-    <Import Project="$(NuGetPackageRoot)boost_json-vc143.1.78.0\build\boost_json-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_json-vc143.1.78.0\build\boost_json-vc143.targets')" />
-    <Import Project="$(NuGetPackageRoot)boost_locale-vc143.1.78.0\build\boost_locale-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_locale-vc143.1.78.0\build\boost_locale-vc143.targets')" />
-    <Import Project="$(NuGetPackageRoot)boost_program_options-vc143.1.78.0\build\boost_program_options-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_program_options-vc143.1.78.0\build\boost_program_options-vc143.targets')" />
-    <Import Project="$(NuGetPackageRoot)boost_system-vc143.1.78.0\build\boost_system-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_system-vc143.1.78.0\build\boost_system-vc143.targets')" />
-    <Import Project="$(NuGetPackageRoot)boost_thread-vc143.1.78.0\build\boost_thread-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_thread-vc143.1.78.0\build\boost_thread-vc143.targets')" />
-    <Import Project="$(NuGetPackageRoot)secp256k1_vc143.0.1.0.20\build\native\secp256k1_vc143.targets" Condition="Exists('$(NuGetPackageRoot)secp256k1_vc143.0.1.0.20\build\native\secp256k1_vc143.targets')" />
-    <Import Project="$(NuGetPackageRoot)libzmq_vc143.4.3.2\build\native\libzmq_vc143.targets" Condition="Exists('$(NuGetPackageRoot)libzmq_vc143.4.3.2\build\native\libzmq_vc143.targets')" />
-    <Import Project="$(NuGetPackageRoot)boost_regex-vc143.1.78.0\build\boost_regex-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_regex-vc143.1.78.0\build\boost_regex-vc143.targets')" />
+    <Import Project="$(NuGetPackageRoot)boost.1.86.0\build\boost.targets" Condition="Exists('$(NuGetPackageRoot)boost.1.86.0\build\boost.targets')" />
+    <Import Project="$(NuGetPackageRoot)boost_container-vc143.1.86.0\build\boost_container-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_container-vc143.1.86.0\build\boost_container-vc143.targets')" />
+    <Import Project="$(NuGetPackageRoot)boost_iostreams-vc143.1.86.0\build\boost_iostreams-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_iostreams-vc143.1.86.0\build\boost_iostreams-vc143.targets')" />
+    <Import Project="$(NuGetPackageRoot)boost_json-vc143.1.86.0\build\boost_json-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_json-vc143.1.86.0\build\boost_json-vc143.targets')" />
+    <Import Project="$(NuGetPackageRoot)boost_locale-vc143.1.86.0\build\boost_locale-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_locale-vc143.1.86.0\build\boost_locale-vc143.targets')" />
+    <Import Project="$(NuGetPackageRoot)boost_program_options-vc143.1.86.0\build\boost_program_options-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_program_options-vc143.1.86.0\build\boost_program_options-vc143.targets')" />
+    <Import Project="$(NuGetPackageRoot)boost_thread-vc143.1.86.0\build\boost_thread-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_thread-vc143.1.86.0\build\boost_thread-vc143.targets')" />
+    <Import Project="$(NuGetPackageRoot)boost_url-vc143.1.86.0\build\boost_url-vc143.targets" Condition="Exists('$(NuGetPackageRoot)boost_url-vc143.1.86.0\build\boost_url-vc143.targets')" />
+    <Import Project="$(NuGetPackageRoot)secp256k1_vc143.0.6.1\build\native\secp256k1_vc143.targets" Condition="Exists('$(NuGetPackageRoot)secp256k1_vc143.0.6.1\build\native\secp256k1_vc143.targets')" />
+    <Import Project="$(NuGetPackageRoot)UltrafastSecp256k1-vc143.4.1.1.7\build\native\UltrafastSecp256k1-vc143.targets" Condition="Exists('$(NuGetPackageRoot)UltrafastSecp256k1-vc143.4.1.1.7\build\native\UltrafastSecp256k1-vc143.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them. For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The Missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost.1.78.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost.1.78.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost_chrono-vc143.1.78.0\build\boost_chrono-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_chrono-vc143.1.78.0\build\boost_chrono-vc143.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost_container-vc143.1.78.0\build\boost_container-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_container-vc143.1.78.0\build\boost_container-vc143.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost_iostreams-vc143.1.78.0\build\boost_iostreams-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_iostreams-vc143.1.78.0\build\boost_iostreams-vc143.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost_json-vc143.1.78.0\build\boost_json-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_json-vc143.1.78.0\build\boost_json-vc143.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost_locale-vc143.1.78.0\build\boost_locale-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_locale-vc143.1.78.0\build\boost_locale-vc143.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost_program_options-vc143.1.78.0\build\boost_program_options-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_program_options-vc143.1.78.0\build\boost_program_options-vc143.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost_system-vc143.1.78.0\build\boost_system-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_system-vc143.1.78.0\build\boost_system-vc143.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost_thread-vc143.1.78.0\build\boost_thread-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_thread-vc143.1.78.0\build\boost_thread-vc143.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)secp256k1_vc143.0.1.0.20\build\native\secp256k1_vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)secp256k1_vc143.0.1.0.20\build\native\secp256k1_vc143.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)libzmq_vc143.4.3.2\build\native\libzmq_vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)libzmq_vc143.4.3.2\build\native\libzmq_vc143.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)boost_regex-vc143.1.78.0\build\boost_regex-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_regex-vc143.1.78.0\build\boost_regex-vc143.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)boost.1.86.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost.1.86.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)boost_container-vc143.1.86.0\build\boost_container-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_container-vc143.1.86.0\build\boost_container-vc143.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)boost_iostreams-vc143.1.86.0\build\boost_iostreams-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_iostreams-vc143.1.86.0\build\boost_iostreams-vc143.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)boost_json-vc143.1.86.0\build\boost_json-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_json-vc143.1.86.0\build\boost_json-vc143.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)boost_locale-vc143.1.86.0\build\boost_locale-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_locale-vc143.1.86.0\build\boost_locale-vc143.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)boost_program_options-vc143.1.86.0\build\boost_program_options-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_program_options-vc143.1.86.0\build\boost_program_options-vc143.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)boost_thread-vc143.1.86.0\build\boost_thread-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_thread-vc143.1.86.0\build\boost_thread-vc143.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)boost_url-vc143.1.86.0\build\boost_url-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)boost_url-vc143.1.86.0\build\boost_url-vc143.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)secp256k1_vc143.0.6.1\build\native\secp256k1_vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)secp256k1_vc143.0.6.1\build\native\secp256k1_vc143.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)UltrafastSecp256k1-vc143.4.1.1.7\build\native\UltrafastSecp256k1-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)UltrafastSecp256k1-vc143.4.1.1.7\build\native\UltrafastSecp256k1-vc143.targets'))" />
   </Target>
   <ItemGroup>
     <Natvis Include="..\..\debug.natvis" />

@@ -21,23 +21,14 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
+BOOST_AUTO_TEST_SUITE(stub)
 BOOST_AUTO_TEST_SUITE(cert_public__invoke)
 
-BOOST_AUTO_TEST_CASE(cert_public__invoke__valid_private_key1__success_output)
+BOOST_AUTO_TEST_CASE(cert_public__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(cert_public);
-    command.set_private_key_argument({ "JTKVSB%%)wK0E.X)V>+}o?pNmC{O&4W4b!Ni{Lh6" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("rq:rM>}U?@Lns47E1%kR.o@n%FcmmsL/@{H8]yf7" "\n");
-}
-
-BOOST_AUTO_TEST_CASE(cert_public__invoke__valid_private_key2__success_output)
-{
-    BX_DECLARE_COMMAND(cert_public);
-    command.set_private_key_argument({ "v=Y(Y-lrKbs[DwQ.Po.y*(5PQ]-!u*naPPVq8/15" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(")^^(VJ98$c[i?z%>R0=0?}>M/L)Tu/{g@yyFrcED" "\n");
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_CERT_PUBLIC_NOT_IMPLEMENTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

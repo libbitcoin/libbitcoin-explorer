@@ -20,48 +20,19 @@
 #include <bitcoin/explorer/commands/send-tx.hpp>
 
 #include <iostream>
-#include <boost/format.hpp>
-#include <bitcoin/client.hpp>
-#include <bitcoin/explorer/callback_state.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/display.hpp>
-#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::client;
 using namespace bc::system;
 
-console_result send_tx::invoke(std::ostream& output, std::ostream& error)
+console_result send_tx::invoke(std::ostream&, std::ostream& error)
 {
-    // Bound parameters.
-    const auto& transaction = get_transaction_argument();
-    const auto connection = get_connection(*this);
-
-    obelisk_client client(connection.retries);
-    if (!client.connect(connection))
-    {
-        display_connection_failure(error, connection.server);
-        return console_result::failure;
-    }
-
-    callback_state state(error, output);
-
-    auto on_done = [&state](const code& ec)
-    {
-        if (!state.succeeded(ec))
-            return;
-
-        state.output(BX_SEND_TX_OUTPUT);
-    };
-
-    // This validates the tx, submits it to local tx pool, and notifies peers.
-    client.transaction_pool_broadcast(on_done, transaction);
-    client.wait();
-
-    return state.get_result();
+    error << BX_SEND_TX_NOT_IMPLEMENTED << std::endl;
+    return console_result::failure;
 }
 
 } //namespace commands

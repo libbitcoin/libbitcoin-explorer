@@ -20,54 +20,17 @@
 #include <bitcoin/explorer/commands/fetch-public-key.hpp>
 
 #include <iostream>
-#include <bitcoin/client.hpp>
-#include <bitcoin/explorer/callback_state.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/display.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::client;
 using namespace bc::system;
 
-console_result fetch_public_key::invoke(std::ostream& output, std::ostream& error)
+console_result fetch_public_key::invoke(std::ostream&, std::ostream& error)
 {
-    //// Bound parameters.
-    //const auto& address = get_payment_address_argument();
-    //const auto retries = get_general_retries_setting();
-    //const auto timeout = get_general_wait_setting();
-    //const auto& server = get_general_network_setting() == BX_TESTNET ?
-    //    get_testnet_url_setting() : get_mainnet_url_setting());
-
-    //czmqpp::context context;
-    //obelisk_client client(context, period_ms(timeout), retries);
-
-    //if (client.connect(server))
-    //{
-    //    display_connection_failure(error, server);
-    //    return console_result::failure;
-    //}
-
-    //callback_state state(error, output);
-
-    //auto on_done = [&state, &address](const client::history_list& rows)
-    //{
-    //    // TODO: get first rows tx where it (spend.hash) is not null.
-    //    // TODO: convert tx to pubkey and then stop.
-    //};
-
-    //auto on_error = [&state](const std::error_code& error)
-    //{
-    //    state.succeeded(error);
-    //};
-
-    //client.get_codec()->address_fetch_history(on_error, on_done, address);
-    //client.resolve_callbacks();
-
-    //return state.get_result();
-
     error << BX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }

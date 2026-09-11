@@ -24,7 +24,7 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result base58check_decode::invoke(std::ostream& output,
+console_result base58check_decode::invoke(std::ostream&,
     std::ostream& error)
 {
     error << BX_BASE58CHECK_DECODE_OBSOLETE << std::endl;

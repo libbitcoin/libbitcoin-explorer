@@ -33,23 +33,23 @@ BOOST_AUTO_TEST_SUITE(sha256__invoke)
 
 BOOST_AUTO_TEST_CASE(sha256__invoke__NIST_SHA256_A__okay_output)
 {
-    BX_DECLARE_COMMAND(sha256);
-    command.set_base16_argument(system::config::base16(bytes(BX_SHA256_NIST_MESSAGE_A)));
+    BX_DECLARE_COMMAND(commands::sha256);
+    command.set_base16_argument(system::config::base16(explorer::config::bytes(BX_SHA256_NIST_MESSAGE_A)));
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_SHA256_NIST_DIGEST_A "\n");
 }
 
 BOOST_AUTO_TEST_CASE(sha256__invoke__NIST_SHA256_B__okay_output)
 {
-    BX_DECLARE_COMMAND(sha256);
-    command.set_base16_argument(system::config::base16(bytes(BX_SHA256_NIST_MESSAGE_B)));
+    BX_DECLARE_COMMAND(commands::sha256);
+    command.set_base16_argument(system::config::base16(explorer::config::bytes(BX_SHA256_NIST_MESSAGE_B)));
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_SHA256_NIST_DIGEST_B "\n");
 }
 
 BOOST_AUTO_TEST_CASE(sha256__invoke__good_food__okay_output)
 {
-    BX_DECLARE_COMMAND(sha256);
+    BX_DECLARE_COMMAND(commands::sha256);
     command.set_base16_argument({ "900df00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("f0ebe3bd55115e573ba35c2b1b65a923ff64c7a548d0deab73f9314754a9149d\n");

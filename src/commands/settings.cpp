@@ -20,7 +20,7 @@
 
 #include <iostream>
 #include <map>
-#include <bitcoin/network.hpp>
+#include <bitcoin/explorer/json.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
@@ -29,14 +29,10 @@ namespace commands {
 
 using namespace bc::explorer::config;
 using namespace bc::system;
-using namespace pt;
 
 console_result commands::settings::invoke(std::ostream& output,
-    std::ostream& error)
+    std::ostream&)
 {
-    // bound parameters
-    const encoding_engine  encoding = get_format_option();
-
     // TODO: look into serializer object quoting.
     // TODO: load from metadata into settings list.
 
@@ -59,51 +55,21 @@ console_result commands::settings::invoke(std::ostream& output,
     list["wallet.rule_fork_flags"] =
         serialize(get_wallet_rule_fork_flags_setting());
 
-    // [network]
-    list["network.identifier"] =
-        serialize(get_network_identifier_setting());
-    list["network.connect_retries"] =
-        serialize(get_network_connect_retries_setting());
-    list["network.connect_timeout_seconds"] =
-        serialize(get_network_connect_timeout_seconds_setting());
-    list["network.channel_handshake_seconds"] =
-        serialize(get_network_channel_handshake_seconds_setting());
-    list["network.hosts_file"] =
-        get_network_hosts_file_setting().string();
-    list["network.debug_file"] =
-        get_network_debug_file_setting().string();
-    list["network.error_file"] =
-        get_network_error_file_setting().string();
-
-    network::settings settings(system::config::settings::mainnet);
-    const auto& nodes = get_network_seeds_setting();
-    const auto& seeds = nodes.empty() ? settings.seeds : nodes;
-
-    std::vector<std::string> buffer;
-    for (const auto& node: seeds)
-        buffer.push_back(node.to_string());
-
-    list["network.seeds"] = join(buffer, ",");
-
     // [server]
     list["server.url"] =
-        get_server_url_setting().to_string();
+        get_server_url_setting().to_uri();
     list["server.block_url"] =
-        get_server_block_url_setting().to_string();
+        get_server_block_url_setting().to_uri();
     list["server.transaction_url"] =
-        get_server_transaction_url_setting().to_string();
+        get_server_transaction_url_setting().to_uri();
     list["server.socks_proxy"] =
         get_server_socks_proxy_setting().to_string();
     list["server.connect_retries"] =
         serialize(get_server_connect_retries_setting());
     list["server.connect_timeout_seconds"] =
         serialize(get_server_connect_timeout_seconds_setting());
-    list["server.server_public_key"] =
-        serialize(get_server_server_public_key_setting());
-    list["server.client_private_key"] =
-        serialize(get_server_client_private_key_setting());
 
-    write_stream(output, system::property_tree(list), encoding);
+    write_stream(output, to_json(list));
     return console_result::okay;
 }
 

@@ -97,8 +97,6 @@ _bx()
         sha160
         sha256
         sha512
-        stealth-decode
-        stealth-encode
         stealth-public
         stealth-secret
         stealth-shared

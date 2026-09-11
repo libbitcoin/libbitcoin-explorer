@@ -29,7 +29,7 @@ using namespace bc::system;
 using namespace bc::system::wallet;
 
 console_result message_validate::invoke(std::ostream& output,
-    std::ostream& error)
+    std::ostream&)
 {
     // Bound parameters.
     const auto& address = get_payment_address_argument();
