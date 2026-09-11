@@ -35,6 +35,7 @@ function global.map_type(type)
     my.type_electrum = "electrum"
     my.type_endorsement = "endorsement"
     my.type_endpoint = "endpoint"
+    my.type_url = "url"
     my.type_hash160 = "hash160"
     my.type_hash256 = "hash256"
     my.type_hd_key = "hd_key"
@@ -78,6 +79,7 @@ function global.map_type(type)
     my.type_electrum_bx = "explorer::config::electrum"
     my.type_endorsement_bx = "explorer::config::endorsement"
     my.type_endpoint_bx = "system::config::endpoint"
+    my.type_url_bx = "system::config::url"
     my.type_hash160_bx = "system::config::hash160"
     my.type_hash256_bx = "system::config::hash256"
     my.type_hd_key_bx = "explorer::config::hd_key"
@@ -139,6 +141,8 @@ function global.map_type(type)
         return my.type_electrum_bx
     elsif my.type = my.type_endorsement
         return my.type_endorsement_bx
+    elsif my.type = my.type_url
+        return my.type_url_bx
     elsif my.type = my.type_endpoint
         return my.type_endpoint_bx
     elsif my.type = my.type_hash160
@@ -216,6 +220,7 @@ endfunction
 
 function global.is_braced_type(type)
     return (my.type = "explorer::config::uri") | \
+        (my.type = "system::config::url") | \
         (my.type = "system::config::endpoint") | \
         (my.type = "system::config::authority")
 endfunction
@@ -224,6 +229,7 @@ function global.is_quoted_type(type)
     return ((my.type = "std::filesystem::path") | \
         (my.type = "std::string") | \
         (my.type = "explorer::config::uri") | \
+        (my.type = "system::config::url") | \
         (my.type = "system::config::endpoint") | \
         (my.type = "system::config::authority"))
 endfunction

@@ -34,12 +34,6 @@ namespace explorer {
 #define BX_PROGRAM_NAME "bx"
 #define BX_HELP_VARIABLE "help"
 #define BX_CONFIG_VARIABLE "config"
-static inline std::filesystem::path config_default_path() NOEXCEPT
-{
-    return system::default_config_path(std::filesystem::path{ "libbitcoin" } /
-        (BX_PROGRAM_NAME ".cfg"));
-}
-
 /**
  * Base class for definition of each Bitcoin Explorer command.
  */
@@ -149,8 +143,7 @@ public:
         (
             /* This composes with the command line options. */
             BX_CONFIG_VARIABLE,
-            value<std::filesystem::path>()
-                ->composing()->default_value(config_default_path()),
+            value<std::filesystem::path>()->composing(),
             "$(config_description)"
         );
     }

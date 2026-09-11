@@ -49,12 +49,6 @@ namespace explorer {
 #define BX_PROGRAM_NAME "bx"
 #define BX_HELP_VARIABLE "help"
 #define BX_CONFIG_VARIABLE "config"
-static inline std::filesystem::path config_default_path() NOEXCEPT
-{
-    return system::default_config_path(std::filesystem::path{ "libbitcoin" } /
-        (BX_PROGRAM_NAME ".cfg"));
-}
-
 /**
  * Base class for definition of each Bitcoin Explorer command.
  */
@@ -164,8 +158,7 @@ public:
         (
             /* This composes with the command line options. */
             BX_CONFIG_VARIABLE,
-            value<std::filesystem::path>()
-                ->composing()->default_value(config_default_path()),
+            value<std::filesystem::path>()->composing(),
             "The path to the configuration settings file."
         );
     }
@@ -245,22 +238,22 @@ public:
         )
         (
             "server.url",
-            value<system::config::endpoint>(&setting_.server.url)->default_value({ "tcp://mainnet.libbitcoin.net:9091" }),
+            value<system::config::url>(&setting_.server.url)->default_value({ "tcp://mainnet.libbitcoin.net:9091" }),
             "The URL of the Libbitcoin query service."
         )
         (
             "server.block_url",
-            value<system::config::endpoint>(&setting_.server.block_url)->default_value({ "tcp://mainnet.libbitcoin.net:9093" }),
+            value<system::config::url>(&setting_.server.block_url)->default_value({ "tcp://mainnet.libbitcoin.net:9093" }),
             "The URL of the Libbitcoin block service."
         )
         (
             "server.transaction_url",
-            value<system::config::endpoint>(&setting_.server.transaction_url)->default_value({ "tcp://mainnet.libbitcoin.net:9094" }),
+            value<system::config::url>(&setting_.server.transaction_url)->default_value({ "tcp://mainnet.libbitcoin.net:9094" }),
             "The URL of the Libbitcoin transaction service."
         )
         (
             "server.socks_proxy",
-            value<system::config::authority>(&setting_.server.socks_proxy)->default_value({ "0.0.0.0:0" }),
+            value<system::config::authority>(&setting_.server.socks_proxy)->default_value({ "0.0.0.0" }),
             "The address of a SOCKS5 proxy to use, defaults to none."
         )
         (
@@ -471,7 +464,7 @@ public:
     /**
      * Get the value of the server.url setting.
      */
-    virtual system::config::endpoint get_server_url_setting() const
+    virtual system::config::url get_server_url_setting() const
     {
         return setting_.server.url;
     }
@@ -479,7 +472,7 @@ public:
     /**
      * Set the value of the server.url setting.
      */
-    virtual void set_server_url_setting(system::config::endpoint value)
+    virtual void set_server_url_setting(system::config::url value)
     {
         setting_.server.url = value;
     }
@@ -487,7 +480,7 @@ public:
     /**
      * Get the value of the server.block_url setting.
      */
-    virtual system::config::endpoint get_server_block_url_setting() const
+    virtual system::config::url get_server_block_url_setting() const
     {
         return setting_.server.block_url;
     }
@@ -495,7 +488,7 @@ public:
     /**
      * Set the value of the server.block_url setting.
      */
-    virtual void set_server_block_url_setting(system::config::endpoint value)
+    virtual void set_server_block_url_setting(system::config::url value)
     {
         setting_.server.block_url = value;
     }
@@ -503,7 +496,7 @@ public:
     /**
      * Get the value of the server.transaction_url setting.
      */
-    virtual system::config::endpoint get_server_transaction_url_setting() const
+    virtual system::config::url get_server_transaction_url_setting() const
     {
         return setting_.server.transaction_url;
     }
@@ -511,7 +504,7 @@ public:
     /**
      * Set the value of the server.transaction_url setting.
      */
-    virtual void set_server_transaction_url_setting(system::config::endpoint value)
+    virtual void set_server_transaction_url_setting(system::config::url value)
     {
         setting_.server.transaction_url = value;
     }
@@ -644,9 +637,9 @@ private:
             {
             }
 
-            system::config::endpoint url;
-            system::config::endpoint block_url;
-            system::config::endpoint transaction_url;
+            system::config::url url;
+            system::config::url block_url;
+            system::config::url transaction_url;
             system::config::authority socks_proxy;
             explorer::config::byte connect_retries;
             uint16_t connect_timeout_seconds;
