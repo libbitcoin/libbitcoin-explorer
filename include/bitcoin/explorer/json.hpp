@@ -16,42 +16,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_ENCODING_HPP
-#define BX_ENCODING_HPP
+#ifndef BX_JSON_HPP
+#define BX_JSON_HPP
 
-#include <iostream>
-#include <string>
+#include <boost/json.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
-namespace config {
 
-// Enumeration mapper.
+/// Serializations for types not annotated by libbitcoin-system.
 
-class BCX_API encoding
-{
-public:
-    typedef encoding_engine type;
+BCX_API boost::json::value to_json(const settings_list& settings) NOEXCEPT;
 
-    encoding();
-    encoding(const encoding& other);
-    encoding(const std::string& token);
-    encoding(const type& value);
+BCX_API boost::json::value to_json(
+    const system::wallet::stealth_address& address) NOEXCEPT;
 
-    operator const type&() const;
-
-    friend std::istream& operator>>(std::istream& input, encoding& argument);
-    friend std::ostream& operator<<(std::ostream& output,
-        const encoding& argument);
-
-private:
-    type value_;
-};
+BCX_API boost::json::value to_json(
+    const system::wallet::bitcoin_uri& uri) NOEXCEPT;
 
 } // namespace explorer
-} // namespace config
 } // namespace libbitcoin
 
 #endif

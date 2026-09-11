@@ -47,10 +47,10 @@ src_libbitcoin_explorer_la_LIBADD = \
     ${libbitcoin_system_LIBS}
 
 src_libbitcoin_explorer_la_SOURCES = \
-    ${srcdir}/../../src/callback_state.cpp \
     ${srcdir}/../../src/dispatch.cpp \
     ${srcdir}/../../src/display.cpp \
     ${srcdir}/../../src/generated.cpp \
+    ${srcdir}/../../src/json.cpp \
     ${srcdir}/../../src/parser.cpp \
     ${srcdir}/../../src/utility.cpp \
     ${srcdir}/../../src/commands/address-decode.cpp \
@@ -176,7 +176,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/config/byte.cpp \
     ${srcdir}/../../src/config/bytes.cpp \
     ${srcdir}/../../src/config/electrum.cpp \
-    ${srcdir}/../../src/config/encoding.cpp \
     ${srcdir}/../../src/config/endorsement.cpp \
     ${srcdir}/../../src/config/hd_key.cpp \
     ${srcdir}/../../src/config/language.cpp \
@@ -194,12 +193,12 @@ include_bitcoin_explorerdir = \
     ${includedir}/bitcoin/explorer
 
 include_bitcoin_explorer_HEADERS = \
-    ${srcdir}/../../include/bitcoin/explorer/callback_state.hpp \
     ${srcdir}/../../include/bitcoin/explorer/command.hpp \
     ${srcdir}/../../include/bitcoin/explorer/define.hpp \
     ${srcdir}/../../include/bitcoin/explorer/dispatch.hpp \
     ${srcdir}/../../include/bitcoin/explorer/display.hpp \
     ${srcdir}/../../include/bitcoin/explorer/generated.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/json.hpp \
     ${srcdir}/../../include/bitcoin/explorer/parser.hpp \
     ${srcdir}/../../include/bitcoin/explorer/utility.hpp \
     ${srcdir}/../../include/bitcoin/explorer/version.hpp
@@ -336,7 +335,6 @@ include_bitcoin_explorer_config_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/config/byte.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/bytes.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/electrum.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/encoding.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/endorsement.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/hd_key.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/language.hpp \

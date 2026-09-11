@@ -34,7 +34,6 @@
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -141,11 +140,6 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
-        )
-        (
             "URI",
             value<system::wallet::bitcoin_uri>(&argument_.uri),
             "The Bitcoin URI to decode. The URI should be quoted when entered on the command line. If not specified the URI is read from STDIN."
@@ -190,23 +184,6 @@ public:
         argument_.uri = value;
     }
 
-    /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
-    }
-
 private:
 
     /**
@@ -232,11 +209,9 @@ private:
     struct option
     {
         option()
-          : format()
         {
         }
 
-        explorer::config::encoding format;
     } option_;
 };
 

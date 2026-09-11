@@ -16,29 +16,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include <bitcoin/explorer/commands/uri-decode.hpp>
 
 #include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/json.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::explorer::config;
 using namespace bc::system;
 
- console_result uri_decode::invoke(std::ostream& output, std::ostream& error)
- {
-     // Bound parameters.
-     const encoding_engine  encoding = get_format_option();
-     const auto& uri = get_uri_argument();
-
-     write_stream(output, property_tree(uri), encoding);
-     return console_result::okay;
- }
+console_result uri_decode::invoke(std::ostream& output, std::ostream&)
+{
+    write_stream(output, to_json(get_uri_argument()));
+    return console_result::okay;
+}
 
 } //namespace commands
 } //namespace explorer

@@ -75,7 +75,6 @@
 
   <!-- The 'command' element attributes typeX multipleX are currently unused and are intended to eventually provide type information for output bindings. -->
   <command symbol="address-decode" formerly="decode-addr" output="wrapper" category="WALLET" description="Convert a payment address to its component parts.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address to decode. If not specified the address is read from STDIN."/>
   </command>
 
@@ -142,7 +141,6 @@
   </command>
 
   <command symbol="bech32-decode" output="base16" category="ENCODING" description="Validate the bech32 checksum of Base16 data and recover its witness prefix, version and program.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="CHECKED" stdin="true" type="base16" description="The bech32 checked Base16 data to decode. If not specified the value is read from STDIN." />
     <define name="BX_BECH32_DECODE_INVALID_CHECKSUM" value="The bech32 checksum is invalid." />
   </command>
@@ -173,7 +171,6 @@
   </command>
 
   <command symbol="checked-decode" formerly="wrap-decode" output="base16" category="ENCODING" description="Validate the bitcoin checksum of Base16 data and recover its version and payload.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="CHECKED" stdin="true" type="base16" description="The checked Base16 data to decode. If not specified the value is read from STDIN." />
   </command>
 
@@ -322,28 +319,24 @@
   </command>
 
   <command symbol="fetch-balance" stub="true" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
     <define name="BX_FETCH_BALANCE_INVALID_ARGUMENTS" value="A valid payments search key must be provided." />
     <define name="BX_FETCH_BALANCE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="fetch-block" stub="true" category="ONLINE" output="block" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
     <define name="BX_FETCH_BLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="fetch-block-hashes" stub="true" category="ONLINE" output="hash_list" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
     <define name="BX_FETCH_BLOCK_HASHES_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="fetch-filter" stub="true" category="ONLINE" output="compact_filter" network="true" description="Retrieve compact filters from a Libbitcoin server.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <!--<argument name="filter_type" shortcut="r" type="uint16_t" description="The compact filter type." />-->
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
@@ -353,7 +346,6 @@
   </command>
 
   <command symbol="fetch-filter-checkpoint" stub="true" category="ONLINE" output="compact_filter_checkpoint" network="true" description="Retrieve compact filter checkpoint from a Libbitcoin server.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <!--<argument name="filter_type" shortcut="r" type="uint16_t" description="The compact filter type." />-->
     <argument name="hash" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
     <define name="BX_BIP157_UNSUPPORTED" value="The peer does not indicate support for BIP157." />
@@ -362,7 +354,6 @@
   </command>
 
   <command symbol="fetch-filter-headers" stub="true" category="ONLINE" output="compact_filter_headers" network="true" description="Retrieve compact filter headers from a Libbitcoin server. The distance between provided height and hash must be strictly less than 2000.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <!--<argument name="filter_type" shortcut="r" type="uint16_t" description="The compact filter type." />-->
     <argument name="start_height" type="uint32_t" description="The starting block height."/>
     <option name="stop_hash" shortcut="s" type="hash256" description="The Base16 stop block hash."/>
@@ -373,7 +364,6 @@
   </command>
 
   <command symbol="get-filters" stub="true" category="ONLINE" output="compact_filter" network="true" description="Retrieve compact filters from a single Bitcoin network node. The distance between provided height and hash must be strictly less than 100.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="host" shortcut="t" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
     <!--<argument name="filter_type" shortcut="r" type="uint16_t" description="The compact filter type." />-->
@@ -385,7 +375,6 @@
   </command>
 
   <command symbol="get-filter-checkpoint" stub="true" category="ONLINE" output="compact_filter_checkpoint" network="true" description="Retrieve compact filter checkpoint from a single Bitcoin network node.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="host" shortcut="t" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
     <!--<argument name="filter_type" shortcut="r" type="uint16_t" description="The compact filter type." />-->
@@ -396,7 +385,6 @@
   </command>
 
   <command symbol="get-filter-headers" stub="true" category="ONLINE" output="compact_filter_headers" network="true" description="Retrieve compact filter headers from a single Bitcoin network node. The distance between provided height and hash must be strictly less than 2000.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="host" shortcut="t" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
     <!--<argument name="filter_type" shortcut="r" type="uint16_t" description="The compact filter type." />-->
@@ -408,7 +396,6 @@
   </command>
 
   <command symbol="fetch-header" stub="true" category="ONLINE" output="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
     <define name="BX_FETCH_HEADER_NOT_IMPLEMENTED" value="This command is not yet implemented." />
@@ -426,7 +413,6 @@
   </command>
 
   <command symbol="fetch-history" stub="true" output="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a payment key. Requires a Libbitcoin server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
     <define name="BX_FETCH_HISTORY_INVALID_ARGUMENTS" value="A valid payments search key must be provided." />
     <define name="BX_FETCH_HISTORY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
@@ -438,20 +424,17 @@
   </command>
 
   <command symbol="fetch-tx" stub="true" formerly="fetch-transaction" output="transaction" category="ONLINE" network="true" description="Get a transaction by its hash. Requires a Libbitcoin server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="witness" description="Include witness as applicable. Requires a version 3.4 or later Libbitcoin server connection." />
     <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash of the transaction to get. If not specified the transaction hash is read from STDIN." />
     <define name="BX_FETCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="fetch-tx-index" stub="true" formerly="fetch-transaction-index" output="string" multipleX="true" category="ONLINE" network="true" description="Get the block height and index of a transaction. Requires a Libbitcoin server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash of the transaction index to get. If not specified the transaction hash is read from STDIN." />
     <define name="BX_FETCH_TX_INDEX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="fetch-utxo" stub="true" formerly="get-utxo" output="output" multipleX="true" category="ONLINE" network="true" description="Get enough unspent transaction outputs from a payment address to pay a number of satoshi. Requires a Libbitcoin server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="algorithm" type="algorithm" description="The algorithm for unspent output selection. Options are 'greedy' and 'individual', defaults to 'greedy'." />
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
@@ -664,7 +647,6 @@
   </command>
 
   <command symbol="settings" output="string" multipleX="true" category="META" description="Display the loaded configuration settings.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
   </command>
 
   <command symbol="sha160" output="base16" category="HASH" description="Perform a SHA160 (also known as SHA-1) hash of Base16 data.">
@@ -681,7 +663,6 @@
 
     <!-- Deprecate? -->
   <command symbol="stealth-decode" formerly="stealth-show-addr" output="stealth_address" category="STEALTH" description="Decode a stealth address.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="STEALTH_ADDRESS" type="stealth_address" stdin="true" description="The stealth payment address. If not specified the address is read from STDIN." />
   </command>
 
@@ -718,7 +699,6 @@
   <command symbol="subscribe-block" output="block" category="ONLINE" network="true" stub="true" description="Watch the network for all blocks. Requires a Libbitcoin server connection.">
     <argument name="server-url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="duration" type="uint32_t" default="600" description="The duration of the subscription in seconds, defaults to 600." />
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <define name="BX_SUBSCRIBE_BLOCK_FAILED" value="Failed to subscribe to transaction service: %1%" />
     <define name="BX_SUBSCRIBE_BLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
@@ -726,7 +706,6 @@
   <command symbol="subscribe-tx" output="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for all transactions. Requires a Libbitcoin server connection.">
     <argument name="server-url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="duration" type="uint32_t" default="600" description="The duration of the subscription in seconds, defaults to 600." />
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <define name="BX_SUBSCRIBE_TX_FAILED" value="Failed to subscribe to transaction service: %1%" />
     <define name="BX_SUBSCRIBE_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
@@ -744,7 +723,6 @@
   </command>
 
   <command symbol="tx-decode" output="transaction" category="TRANSACTION" description="Decode a Base16 transaction.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
   </command>
 
@@ -767,7 +745,6 @@
   </command>
 
   <command symbol="uri-decode" output="uri" category="WALLET" description="Decompose a Bitcoin URI into its parts.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="URI" type="uri" stdin="true" description="The Bitcoin URI to decode. The URI should be quoted when entered on the command line. If not specified the URI is read from STDIN." />
   </command>
 
@@ -802,7 +779,6 @@
   </command>
 
   <command symbol="watch-tx" formerly="watchtx" output="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for a transaction by hash. Requires a Libbitcoin server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash to watch. If not specified the hash is read from STDIN." />
     <define name="BX_WATCH_TX_WAITING" value="Watching transaction: %1%..." />
     <define name="BX_WATCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />

@@ -34,7 +34,6 @@
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -147,11 +146,6 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
-        )
-        (
             "stop_hash,s",
             value<system::config::hash256>(&option_.stop_hash),
             "The Base16 stop block hash."
@@ -204,23 +198,6 @@ public:
         const uint32_t& value)
     {
         argument_.start_height = value;
-    }
-
-    /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
     }
 
     /**
@@ -282,13 +259,11 @@ private:
     struct option
     {
         option()
-          : format(),
-            stop_hash(),
+          : stop_hash(),
             stop_height()
         {
         }
 
-        explorer::config::encoding format;
         system::config::hash256 stop_hash;
         uint32_t stop_height;
     } option_;

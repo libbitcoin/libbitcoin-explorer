@@ -34,7 +34,6 @@
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -152,11 +151,6 @@ public:
             "The duration of the subscription in seconds, defaults to 600."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
-        )
-        (
             "server-url",
             value<std::string>(&argument_.server_url),
             "The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."
@@ -218,23 +212,6 @@ public:
         option_.duration = value;
     }
 
-    /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
-    }
-
 private:
 
     /**
@@ -260,13 +237,11 @@ private:
     struct option
     {
         option()
-          : duration(),
-            format()
+          : duration()
         {
         }
 
         uint32_t duration;
-        explorer::config::encoding format;
     } option_;
 };
 

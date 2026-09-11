@@ -20,6 +20,7 @@
 
 #include <iostream>
 #include <map>
+#include <bitcoin/explorer/json.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
@@ -28,14 +29,10 @@ namespace commands {
 
 using namespace bc::explorer::config;
 using namespace bc::system;
-using namespace pt;
 
 console_result commands::settings::invoke(std::ostream& output,
     std::ostream& error)
 {
-    // bound parameters
-    const encoding_engine  encoding = get_format_option();
-
     // TODO: look into serializer object quoting.
     // TODO: load from metadata into settings list.
 
@@ -72,7 +69,7 @@ console_result commands::settings::invoke(std::ostream& output,
     list["server.connect_timeout_seconds"] =
         serialize(get_server_connect_timeout_seconds_setting());
 
-    write_stream(output, system::property_tree(list), encoding);
+    write_stream(output, to_json(list));
     return console_result::okay;
 }
 

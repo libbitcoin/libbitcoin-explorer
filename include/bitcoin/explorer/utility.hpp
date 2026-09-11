@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <string>
-#include <boost/property_tree/ptree.hpp>
+#include <boost/json.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -65,14 +65,13 @@ void write_file(std::ostream& output, const std::string& path,
     const Instance& instance, bool terminate=true);
 
 /**
- * Serialize a property tree using a specified encoding.
+ * Serialize a json value.
  * @param[out] output  The output stream to write to.
- * @param[in]  tree    The property tree to serialize.
- * @param[in]  engine  The stream writing engine type to use, defaults to info.
+ * @param[in]  value   The json value to serialize.
  * @return             The output stream (for convenience).
  */
-BCX_API std::ostream& write_stream(std::ostream& output, const pt::ptree& tree,
-    encoding_engine engine=encoding_engine::info);
+BCX_API std::ostream& write_stream(std::ostream& output,
+    const boost::json::value& value);
 
 } // namespace explorer
 } // namespace libbitcoin

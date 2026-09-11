@@ -34,7 +34,6 @@
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -158,11 +157,6 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
-        )
-        (
             "algorithm,a",
             value<explorer::config::algorithm>(&option_.algorithm),
             "The algorithm for unspent output selection. Options are 'greedy' and 'individual', defaults to 'greedy'."
@@ -235,23 +229,6 @@ public:
     }
 
     /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
-    }
-
-    /**
      * Get the value of the algorithm option.
      */
     virtual explorer::config::algorithm& get_algorithm_option()
@@ -295,12 +272,10 @@ private:
     struct option
     {
         option()
-          : format(),
-            algorithm()
+          : algorithm()
         {
         }
 
-        explorer::config::encoding format;
         explorer::config::algorithm algorithm;
     } option_;
 };

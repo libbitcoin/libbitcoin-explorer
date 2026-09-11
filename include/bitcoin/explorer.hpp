@@ -15,12 +15,12 @@
  */
 
 #include <bitcoin/system.hpp>
-#include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/dispatch.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
+#include <bitcoin/explorer/json.hpp>
 #include <bitcoin/explorer/parser.hpp>
 #include <bitcoin/explorer/utility.hpp>
 #include <bitcoin/explorer/version.hpp>
@@ -147,7 +147,6 @@
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>

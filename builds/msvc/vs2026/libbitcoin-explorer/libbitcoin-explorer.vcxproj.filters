@@ -39,9 +39,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\callback_state.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\address-decode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -411,9 +408,6 @@
     <ClCompile Include="..\..\..\..\src\config\electrum.cpp">
       <Filter>src\config</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\config\encoding.cpp">
-      <Filter>src\config</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\config\endorsement.cpp">
       <Filter>src\config</Filter>
     </ClCompile>
@@ -441,6 +435,9 @@
     <ClCompile Include="..\..\..\..\src\generated.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\json.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\parser.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -454,9 +451,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer.hpp">
       <Filter>include\bitcoin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\callback_state.hpp">
-      <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\command.hpp">
       <Filter>include\bitcoin\explorer</Filter>
@@ -830,9 +824,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\electrum.hpp">
       <Filter>include\bitcoin\explorer\config</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\encoding.hpp">
-      <Filter>include\bitcoin\explorer\config</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\endorsement.hpp">
       <Filter>include\bitcoin\explorer\config</Filter>
     </ClInclude>
@@ -864,6 +855,9 @@
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\generated.hpp">
+      <Filter>include\bitcoin\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\json.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\parser.hpp">

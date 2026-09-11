@@ -22,37 +22,17 @@
 #include <iostream>
 #include <iterator>
 #include <string>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/info_parser.hpp>
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/xml_parser.hpp>
+#include <boost/json.hpp>
 
 using namespace bc::system;
 
 namespace libbitcoin {
 namespace explorer {
 
-// We aren't yet using a reader, although it is possible using ptree.
-std::ostream& write_stream(std::ostream& output, const pt::ptree& tree,
-    encoding_engine engine)
+std::ostream& write_stream(std::ostream& output,
+    const boost::json::value& value)
 {
-    switch (engine)
-    {
-        case encoding_engine::json:
-            pt::write_json(output, tree);
-            break;
-        case encoding_engine::xml:
-            pt::write_xml(output, tree);
-
-            // property tree XML serialization doesn't terminate the string.
-            output << std::endl;
-
-            break;
-        default:
-            pt::write_info(output, tree);
-            break;
-    }
-
+    output << boost::json::serialize(value) << std::endl;
     return output;
 }
 

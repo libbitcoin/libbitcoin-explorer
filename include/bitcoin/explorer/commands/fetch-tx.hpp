@@ -34,7 +34,6 @@
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -155,11 +154,6 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
-        )
-        (
             "witness,w",
             value<bool>(&option_.witness)->zero_tokens(),
             "Include witness as applicable. Requires a version 3.4 or later Libbitcoin server connection."
@@ -210,23 +204,6 @@ public:
     }
 
     /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
-    }
-
-    /**
      * Get the value of the witness option.
      */
     virtual bool& get_witness_option()
@@ -268,12 +245,10 @@ private:
     struct option
     {
         option()
-          : format(),
-            witness()
+          : witness()
         {
         }
 
-        explorer::config::encoding format;
         bool witness;
     } option_;
 };

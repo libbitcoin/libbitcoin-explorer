@@ -34,7 +34,6 @@
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
@@ -149,11 +148,6 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
-        )
-        (
             "PAYMENT_ADDRESS",
             value<system::wallet::payment_address>(&argument_.payment_address),
             "The payment address to decode. If not specified the address is read from STDIN."
@@ -198,23 +192,6 @@ public:
         argument_.payment_address = value;
     }
 
-    /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
-    }
-
 private:
 
     /**
@@ -240,11 +217,9 @@ private:
     struct option
     {
         option()
-          : format()
         {
         }
 
-        explorer::config::encoding format;
     } option_;
 };
 
