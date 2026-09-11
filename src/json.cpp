@@ -59,30 +59,6 @@ value to_json(const settings_list& settings) NOEXCEPT
     return object{ { "settings", std::move(list) } };
 }
 
-value to_json(const wallet::stealth_address& address) NOEXCEPT
-{
-    array spends;
-    spends.reserve(address.spend_keys().size());
-
-    for (const auto& spend: address.spend_keys())
-        spends.emplace_back(encode_base16(spend));
-
-    return object
-    {
-        {
-            "stealth_address", object
-            {
-                { "encoded", address.encoded() },
-                { "filter", address.filter().encoded() },
-                { "scan_public_key", encode_base16(address.scan_key()) },
-                { "signatures", address.signatures() },
-                { "spends", std::move(spends) },
-                { "version", address.version() }
-            }
-        }
-    };
-}
-
 value to_json(const wallet::bitcoin_uri& uri) NOEXCEPT
 {
     object properties;

@@ -50,7 +50,6 @@ function global.map_type(type)
     my.type_sighash = "sighash"
     my.type_script = "script"
     my.type_signature = "signature"
-    my.type_stealth_address = "stealth_address"
     my.type_string = "string"
     my.type_transaction = "transaction"
     my.type_uri = "uri"
@@ -94,7 +93,6 @@ function global.map_type(type)
     my.type_script_bx = "system::config::script"
     my.type_sighash_bx = "explorer::config::sighash"
     my.type_signature_bx = "explorer::config::signature"
-    my.type_stealth_address_bx = "system::wallet::stealth_address"
     my.type_string_std = "std::string"
     my.type_transaction_bx = "system::config::transaction"
     my.type_uri_bx = "system::wallet::bitcoin_uri"
@@ -173,8 +171,6 @@ function global.map_type(type)
         return my.type_sighash_bx
     elsif my.type = my.type_signature
         return my.type_signature_bx
-    elsif my.type = my.type_stealth_address
-        return my.type_stealth_address_bx
     elsif my.type = my.type_string
         return my.type_string_std
     elsif my.type = my.type_transaction

@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include <bitcoin/explorer/commands/input-set.hpp>
 
 #include <iostream>
-#include <cstdint>
+#include <memory>
 #include <bitcoin/system.hpp>
-#include <bitcoin/explorer/utility.hpp>
+#include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -34,22 +35,35 @@ console_result input_set::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto index = get_index_option();
-    const auto& tx_in = get_transaction_argument();
-    const auto& script = get_endorsement_script_argument();
+    const chain::transaction& tx = get_transaction_argument();
+    const chain::script& endorsement = get_endorsement_script_argument();
 
-    // Clone so we keep arguments const.
-    auto tx_copy = transaction(tx_in);
-    auto& tx_out = tx_copy.data();
+    const auto& ins = *tx.inputs_ptr();
 
-    if (index >= tx_out.inputs().size())
+    if (index >= ins.size())
     {
         error << BX_INPUT_SET_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    tx_out.inputs()[index].set_script(script);
+    const auto inputs = std::make_shared<chain::input_cptrs>();
+    inputs->reserve(ins.size());
 
-    output << tx_copy << std::endl;
+    for (size_t input = 0; input < ins.size(); ++input)
+        inputs->push_back(input == index ?
+            std::make_shared<const chain::input>(ins[input]->point_ptr(),
+                std::make_shared<const chain::script>(endorsement),
+                ins[input]->witness_ptr(), ins[input]->sequence()) :
+            ins[input]);
+
+    output << transaction(chain::transaction
+    {
+        tx.version(),
+        inputs,
+        tx.outputs_ptr(),
+        tx.locktime()
+    }) << std::endl;
+
     return console_result::okay;
 }
 

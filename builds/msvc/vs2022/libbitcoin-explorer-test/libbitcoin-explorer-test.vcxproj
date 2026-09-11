@@ -208,8 +208,6 @@
     <ClCompile Include="..\..\..\..\test\commands\sha160.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\sha256.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\sha512.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\stealth-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\stealth-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-secret.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-shared.cpp" />

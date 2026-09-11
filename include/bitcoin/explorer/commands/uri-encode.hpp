@@ -160,7 +160,7 @@ public:
         (
             "ADDRESS",
             value<explorer::config::address>(&argument_.address),
-            "The payment address or stealth address for the address part."
+            "The payment address for the address part."
         );
 
         return options;

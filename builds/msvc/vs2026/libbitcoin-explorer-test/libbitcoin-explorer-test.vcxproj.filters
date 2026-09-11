@@ -288,12 +288,6 @@
     <ClCompile Include="..\..\..\..\test\commands\sha512.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\stealth-decode.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\stealth-encode.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\stealth-public.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

@@ -145,11 +145,6 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "script_version,s",
-            value<explorer::config::byte>(&option_.script_version)->default_value(5),
-            "The pay-to-script-hash payment address version, defaults to 5. This is used to differentiate output addresses."
-        )
-        (
             "lock_time,l",
             value<uint32_t>(&option_.lock_time),
             "The transaction lock time."
@@ -167,7 +162,7 @@ public:
         (
             "output,o",
             value<std::vector<system::config::output>>(&option_.outputs),
-            "The set of transaction output data encoded as TARGET:SATOSHI:ENTROPY. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 64 bit spend amount in satoshi. ENTROPY is required for stealth outputs and not used otherwise. The same entropy should NOT be used for multiple outputs."
+            "The set of transaction output data encoded as SCRIPT:SATOSHI. SCRIPT is a Base16 or serialized script. SATOSHI is the 64 bit spend amount in satoshi."
         );
 
         return options;
@@ -179,13 +174,6 @@ public:
      */
     virtual void set_defaults_from_config(po::variables_map& variables)
     {
-        const auto& option_script_version = variables["script_version"];
-        const auto& option_script_version_config = variables["wallet.pay_to_script_hash_version"];
-        if (option_script_version.defaulted() && !option_script_version_config.defaulted())
-        {
-            option_.script_version = option_script_version_config.as<explorer::config::byte>();
-        }
-
         const auto& option_version = variables["version"];
         const auto& option_version_config = variables["wallet.transaction_version"];
         if (option_version.defaulted() && !option_version_config.defaulted())
@@ -204,23 +192,6 @@ public:
         std::ostream& cerr);
 
     /* Properties */
-
-    /**
-     * Get the value of the script_version option.
-     */
-    virtual explorer::config::byte& get_script_version_option()
-    {
-        return option_.script_version;
-    }
-
-    /**
-     * Set the value of the script_version option.
-     */
-    virtual void set_script_version_option(
-        const explorer::config::byte& value)
-    {
-        option_.script_version = value;
-    }
 
     /**
      * Get the value of the lock_time option.
@@ -313,15 +284,13 @@ private:
     struct option
     {
         option()
-          : script_version(),
-            lock_time(),
+          : lock_time(),
             version(),
             inputs(),
             outputs()
         {
         }
 
-        explorer::config::byte script_version;
         uint32_t lock_time;
         uint32_t version;
         std::vector<system::config::input> inputs;

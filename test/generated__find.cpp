@@ -503,16 +503,6 @@ BOOST_AUTO_TEST_CASE(generated__find__sha512__returns_object)
     BOOST_REQUIRE(find("sha512") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__stealth_decode__returns_object)
-{
-    BOOST_REQUIRE(find("stealth-decode") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__stealth_encode__returns_object)
-{
-    BOOST_REQUIRE(find("stealth-encode") != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__stealth_public__returns_object)
 {
     BOOST_REQUIRE(find("stealth-public") != nullptr);

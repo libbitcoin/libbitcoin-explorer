@@ -661,23 +661,6 @@
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the value is read from STDIN."/>
   </command>
 
-    <!-- Deprecate? -->
-  <command symbol="stealth-decode" formerly="stealth-show-addr" output="stealth_address" category="STEALTH" description="Decode a stealth address.">
-    <argument name="STEALTH_ADDRESS" type="stealth_address" stdin="true" description="The stealth payment address. If not specified the address is read from STDIN." />
-  </command>
-
-  <!-- Deprecate? -->
-  <command symbol="stealth-encode" output="stealth_address" category="STEALTH" description="Encode a stealth payment address. Does not support stealth multisignature.">
-    <option name="filter" type="base2" description="The Base2 stealth prefix filter that will be used to locate payments." />
-    <!--<option name="signatures" type="byte" description="The number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs." />-->
-    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
-    <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to create a payment." />
-    <argument name="SPEND_PUBKEY" type="ec_public" description="The Base16 EC public key corresponding to the private key that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY." />
-    <define name="BX_STEALTH_ENCODE_FILTER_TOO_LONG" value="The filter is limited to 32 bits." />
-    <!--<define name="BX_STEALTH_ENCODE_SIGNATURES_OVERFLOW" value="The number of signatures is greater than the number of SPEND_PUBKEYs." />-->
-    <!--<define name="BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED" value="WARNING: multiple signature stealth transactions are not yet fully supported." />-->
-  </command>
-
   <command symbol="stealth-public" formerly="stealth-uncover" output="ec_public" category="STEALTH" description="Derive the stealth public key necessary to address and to identify a stealth payment.">
     <argument name="SPEND_PUBKEY" required="true" type="ec_public" description="The Base16 EC spend public key of a stealth address." />
     <argument name="SHARED_SECRET" stdin="true" type="ec_private" description="The Base16 EC shared secret corresponding to the SPEND_PUBKEY. If not specified the key is read from STDIN." />
@@ -726,13 +709,11 @@
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
   </command>
 
-  <!-- TODO: deprecate stealth (:ENTROPY, address). -->
   <command symbol="tx-encode" output="transaction" category="TRANSACTION" description="Encode an unsigned transaction as Base16.">
-    <option name="script_version" type="byte" configuration="wallet.pay_to_script_hash_version" description="The pay-to-script-hash payment address version, defaults to 5. This is used to differentiate output addresses." />
     <option name="lock_time" type="uint32_t" description="The transaction lock time." />
     <option name="version" type="uint32_t" configuration="wallet.transaction_version" description="The transaction version, defaults to 1." />
     <option name="input" multiple="true" type="input" description="The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value." />
-    <option name="output" multiple="true" type="output" description="The set of transaction output data encoded as TARGET:SATOSHI:ENTROPY. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 64 bit spend amount in satoshi. ENTROPY is required for stealth outputs and not used otherwise. The same entropy should NOT be used for multiple outputs." />
+    <option name="output" multiple="true" type="output" description="The set of transaction output data encoded as SCRIPT:SATOSHI. SCRIPT is a Base16 or serialized script. SATOSHI is the 64 bit spend amount in satoshi." />
     <define name="BX_TX_ENCODE_INVALID_OUTPUT" value="An output is not valid." />
     <define name="BX_TX_ENCODE_LOCKTIME_CONFLICT" value="The specified lock time is ineffective because all sequences are set to the maximum value." />
   </command>
@@ -754,7 +735,7 @@
     <option name="label" type="string" description="The value of the label parameter." />
     <option name="message" type="string" description="The value of the message parameter." />
     <option name="request" type="endpoint" description="The value of the payment request parameter." />
-    <argument name="ADDRESS" type="address" description="The payment address or stealth address for the address part." />
+    <argument name="ADDRESS" type="address" description="The payment address for the address part." />
   </command>
 
   <command symbol="validate-tx" stub="true" formerly="validtx" output="string" category="ONLINE" network="true" description="Determine if a transaction is valid for submission to the blockchain. Requires a Libbitcoin server connection.">

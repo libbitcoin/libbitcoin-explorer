@@ -216,8 +216,6 @@
     <ClCompile Include="..\..\..\..\src\commands\sha160.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sha256.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sha512.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\stealth-decode.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\stealth-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-secret.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-shared.cpp" />
@@ -356,8 +354,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha160.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha256.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha512.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-decode.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-secret.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-shared.hpp" />

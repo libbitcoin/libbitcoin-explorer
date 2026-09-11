@@ -148,8 +148,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/sha160.cpp \
     ${srcdir}/../../src/commands/sha256.cpp \
     ${srcdir}/../../src/commands/sha512.cpp \
-    ${srcdir}/../../src/commands/stealth-decode.cpp \
-    ${srcdir}/../../src/commands/stealth-encode.cpp \
     ${srcdir}/../../src/commands/stealth-public.cpp \
     ${srcdir}/../../src/commands/stealth-secret.cpp \
     ${srcdir}/../../src/commands/stealth-shared.cpp \
@@ -302,8 +300,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/sha160.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/sha256.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/sha512.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/commands/stealth-decode.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/commands/stealth-encode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/stealth-public.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/stealth-secret.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/stealth-shared.hpp \
@@ -470,8 +466,6 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/sha160.cpp \
     ${srcdir}/../../test/commands/sha256.cpp \
     ${srcdir}/../../test/commands/sha512.cpp \
-    ${srcdir}/../../test/commands/stealth-decode.cpp \
-    ${srcdir}/../../test/commands/stealth-encode.cpp \
     ${srcdir}/../../test/commands/stealth-public.cpp \
     ${srcdir}/../../test/commands/stealth-secret.cpp \
     ${srcdir}/../../test/commands/stealth-shared.cpp \
