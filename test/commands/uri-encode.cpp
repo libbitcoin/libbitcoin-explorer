@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE(uri_encode__invoke__composite__okay_output)
     command.set_message_option("hello bitcoin");
     command.set_request_option("http://example.com?purchase=shoes&user=bob");
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("bitcoin:hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i?amount=100.0012&label=%26=%5Cn%23&message=hello+bitcoin&r=http://example.com?purchase=shoes&user=bob\n");
+    BX_REQUIRE_OUTPUT("bitcoin:hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i?amount=100.0012&label=%26=%5Cn%23&message=hello+bitcoin&r=http://example.com?purchase=shoes%26user=bob\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
