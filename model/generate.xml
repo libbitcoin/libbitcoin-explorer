@@ -459,18 +459,18 @@
     <define name="BX_FETCH_UTXO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="match-neutrino-address" output="bool" category="MATH" description="Determine whether the provided filter probabilistically matches the provided payment address.">
-    <argument name="COMPACT_FILTER" required="true" type="compact_filter" description="The neutrino filter to be evaluated." />
+  <command symbol="match-neutrino-address" output="bool" category="MATH" description="Determine whether the provided client filter probabilistically matches the provided payment address.">
+    <argument name="BLOCK_HASH" required="true" type="hash256" description="The hash of the block from which the client filter was derived." />
+    <argument name="CLIENT_FILTER" required="true" type="base16" description="The BIP158 client filter to be evaluated." />
     <argument name="ADDRESS" stdin="true" type="system::wallet::payment_address" description="The payment address whose membership is in question." />
-    <define name="BX_FILTER_TYPE_UNRECOGNIZED" value="The filter provided contains an unrecognized type." />
     <define name="BX_FILTER_MATCH_ADDRESS_SUCCESS" value="Address matched filter." />
     <define name="BX_FILTER_MATCH_ADDRESS_FAILURE" value="Address does not match filter." />
   </command>
 
-  <command symbol="match-neutrino-script" output="bool" category="MATH" description="Determine whether the provided filter probabilistically matches the provided script.">
-    <argument name="COMPACT_FILTER" required="true" type="compact_filter" description="The neutrino filter to be evaluated." />
+  <command symbol="match-neutrino-script" output="bool" category="MATH" description="Determine whether the provided client filter probabilistically matches the provided script.">
+    <argument name="BLOCK_HASH" required="true" type="hash256" description="The hash of the block from which the client filter was derived." />
+    <argument name="CLIENT_FILTER" required="true" type="base16" description="The BIP158 client filter to be evaluated." />
     <argument name="SCRIPT" stdin="true" type="script" description="The script whose membership is in question." />
-    <define name="BX_FILTER_TYPE_UNRECOGNIZED" value="The filter provided contains an unrecognized type." />
     <define name="BX_FILTER_MATCH_SCRIPT_SUCCESS" value="Script matched filter." />
     <define name="BX_FILTER_MATCH_SCRIPT_FAILURE" value="Script does not match filter." />
   </command>

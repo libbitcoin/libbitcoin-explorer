@@ -53,8 +53,6 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FILTER_TYPE_UNRECOGNIZED \
-    "The filter provided contains an unrecognized type."
 #define BX_FILTER_MATCH_SCRIPT_SUCCESS \
     "Script matched filter."
 #define BX_FILTER_MATCH_SCRIPT_FAILURE \
@@ -104,7 +102,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Determine whether the provided filter probabilistically matches the provided script.";
+        return "Determine whether the provided client filter probabilistically matches the provided script.";
     }
 
     /**
@@ -115,7 +113,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("COMPACT_FILTER", 1)
+            .add("BLOCK_HASH", 1)
+            .add("CLIENT_FILTER", 1)
             .add("SCRIPT", 1);
     }
 
@@ -152,9 +151,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "COMPACT_FILTER",
-            value<system::config::compact_filter>(&argument_.compact_filter)->required(),
-            "The neutrino filter to be evaluated."
+            "BLOCK_HASH",
+            value<system::config::hash256>(&argument_.block_hash)->required(),
+            "The hash of the block from which the client filter was derived."
+        )
+        (
+            "CLIENT_FILTER",
+            value<system::config::base16>(&argument_.client_filter)->required(),
+            "The BIP158 client filter to be evaluated."
         )
         (
             "SCRIPT",
@@ -185,20 +189,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the COMPACT_FILTER argument.
+     * Get the value of the BLOCK_HASH argument.
      */
-    virtual system::config::compact_filter& get_compact_filter_argument()
+    virtual system::config::hash256& get_block_hash_argument()
     {
-        return argument_.compact_filter;
+        return argument_.block_hash;
     }
 
     /**
-     * Set the value of the COMPACT_FILTER argument.
+     * Set the value of the BLOCK_HASH argument.
      */
-    virtual void set_compact_filter_argument(
-        const system::config::compact_filter& value)
+    virtual void set_block_hash_argument(
+        const system::config::hash256& value)
     {
-        argument_.compact_filter = value;
+        argument_.block_hash = value;
+    }
+
+    /**
+     * Get the value of the CLIENT_FILTER argument.
+     */
+    virtual system::config::base16& get_client_filter_argument()
+    {
+        return argument_.client_filter;
+    }
+
+    /**
+     * Set the value of the CLIENT_FILTER argument.
+     */
+    virtual void set_client_filter_argument(
+        const system::config::base16& value)
+    {
+        argument_.client_filter = value;
     }
 
     /**
@@ -228,12 +249,14 @@ private:
     struct argument
     {
         argument()
-          : compact_filter(),
+          : block_hash(),
+            client_filter(),
             script()
         {
         }
 
-        system::config::compact_filter compact_filter;
+        system::config::hash256 block_hash;
+        system::config::base16 client_filter;
         system::config::script script;
     } argument_;
 

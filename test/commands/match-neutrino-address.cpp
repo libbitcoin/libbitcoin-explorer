@@ -23,20 +23,18 @@
 
 BX_USING_NAMESPACES()
 
+#define BX_NEUTRINO_BLOCK_HASH "00000000fd3ceb2404ff07a785c7fdcc76619edc8ed61bd25134eaa22084366a"
+#define BX_NEUTRINO_CLIENT_FILTER "0db414c859a07e8205876354a210a75042d0463404913d61a8e068e58a3ae2aa080026"
+
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(match_neutrino_address__invoke)
 
 BOOST_AUTO_TEST_CASE(match_neutrino_address__invoke__match)
 {
     BX_DECLARE_COMMAND(match_neutrino_address);
-    const std::string filter(
-        "006a368420a2ea3451d21bd68edc9e6176ccfdc785a707"
-        "ff0424eb3cfd00000000230db414c859a07e8205876354"
-        "a210a75042d0463404913d61a8e068e58a3ae2aa080026");
-
-    command.set_compact_filter_argument({ filter });
-    const std::string address("mfXcDNV1r9SPmNVziJoNG4CXFjx5Gn1BTi");
-    command.set_address_argument({ address });
+    command.set_block_hash_argument({ BX_NEUTRINO_BLOCK_HASH });
+    command.set_client_filter_argument({ BX_NEUTRINO_CLIENT_FILTER });
+    command.set_address_argument({ "mfXcDNV1r9SPmNVziJoNG4CXFjx5Gn1BTi" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FILTER_MATCH_ADDRESS_SUCCESS "\n");
 }
@@ -44,31 +42,11 @@ BOOST_AUTO_TEST_CASE(match_neutrino_address__invoke__match)
 BOOST_AUTO_TEST_CASE(match_neutrino_address__invoke__no_match)
 {
     BX_DECLARE_COMMAND(match_neutrino_address);
-    const std::string filter(
-        "006a368420a2ea3451d21bd68edc9e6176ccfdc785a707"
-        "ff0424eb3cfd00000000230db414c859a07e8205876354"
-        "a210a75042d0463404913d61a8e068e58a3ae2aa080026");
-
-    command.set_compact_filter_argument({ filter });
-    const std::string address("mfXcDNV1r9SPmNVEba34DG7CWrLEaRzKm3");
-    command.set_address_argument({ address });
+    command.set_block_hash_argument({ BX_NEUTRINO_BLOCK_HASH });
+    command.set_client_filter_argument({ BX_NEUTRINO_CLIENT_FILTER });
+    command.set_address_argument({ "mfXcDNV1r9SPmNVEba34DG7CWrLEaRzKm3" });
     BX_REQUIRE_INVALID(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FILTER_MATCH_ADDRESS_FAILURE "\n");
-}
-
-BOOST_AUTO_TEST_CASE(match_neutrino_address__invoke__invalid_filter_type)
-{
-    BX_DECLARE_COMMAND(match_neutrino_address);
-    const std::string filter(
-        "016a368420a2ea3451d21bd68edc9e6176ccfdc785a707"
-        "ff0424eb3cfd00000000230db414c859a07e8205876354"
-        "a210a75042d0463404913d61a8e068e58a3ae2aa080026");
-
-    command.set_compact_filter_argument({ filter });
-    const std::string address("mfXcDNV1r9SPmNVEba34DG7CWrLEaRzKm3");
-    command.set_address_argument({ address });
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_FILTER_TYPE_UNRECOGNIZED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
