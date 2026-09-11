@@ -157,7 +157,7 @@ public:
         (
             "input,i",
             value<std::vector<system::config::input>>(&option_.inputs),
-            "The set of transaction inputs encoded as SCRIPT:TXHASH:INDEX:SEQUENCE. SCRIPT is the input script. TXHASH is a Base16 transaction hash. INDEX is the 32 bit index of the output being spent. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value."
+            "The set of transaction inputs encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit index of the output being spent. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value."
         )
         (
             "output,o",
