@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include <bitcoin/explorer/commands/hd-private.hpp>
 
 #include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-
 
 namespace libbitcoin {
 namespace explorer {
@@ -34,7 +34,20 @@ console_result hd_private::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto hard = get_hard_option();
     const auto index = get_index_option();
-    const auto& private_key = get_hd_private_key_argument();
+    const auto secret_version = get_secret_version_option();
+    const auto public_version = get_public_version_option();
+    const auto& key = get_hd_key_argument();
+
+    if (key.version() != secret_version)
+    {
+        output << BX_HD_PRIVATE_VERSION_MISMATCH << std::endl;
+        return console_result::failure;
+    }
+
+    const auto prefixes = wallet::hd_private::to_prefixes(secret_version,
+        public_version);
+
+    const wallet::hd_private private_key(key, prefixes);
 
     static constexpr auto first = wallet::hd_first_hardened_key;
     const auto position = hard ? first + index : index;

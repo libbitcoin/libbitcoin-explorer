@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include <bitcoin/explorer/commands/hd-to-public.hpp>
 
 #include <iostream>
@@ -27,30 +28,32 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
-using namespace bc::system::wallet;
 
 console_result hd_to_public::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
+    const auto secret_version = get_secret_version_option();
     const auto version = get_version_option();
-    const auto& private_key = get_hd_private_key_argument();
+    const auto& key = get_hd_key_argument();
 
-    // Obtain private version and combine with specified public version.
-    using secret = wallet::hd_private;
-    const auto private_hd_key = private_key.to_hd_key();
-    const auto prefix = secret::to_prefix(private_key.lineage().prefixes);
-    const auto prefixes = secret::to_prefixes(prefix, version);
+    if (key.version() != secret_version)
+    {
+        output << BX_HD_TO_PUBLIC_VERSION_MISMATCH << std::endl;
+        return console_result::failure;
+    }
 
-    // Derive the public key from new private key with the public version.
-    const secret versioned(private_hd_key, prefixes);
+    const auto prefixes = wallet::hd_private::to_prefixes(secret_version,
+        version);
 
-    if (!versioned)
+    const wallet::hd_private private_key(key, prefixes);
+
+    if (!private_key)
     {
         output << BX_HD_TO_PUBLIC_INVALID_KEY << std::endl;
         return console_result::failure;
     }
 
-    output << versioned.to_public() << std::endl;
+    output << private_key.to_public() << std::endl;
     return console_result::okay;
 }
 

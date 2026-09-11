@@ -468,8 +468,11 @@
   <command symbol="hd-private" output="hd_private" category="WALLET" description="Derive a child HD (BIP32) private key from another HD private key.">
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
     <option name="index" type="uint32_t" description="The HD index, defaults to 0." />
-    <argument name="HD_PRIVATE_KEY" stdin="true" type="hd_private" description="The parent HD private key. If not specified the key is read from STDIN." />
+    <option name="secret_version" type="uint32_t" configuration="wallet.hd_secret_version" description="The expected version for an HD private key, defaults to 76066276." />
+    <option name="public_version" type="uint32_t" configuration="wallet.hd_public_version" description="The expected version for an HD public key, defaults to 76067358." />
+    <argument name="HD_KEY" stdin="true" type="hd_key" description="The parent HD private key. If not specified the key is read from STDIN." />
     <define name="BX_HD_PRIVATE_INVALID_DERIVED_KEY" value="The derived key is invalid." />
+    <define name="BX_HD_PRIVATE_VERSION_MISMATCH" value="The key version does not match the secret version option." />
   </command>
 
   <command symbol="hd-public" output="hd_public" category="WALLET" description="Derive a child HD (BIP32) public key from another HD public or private key.">
@@ -496,9 +499,11 @@
   </command>
 
   <command symbol="hd-to-public" output="hd_public" category="WALLET" description="Derive the HD (BIP32) public key of a HD private key.">
+    <option name="secret_version" type="uint32_t" configuration="wallet.hd_secret_version" description="The expected version for an HD private key, defaults to 76066276." />
     <option name="version" type="uint32_t" configuration="wallet.hd_public_version" description="The desired HD public key version, defaults to 76067358." />
-    <argument name="HD_PRIVATE_KEY" stdin="true" type="hd_private" description="The HD private key. If not specified the key is read from STDIN." />
+    <argument name="HD_KEY" stdin="true" type="hd_key" description="The HD private key. If not specified the key is read from STDIN." />
     <define name="BX_HD_TO_PUBLIC_INVALID_KEY" value="The private key is invalid." />
+    <define name="BX_HD_TO_PUBLIC_VERSION_MISMATCH" value="The key version does not match the secret version option." />
   </command>
 
   <command symbol="hd-to-wif" category="WALLET" obsolete="true" description="Convert a HD (BIP32) private key to a WIF private key.">
