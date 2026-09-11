@@ -33,6 +33,7 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
@@ -161,7 +162,7 @@ public:
         )
         (
             "SHARED_SECRET",
-            value<system::wallet::ec_private>(&argument_.shared_secret),
+            value<explorer::config::ec_private>(&argument_.shared_secret),
             "The Base16 EC shared secret corresponding to the SPEND_PUBKEY. If not specified the key is read from STDIN."
         );
 
@@ -207,7 +208,7 @@ public:
     /**
      * Get the value of the SHARED_SECRET argument.
      */
-    virtual system::wallet::ec_private& get_shared_secret_argument()
+    virtual explorer::config::ec_private& get_shared_secret_argument()
     {
         return argument_.shared_secret;
     }
@@ -216,7 +217,7 @@ public:
      * Set the value of the SHARED_SECRET argument.
      */
     virtual void set_shared_secret_argument(
-        const system::wallet::ec_private& value)
+        const explorer::config::ec_private& value)
     {
         argument_.shared_secret = value;
     }
@@ -237,7 +238,7 @@ private:
         }
 
         system::wallet::ec_public spend_pubkey;
-        system::wallet::ec_private shared_secret;
+        explorer::config::ec_private shared_secret;
     } argument_;
 
     /**

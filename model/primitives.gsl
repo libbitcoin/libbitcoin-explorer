@@ -71,7 +71,7 @@ function global.map_type(type)
     my.type_btc_bx = "explorer::config::btc"
     my.type_byte_bx = "explorer::config::byte"
     my.type_bytes_bx = "explorer::config::bytes"
-    my.type_ec_private_bx = "system::wallet::ec_private"
+    my.type_ec_private_bx = "explorer::config::ec_private"
     my.type_ec_public_bx = "system::wallet::ec_public"
     my.type_ek_private_bx = "system::wallet::ek_private"
     my.type_ek_public_bx = "system::wallet::ek_public"
@@ -267,6 +267,7 @@ endfunction
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>

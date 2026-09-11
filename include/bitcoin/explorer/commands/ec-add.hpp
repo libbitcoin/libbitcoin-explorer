@@ -33,6 +33,7 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
@@ -153,7 +154,7 @@ public:
         )
         (
             "SECRET",
-            value<system::wallet::ec_private>(&argument_.secret),
+            value<explorer::config::ec_private>(&argument_.secret),
             "The Base16 EC secret to add. If not specified the secret is read from STDIN."
         );
 
@@ -199,7 +200,7 @@ public:
     /**
      * Get the value of the SECRET argument.
      */
-    virtual system::wallet::ec_private& get_secret_argument()
+    virtual explorer::config::ec_private& get_secret_argument()
     {
         return argument_.secret;
     }
@@ -208,7 +209,7 @@ public:
      * Set the value of the SECRET argument.
      */
     virtual void set_secret_argument(
-        const system::wallet::ec_private& value)
+        const explorer::config::ec_private& value)
     {
         argument_.secret = value;
     }
@@ -229,7 +230,7 @@ private:
         }
 
         system::wallet::ec_public point;
-        system::wallet::ec_private secret;
+        explorer::config::ec_private secret;
     } argument_;
 
     /**

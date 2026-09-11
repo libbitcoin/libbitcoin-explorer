@@ -173,6 +173,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/config/btc.cpp \
     ${srcdir}/../../src/config/byte.cpp \
     ${srcdir}/../../src/config/bytes.cpp \
+    ${srcdir}/../../src/config/ec_private.cpp \
     ${srcdir}/../../src/config/electrum.cpp \
     ${srcdir}/../../src/config/endorsement.cpp \
     ${srcdir}/../../src/config/hd_key.cpp \
@@ -330,6 +331,7 @@ include_bitcoin_explorer_config_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/config/btc.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/byte.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/bytes.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/ec_private.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/electrum.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/endorsement.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/hd_key.hpp \

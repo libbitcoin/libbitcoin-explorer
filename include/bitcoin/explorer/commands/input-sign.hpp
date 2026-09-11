@@ -33,6 +33,7 @@
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
@@ -174,7 +175,7 @@ public:
         )
         (
             "EC_PRIVATE_KEY",
-            value<system::wallet::ec_private>(&argument_.ec_private_key)->required(),
+            value<explorer::config::ec_private>(&argument_.ec_private_key)->required(),
             "The Base16 EC private key to sign with."
         )
         (
@@ -213,7 +214,7 @@ public:
     /**
      * Get the value of the EC_PRIVATE_KEY argument.
      */
-    virtual system::wallet::ec_private& get_ec_private_key_argument()
+    virtual explorer::config::ec_private& get_ec_private_key_argument()
     {
         return argument_.ec_private_key;
     }
@@ -222,7 +223,7 @@ public:
      * Set the value of the EC_PRIVATE_KEY argument.
      */
     virtual void set_ec_private_key_argument(
-        const system::wallet::ec_private& value)
+        const explorer::config::ec_private& value)
     {
         argument_.ec_private_key = value;
     }
@@ -328,7 +329,7 @@ private:
         {
         }
 
-        system::wallet::ec_private ec_private_key;
+        explorer::config::ec_private ec_private_key;
         system::config::script contract;
         system::config::transaction transaction;
     } argument_;

@@ -49,13 +49,10 @@ BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__one_value__okay_output)
 {
     BX_DECLARE_COMMAND(ec_add_secrets);
 
-    const std::vector<system::wallet::ec_private> secrets
-    (
-        system::wallet::ec_private(
-            "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006")
-    );
-
-    command.set_secrets_argument(secrets);
+    command.set_secrets_argument(
+    {
+        { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" }
+    });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n");
 }
