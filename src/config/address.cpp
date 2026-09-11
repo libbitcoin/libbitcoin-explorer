@@ -63,7 +63,6 @@ std::istream& operator>>(std::istream& input, address& argument)
     // TODO: add witness address.
 
     throw istream_exception(text);
-    return input;
 }
 
 std::ostream& operator<<(std::ostream& output, const address& argument)

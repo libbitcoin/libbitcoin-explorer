@@ -29,7 +29,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result ec_to_address::invoke(std::ostream& output, std::ostream& error)
+console_result ec_to_address::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto& point = get_ec_public_key_argument();

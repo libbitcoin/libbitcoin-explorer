@@ -132,8 +132,8 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
-        std::ostream& error)
+    virtual console_result invoke(std::ostream&,
+        std::ostream&)
     {
         return console_result::failure;
     }
@@ -169,8 +169,8 @@ public:
      * @param[in]  input      The input stream for loading the parameters.
      * @param[in]  variables  The loaded variables.
      */
-    BCX_API virtual void load_fallbacks(std::istream& input,
-        po::variables_map& variables)
+    BCX_API virtual void load_fallbacks(std::istream&,
+        po::variables_map&)
     {
     }
 
@@ -274,7 +274,7 @@ public:
      * @param[in]  input      The input stream for loading the parameter.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void load_stream(std::istream& input, po::variables_map& variables)
+    virtual void load_stream(std::istream&, po::variables_map&)
     {
     }
 
@@ -282,7 +282,7 @@ public:
      * Set variable defaults from configuration variable values.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void set_defaults_from_config(po::variables_map& variables)
+    virtual void set_defaults_from_config(po::variables_map&)
     {
     }
 

@@ -24,7 +24,7 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result wrap_encode::invoke(std::ostream& output, std::ostream& error)
+console_result wrap_encode::invoke(std::ostream&, std::ostream& error)
 {
     error << BX_WRAP_ENCODE_OBSOLETE << std::endl;
     return console_result::failure;

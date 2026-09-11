@@ -27,7 +27,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::explorer::config;
 
-console_result base64_decode::invoke(std::ostream& output, std::ostream& error)
+console_result base64_decode::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto& base64 = get_base64_argument();

@@ -69,7 +69,7 @@ static std::ostream& get_command_output(command& command, std::ostream& output)
 }
 
 // Set Unicode error stream in Windows builds.
-static std::ostream& get_command_error(command& command, std::ostream& error)
+static std::ostream& get_command_error(command&, std::ostream& error)
 {
     set_utf8_stderr();
     return error;

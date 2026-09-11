@@ -29,7 +29,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result ec_to_wif::invoke(std::ostream& output, std::ostream& error)
+console_result ec_to_wif::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto& secret = get_ec_private_key_argument();

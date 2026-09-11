@@ -151,13 +151,17 @@ public:
 .endfor
     }
 
+.define has_fallbacks = 0
+.for argument where is_xml_true(argument.file) | is_xml_true(argument.stdin)
+.   has_fallbacks = 1
+.endfor
     /**
      * Load parameter fallbacks from file or input as appropriate.
-     * @param[in]  input  The input stream for loading the parameters.
-     * @param[in]         The loaded variables.
+     * @param[in]  input      The input stream for loading the parameters.
+     * @param[in]  variables  The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input,
-        po::variables_map& variables)
+    virtual void load_fallbacks(std::istream&$(if_else_empty(has_fallbacks, " input")),
+        po::variables_map&$(if_else_empty(has_fallbacks, " variables")))
     {
 .for argument
 .   is_vector = !is_default(limit, 1)
@@ -239,11 +243,15 @@ public:
         return options;
     }
 
+.define has_config_options = 0
+.for option where defined(option.configuration)
+.   has_config_options = 1
+.endfor
     /**
      * Set variable defaults from configuration variable values.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void set_defaults_from_config(po::variables_map& variables)
+    virtual void set_defaults_from_config(po::variables_map&$(if_else_empty(has_config_options, " variables")))
     {
 .for option where defined(option.configuration)
 .   is_vector = is_xml_true(multiple)

@@ -30,7 +30,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result wif_to_public::invoke(std::ostream& output, std::ostream& error)
+console_result wif_to_public::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto& secret = get_wif_argument();

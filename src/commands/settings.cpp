@@ -31,7 +31,7 @@ using namespace bc::explorer::config;
 using namespace bc::system;
 
 console_result commands::settings::invoke(std::ostream& output,
-    std::ostream& error)
+    std::ostream&)
 {
     // TODO: look into serializer object quoting.
     // TODO: load from metadata into settings list.

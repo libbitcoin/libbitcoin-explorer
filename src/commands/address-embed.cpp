@@ -33,7 +33,7 @@ using namespace bc::system::chain;
 using namespace bc::system::wallet;
 
 console_result address_embed::invoke(std::ostream& output,
-    std::ostream& error)
+    std::ostream&)
 {
     // Bound parameters.
     const data_chunk& data = get_data_argument();

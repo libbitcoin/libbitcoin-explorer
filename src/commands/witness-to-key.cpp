@@ -27,7 +27,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::config;
 
-console_result witness_to_key::invoke(std::ostream& output, std::ostream& error)
+console_result witness_to_key::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto& address = get_witness_address_argument();

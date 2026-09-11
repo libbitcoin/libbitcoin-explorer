@@ -30,7 +30,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
- console_result uri_encode::invoke(std::ostream& output, std::ostream& error)
+ console_result uri_encode::invoke(std::ostream& output, std::ostream&)
  {
      // Bound parameters.
      const auto& amount = get_amount_option();

@@ -31,7 +31,7 @@ using namespace bc::explorer::config;
 using namespace bc::system;
 
 console_result satoshi_to_btc::invoke(std::ostream& output,
-    std::ostream& error)
+    std::ostream&)
 {
     // Bound parameters.
     const auto satoshi = get_satoshi_argument();

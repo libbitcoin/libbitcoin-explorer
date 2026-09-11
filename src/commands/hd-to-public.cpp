@@ -29,7 +29,7 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result hd_to_public::invoke(std::ostream& output, std::ostream& error)
+console_result hd_to_public::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto secret_version = get_secret_version_option();

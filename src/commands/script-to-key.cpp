@@ -30,7 +30,7 @@ using namespace bc::system;
 using namespace bc::system::config;
 using namespace bc::system::wallet;
 
-console_result script_to_key::invoke(std::ostream& output, std::ostream& error)
+console_result script_to_key::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto& script = get_script_argument();

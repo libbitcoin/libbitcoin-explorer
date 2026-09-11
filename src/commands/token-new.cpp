@@ -30,7 +30,7 @@ using namespace bc::explorer::config;
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result token_new::invoke(std::ostream& output, std::ostream& error)
+console_result token_new::invoke(std::ostream&, std::ostream& error)
 {
 #ifdef WITH_ICU
     const auto lot = get_lot_option();

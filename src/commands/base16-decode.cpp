@@ -31,7 +31,7 @@ using namespace bc::system;
 using namespace bc::explorer::config;
 
 console_result base16_decode::invoke(std::ostream& output,
-    std::ostream& error)
+    std::ostream&)
 {
     // Bound parameters.
     const auto& base16 = get_base16_argument();

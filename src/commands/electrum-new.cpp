@@ -32,7 +32,7 @@ using namespace bc::system::wallet;
 ////<define name="BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE" value="The entropy size is not 17 to 64 bytes." />
 ////<define name="BX_ELECTRUM_NEW_INVALID_VERSION1_LANGUAGE" value="Version1 langauges are limited to 'en' and 'pt'." />
 
-console_result electrum_new::invoke(std::ostream& output, std::ostream& error)
+console_result electrum_new::invoke(std::ostream&, std::ostream&)
 {
     ////// Bound parameters.
     ////const language lingo = get_language_option();

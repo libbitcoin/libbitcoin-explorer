@@ -30,7 +30,7 @@ using namespace bc::explorer::config;
 using namespace bc::system;
 using namespace bc::system::config;
 
-console_result bitcoin256::invoke(std::ostream& output, std::ostream& error)
+console_result bitcoin256::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const data_chunk& data = get_base16_argument();

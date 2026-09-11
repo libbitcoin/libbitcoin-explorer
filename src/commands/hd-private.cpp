@@ -29,7 +29,7 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result hd_private::invoke(std::ostream& output, std::ostream& error)
+console_result hd_private::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const auto hard = get_hard_option();
