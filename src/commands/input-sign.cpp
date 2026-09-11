@@ -54,7 +54,6 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
 
     endorsement endorse;
 
-    // Legacy signing only, segwit requires the prevout value and version.
     if (!tx.create_endorsement(endorse, private_key, contract, index, 0,
         hash_type, chain::script_version::unversioned, chain::flags::all_rules))
     {

@@ -26,8 +26,6 @@
 namespace libbitcoin {
 namespace explorer {
 
-/// Serializations for types not annotated by libbitcoin-system.
-
 BCX_API boost::json::value to_json(const settings_list& settings) NOEXCEPT;
 
 BCX_API boost::json::value to_json(

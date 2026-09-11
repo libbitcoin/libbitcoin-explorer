@@ -157,12 +157,12 @@ public:
         (
             "input,i",
             value<std::vector<system::config::input>>(&option_.inputs),
-            "The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value."
+            "The set of transaction inputs encoded as SCRIPT:TXHASH:INDEX:SEQUENCE. SCRIPT is the input script. TXHASH is a Base16 transaction hash. INDEX is the 32 bit index of the output being spent. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value."
         )
         (
             "output,o",
             value<std::vector<system::config::output>>(&option_.outputs),
-            "The set of transaction output data encoded as SCRIPT:SATOSHI. SCRIPT is a Base16 or serialized script. SATOSHI is the 64 bit spend amount in satoshi."
+            "The set of transaction outputs encoded as SCRIPT:SATOSHI. SCRIPT is the output script. SATOSHI is the 64 bit spend amount in satoshi."
         );
 
         return options;
