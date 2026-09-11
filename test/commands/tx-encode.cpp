@@ -45,17 +45,6 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__example1__expected_output)
     BX_REQUIRE_OUTPUT("0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970000000000ffffffff01c8af0000000000001976a91458b7a60f11a904feef35a639b6048de8dd4d9f1c88ac00000000" "\n");
 }
 
-// Vector: from stealth-encode tests.
-BOOST_AUTO_TEST_CASE(tx_encode__invoke__example2__okay_output)
-{
-    BX_DECLARE_COMMAND(tx_encode);
-    command.set_version_option(1);
-    command.set_inputs_option({ { "97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1:7" } });
-    command.set_outputs_option({ { "hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i:42:baadf00dbaadf00dbaadf00dbaadf00d" } });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000070000000200000000000000003a6a3814576f496f20b0befe21f39f765e81543ebd1790ec4a03d1b5a1c2e912749d90d0fd7b16322749e301a2b0dbfe278509011564590412b2772a000000000000001976a914cc04492c12d0ddeb4cf88cfccb0d6d78d0fcd39d88ac00000000" "\n");
-}
-
 // Vector: script from script-decode
 BOOST_AUTO_TEST_CASE(tx_encode__invoke__example3__okay_output)
 {
