@@ -20,7 +20,6 @@
 
 #include <iostream>
 #include <string>
-#include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -34,7 +33,6 @@ namespace explorer {
 
 using namespace bc::system;
 using namespace boost;
-using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace boost::system;
 

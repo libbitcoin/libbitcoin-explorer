@@ -48,9 +48,9 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    uint8_t hash_type = (machine::sighash_algorithm)sign_type;
+    uint8_t hash_type = (chain::coverage)sign_type;
     if (anyone_can_pay)
-        hash_type |= machine::sighash_algorithm::anyone_can_pay;
+        hash_type |= chain::coverage::anyone_can_pay;
 
     endorsement endorse;
     if (!chain::script::create_endorsement(endorse, private_key, contract, tx,

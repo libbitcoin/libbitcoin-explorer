@@ -32,7 +32,7 @@ constexpr auto sighash_none = "none";
 constexpr auto sighash_single = "single";
 
 sighash::sighash()
-  : value_(type::all)
+  : value_(type::hash_all)
 {
 }
 
@@ -62,13 +62,13 @@ std::istream& operator>>(std::istream& input, sighash& argument)
     input >> text;
 
     if (text == sighash_all)
-        argument.value_ = sighash::type::all;
+        argument.value_ = sighash::type::hash_all;
     else if (text == sighash_none)
-        argument.value_ = sighash::type::none;
+        argument.value_ = sighash::type::hash_none;
     else if (text == sighash_single)
-        argument.value_ = sighash::type::single;
+        argument.value_ = sighash::type::hash_single;
     else
-        throw system::istream_exception(text);
+        throw istream_exception(text);
 
     return input;
 }
@@ -79,17 +79,17 @@ std::ostream& operator<<(std::ostream& output, const sighash& argument)
 
     switch (argument.value_)
     {
-        case sighash::type::all:
+        case sighash::type::hash_all:
             text = sighash_all;
             break;
-        case sighash::type::none:
+        case sighash::type::hash_none:
             text = sighash_none;
             break;
-        case sighash::type::single:
+        case sighash::type::hash_single:
             text = sighash_single;
             break;
         default:
-            throw system::ostream_exception("sighash");
+            throw ostream_exception("sighash");
     }
 
     output << text;

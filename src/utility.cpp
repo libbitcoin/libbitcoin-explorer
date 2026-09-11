@@ -28,7 +28,6 @@
 #include <boost/property_tree/xml_parser.hpp>
 
 using namespace bc::system;
-using boost::filesystem::path;
 
 namespace libbitcoin {
 namespace explorer {

@@ -33,7 +33,7 @@ namespace config {
 class BCX_API language
 {
 public:
-    typedef system::wallet::language type;
+    typedef system::language type;
 
     language();
     language(const language& other);

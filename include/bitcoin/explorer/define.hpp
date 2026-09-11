@@ -79,6 +79,14 @@ enum class encoding_engine
     xml
 };
 
+/// Console result codes, positive values are domain-specific.
+enum console_result : int
+{
+    failure = -1,
+    okay = 0,
+    invalid = 1
+};
+
 } // namespace explorer
 } // namespace libbitcoin
 

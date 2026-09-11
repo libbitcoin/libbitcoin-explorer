@@ -92,7 +92,7 @@ function global.map_type(type)
     my.type_input_bx = "system::config::input"
     my.type_language_bx = "explorer::config::language"
     my.type_output_bx = "system::config::output"
-    my.type_path_boost = "boost::filesystem::path"
+    my.type_path_std = "std::filesystem::path"
     my.type_payment_address_bx = "system::wallet::payment_address"
     my.type_point_bx = "system::config::point"
     my.type_script_bx = "system::config::script"
@@ -170,7 +170,7 @@ function global.map_type(type)
     elsif my.type = my.type_output
         return my.type_output_bx
     elsif my.type = my.type_path
-        return my.type_path_boost
+        return my.type_path_std
     elsif my.type = my.type_payment_address
         return my.type_payment_address_bx
     elsif my.type = my.type_point
@@ -233,7 +233,7 @@ function global.is_braced_type(type)
 endfunction
 
 function global.is_quoted_type(type)
-    return ((my.type = "boost::filesystem::path") | \
+    return ((my.type = "std::filesystem::path") | \
         (my.type = "std::string") | \
         (my.type = "explorer::config::uri") | \
         (my.type = "system::config::endpoint") | \

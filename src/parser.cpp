@@ -26,7 +26,6 @@
 #include <bitcoin/system.hpp>
 
 using namespace bc::system;
-using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace boost::system;
 

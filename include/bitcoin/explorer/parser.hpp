@@ -21,7 +21,6 @@
 
 #include <iostream>
 #include <string>
-#include <boost/filesystem.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -45,16 +44,16 @@ public:
     virtual bool help() const;
 
     /// Load command line options (named).
-    virtual system::options_metadata load_options();
+    virtual options_metadata load_options();
 
     /// Load command line arguments (positional).
-    virtual system::arguments_metadata load_arguments();
+    virtual arguments_metadata load_arguments();
 
     /// Load configuration file settings.
-    virtual system::options_metadata load_settings();
+    virtual options_metadata load_settings();
 
     /// Load environment variable settings.
-    virtual system::options_metadata load_environment();
+    virtual options_metadata load_environment();
 
 protected:
     virtual void load_command_variables(std::istream& input, int argc,

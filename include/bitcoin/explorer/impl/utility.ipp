@@ -36,7 +36,7 @@ void load_input(Value& parameter, const std::string& name,
 {
     if (variables.find(name) == variables.end())
         if (!system::deserialize(parameter, input))
-            throw system::istream_exception(name);
+            throw istream_exception(name);
 }
 
 template <typename Value>
@@ -61,7 +61,7 @@ void load_path(Value& parameter, const std::string& name,
 
     system::ifstream file(path, std::ios::binary);
     if (!file.good() || !system::deserialize(parameter, file))
-        throw system::istream_exception(path);
+        throw istream_exception(path);
 }
 
 template <typename Instance>
