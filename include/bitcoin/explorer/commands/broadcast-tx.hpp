@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -56,6 +55,8 @@ namespace commands {
  */
 #define BX_SEND_TX_P2P_OUTPUT \
     "Sent transaction."
+#define BX_BROADCAST_TX_NOT_IMPLEMENTED \
+    "This command is not yet implemented."
 
 /**
  * Class to implement the broadcast-tx command.

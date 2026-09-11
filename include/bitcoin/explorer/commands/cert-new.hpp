@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -56,6 +55,8 @@ namespace commands {
  */
 #define BX_CERT_NEW_FAILURE \
     "The key generation failed."
+#define BX_CERT_NEW_NOT_IMPLEMENTED \
+    "This command is not yet implemented."
 
 /**
  * Class to implement the cert-new command.

@@ -40,7 +40,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -242,46 +241,6 @@ public:
             "The rule fork flags, defaults to all (4294967295)."
         )
         (
-            "network.identifier",
-            value<uint32_t>(&setting_.network.identifier)->default_value(3652501241),
-            "The magic number for message headers, defaults to 3652501241."
-        )
-        (
-            "network.connect_retries",
-            value<explorer::config::byte>(&setting_.network.connect_retries)->default_value(0),
-            "The number of times to retry contacting a node, defaults to 0."
-        )
-        (
-            "network.connect_timeout_seconds",
-            value<uint32_t>(&setting_.network.connect_timeout_seconds)->default_value(5),
-            "The time limit for connection establishment, defaults to 5."
-        )
-        (
-            "network.channel_handshake_seconds",
-            value<uint32_t>(&setting_.network.channel_handshake_seconds)->default_value(30),
-            "The time limit to complete the connection handshake, defaults to 30."
-        )
-        (
-            "network.hosts_file",
-            value<boost::filesystem::path>(&setting_.network.hosts_file)->default_value("hosts.cache"),
-            "The peer hosts cache file path, defaults to 'hosts.cache'."
-        )
-        (
-            "network.debug_file",
-            value<boost::filesystem::path>(&setting_.network.debug_file)->default_value("debug.log"),
-            "The debug log file path, defaults to 'debug.log'."
-        )
-        (
-            "network.error_file",
-            value<boost::filesystem::path>(&setting_.network.error_file)->default_value("error.log"),
-            "The error log file path, defaults to 'error.log'."
-        )
-        (
-            "network.seed",
-            value<std::vector<system::config::endpoint>>(&setting_.network.seeds),
-            "A seed node for initializing the host pool, multiple entries allowed."
-        )
-        (
             "server.url",
             value<system::config::endpoint>(&setting_.server.url)->default_value({ "tcp://mainnet.libbitcoin.net:9091" }),
             "The URL of the Libbitcoin query service."
@@ -310,16 +269,6 @@ public:
             "server.connect_timeout_seconds",
             value<uint16_t>(&setting_.server.connect_timeout_seconds)->default_value(5),
             "The time limit for connection establishment, defaults to 5."
-        )
-        (
-            "server.server_public_key",
-            value<protocol::zmq::sodium>(&setting_.server.server_public_key),
-            "The Base85 encoded public key of the server."
-        )
-        (
-            "server.client_private_key",
-            value<protocol::zmq::sodium>(&setting_.server.client_private_key),
-            "The Base85 encoded private key of the client."
         );
     }
 
@@ -517,134 +466,6 @@ public:
     }
 
     /**
-     * Get the value of the network.identifier setting.
-     */
-    virtual uint32_t get_network_identifier_setting() const
-    {
-        return setting_.network.identifier;
-    }
-
-    /**
-     * Set the value of the network.identifier setting.
-     */
-    virtual void set_network_identifier_setting(uint32_t value)
-    {
-        setting_.network.identifier = value;
-    }
-
-    /**
-     * Get the value of the network.connect_retries setting.
-     */
-    virtual explorer::config::byte get_network_connect_retries_setting() const
-    {
-        return setting_.network.connect_retries;
-    }
-
-    /**
-     * Set the value of the network.connect_retries setting.
-     */
-    virtual void set_network_connect_retries_setting(explorer::config::byte value)
-    {
-        setting_.network.connect_retries = value;
-    }
-
-    /**
-     * Get the value of the network.connect_timeout_seconds setting.
-     */
-    virtual uint32_t get_network_connect_timeout_seconds_setting() const
-    {
-        return setting_.network.connect_timeout_seconds;
-    }
-
-    /**
-     * Set the value of the network.connect_timeout_seconds setting.
-     */
-    virtual void set_network_connect_timeout_seconds_setting(uint32_t value)
-    {
-        setting_.network.connect_timeout_seconds = value;
-    }
-
-    /**
-     * Get the value of the network.channel_handshake_seconds setting.
-     */
-    virtual uint32_t get_network_channel_handshake_seconds_setting() const
-    {
-        return setting_.network.channel_handshake_seconds;
-    }
-
-    /**
-     * Set the value of the network.channel_handshake_seconds setting.
-     */
-    virtual void set_network_channel_handshake_seconds_setting(uint32_t value)
-    {
-        setting_.network.channel_handshake_seconds = value;
-    }
-
-    /**
-     * Get the value of the network.hosts_file setting.
-     */
-    virtual boost::filesystem::path get_network_hosts_file_setting() const
-    {
-        return setting_.network.hosts_file;
-    }
-
-    /**
-     * Set the value of the network.hosts_file setting.
-     */
-    virtual void set_network_hosts_file_setting(boost::filesystem::path value)
-    {
-        setting_.network.hosts_file = value;
-    }
-
-    /**
-     * Get the value of the network.debug_file setting.
-     */
-    virtual boost::filesystem::path get_network_debug_file_setting() const
-    {
-        return setting_.network.debug_file;
-    }
-
-    /**
-     * Set the value of the network.debug_file setting.
-     */
-    virtual void set_network_debug_file_setting(boost::filesystem::path value)
-    {
-        setting_.network.debug_file = value;
-    }
-
-    /**
-     * Get the value of the network.error_file setting.
-     */
-    virtual boost::filesystem::path get_network_error_file_setting() const
-    {
-        return setting_.network.error_file;
-    }
-
-    /**
-     * Set the value of the network.error_file setting.
-     */
-    virtual void set_network_error_file_setting(boost::filesystem::path value)
-    {
-        setting_.network.error_file = value;
-    }
-
-    /**
-     * Get the value of the network.seed settings.
-     */
-    virtual std::vector<system::config::endpoint> get_network_seeds_setting() const
-    {
-        return setting_.network.seeds;
-    }
-
-    /**
-     * Set the value of the network.seed settings.
-     */
-    virtual void set_network_seeds_setting(std::vector<system::config::endpoint> value)
-    {
-        setting_.network.seeds = value;
-    }
-
-    /**
      * Get the value of the server.url setting.
      */
     virtual system::config::endpoint get_server_url_setting() const
@@ -740,38 +561,6 @@ public:
         setting_.server.connect_timeout_seconds = value;
     }
 
-    /**
-     * Get the value of the server.server_public_key setting.
-     */
-    virtual protocol::zmq::sodium get_server_server_public_key_setting() const
-    {
-        return setting_.server.server_public_key;
-    }
-
-    /**
-     * Set the value of the server.server_public_key setting.
-     */
-    virtual void set_server_server_public_key_setting(protocol::zmq::sodium value)
-    {
-        setting_.server.server_public_key = value;
-    }
-
-    /**
-     * Get the value of the server.client_private_key setting.
-     */
-    virtual protocol::zmq::sodium get_server_client_private_key_setting() const
-    {
-        return setting_.server.client_private_key;
-    }
-
-    /**
-     * Set the value of the server.client_private_key setting.
-     */
-    virtual void set_server_client_private_key_setting(protocol::zmq::sodium value)
-    {
-        setting_.server.client_private_key = value;
-    }
-
 protected:
 
     /**
@@ -840,30 +629,6 @@ private:
             uint32_t rule_fork_flags;
         } wallet;
 
-        struct network
-        {
-            network()
-              : identifier(),
-                connect_retries(),
-                connect_timeout_seconds(),
-                channel_handshake_seconds(),
-                hosts_file(),
-                debug_file(),
-                error_file(),
-                seeds()
-            {
-            }
-
-            uint32_t identifier;
-            explorer::config::byte connect_retries;
-            uint32_t connect_timeout_seconds;
-            uint32_t channel_handshake_seconds;
-            boost::filesystem::path hosts_file;
-            boost::filesystem::path debug_file;
-            boost::filesystem::path error_file;
-            std::vector<system::config::endpoint> seeds;
-        } network;
-
         struct server
         {
             server()
@@ -872,9 +637,7 @@ private:
                 transaction_url(),
                 socks_proxy(),
                 connect_retries(),
-                connect_timeout_seconds(),
-                server_public_key(),
-                client_private_key()
+                connect_timeout_seconds()
             {
             }
 
@@ -884,13 +647,10 @@ private:
             system::config::authority socks_proxy;
             explorer::config::byte connect_retries;
             uint16_t connect_timeout_seconds;
-            protocol::zmq::sodium server_public_key;
-            protocol::zmq::sodium client_private_key;
         } server;
 
         setting()
           : wallet(),
-            network(),
             server()
         {
         }

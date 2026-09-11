@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -50,6 +49,12 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+/**
+ * Various localizable strings.
+ */
+#define BX_FETCH_BLOCK_HASHES_NOT_IMPLEMENTED \
+    "This command is not yet implemented."
 
 /**
  * Class to implement the fetch-block-hashes command.

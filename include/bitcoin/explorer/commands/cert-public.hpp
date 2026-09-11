@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -56,6 +55,8 @@ namespace commands {
  */
 #define BX_CERT_PUBLIC_INVALID \
     "The private key is not valid."
+#define BX_CERT_PUBLIC_NOT_IMPLEMENTED \
+    "This command is not yet implemented."
 
 /**
  * Class to implement the cert-public command.
@@ -149,7 +150,7 @@ public:
         )
         (
             "PRIVATE_KEY",
-            value<protocol::zmq::sodium>(&argument_.private_key),
+            value<system::config::base85>(&argument_.private_key),
             "The private key from which to derive the public key."
         );
 
@@ -178,7 +179,7 @@ public:
     /**
      * Get the value of the PRIVATE_KEY argument.
      */
-    virtual protocol::zmq::sodium& get_private_key_argument()
+    virtual system::config::base85& get_private_key_argument()
     {
         return argument_.private_key;
     }
@@ -187,7 +188,7 @@ public:
      * Set the value of the PRIVATE_KEY argument.
      */
     virtual void set_private_key_argument(
-        const protocol::zmq::sodium& value)
+        const system::config::base85& value)
     {
         argument_.private_key = value;
     }
@@ -206,7 +207,7 @@ private:
         {
         }
 
-        protocol::zmq::sodium private_key;
+        system::config::base85 private_key;
     } argument_;
 
     /**

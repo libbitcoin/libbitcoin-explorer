@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -56,6 +55,8 @@ namespace commands {
  */
 #define BX_FETCH_HISTORY_INVALID_ARGUMENTS \
     "A valid payments search key must be provided."
+#define BX_FETCH_HISTORY_NOT_IMPLEMENTED \
+    "This command is not yet implemented."
 
 /**
  * Class to implement the fetch-history command.

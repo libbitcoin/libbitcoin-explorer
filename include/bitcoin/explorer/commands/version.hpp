@@ -42,7 +42,6 @@
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
-#include <bitcoin/protocol/zmq/sodium.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -60,6 +59,8 @@ namespace commands {
     "libbitcoin-server version: %1%."
 #define BX_EXPLORER_VERSION \
     "libbitcoin-explorer version: %1%."
+#define BX_VERSION_NOT_IMPLEMENTED \
+    "This command is not yet implemented."
 
 /**
  * Class to implement the version command.
