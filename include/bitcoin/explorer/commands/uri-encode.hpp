@@ -154,7 +154,7 @@ public:
         )
         (
             "request,r",
-            value<system::config::endpoint>(&option_.request),
+            value<std::string>(&option_.request),
             "The value of the payment request parameter."
         )
         (
@@ -256,7 +256,7 @@ public:
     /**
      * Get the value of the request option.
      */
-    virtual system::config::endpoint& get_request_option()
+    virtual std::string& get_request_option()
     {
         return option_.request;
     }
@@ -265,7 +265,7 @@ public:
      * Set the value of the request option.
      */
     virtual void set_request_option(
-        const system::config::endpoint& value)
+        const std::string& value)
     {
         option_.request = value;
     }
@@ -305,7 +305,7 @@ private:
         explorer::config::btc amount;
         std::string label;
         std::string message;
-        system::config::endpoint request;
+        std::string request;
     } option_;
 };
 

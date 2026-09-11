@@ -24,53 +24,9 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(settings__invoke)
 
-#define BX_SETTINGS_EMPTY \
-"settings\n" \
-"{\n" \
-"    server\n" \
-"    {\n" \
-"        block_url localhost\n" \
-"        connect_retries 0\n" \
-"        connect_timeout_seconds 0\n" \
-"        socks_proxy [::]\n" \
-"        transaction_url localhost\n" \
-"        url localhost\n" \
-"    }\n" \
-"    wallet\n" \
-"    {\n" \
-"        hd_public_version 0\n" \
-"        hd_secret_version 0\n" \
-"        pay_to_public_key_hash_version 0\n" \
-"        pay_to_script_hash_version 0\n" \
-"        rule_fork_flags 0\n" \
-"        transaction_version 0\n" \
-"        wif_version 0\n" \
-"    }\n" \
-"}\n"
+#define BX_SETTINGS_EMPTY "{\"settings\":{\"server\":{\"block_url\":\"localhost\",\"connect_retries\":\"0\",\"connect_timeout_seconds\":\"0\",\"socks_proxy\":\"[::]\",\"transaction_url\":\"localhost\",\"url\":\"localhost\"},\"wallet\":{\"hd_public_version\":\"0\",\"hd_secret_version\":\"0\",\"pay_to_public_key_hash_version\":\"0\",\"pay_to_script_hash_version\":\"0\",\"rule_fork_flags\":\"0\",\"transaction_version\":\"0\",\"wif_version\":\"0\"}}}\n"
 
-#define BX_SETTINGS_TEST_VALUES \
-"settings\n" \
-"{\n" \
-"    server\n" \
-"    {\n" \
-"        block_url https://mainnet.obelisk.net:43\n" \
-"        connect_retries 21\n" \
-"        connect_timeout_seconds 22\n" \
-"        socks_proxy 127.0.0.42:4242\n" \
-"        transaction_url https://mainnet.obelisk.net:44\n" \
-"        url https://mainnet.obelisk.net:42\n" \
-"    }\n" \
-"    wallet\n" \
-"    {\n" \
-"        hd_public_version 2\n" \
-"        hd_secret_version 3\n" \
-"        pay_to_public_key_hash_version 4\n" \
-"        pay_to_script_hash_version 5\n" \
-"        rule_fork_flags 4294967295\n" \
-"        transaction_version 6\n" \
-"        wif_version 1\n" \
-"    }\n" \
-"}\n"
+#define BX_SETTINGS_TEST_VALUES "{\"settings\":{\"server\":{\"block_url\":\"https://mainnet.obelisk.net:43\",\"connect_retries\":\"21\",\"connect_timeout_seconds\":\"22\",\"socks_proxy\":\"127.0.0.42:4242\",\"transaction_url\":\"https://mainnet.obelisk.net:44\",\"url\":\"https://mainnet.obelisk.net:42\"},\"wallet\":{\"hd_public_version\":\"2\",\"hd_secret_version\":\"3\",\"pay_to_public_key_hash_version\":\"4\",\"pay_to_script_hash_version\":\"5\",\"rule_fork_flags\":\"4294967295\",\"transaction_version\":\"6\",\"wif_version\":\"1\"}}}\n"
 
 BOOST_AUTO_TEST_CASE(settings__invoke__empty__okay_output)
 {

@@ -95,8 +95,8 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__non_default_values__success_expected_size)
     command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
-    istream_reader stream(output);
-    BOOST_REQUIRE_EQUAL(stream.read_bytes().size(), 2676u);
+    system::read::bytes::istream reader(output);
+    BOOST_REQUIRE_EQUAL(reader.read_bytes().size(), 2676u);
 }
 
 BOOST_AUTO_TEST_CASE(qrcode__invoke__minimal_size__success_expected)
@@ -187,10 +187,10 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__minimal_size__success_expected)
     command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
-    istream_reader stream(output);
+    system::read::bytes::istream reader(output);
 
     // Encode as base16 so that failure message is intelligible.
-    BOOST_REQUIRE_EQUAL(encode_base16(stream.read_bytes()), encode_base16(expected));
+    BOOST_REQUIRE_EQUAL(encode_base16(reader.read_bytes()), encode_base16(expected));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

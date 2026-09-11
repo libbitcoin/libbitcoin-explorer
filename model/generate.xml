@@ -729,12 +729,11 @@
     <argument name="URI" type="uri" stdin="true" description="The Bitcoin URI to decode. The URI should be quoted when entered on the command line. If not specified the URI is read from STDIN." />
   </command>
 
-  <!-- TODO: remove steath option. -->
   <command symbol="uri-encode" output="uri" category="WALLET" description="Compose a Bitcoin URI from specified parts.">
     <option name="amount" type="btc" description="The value of the amount parameter." />
     <option name="label" type="string" description="The value of the label parameter." />
     <option name="message" type="string" description="The value of the message parameter." />
-    <option name="request" type="endpoint" description="The value of the payment request parameter." />
+    <option name="request" type="string" description="The value of the payment request parameter." />
     <argument name="ADDRESS" type="address" description="The payment address for the address part." />
   </command>
 

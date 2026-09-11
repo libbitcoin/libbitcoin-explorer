@@ -29,7 +29,6 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__locktime_conflict__locktime_conflict_err
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(1);
     command.set_lock_time_option(42);
-    command.set_script_version_option(5);
     command.set_inputs_option({ { "97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1" } });
     command.set_outputs_option({ { "13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000" } });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
@@ -40,7 +39,6 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__example1__expected_output)
 {
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(1);
-    command.set_script_version_option(5);
     command.set_inputs_option({ { "97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0" } });
     command.set_outputs_option({ { "1966U1pjj15tLxPXZ19U48c99EJDkdXeqb:45000" } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -52,7 +50,6 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__example2__okay_output)
 {
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(1);
-    command.set_script_version_option(5);
     command.set_inputs_option({ { "97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1:7" } });
     command.set_outputs_option({ { "hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i:42:baadf00dbaadf00dbaadf00dbaadf00d" } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -64,7 +61,6 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__example3__okay_output)
 {
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(1);
-    command.set_script_version_option(5);
     command.set_inputs_option({ { "97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1:7" } });
     command.set_outputs_option({ { "76a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac:500" } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
