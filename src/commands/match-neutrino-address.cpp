@@ -40,7 +40,9 @@ console_result match_neutrino_address::invoke(std::ostream& output, std::ostream
         get_client_filter_argument()
     };
 
-    if (!neutrino::match_filter(filter, get_address_argument()))
+    if (!neutrino::match_filter(filter, get_address_argument(),
+        get_wallet_pay_to_public_key_hash_version_setting(),
+        get_wallet_pay_to_script_hash_version_setting()))
     {
         output << BX_FILTER_MATCH_ADDRESS_FAILURE << std::endl;
         return console_result::invalid;

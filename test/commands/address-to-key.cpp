@@ -63,6 +63,7 @@ BOOST_AUTO_TEST_CASE(address_to_key__invoke__address3__okay_output)
 BOOST_AUTO_TEST_CASE(address_to_key__invoke__testnet_address1__okay_output)
 {
     BX_DECLARE_COMMAND(bc::explorer::commands::address_to_key);
+    command.set_wallet_pay_to_public_key_hash_version_setting(111);
     command.set_payment_address_argument({ BX_ADDRESS_TO_KEY_TESTNET_ADDRESS1 });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_ADDRESS_TO_KEY_TESTNET_KEY1);

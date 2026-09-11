@@ -32,6 +32,7 @@ BOOST_AUTO_TEST_SUITE(match_neutrino_address__invoke)
 BOOST_AUTO_TEST_CASE(match_neutrino_address__invoke__match)
 {
     BX_DECLARE_COMMAND(match_neutrino_address);
+    command.set_wallet_pay_to_public_key_hash_version_setting(111);
     command.set_block_hash_argument({ BX_NEUTRINO_BLOCK_HASH });
     command.set_client_filter_argument({ BX_NEUTRINO_CLIENT_FILTER });
     command.set_address_argument({ "mfXcDNV1r9SPmNVziJoNG4CXFjx5Gn1BTi" });
@@ -42,6 +43,7 @@ BOOST_AUTO_TEST_CASE(match_neutrino_address__invoke__match)
 BOOST_AUTO_TEST_CASE(match_neutrino_address__invoke__no_match)
 {
     BX_DECLARE_COMMAND(match_neutrino_address);
+    command.set_wallet_pay_to_public_key_hash_version_setting(111);
     command.set_block_hash_argument({ BX_NEUTRINO_BLOCK_HASH });
     command.set_client_filter_argument({ BX_NEUTRINO_CLIENT_FILTER });
     command.set_address_argument({ "mfXcDNV1r9SPmNVEba34DG7CWrLEaRzKm3" });
