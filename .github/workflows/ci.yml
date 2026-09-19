@@ -7,7 +7,11 @@
 
 name: Continuous Integration
 
-on: [ pull_request, push, workflow_dispatch ]
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+  push:
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.repository_owner == 'libbitcoin' && (github.event.pull_request.number || github.run_id) || github.ref }}
@@ -34,6 +38,8 @@ jobs:
 
 
   gnu:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
+
     strategy:
       fail-fast: false
 
@@ -127,8 +133,7 @@ jobs:
       - name: Checkout repository [libbitcoin-system] cleanup on failure
         continue-on-error: true
         if: steps.checkout-libbitcoin-system.outcome == 'failure'
-        shell: powershell
-        working-directory: 'libbitcoin-explorer'
+        shell: bash
         run: |
           rm -rf ${{ github.workspace }}/libbitcoin-system
 
@@ -247,6 +252,8 @@ jobs:
           if-no-files-found: warn
 
   cmake:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
+
     strategy:
       fail-fast: false
 
@@ -340,8 +347,7 @@ jobs:
       - name: Checkout repository [libbitcoin-system] cleanup on failure
         continue-on-error: true
         if: steps.checkout-libbitcoin-system.outcome == 'failure'
-        shell: powershell
-        working-directory: 'libbitcoin-explorer'
+        shell: bash
         run: |
           rm -rf ${{ github.workspace }}/libbitcoin-system
 
@@ -460,6 +466,8 @@ jobs:
           if-no-files-found: warn
 
   presets:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
+
     strategy:
       fail-fast: false
 
@@ -516,8 +524,7 @@ jobs:
       - name: Checkout repository [libbitcoin-system] cleanup on failure
         continue-on-error: true
         if: steps.checkout-libbitcoin-system.outcome == 'failure'
-        shell: powershell
-        working-directory: 'libbitcoin-explorer'
+        shell: bash
         run: |
           rm -rf ${{ github.workspace }}/libbitcoin-system
 
@@ -631,6 +638,8 @@ jobs:
           if-no-files-found: warn
 
   msvc:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
+
     strategy:
       fail-fast: false
 
@@ -680,7 +689,6 @@ jobs:
         continue-on-error: true
         if: steps.checkout-libbitcoin-system.outcome == 'failure'
         shell: powershell
-        working-directory: 'libbitcoin-explorer'
         run: |
           Remove-Item -Path ${{ github.workspace }}\libbitcoin-system -Recurse -Force -ErrorAction SilentlyContinue
 

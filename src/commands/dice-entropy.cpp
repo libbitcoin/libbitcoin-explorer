@@ -37,6 +37,8 @@ using namespace bc::system::config;
 
 using boost::multiprecision::cpp_int;
 
+static constexpr auto bits_per_byte = 8;
+
 // Acceptable configuration settings: dice rolls, entropy bits
 const std::unordered_map<uint16_t, uint16_t> configurations =
 {
@@ -62,11 +64,11 @@ data_chunk dice_to_entropy(const std::string& rolls)
     const auto bits = config->second;
     const cpp_int range = cpp_int(1) << bits;
 
-    cpp_int inputSpace = 1;
+    cpp_int input_space = 1;
     for (int i = 0; i < config->first; ++i)
-        inputSpace *= 6;
+        input_space *= 6;
 
-    const cpp_int limit = (inputSpace / range) * range;
+    const cpp_int limit = (input_space / range) * range;
 
     // Reject the incomplete range to avoid modulo bias.
     if (n >= limit)
@@ -74,12 +76,12 @@ data_chunk dice_to_entropy(const std::string& rolls)
 
     n %= range;
 
-    data_chunk result(config->second / 8);
+    data_chunk result(config->second / bits_per_byte);
 
     // Big-endian output.
-    for (int i = (config->second / 8) - 1; i >= 0; --i) {
+    for (int i = (config->second / bits_per_byte) - 1; i >= 0; --i) {
         result[i] = static_cast<unsigned char>(n & 0xff);
-        n >>= 8;
+        n >>= bits_per_byte;
     }
 
     return result;
@@ -90,15 +92,15 @@ console_result dice_entropy::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& rolls = get_rolls_argument();
 
-    const auto entropy_bits = dice_to_entropy(rolls);
+    const auto entropy = dice_to_entropy(rolls);
 
-    if (entropy_bits.empty())
+    if (entropy.empty())
     {
         error << BX_DICE_ROLLS_INVALID << std::endl;
         return console_result::failure;
     }
 
-    output << base16(entropy_bits) << std::endl;
+    output << base16(entropy) << std::endl;
     return console_result::okay;
 }
 
