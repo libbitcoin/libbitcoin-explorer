@@ -422,6 +422,7 @@ jobs:
           fi
 
       - name: Checkout repository [libbitcoin-system]
+        id: checkout-libbitcoin-system
         continue-on-error: true
         uses: actions/checkout@v6
         with:
@@ -430,12 +431,23 @@ jobs:
           ref: ${{ steps.get-branch.outputs.branch }}
           repository: ${{ github.repository_owner }}/libbitcoin-system
 
+      - name: Checkout repository [libbitcoin-system] cleanup on failure
+        continue-on-error: true
+        if: steps.checkout-libbitcoin-system.outcome == 'failure'
+        shell: powershell
+        working-directory: 'libbitcoin-explorer'
+        run: |
+          rm -rf ${{ github.workspace }}/libbitcoin-system
+
+
       - name: Checkout repository [libbitcoin-explorer]
+        id: checkout-libbitcoin-explorer
         uses: actions/checkout@v6
         with:
           fetch-depth: 1
           path: 'libbitcoin-explorer'
           repository: ${{ github.repository }}
+
 
       - name: Prepare toolchain [linux]
         if: ${{ startsWith(matrix.image, 'ubuntu') }}
@@ -930,6 +942,7 @@ jobs:
           fi
 
       - name: Checkout repository [libbitcoin-system]
+        id: checkout-libbitcoin-system
         continue-on-error: true
         uses: actions/checkout@v6
         with:
@@ -938,12 +951,23 @@ jobs:
           ref: ${{ steps.get-branch.outputs.branch }}
           repository: ${{ github.repository_owner }}/libbitcoin-system
 
+      - name: Checkout repository [libbitcoin-system] cleanup on failure
+        continue-on-error: true
+        if: steps.checkout-libbitcoin-system.outcome == 'failure'
+        shell: powershell
+        working-directory: 'libbitcoin-explorer'
+        run: |
+          rm -rf ${{ github.workspace }}/libbitcoin-system
+
+
       - name: Checkout repository [libbitcoin-explorer]
+        id: checkout-libbitcoin-explorer
         uses: actions/checkout@v6
         with:
           fetch-depth: 1
           path: 'libbitcoin-explorer'
           repository: ${{ github.repository }}
+
 
       - name: Prepare toolchain [linux]
         if: ${{ startsWith(matrix.image, 'ubuntu') }}
@@ -1366,6 +1390,7 @@ jobs:
           fi
 
       - name: Checkout repository [libbitcoin-system]
+        id: checkout-libbitcoin-system
         continue-on-error: true
         uses: actions/checkout@v6
         with:
@@ -1374,12 +1399,23 @@ jobs:
           ref: ${{ steps.get-branch.outputs.branch }}
           repository: ${{ github.repository_owner }}/libbitcoin-system
 
+      - name: Checkout repository [libbitcoin-system] cleanup on failure
+        continue-on-error: true
+        if: steps.checkout-libbitcoin-system.outcome == 'failure'
+        shell: powershell
+        working-directory: 'libbitcoin-explorer'
+        run: |
+          rm -rf ${{ github.workspace }}/libbitcoin-system
+
+
       - name: Checkout repository [libbitcoin-explorer]
+        id: checkout-libbitcoin-explorer
         uses: actions/checkout@v6
         with:
           fetch-depth: 1
           path: 'libbitcoin-explorer'
           repository: ${{ github.repository }}
+
 
       - name: Prepare toolchain [linux]
         if: ${{ startsWith(matrix.image, 'ubuntu') }}
@@ -1529,6 +1565,7 @@ jobs:
           msbuild-architecture: x64
 
       - name: Checkout repository [libbitcoin-system]
+        id: checkout-libbitcoin-system
         continue-on-error: true
         uses: actions/checkout@v6
         with:
@@ -1537,7 +1574,16 @@ jobs:
           ref: ${{ steps.get-branch.outputs.branch }}
           repository: ${{ github.repository_owner }}/libbitcoin-system
 
+      - name: Checkout repository [libbitcoin-system] cleanup on failure
+        continue-on-error: true
+        if: steps.checkout-libbitcoin-system.outcome == 'failure'
+        shell: powershell
+        working-directory: 'libbitcoin-explorer'
+        run: |
+          Remove-Item -Path ${{ github.workspace }}\libbitcoin-system -Recurse -Force -ErrorAction SilentlyContinue
+
       - name: Checkout repository [libbitcoin-explorer]
+        id: checkout-libbitcoin-explorer
         uses: actions/checkout@v6
         with:
           fetch-depth: 1
