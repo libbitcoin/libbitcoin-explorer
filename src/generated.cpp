@@ -59,6 +59,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<cert_public>());
     func(make_shared<checked_decode>());
     func(make_shared<checked_encode>());
+    func(make_shared<dice_entropy>());
     func(make_shared<ec_add>());
     func(make_shared<ec_add_secrets>());
     func(make_shared<ec_decompress>());
@@ -202,6 +203,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<checked_decode>();
     if (symbol == checked_encode::symbol())
         return make_shared<checked_encode>();
+    if (symbol == dice_entropy::symbol())
+        return make_shared<dice_entropy>();
     if (symbol == ec_add::symbol())
         return make_shared<ec_add>();
     if (symbol == ec_add_secrets::symbol())

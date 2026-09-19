@@ -24,6 +24,20 @@
 #include <bitcoin/explorer/parser.hpp>
 #include <bitcoin/explorer/utility.hpp>
 #include <bitcoin/explorer/version.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/electrum.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/witness.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/commands/address-decode.hpp>
 #include <bitcoin/explorer/commands/address-embed.hpp>
 #include <bitcoin/explorer/commands/address-encode.hpp>
@@ -48,6 +62,7 @@
 #include <bitcoin/explorer/commands/cert-public.hpp>
 #include <bitcoin/explorer/commands/checked-decode.hpp>
 #include <bitcoin/explorer/commands/checked-encode.hpp>
+#include <bitcoin/explorer/commands/dice-entropy.hpp>
 #include <bitcoin/explorer/commands/ec-add-secrets.hpp>
 #include <bitcoin/explorer/commands/ec-add.hpp>
 #include <bitcoin/explorer/commands/ec-decompress.hpp>
@@ -139,19 +154,5 @@
 #include <bitcoin/explorer/commands/witness-to-key.hpp>
 #include <bitcoin/explorer/commands/wrap-decode.hpp>
 #include <bitcoin/explorer/commands/wrap-encode.hpp>
-#include <bitcoin/explorer/config/address.hpp>
-#include <bitcoin/explorer/config/algorithm.hpp>
-#include <bitcoin/explorer/config/btc.hpp>
-#include <bitcoin/explorer/config/byte.hpp>
-#include <bitcoin/explorer/config/bytes.hpp>
-#include <bitcoin/explorer/config/ec_private.hpp>
-#include <bitcoin/explorer/config/electrum.hpp>
-#include <bitcoin/explorer/config/endorsement.hpp>
-#include <bitcoin/explorer/config/hd_key.hpp>
-#include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/sighash.hpp>
-#include <bitcoin/explorer/config/signature.hpp>
-#include <bitcoin/explorer/config/witness.hpp>
-#include <bitcoin/explorer/config/wrapper.hpp>
 
 #endif

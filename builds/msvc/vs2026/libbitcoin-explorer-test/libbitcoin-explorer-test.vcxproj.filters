@@ -10,11 +10,20 @@
     <Filter Include="src">
       <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000000}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\commands">
+    <Filter Include="src\.deps">
       <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000001}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\config">
+    <Filter Include="src\commands">
       <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\commands\.deps">
+      <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000003}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\config">
+      <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\config\.deps">
+      <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000005}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +97,9 @@
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\checked-encode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\dice-entropy.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\ec-add-secrets.cpp">

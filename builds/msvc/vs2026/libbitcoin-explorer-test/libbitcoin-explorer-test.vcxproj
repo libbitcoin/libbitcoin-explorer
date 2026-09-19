@@ -142,6 +142,7 @@
     <ClCompile Include="..\..\..\..\test\commands\cert-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\checked-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\checked-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\dice-entropy.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-decompress.cpp" />

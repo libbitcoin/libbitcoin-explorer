@@ -179,6 +179,11 @@
     <argument name="PAYLOAD" stdin="true" type="base16" description="The Base16 data to encode. If not specified the value is read from STDIN." />
   </command>
 
+  <command symbol="dice-entropy" output="base16" category="WALLET" description="Convert a sequence of dice rolls to Base16 data.">
+    <define name="BX_DICE_ROLLS_INVALID" value="The dice roll input is invalid." />
+    <argument name="rolls" type="string" stdin="true" description="The sequence of dice rolls formatted as a string. Must contain either 50 or 100 rolls for entropy hex (e.g. matching 12 or 24 words using mnemonic-new), respectively." />
+  </command>
+
   <command symbol="ec-add" output="ec_public" category="MATH" description="Calculate the EC function POINT + (SECRET * curve-generator-point).">
     <argument name="POINT" required="true" type="ec_public" description="The Base16 EC point to add."/>
     <argument name="SECRET" stdin="true" type="ec_private" description="The Base16 EC secret to add. If not specified the secret is read from STDIN."/>
