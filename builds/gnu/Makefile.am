@@ -77,6 +77,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/cert-public.cpp \
     ${srcdir}/../../src/commands/checked-decode.cpp \
     ${srcdir}/../../src/commands/checked-encode.cpp \
+    ${srcdir}/../../src/commands/dice-entropy.cpp \
     ${srcdir}/../../src/commands/ec-add-secrets.cpp \
     ${srcdir}/../../src/commands/ec-add.cpp \
     ${srcdir}/../../src/commands/ec-decompress.cpp \
@@ -230,6 +231,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/cert-public.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/checked-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/checked-encode.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/dice-entropy.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/ec-add-secrets.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/ec-add.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/ec-decompress.hpp \
@@ -402,6 +404,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/cert-public.cpp \
     ${srcdir}/../../test/commands/checked-decode.cpp \
     ${srcdir}/../../test/commands/checked-encode.cpp \
+    ${srcdir}/../../test/commands/dice-entropy.cpp \
     ${srcdir}/../../test/commands/ec-add-secrets.cpp \
     ${srcdir}/../../test/commands/ec-add.cpp \
     ${srcdir}/../../test/commands/ec-decompress.cpp \
