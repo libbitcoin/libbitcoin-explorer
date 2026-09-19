@@ -203,6 +203,31 @@ include_bitcoin_explorer_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/utility.hpp \
     ${srcdir}/../../include/bitcoin/explorer/version.hpp
 
+include_bitcoin_explorer_configdir = \
+    ${includedir}/bitcoin/explorer/config
+
+include_bitcoin_explorer_config_HEADERS = \
+    ${srcdir}/../../include/bitcoin/explorer/config/address.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/algorithm.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/btc.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/byte.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/bytes.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/ec_private.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/electrum.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/endorsement.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/hd_key.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/language.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/sighash.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/signature.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/witness.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/wrapper.hpp
+
+include_bitcoin_explorer_impldir = \
+    ${includedir}/bitcoin/explorer/impl
+
+include_bitcoin_explorer_impl_HEADERS = \
+    ${srcdir}/../../include/bitcoin/explorer/impl/utility.ipp
+
 include_bitcoin_explorer_commandsdir = \
     ${includedir}/bitcoin/explorer/commands
 
@@ -323,31 +348,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/witness-to-key.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/wrap-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/wrap-encode.hpp
-
-include_bitcoin_explorer_configdir = \
-    ${includedir}/bitcoin/explorer/config
-
-include_bitcoin_explorer_config_HEADERS = \
-    ${srcdir}/../../include/bitcoin/explorer/config/address.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/algorithm.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/btc.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/byte.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/bytes.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/ec_private.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/electrum.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/endorsement.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/hd_key.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/language.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/sighash.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/signature.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/witness.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/wrapper.hpp
-
-include_bitcoin_explorer_impldir = \
-    ${includedir}/bitcoin/explorer/impl
-
-include_bitcoin_explorer_impl_HEADERS = \
-    ${srcdir}/../../include/bitcoin/explorer/impl/utility.ipp
 
 # Tests.
 #==============================================================================
