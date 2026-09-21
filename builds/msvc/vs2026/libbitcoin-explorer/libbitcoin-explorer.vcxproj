@@ -396,10 +396,10 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\json.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\parser.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\version.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\include\bitcoin\explorer\impl\utility.ipp" />
+    <None Include="..\..\..\..\include\bitcoin\explorer\version.hpp.in" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -860,13 +860,13 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\version.hpp">
-      <Filter>include\bitcoin\explorer</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\include\bitcoin\explorer\impl\utility.ipp">
       <Filter>include\bitcoin\explorer\impl</Filter>
+    </None>
+    <None Include="..\..\..\..\include\bitcoin\explorer\version.hpp.in">
+      <Filter>include\bitcoin\explorer</Filter>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

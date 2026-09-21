@@ -169,6 +169,15 @@ endif()
 include(CheckLinkerFlag)
 
 #------------------------------------------------------------------------------
+# Configurable file(s).
+#------------------------------------------------------------------------------
+
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/../../include/bitcoin/explorer/version.hpp.in
+  ${CMAKE_CURRENT_BINARY_DIR}/include/bitcoin/explorer/version.hpp
+  @ONLY )
+
+#------------------------------------------------------------------------------
 # libbitcoin-explorer library
 #------------------------------------------------------------------------------
 add_library( libbitcoin-explorer )
@@ -209,6 +218,10 @@ target_sources( libbitcoin-explorer
     BASE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../include"
     FILES
       ${libbitcoin_explorer_HEADERS}
+    FILE_SET HEADERS
+    BASE_DIRS "${CMAKE_CURRENT_BINARY_DIR}/include"
+    FILES
+      "${CMAKE_CURRENT_BINARY_DIR}/include/bitcoin/explorer/version.hpp"
   PRIVATE
     ${libbitcoin_explorer_SOURCES}
 )
