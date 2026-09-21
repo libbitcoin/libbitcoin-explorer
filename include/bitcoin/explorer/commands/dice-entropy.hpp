@@ -148,7 +148,7 @@ public:
         (
             "rolls",
             value<std::string>(&argument_.rolls),
-            "The sequence of dice rolls formatted as a string. Must contain either 50 or 100 rolls for entropy hex (e.g. matching 12 or 24 words using mnemonic-new), respectively."
+            "The sequence of dice rolls formatted as a string. Must contain either 50 or 100 rolls for entropy hex (e.g. matching ec-new, or 12 or 24 words using mnemonic-new, respectively)."
         );
 
         return options;
