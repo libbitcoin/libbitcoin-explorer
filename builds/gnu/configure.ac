@@ -288,6 +288,7 @@ AS_IF([(test "x${with_tests}" != "xno")],
 AC_CONFIG_FILES([
     Makefile
     libbitcoin-explorer.pc
+    include/bitcoin/explorer/version.hpp:${repository_root_dir}/include/bitcoin/explorer/version.hpp.in
   ])
 
 AC_OUTPUT
