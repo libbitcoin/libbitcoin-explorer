@@ -40,8 +40,9 @@ using boost::multiprecision::pow;
 
 static constexpr auto bits_per_byte = 8;
 static constexpr auto max_die_value = 6;
-static constexpr auto min_die_char = '1';
-static constexpr auto max_die_char = '6';
+
+static constexpr char min_die_char = '1';
+static constexpr char max_die_char = '6';
 
 // Acceptable configuration settings: dice rolls, entropy bits
 const std::unordered_map<uint16_t, uint16_t> configurations =
@@ -65,9 +66,12 @@ data_chunk dice_to_entropy(const std::string& rolls)
         n = n * max_die_value + (c - min_die_char);
     }
 
+    uintx input_space = 1;
+    for (auto i = 0; i < config->first; ++i)
+        input_space *= max_die_value;
+
     const auto bits = config->second;
     const auto range = uintx(1) << bits;
-    const auto input_space = pow(uintx(6), config->first);
     const auto limit = (input_space / range) * range;
 
     // Reject the incomplete range to avoid modulo bias.
