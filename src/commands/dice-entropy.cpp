@@ -36,7 +36,6 @@ using namespace bc::system::config;
 #include <algorithm>
 
 using bc::uintx;
-using boost::multiprecision::pow;
 
 static constexpr auto bits_per_byte = 8;
 static constexpr auto max_die_value = 6;
@@ -66,12 +65,11 @@ data_chunk dice_to_entropy(const std::string& rolls)
         n = n * max_die_value + (c - min_die_char);
     }
 
-    uintx input_space = 1;
-    for (auto i = 0; i < config->first; ++i)
-        input_space *= max_die_value;
-
     const auto bits = config->second;
     const auto range = uintx(1) << bits;
+
+    const uintx input_space = boost::multiprecision::pow(
+        uintx(max_die_value), config->first);
     const auto limit = (input_space / range) * range;
 
     // Reject the incomplete range to avoid modulo bias.
