@@ -77,6 +77,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/cert-public.cpp \
     ${srcdir}/../../src/commands/checked-decode.cpp \
     ${srcdir}/../../src/commands/checked-encode.cpp \
+    ${srcdir}/../../src/commands/dice-entropy.cpp \
     ${srcdir}/../../src/commands/ec-add-secrets.cpp \
     ${srcdir}/../../src/commands/ec-add.cpp \
     ${srcdir}/../../src/commands/ec-decompress.cpp \
@@ -202,6 +203,31 @@ include_bitcoin_explorer_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/utility.hpp \
     ${srcdir}/../../include/bitcoin/explorer/version.hpp
 
+include_bitcoin_explorer_configdir = \
+    ${includedir}/bitcoin/explorer/config
+
+include_bitcoin_explorer_config_HEADERS = \
+    ${srcdir}/../../include/bitcoin/explorer/config/address.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/algorithm.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/btc.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/byte.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/bytes.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/ec_private.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/electrum.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/endorsement.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/hd_key.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/language.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/sighash.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/signature.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/witness.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/wrapper.hpp
+
+include_bitcoin_explorer_impldir = \
+    ${includedir}/bitcoin/explorer/impl
+
+include_bitcoin_explorer_impl_HEADERS = \
+    ${srcdir}/../../include/bitcoin/explorer/impl/utility.ipp
+
 include_bitcoin_explorer_commandsdir = \
     ${includedir}/bitcoin/explorer/commands
 
@@ -230,6 +256,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/cert-public.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/checked-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/checked-encode.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/dice-entropy.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/ec-add-secrets.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/ec-add.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/ec-decompress.hpp \
@@ -322,31 +349,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/wrap-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/wrap-encode.hpp
 
-include_bitcoin_explorer_configdir = \
-    ${includedir}/bitcoin/explorer/config
-
-include_bitcoin_explorer_config_HEADERS = \
-    ${srcdir}/../../include/bitcoin/explorer/config/address.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/algorithm.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/btc.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/byte.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/bytes.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/ec_private.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/electrum.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/endorsement.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/hd_key.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/language.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/sighash.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/signature.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/witness.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/wrapper.hpp
-
-include_bitcoin_explorer_impldir = \
-    ${includedir}/bitcoin/explorer/impl
-
-include_bitcoin_explorer_impl_HEADERS = \
-    ${srcdir}/../../include/bitcoin/explorer/impl/utility.ipp
-
 # Tests.
 #==============================================================================
 # Target test 'test/libbitcoin-explorer-test'
@@ -402,6 +404,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/cert-public.cpp \
     ${srcdir}/../../test/commands/checked-decode.cpp \
     ${srcdir}/../../test/commands/checked-encode.cpp \
+    ${srcdir}/../../test/commands/dice-entropy.cpp \
     ${srcdir}/../../test/commands/ec-add-secrets.cpp \
     ${srcdir}/../../test/commands/ec-add.cpp \
     ${srcdir}/../../test/commands/ec-decompress.cpp \
