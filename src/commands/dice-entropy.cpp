@@ -35,9 +35,13 @@ using namespace bc::system::config;
 #include <map>
 #include <algorithm>
 
-using boost::multiprecision::cpp_int;
+using bc::uintx;
+using boost::multiprecision::pow;
 
 static constexpr auto bits_per_byte = 8;
+static constexpr auto max_die_value = 6;
+static constexpr auto min_die_char = '1';
+static constexpr auto max_die_char = '6';
 
 // Acceptable configuration settings: dice rolls, entropy bits
 const std::unordered_map<uint16_t, uint16_t> configurations =
@@ -52,23 +56,19 @@ data_chunk dice_to_entropy(const std::string& rolls)
     if (config == configurations.end())
         return {};
 
-    cpp_int n = 0;
+    uintx n = 0;
 
     for (char c : rolls) {
-        if (c < '1' || c > '6')
+        if (c < min_die_char || c > max_die_char)
             return {};
 
-        n = n * 6 + (c - '1');
+        n = n * max_die_value + (c - min_die_char);
     }
 
     const auto bits = config->second;
-    const cpp_int range = cpp_int(1) << bits;
-
-    cpp_int input_space = 1;
-    for (int i = 0; i < config->first; ++i)
-        input_space *= 6;
-
-    const cpp_int limit = (input_space / range) * range;
+    const auto range = uintx(1) << bits;
+    const auto input_space = pow(uintx(6), config->first);
+    const auto limit = (input_space / range) * range;
 
     // Reject the incomplete range to avoid modulo bias.
     if (n >= limit)
@@ -76,10 +76,10 @@ data_chunk dice_to_entropy(const std::string& rolls)
 
     n %= range;
 
-    data_chunk result(config->second / bits_per_byte);
+    data_chunk result(bits / bits_per_byte);
 
     // Big-endian output.
-    for (int i = (config->second / bits_per_byte) - 1; i >= 0; --i) {
+    for (int i = (bits / bits_per_byte) - 1; i >= 0; --i) {
         result[i] = static_cast<unsigned char>(n & 0xff);
         n >>= bits_per_byte;
     }
