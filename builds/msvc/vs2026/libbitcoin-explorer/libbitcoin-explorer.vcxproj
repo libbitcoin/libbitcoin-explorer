@@ -120,6 +120,16 @@
     <Import Project="$(ProjectDir)..\..\properties\Output.props" />
     <Import Project="$(ProjectDir)$(ProjectName).props" />
   </ImportGroup>
+  <PropertyGroup Label="Git">
+    <VersionMajor>4</VersionMajor>
+    <VersionMinor>0</VersionMinor>
+  </PropertyGroup>
+  <ItemGroup>
+    <ConfigurableFile Include="..\..\..\..\include\bitcoin\explorer\version.hpp.in">
+      <Generated>..\..\..\..\build\include\bitcoin\explorer\version.hpp</Generated>
+    </ConfigurableFile>
+    <ClInclude Include="..\..\..\..\build\include\bitcoin\explorer\version.hpp" />
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\commands\address-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-embed.cpp" />
@@ -257,7 +267,6 @@
     <ClCompile Include="..\..\..\..\src\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\builds\msvc\resource.h" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\command.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-decode.hpp" />
@@ -400,10 +409,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\include\bitcoin\explorer\impl\utility.ipp" />
+    <None Include="..\..\..\..\include\bitcoin\explorer\version.hpp.in" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\..\..\builds\msvc\resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
