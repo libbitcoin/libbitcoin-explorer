@@ -37,6 +37,7 @@ lib_LTLIBRARIES = src/libbitcoin-explorer.la
 src_libbitcoin_explorer_la_LIBS = src/libbitcoin-explorer.la
 
 src_libbitcoin_explorer_la_CPPFLAGS = \
+    -I${top_builddir}/include \
     -I${srcdir}/../../include \
     ${libbitcoin_system_BUILD_CPPFLAGS}
 
@@ -200,7 +201,7 @@ include_bitcoin_explorer_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/json.hpp \
     ${srcdir}/../../include/bitcoin/explorer/parser.hpp \
     ${srcdir}/../../include/bitcoin/explorer/utility.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/version.hpp
+    include/bitcoin/explorer/version.hpp
 
 include_bitcoin_explorer_commandsdir = \
     ${includedir}/bitcoin/explorer/commands
@@ -356,6 +357,7 @@ if WITH_TESTS
 check_PROGRAMS = test/libbitcoin-explorer-test
 
 test_libbitcoin_explorer_test_CPPFLAGS = \
+    -I${top_builddir}/test \
     -I${srcdir}/../../test \
     ${boost_BUILD_CPPFLAGS} \
     ${boost_unit_test_framework_BUILD_CPPFLAGS} \
