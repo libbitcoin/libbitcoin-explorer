@@ -64,7 +64,7 @@ std::istream& operator>>(std::istream& input, signature& argument)
         (out.size() != system::wallet::message_signature_size))
         throw istream_exception(text);
 
-    std::copy(out.begin(), out.end(), argument.value_.begin());
+    std::copy(out.cbegin(), out.cend(), argument.value_.begin());
     return input;
 }
 

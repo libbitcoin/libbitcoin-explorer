@@ -32,7 +32,7 @@ template <typename Value>
 void load_input(Value& parameter, const std::string& name,
     po::variables_map& variables, std::istream& input)
 {
-    if (variables.find(name) == variables.end())
+    if (variables.find(name) == variables.cend())
         if (!system::deserialize(parameter, input))
             throw istream_exception(name);
 }
@@ -43,7 +43,7 @@ void load_path(Value& parameter, const std::string& name,
 {
     // The path is not set as an argument so we can't load from file.
     auto variable = variables.find(name);
-    if (variable == variables.end())
+    if (variable == variables.cend())
         return;
 
     // Get the argument value as a string.
