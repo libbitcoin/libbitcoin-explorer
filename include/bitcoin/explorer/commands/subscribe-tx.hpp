@@ -54,7 +54,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_SUBSCRIBE_TX_FAILED \
-    "Failed to subscribe to transaction service: %1%"
+    "Failed to subscribe to transaction service: {}"
 #define BX_SUBSCRIBE_TX_NOT_IMPLEMENTED \
     "This command is not yet implemented."
 

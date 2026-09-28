@@ -157,27 +157,27 @@ namespace explorer {
 #define BX_CONFIG_DESCRIPTION \
     "The path to the configuration settings file."
 #define BX_CONNECTION_FAILURE \
-    "Could not connect to server: %1%"
+    "Could not connect to server: {}"
 #define BX_DEPRECATED_COMMAND \
-    "The '%1%' command has been replaced by '%2%'."
+    "The '{}' command has been replaced by '{}'."
 #define BX_HELP_DESCRIPTION \
     "Get a description and instructions for this command."
 #define BX_INVALID_COMMAND \
-    "'%1%' is not a bx command. Enter 'bx help' for a list of commands."
+    "'{}' is not a bx command. Enter 'bx help' for a list of commands."
 #define BX_INVALID_PARAMETER \
-    "Error: %1%"
+    "Error: {}"
 #define BX_PRINTER_ARGUMENT_TABLE_HEADER \
     "Arguments (positional):"
 #define BX_PRINTER_DESCRIPTION_FORMAT \
-    "Info: %1%"
+    "Info: {}"
 #define BX_PRINTER_OPTION_TABLE_HEADER \
     "Options (named):"
 #define BX_PRINTER_USAGE_FORMAT \
-    "Usage: %1% %2% %3%"
+    "Usage: {} {} {}"
 #define BX_PRINTER_VALUE_TEXT \
     "VALUE"
 #define BX_VERSION_MESSAGE \
-    "Version: %1%"
+    "Version: {}"
 
 /**
  * Invoke a specified function on all commands.

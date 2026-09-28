@@ -20,7 +20,6 @@
 #include <bitcoin/explorer/commands/tx-sign.hpp>
 
 #include <iostream>
-#include <boost/format.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
