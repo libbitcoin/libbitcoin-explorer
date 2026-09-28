@@ -21,7 +21,6 @@
 
 #include <iostream>
 #include <memory>
-#include <boost/algorithm/string/replace.hpp>
 #include <boost/format.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/dispatch.hpp>
@@ -68,7 +67,7 @@ void display_invalid_command(std::ostream& stream, const std::string& command,
 static std::string fixup_boost_po_what_en(const std::string& what)
 {
     std::string message(what);
-    boost::replace_all(message, "for option is invalid", "is invalid");
+    system::replace(message, "for option is invalid", "is invalid");
     return message;
 }
 
