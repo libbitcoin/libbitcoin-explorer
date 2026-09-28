@@ -23,7 +23,6 @@
 #include <cstddef>
 #include <map>
 #include <string>
-#include <boost/dynamic_bitset.hpp>
 #include <boost/format.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
