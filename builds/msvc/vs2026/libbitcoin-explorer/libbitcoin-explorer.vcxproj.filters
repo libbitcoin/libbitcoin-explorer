@@ -25,17 +25,14 @@
     <Filter Include="include\bitcoin\explorer\impl">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000005}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resource">
+    <Filter Include="src">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000006}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src">
+    <Filter Include="src\commands">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000007}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\.deps">
+    <Filter Include="src\config">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000008}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\commands">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000009}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\commands\.deps">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-00000000000A}</UniqueIdentifier>
@@ -455,9 +452,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\builds\msvc\resource.h">
-      <Filter>resource</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer.hpp">
       <Filter>include\bitcoin</Filter>
     </ClInclude>
@@ -875,7 +869,9 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\version.hpp">
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\build\include\bitcoin\explorer\version.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
   </ItemGroup>
@@ -883,14 +879,12 @@
     <None Include="..\..\..\..\include\bitcoin\explorer\impl\utility.ipp">
       <Filter>include\bitcoin\explorer\impl</Filter>
     </None>
+    <None Include="..\..\..\..\include\bitcoin\explorer\version.hpp.in">
+      <Filter>include\bitcoin\explorer</Filter>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="..\..\debug.natvis" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\..\..\..\builds\msvc\resource.rc">
-      <Filter>resource</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@
     <DebugOrRelease>Release</DebugOrRelease>
     <!--<LinkIncremental>false</LinkIncremental>-->
   </PropertyGroup>
-  
+
   <!-- DebugInformationFormat and GenerateDebugInformation were formerly disabled. -->
   <!-- This is why we were not getting symbols in release builds (update nuget). -->
   <ItemDefinitionGroup>
@@ -29,11 +29,6 @@
       <OmitFramePointers>true</OmitFramePointers>
       <Optimization>MaxSpeed</Optimization>
 
-      <!-- SSE4/AVX2 (also AVX512) -->
-      <!--TODO: these should be integrated with the HAVE build options.-->
-      <!--<EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>-->
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
-  
       <!-- Other. -->
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <StringPooling>true</StringPooling>

@@ -13,30 +13,6 @@
     <ProjectName>libbitcoin-explorer-test</ProjectName>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="DebugDEXE|ARM">
-      <Configuration>DebugDEXE</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseDEXE|ARM">
-      <Configuration>ReleaseDEXE</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugLEXE|ARM">
-      <Configuration>DebugLEXE</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseLEXE|ARM">
-      <Configuration>ReleaseLEXE</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugSEXE|ARM">
-      <Configuration>DebugSEXE</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseSEXE|ARM">
-      <Configuration>ReleaseSEXE</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="DebugDEXE|ARM64">
       <Configuration>DebugDEXE</Configuration>
       <Platform>ARM64</Platform>
@@ -256,7 +232,7 @@
     <Import Project="$(NuGetPackageRoot)libbitcoin-boost_unit_test_framework-vc145.1.91.0\build\libbitcoin-boost_unit_test_framework-vc145.targets" Condition="Exists('$(NuGetPackageRoot)libbitcoin-boost_unit_test_framework-vc145.1.91.0\build\libbitcoin-boost_unit_test_framework-vc145.targets')" />
     <Import Project="$(NuGetPackageRoot)libbitcoin-boost_url-vc145.1.91.0\build\libbitcoin-boost_url-vc145.targets" Condition="Exists('$(NuGetPackageRoot)libbitcoin-boost_url-vc145.1.91.0\build\libbitcoin-boost_url-vc145.targets')" />
     <Import Project="$(NuGetPackageRoot)secp256k1_vc145.0.8.0\build\native\secp256k1_vc145.targets" Condition="Exists('$(NuGetPackageRoot)secp256k1_vc145.0.8.0\build\native\secp256k1_vc145.targets')" />
-    <Import Project="$(NuGetPackageRoot)UltrafastSecp256k1-vc145.4.5.0.3\build\native\UltrafastSecp256k1-vc145.targets" Condition="Exists('$(NuGetPackageRoot)UltrafastSecp256k1-vc145.4.5.0.3\build\native\UltrafastSecp256k1-vc145.targets')" />
+    <Import Project="$(NuGetPackageRoot)UltrafastSecp256k1-vc145.4.6.0.0\build\native\UltrafastSecp256k1-vc145.targets" Condition="Exists('$(NuGetPackageRoot)UltrafastSecp256k1-vc145.4.6.0.0\build\native\UltrafastSecp256k1-vc145.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -272,7 +248,7 @@
     <Error Condition="!Exists('$(NuGetPackageRoot)libbitcoin-boost_unit_test_framework-vc145.1.91.0\build\libbitcoin-boost_unit_test_framework-vc145.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)libbitcoin-boost_unit_test_framework-vc145.1.91.0\build\libbitcoin-boost_unit_test_framework-vc145.targets'))" />
     <Error Condition="!Exists('$(NuGetPackageRoot)libbitcoin-boost_url-vc145.1.91.0\build\libbitcoin-boost_url-vc145.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)libbitcoin-boost_url-vc145.1.91.0\build\libbitcoin-boost_url-vc145.targets'))" />
     <Error Condition="!Exists('$(NuGetPackageRoot)secp256k1_vc145.0.8.0\build\native\secp256k1_vc145.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)secp256k1_vc145.0.8.0\build\native\secp256k1_vc145.targets'))" />
-    <Error Condition="!Exists('$(NuGetPackageRoot)UltrafastSecp256k1-vc145.4.5.0.3\build\native\UltrafastSecp256k1-vc145.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)UltrafastSecp256k1-vc145.4.5.0.3\build\native\UltrafastSecp256k1-vc145.targets'))" />
+    <Error Condition="!Exists('$(NuGetPackageRoot)UltrafastSecp256k1-vc145.4.6.0.0\build\native\UltrafastSecp256k1-vc145.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NuGetPackageRoot)UltrafastSecp256k1-vc145.4.6.0.0\build\native\UltrafastSecp256k1-vc145.targets'))" />
   </Target>
   <ItemGroup>
     <ProjectReference Include="..\libbitcoin-explorer\libbitcoin-explorer.vcxproj">

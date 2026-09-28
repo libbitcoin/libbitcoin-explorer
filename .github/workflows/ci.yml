@@ -203,7 +203,7 @@ jobs:
         working-directory: 'libbitcoin-explorer'
         run: |
           lcov --ignore-errors version,gcov,mismatch,mismatch --directory . --capture --output-file coverage.info
-          lcov --ignore-errors unused --remove coverage.info "${{ github.workspace }}/prefix/*" "${{ github.workspace }}/libbitcoin-explorer/examples/*" "${{ github.workspace }}/libbitcoin-explorer/test/*"  --output-file coverage.info
+          lcov --ignore-errors unused --extract coverage.info "${{ github.workspace }}/libbitcoin-explorer/include/*" "${{ github.workspace }}/libbitcoin-explorer/src/*" --output-file coverage.info
 
       - name: Coveralls.io upload
         if: ${{ matrix.coverage == 'lcov' }}
@@ -417,7 +417,7 @@ jobs:
         working-directory: 'libbitcoin-explorer'
         run: |
           lcov --ignore-errors version,gcov,mismatch,mismatch --directory . --capture --output-file coverage.info
-          lcov --ignore-errors unused --remove coverage.info "${{ github.workspace }}/prefix/*" "${{ github.workspace }}/libbitcoin-explorer/examples/*" "${{ github.workspace }}/libbitcoin-explorer/test/*"  --output-file coverage.info
+          lcov --ignore-errors unused --extract coverage.info "${{ github.workspace }}/libbitcoin-explorer/include/*" "${{ github.workspace }}/libbitcoin-explorer/src/*" --output-file coverage.info
 
       - name: Coveralls.io upload
         if: ${{ matrix.coverage == 'lcov' }}
@@ -589,7 +589,7 @@ jobs:
         working-directory: 'libbitcoin-explorer'
         run: |
           lcov --ignore-errors version,gcov,mismatch,mismatch --directory . --capture --output-file coverage.info
-          lcov --ignore-errors unused --remove coverage.info "${{ github.workspace }}/prefix/*" "${{ github.workspace }}/libbitcoin-explorer/examples/*" "${{ github.workspace }}/libbitcoin-explorer/test/*"  --output-file coverage.info
+          lcov --ignore-errors unused --extract coverage.info "${{ github.workspace }}/libbitcoin-explorer/include/*" "${{ github.workspace }}/libbitcoin-explorer/src/*" --output-file coverage.info
 
       - name: Coveralls.io upload
         if: ${{ matrix.coverage == 'lcov' }}

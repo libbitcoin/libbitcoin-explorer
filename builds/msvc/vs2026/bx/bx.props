@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <_PropertySheetDisplayName>Bitcoin Explorer Common Settings</_PropertySheetDisplayName>
+    <_PropertySheetDisplayName>Bitcoin Explorer Settings</_PropertySheetDisplayName>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
@@ -11,11 +11,15 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
+      <AdditionalIncludeDirectories>$(RepoRoot)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnablePREfast>false</EnablePREfast>
     </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(RepoRoot)build\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
 
-  <!-- Extensions -->
+  <!-- Dependencies -->
 
   <ImportGroup Label="PropertySheets">
     <Import Project="$(SolutionDir)libbitcoin-system.import.props" />
