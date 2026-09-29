@@ -23,8 +23,6 @@
 #include <cstddef>
 #include <map>
 #include <string>
-#include <boost/dynamic_bitset.hpp>
-#include <boost/format.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
 
@@ -67,7 +65,6 @@ namespace explorer {
 namespace ph = std::placeholders;
 namespace po = boost::program_options;
 
-typedef boost::format format;
 typedef std::map<std::string, std::string> settings_list;
 typedef bc::system::chain::transaction tx_type;
 typedef bc::system::chain::input tx_input_type;

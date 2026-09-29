@@ -54,21 +54,21 @@
   <!-- General resources. -->
 
   <resource>
-    <string name="BX_PRINTER_USAGE_FORMAT" value="Usage: %1% %2% %3%" />
-    <string name="BX_PRINTER_DESCRIPTION_FORMAT" value="Info: %1%" />
+    <string name="BX_PRINTER_USAGE_FORMAT" value="Usage: {} {} {}" />
+    <string name="BX_PRINTER_DESCRIPTION_FORMAT" value="Info: {}" />
     <string name="BX_PRINTER_OPTION_TABLE_HEADER" value="Options (named):" />
     <string name="BX_PRINTER_ARGUMENT_TABLE_HEADER" value="Arguments (positional):" />
     <string name="BX_PRINTER_VALUE_TEXT" value="VALUE" />
     <string name="BX_COMMAND_USAGE" value="Usage: bx COMMAND [--help]" />
     <string name="BX_COMMANDS_HEADER" value="Info: The bx commands are:" />
     <string name="BX_COMMANDS_HOME_PAGE" value="Bitcoin Explorer home page:" />
-    <string name="BX_CONNECTION_FAILURE" value="Could not connect to server: %1%" />
-    <string name="BX_DEPRECATED_COMMAND" value="The '%1%' command has been replaced by '%2%'."/>
-    <string name="BX_INVALID_COMMAND" value="'%1%' is not a bx command. Enter 'bx help' for a list of commands." />
-    <string name="BX_INVALID_PARAMETER" value="Error: %1%" />
+    <string name="BX_CONNECTION_FAILURE" value="Could not connect to server: {}" />
+    <string name="BX_DEPRECATED_COMMAND" value="The '{}' command has been replaced by '{}'."/>
+    <string name="BX_INVALID_COMMAND" value="'{}' is not a bx command. Enter 'bx help' for a list of commands." />
+    <string name="BX_INVALID_PARAMETER" value="Error: {}" />
     <string name="BX_CONFIG_DESCRIPTION" value="The path to the configuration settings file." />
     <string name="BX_HELP_DESCRIPTION" value="Get a description and instructions for this command." />
-    <string name="BX_VERSION_MESSAGE" value="Version: %1%" />
+    <string name="BX_VERSION_MESSAGE" value="Version: {}" />
   </resource>
 
   <!-- Bitcoin Explorer Commands -->
@@ -687,14 +687,14 @@
   <command symbol="subscribe-block" output="block" category="ONLINE" network="true" stub="true" description="Watch the network for all blocks. Requires a Libbitcoin server connection.">
     <argument name="server-url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="duration" type="uint32_t" default="600" description="The duration of the subscription in seconds, defaults to 600." />
-    <define name="BX_SUBSCRIBE_BLOCK_FAILED" value="Failed to subscribe to transaction service: %1%" />
+    <define name="BX_SUBSCRIBE_BLOCK_FAILED" value="Failed to subscribe to transaction service: {}" />
     <define name="BX_SUBSCRIBE_BLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="subscribe-tx" output="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for all transactions. Requires a Libbitcoin server connection.">
     <argument name="server-url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="duration" type="uint32_t" default="600" description="The duration of the subscription in seconds, defaults to 600." />
-    <define name="BX_SUBSCRIBE_TX_FAILED" value="Failed to subscribe to transaction service: %1%" />
+    <define name="BX_SUBSCRIBE_TX_FAILED" value="Failed to subscribe to transaction service: {}" />
     <define name="BX_SUBSCRIBE_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
@@ -745,27 +745,27 @@
   <command symbol="validate-tx" stub="true" formerly="validtx" output="string" category="ONLINE" network="true" description="Determine if a transaction is valid for submission to the blockchain. Requires a Libbitcoin server connection.">
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
     <define name="BX_VALIDATE_TX_VALID" value="The transaction is valid." />
-    <define name="BX_VALIDATE_TX_INVALID" value="The transaction is invalid for the current state of the node: %1%." />
+    <define name="BX_VALIDATE_TX_INVALID" value="The transaction is invalid for the current state of the node: {}." />
     <define name="BX_VALIDATE_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="version" stub="true" output="string" category="ONLINE" network="true" description="Fetch and display the libbitcoin server and client versions. Requires a Libbitcoin server connection.">
-    <define name="BX_VERSION_FAILED" value="Failed to retrieve server version: %1%." />
-    <define name="BX_SERVER_VERSION" value="libbitcoin-server version: %1%." />
-    <define name="BX_EXPLORER_VERSION" value="libbitcoin-explorer version: %1%." />
+    <define name="BX_VERSION_FAILED" value="Failed to retrieve server version: {}." />
+    <define name="BX_SERVER_VERSION" value="libbitcoin-server version: {}." />
+    <define name="BX_EXPLORER_VERSION" value="libbitcoin-explorer version: {}." />
     <define name="BX_VERSION_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="watch-key" stub="true" formerly="monitor" output="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which a payment key participates. Requires a Libbitcoin server connection.">
     <option name="duration" type="uint32_t" default="600" description="The duration of the watch in seconds, defaults to 600." />
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the address is read from STDIN."/>
-    <define name="BX_WATCH_KEY_WAITING" value="Watching key: %1%..." />
+    <define name="BX_WATCH_KEY_WAITING" value="Watching key: {}..." />
     <define name="BX_WATCH_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="watch-tx" formerly="watchtx" output="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for a transaction by hash. Requires a Libbitcoin server connection.">
     <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash to watch. If not specified the hash is read from STDIN." />
-    <define name="BX_WATCH_TX_WAITING" value="Watching transaction: %1%..." />
+    <define name="BX_WATCH_TX_WAITING" value="Watching transaction: {}..." />
     <define name="BX_WATCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 

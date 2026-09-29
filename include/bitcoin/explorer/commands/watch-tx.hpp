@@ -54,7 +54,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_WATCH_TX_WAITING \
-    "Watching transaction: %1%..."
+    "Watching transaction: {}..."
 #define BX_WATCH_TX_NOT_IMPLEMENTED \
     "This command is not yet implemented."
 

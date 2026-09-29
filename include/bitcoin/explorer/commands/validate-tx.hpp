@@ -56,7 +56,7 @@ namespace commands {
 #define BX_VALIDATE_TX_VALID \
     "The transaction is valid."
 #define BX_VALIDATE_TX_INVALID \
-    "The transaction is invalid for the current state of the node: %1%."
+    "The transaction is invalid for the current state of the node: {}."
 #define BX_VALIDATE_TX_NOT_IMPLEMENTED \
     "This command is not yet implemented."
 

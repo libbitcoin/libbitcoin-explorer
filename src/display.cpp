@@ -19,10 +19,9 @@
 
 #include <bitcoin/explorer/display.hpp>
 
+#include <format>
 #include <iostream>
 #include <memory>
-#include <boost/algorithm/string/replace.hpp>
-#include <boost/format.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/dispatch.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -50,16 +49,16 @@ void display_command_names(std::ostream& stream)
 
 void display_connection_failure(std::ostream& stream, const endpoint& url)
 {
-    stream << format(BX_CONNECTION_FAILURE) % url << std::endl;
+    stream << std::format(BX_CONNECTION_FAILURE, url.to_string()) << std::endl;
 }
 
 void display_invalid_command(std::ostream& stream, const std::string& command,
     const std::string& superseding)
 {
     if (superseding.empty())
-        stream << format(BX_INVALID_COMMAND) % command;
+        stream << std::format(BX_INVALID_COMMAND, command);
     else
-        stream << format(BX_DEPRECATED_COMMAND) % command % superseding;
+        stream << std::format(BX_DEPRECATED_COMMAND, command, superseding);
 
     stream << std::endl;
 }
@@ -68,23 +67,23 @@ void display_invalid_command(std::ostream& stream, const std::string& command,
 static std::string fixup_boost_po_what_en(const std::string& what)
 {
     std::string message(what);
-    boost::replace_all(message, "for option is invalid", "is invalid");
+    system::replace(message, "for option is invalid", "is invalid");
     return message;
 }
 
 void display_invalid_parameter(std::ostream& stream,
     const std::string& message)
 {
-    stream << format(BX_INVALID_PARAMETER) % fixup_boost_po_what_en(message)
-        << std::endl;
+    stream << std::format(BX_INVALID_PARAMETER,
+        fixup_boost_po_what_en(message)) << std::endl;
 }
 
 void display_usage(std::ostream& stream)
 {
     stream
         << std::endl << BX_COMMAND_USAGE << std::endl
-        << std::endl << format(BX_VERSION_MESSAGE) %
-            LIBBITCOIN_EXPLORER_VERSION << std::endl
+        << std::endl << std::format(BX_VERSION_MESSAGE,
+            LIBBITCOIN_EXPLORER_VERSION) << std::endl
         << std::endl << BX_COMMANDS_HEADER << std::endl
         << std::endl;
 

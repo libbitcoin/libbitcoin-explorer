@@ -54,11 +54,11 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_VERSION_FAILED \
-    "Failed to retrieve server version: %1%."
+    "Failed to retrieve server version: {}."
 #define BX_SERVER_VERSION \
-    "libbitcoin-server version: %1%."
+    "libbitcoin-server version: {}."
 #define BX_EXPLORER_VERSION \
-    "libbitcoin-explorer version: %1%."
+    "libbitcoin-explorer version: {}."
 #define BX_VERSION_NOT_IMPLEMENTED \
     "This command is not yet implemented."
 

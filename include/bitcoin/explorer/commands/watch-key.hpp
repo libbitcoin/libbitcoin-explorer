@@ -54,7 +54,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_WATCH_KEY_WAITING \
-    "Watching key: %1%..."
+    "Watching key: {}..."
 #define BX_WATCH_KEY_NOT_IMPLEMENTED \
     "This command is not yet implemented."
 
