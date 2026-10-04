@@ -148,6 +148,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__checked_encode__returns_expected_value)
     BOOST_REQUIRE_EQUAL(checked_encode::symbol(), "checked-encode");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__dice_entropy__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(dice_entropy::symbol(), "dice-entropy");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_add__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(ec_add::symbol(), "ec-add");
