@@ -507,7 +507,6 @@ console_bx_CPPFLAGS = \
     ${src_libbitcoin_explorer_la_CPPFLAGS}
 
 console_bx_LDFLAGS = \
-    ${LIBTOOL_ALL_STATIC} \
     ${src_libbitcoin_explorer_la_LDFLAGS}
 
 console_bx_LDADD = \

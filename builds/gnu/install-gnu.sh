@@ -34,6 +34,8 @@
 #                                 Default: --disable-aes
 # --<with/without>-secp256k1    Use bitcoin-core/secp256k1 library.
 #                                 Default: --without-secp256k1
+# --<with/without>-valgrind     Use valgrind memcheck client requests.
+#                                 Default: --without-valgrind
 # --<enable/disable>-cuda       Use cuda (gpu) batch signature verification (inert on macOS).
 #                                 Default: --enable-cuda
 # --build-boost                 Build Boost libraries
@@ -53,6 +55,7 @@
 #                                 Default: git clone --depth 1 --single-branch
 # --build-post-install-clean    Clean dependencies after installation (saves space).
 # --build-skip-tests            Skip test compilation and execution.
+# --build-valgrind=<filter>     Also run the tests matching the filter under valgrind.
 # --build-parallel=<int>        Number of jobs to run simultaneously.
 #                                 Default: supported platforms use nproc/sysctl
 # --build-use-local-src         Use existing sources in relevant paths.
@@ -117,6 +120,7 @@ main()
             (--build-full-repositories)     BUILD_FULL_REPOSITORIES="yes";;
             (--build-post-install-clean)    BUILD_POST_INSTALL_CLEAN="yes";;
             (--build-skip-tests)            BUILD_SKIP_TESTS="yes";;
+            (--build-valgrind=*)            BUILD_VALGRIND="${OPTION#*=}";;
             (--build-parallel=*)            PARALLEL="${OPTION#*=}";;
             (--build-use-local-src)         BUILD_USE_LOCAL_SRC="yes";;
             (--prefix=*)                    PREFIX="${OPTION#*=}";;
@@ -138,6 +142,7 @@ main()
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/--build-full-repositories/}")
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/--build-post-install-clean/}")
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/--build-skip-tests/}")
+    CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/--build-valgrind=*/}")
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/--build-parallel=*/}")
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/--build-use-local-src/}")
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/--prefix=*/}")
@@ -935,6 +940,17 @@ test_gnu()
         exit ${RESULT}
     fi
 
+    if [[ -n "${BUILD_VALGRIND}" && "${PROJECT}" == "libbitcoin-explorer" ]]; then
+        msg "Testing ${PROJECT} under valgrind: ${BUILD_VALGRIND}"
+        valgrind --quiet --error-exitcode=1 "./test/${PROJECT}-test" --run_test="${BUILD_VALGRIND}"
+
+        RESULT=$?
+        if [[ ${RESULT} -ne 0 ]]; then
+            msg_error "Encountered valgrind error, please see report above."
+            exit ${RESULT}
+        fi
+    fi
+
     enable_exit_on_error
 
     pop_directory # BUILD_OBJ_DIR
@@ -959,6 +975,7 @@ display_build_variables()
     msg "BUILD_POST_INSTALL_CLEAN        : ${BUILD_POST_INSTALL_CLEAN}"
     msg "BUILD_USE_LOCAL_SRC             : ${BUILD_USE_LOCAL_SRC}"
     msg "BUILD_SKIP_TESTS                : ${BUILD_SKIP_TESTS}"
+    msg "BUILD_VALGRIND                  : ${BUILD_VALGRIND}"
     msg "PARALLEL                        : ${PARALLEL}"
     msg "PREFIX                          : ${PREFIX}"
     msg "DISPLAY_VERBOSE                 : ${DISPLAY_VERBOSE}"
@@ -1034,6 +1051,8 @@ help()
     msg "                                Default: --disable-aes"
     msg "--<with/without>-secp256k1    Use bitcoin-core/secp256k1 library."
     msg "                                Default: --without-secp256k1"
+    msg "--<with/without>-valgrind     Use valgrind memcheck client requests."
+    msg "                                Default: --without-valgrind"
     msg "--<enable/disable>-cuda       Use cuda (gpu) batch signature verification (inert on macOS)."
     msg "                                Default: --enable-cuda"
     msg "--build-boost                 Build Boost libraries"
@@ -1053,6 +1072,7 @@ help()
     msg "                                Default: git clone --depth 1 --single-branch"
     msg "--build-post-install-clean    Clean dependencies after installation (saves space)."
     msg "--build-skip-tests            Skip test compilation and execution."
+    msg "--build-valgrind=<filter>     Also run the tests matching the filter under valgrind."
     msg "--build-parallel=<int>        Number of jobs to run simultaneously."
     msg "                                Default: supported platforms use nproc/sysctl"
     msg "--build-use-local-src         Use existing sources in relevant paths."
