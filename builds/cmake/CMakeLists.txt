@@ -96,10 +96,7 @@ endif()
 find_package( libbitcoin-system 4.0.0 REQUIRED )
 set( libbitcoin_system_VERSION ${libbitcoin-system_VERSION} )
 
-find_package( Boost 1.86.0 REQUIRED
-  COMPONENTS
-    unit_test_framework
-)
+find_package( Boost 1.86.0 REQUIRED )
 
 #------------------------------------------------------------------------------
 # Compiler options.
@@ -321,7 +318,7 @@ if ( with-tests )
 
   target_link_libraries( libbitcoin-explorer-test
     PRIVATE
-      Boost::unit_test_framework
+      Boost::headers
       bitcoin::explorer
   )
 
