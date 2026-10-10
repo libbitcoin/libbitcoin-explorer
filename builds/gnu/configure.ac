@@ -280,13 +280,6 @@ AS_IF([test "x${enable_isystem}" != "xno"],
 
 AC_MSG_NOTICE([boost_BUILD_CPPFLAGS : ${boost_BUILD_CPPFLAGS}])
 
-AS_IF([(test "x${with_tests}" != "xno")],
-  [
-    AX_BOOST_UNIT_TEST_FRAMEWORK
-    AC_SUBST([boost_unit_test_framework_LIBS], [${BOOST_UNIT_TEST_FRAMEWORK_LIB}])
-    AC_MSG_NOTICE([boost_unit_test_framework_LIBS : ${boost_unit_test_framework_LIBS}])
-  ])
-
 AC_CONFIG_FILES([
     Makefile
     libbitcoin-explorer.pc
