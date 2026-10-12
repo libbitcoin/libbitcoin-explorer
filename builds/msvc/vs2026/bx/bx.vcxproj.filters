@@ -13,9 +13,6 @@
     <Filter Include="src">
       <UniqueIdentifier>{098A91F3-291C-4A0D-0000-000000000001}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\.deps">
-      <UniqueIdentifier>{098A91F3-291C-4A0D-0000-000000000002}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\console\main.cpp">

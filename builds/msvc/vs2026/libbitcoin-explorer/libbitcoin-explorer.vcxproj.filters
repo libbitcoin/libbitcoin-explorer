@@ -34,15 +34,6 @@
     <Filter Include="src\config">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000008}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\commands\.deps">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-00000000000A}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\config">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-00000000000B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\config\.deps">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-00000000000C}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\commands\address-decode.cpp">
