@@ -29,6 +29,7 @@ _bx()
         cert-public
         checked-decode
         checked-encode
+        dice-entropy
         ec-add
         ec-add-secrets
         ec-decompress

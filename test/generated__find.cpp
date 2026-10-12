@@ -148,6 +148,11 @@ BOOST_AUTO_TEST_CASE(generated__find__checked_encode__returns_object)
     BOOST_REQUIRE(find("checked-encode") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__dice_entropy__returns_object)
+{
+    BOOST_REQUIRE(find("dice-entropy") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__ec_add__returns_object)
 {
     BOOST_REQUIRE(find("ec-add") != nullptr);
