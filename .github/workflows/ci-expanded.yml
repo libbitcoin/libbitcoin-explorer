@@ -369,7 +369,7 @@ jobs:
       - name: Checkout repository [libbitcoin-system]
         id: checkout-libbitcoin-system
         continue-on-error: true
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
           path: 'libbitcoin-system'
@@ -386,7 +386,7 @@ jobs:
 
       - name: Checkout repository [libbitcoin-explorer]
         id: checkout-libbitcoin-explorer
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
           path: 'libbitcoin-explorer'
@@ -489,7 +489,7 @@ jobs:
 
       - name: Test artifact upload
         if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: testlogs
           path: ${{ github.workspace }}/*.errors
@@ -817,7 +817,7 @@ jobs:
       - name: Checkout repository [libbitcoin-system]
         id: checkout-libbitcoin-system
         continue-on-error: true
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
           path: 'libbitcoin-system'
@@ -834,7 +834,7 @@ jobs:
 
       - name: Checkout repository [libbitcoin-explorer]
         id: checkout-libbitcoin-explorer
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
           path: 'libbitcoin-explorer'
@@ -937,7 +937,7 @@ jobs:
 
       - name: Test artifact upload
         if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: testlogs
           path: ${{ github.workspace }}/*.errors
@@ -1201,7 +1201,7 @@ jobs:
       - name: Checkout repository [libbitcoin-system]
         id: checkout-libbitcoin-system
         continue-on-error: true
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
           path: 'libbitcoin-system'
@@ -1218,7 +1218,7 @@ jobs:
 
       - name: Checkout repository [libbitcoin-explorer]
         id: checkout-libbitcoin-explorer
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
           path: 'libbitcoin-explorer'
@@ -1316,7 +1316,7 @@ jobs:
 
       - name: Test artifact upload
         if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: testlogs
           path: ${{ github.workspace }}/*.errors
@@ -1369,14 +1369,14 @@ jobs:
           fi
 
       - name: Set msbuild path
-        uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57
+        uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3
         with:
           msbuild-architecture: x64
 
       - name: Checkout repository [libbitcoin-system]
         id: checkout-libbitcoin-system
         continue-on-error: true
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
           path: 'libbitcoin-system'
@@ -1393,7 +1393,7 @@ jobs:
 
       - name: Checkout repository [libbitcoin-explorer]
         id: checkout-libbitcoin-explorer
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
           path: 'libbitcoin-explorer'
