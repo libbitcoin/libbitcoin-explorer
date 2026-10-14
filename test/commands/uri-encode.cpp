@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE(uri_encode__invoke__escaped_label__okay_output)
     BX_DECLARE_COMMAND(uri_encode);
     command.set_label_option("&=\\n#");
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("bitcoin:?label=%26=%5Cn%23\n");
+    BX_REQUIRE_OUTPUT("bitcoin:?label=%26%3D%5Cn%23\n");
 }
 
 BOOST_AUTO_TEST_CASE(uri_encode__invoke__composite__okay_output)
