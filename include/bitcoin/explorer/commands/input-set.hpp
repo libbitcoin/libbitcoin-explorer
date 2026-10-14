@@ -19,11 +19,6 @@
 #ifndef BX_INPUT_SET_HPP
 #define BX_INPUT_SET_HPP
 
-#include <cstdint>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>

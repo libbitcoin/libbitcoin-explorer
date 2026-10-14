@@ -18,8 +18,6 @@
  */
 #include <bitcoin/explorer/json.hpp>
 
-#include <string>
-#include <boost/json.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

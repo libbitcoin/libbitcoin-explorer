@@ -19,11 +19,6 @@
 #ifndef BX_BITCOIN160_HPP
 #define BX_BITCOIN160_HPP
 
-#include <cstdint>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>

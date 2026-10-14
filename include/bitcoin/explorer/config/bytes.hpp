@@ -19,8 +19,6 @@
 #ifndef BX_BYTES_HPP
 #define BX_BYTES_HPP
 
-#include <iostream>
-#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

@@ -19,8 +19,6 @@
 #ifndef BX_ELECTRUM_HPP
 #define BX_ELECTRUM_HPP
 
-#include <iostream>
-#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

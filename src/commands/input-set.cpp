@@ -19,8 +19,6 @@
 
 #include <bitcoin/explorer/commands/input-set.hpp>
 
-#include <iostream>
-#include <memory>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

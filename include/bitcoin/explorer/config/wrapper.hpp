@@ -19,9 +19,6 @@
 #ifndef BX_WRAPPER_HPP
 #define BX_WRAPPER_HPP
 
-#include <cstdint>
-#include <iostream>
-#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

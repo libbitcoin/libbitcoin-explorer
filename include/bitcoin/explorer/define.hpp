@@ -19,11 +19,7 @@
 #ifndef BX_DEFINE_HPP
 #define BX_DEFINE_HPP
 
-#include <cstdint>
-#include <cstddef>
 #include <map>
-#include <string>
-#include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
 
 // We use the generic helper definitions in libbitcoin to define BCX_API

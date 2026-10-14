@@ -18,9 +18,6 @@
  */
 #include <bitcoin/explorer/commands/ek-to-ec.hpp>
 
-#include <algorithm>
-#include <cstdint>
-#include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

@@ -19,8 +19,6 @@
 #ifndef BX_PARSER_HPP
 #define BX_PARSER_HPP
 
-#include <iostream>
-#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>

@@ -19,7 +19,6 @@
 
 #include <bitcoin/explorer/commands/fetch-block.hpp>
 
-#include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

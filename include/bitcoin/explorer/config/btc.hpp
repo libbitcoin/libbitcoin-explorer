@@ -19,9 +19,6 @@
 #ifndef BX_BTC_HPP
 #define BX_BTC_HPP
 
-#include <cstdint>
-#include <iostream>
-#include <string>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {

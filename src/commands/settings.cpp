@@ -18,7 +18,6 @@
  */
 #include <bitcoin/explorer/commands/help.hpp>
 
-#include <iostream>
 #include <map>
 #include <bitcoin/explorer/json.hpp>
 #include <bitcoin/explorer/utility.hpp>

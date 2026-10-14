@@ -19,8 +19,6 @@
 #ifndef BX_HD_KEY_HPP
 #define BX_HD_KEY_HPP
 
-#include <iostream>
-#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

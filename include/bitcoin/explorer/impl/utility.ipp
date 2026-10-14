@@ -19,10 +19,7 @@
 #ifndef BX_UTILITY_IPP
 #define BX_UTILITY_IPP
 
-#include <iostream>
-#include <string>
 #include <boost/any.hpp>
-#include <boost/program_options.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {

@@ -19,8 +19,6 @@
 #ifndef BX_LANGUAGE_HPP
 #define BX_LANGUAGE_HPP
 
-#include <iostream>
-#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

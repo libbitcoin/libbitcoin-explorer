@@ -19,8 +19,6 @@
 #ifndef BX_EC_PRIVATE_HPP
 #define BX_EC_PRIVATE_HPP
 
-#include <iostream>
-#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

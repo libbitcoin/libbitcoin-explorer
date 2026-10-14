@@ -18,7 +18,6 @@
  */
 #include <bitcoin/explorer/commands/input-validate.hpp>
 
-#include <iostream>
 #include <bitcoin/system.hpp>
 
 namespace libbitcoin {

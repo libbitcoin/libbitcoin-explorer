@@ -20,8 +20,6 @@
 #include <bitcoin/explorer/display.hpp>
 
 #include <format>
-#include <iostream>
-#include <memory>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/dispatch.hpp>
 #include <bitcoin/explorer/generated.hpp>

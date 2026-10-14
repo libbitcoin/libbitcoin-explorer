@@ -16,9 +16,6 @@
 #ifndef BX_GENERATED_HPP
 #define BX_GENERATED_HPP
 
-#include <functional>
-#include <memory>
-#include <string>
 #include <bitcoin/explorer/command.hpp>
 .for command by symbol
 #include <bitcoin/explorer/commands/$(symbol).hpp>

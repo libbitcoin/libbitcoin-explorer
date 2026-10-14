@@ -19,7 +19,6 @@
 
 #include <bitcoin/explorer/commands/watch-tx.hpp>
 
-#include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

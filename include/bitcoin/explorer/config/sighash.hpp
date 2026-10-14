@@ -19,8 +19,6 @@
 #ifndef BX_SIGHASH_HPP
 #define BX_SIGHASH_HPP
 
-#include <iostream>
-#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
