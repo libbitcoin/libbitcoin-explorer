@@ -90,6 +90,22 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output8)
    BX_REQUIRE_OUTPUT("0000000000000000000000000000000000000000000000000000000000000000\n");
 }
 
+BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output9)
+{
+   BX_DECLARE_COMMAND(dice_entropy);
+   command.set_rolls_argument({ "61262262611466652634263242642635642166662444332122" });
+   BX_REQUIRE_OKAY(command.invoke(output, error));
+   BX_REQUIRE_OUTPUT("ffffffffffffffffffffffffffffffff\n");
+}
+
+BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output10)
+{
+   BX_DECLARE_COMMAND(dice_entropy);
+   command.set_rolls_argument({ "6263365546524225314413253522255442433336134252134625323511345453215331453612416422433556351254153322" });
+   BX_REQUIRE_OKAY(command.invoke(output, error));
+   BX_REQUIRE_OUTPUT("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n");
+}
+
 BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input1)
 {
    BX_DECLARE_COMMAND(dice_entropy);
@@ -137,6 +153,38 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input6)
    BX_REQUIRE_FAILURE(command.invoke(output, error));
    BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
 }
+BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input7)
+{
+   BX_DECLARE_COMMAND(dice_entropy);
+   command.set_rolls_argument({ "61262262611466652634263242642635642166662444332123" });
+   BX_REQUIRE_FAILURE(command.invoke(output, error));
+   BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
+}
+
+BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input8)
+{
+   BX_DECLARE_COMMAND(dice_entropy);
+   command.set_rolls_argument({ "66666666666666666666666666666666666666666666666666" });
+   BX_REQUIRE_FAILURE(command.invoke(output, error));
+   BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
+}
+
+BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input9)
+{
+   BX_DECLARE_COMMAND(dice_entropy);
+   command.set_rolls_argument({ "6263365546524225314413253522255442433336134252134625323511345453215331453612416422433556351254153323" });
+   BX_REQUIRE_FAILURE(command.invoke(output, error));
+   BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
+}
+
+BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input10)
+{
+   BX_DECLARE_COMMAND(dice_entropy);
+   command.set_rolls_argument({ "6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666" });
+   BX_REQUIRE_FAILURE(command.invoke(output, error));
+   BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
