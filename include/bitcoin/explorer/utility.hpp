@@ -19,9 +19,6 @@
 #ifndef BX_UTILITY_HPP
 #define BX_UTILITY_HPP
 
-#include <iostream>
-#include <string>
-#include <boost/json.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {

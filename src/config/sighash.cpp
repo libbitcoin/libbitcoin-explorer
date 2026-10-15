@@ -18,9 +18,7 @@
  */
 #include <bitcoin/explorer/config/sighash.hpp>
 
-#include <iostream>
 #include <sstream>
-#include <string>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {

@@ -18,9 +18,7 @@
  */
 #include <bitcoin/explorer/config/witness.hpp>
 
-#include <iostream>
 #include <sstream>
-#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/utility.hpp>
 

@@ -19,9 +19,6 @@
 #ifndef BX_BYTE_HPP
 #define BX_BYTE_HPP
 
-#include <cstdint>
-#include <iostream>
-#include <string>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {

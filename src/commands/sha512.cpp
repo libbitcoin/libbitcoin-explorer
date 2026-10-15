@@ -18,7 +18,6 @@
  */
 #include <bitcoin/explorer/commands/sha512.hpp>
 
-#include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

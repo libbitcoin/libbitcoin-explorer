@@ -18,8 +18,6 @@
  */
 #include <bitcoin/explorer/commands/btc-to-satoshi.hpp>
 
-#include <cstdint>
-#include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

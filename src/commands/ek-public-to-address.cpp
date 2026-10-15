@@ -18,8 +18,6 @@
  */
 #include <bitcoin/explorer/commands/ek-public-to-address.hpp>
 
-#include <cstdint>
-#include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

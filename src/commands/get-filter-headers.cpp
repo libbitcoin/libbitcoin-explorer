@@ -19,7 +19,6 @@
 
 #include <bitcoin/explorer/commands/get-filter-headers.hpp>
 
-#include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

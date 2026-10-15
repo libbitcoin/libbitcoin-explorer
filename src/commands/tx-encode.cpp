@@ -19,8 +19,6 @@
 
 #include <bitcoin/explorer/commands/tx-encode.hpp>
 
-#include <algorithm>
-#include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

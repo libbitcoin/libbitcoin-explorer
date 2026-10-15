@@ -19,7 +19,6 @@
 #ifndef BX_JSON_HPP
 #define BX_JSON_HPP
 
-#include <boost/json.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

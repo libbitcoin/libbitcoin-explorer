@@ -18,9 +18,6 @@
  */
 #include <bitcoin/explorer/parser.hpp>
 
-#include <iostream>
-#include <string>
-#include <boost/program_options.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/system.hpp>

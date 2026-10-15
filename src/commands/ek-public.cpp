@@ -18,7 +18,6 @@
  */
 #include <bitcoin/explorer/commands/ek-public.hpp>
 
-#include <algorithm>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {

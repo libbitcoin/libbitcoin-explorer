@@ -15,10 +15,6 @@
 .copyleft()
 #include <bitcoin/explorer/generated.hpp>
 
-#include <functional>
-#include <memory>
-#include <string>
-#include <vector>
 #include <bitcoin/explorer/command.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/

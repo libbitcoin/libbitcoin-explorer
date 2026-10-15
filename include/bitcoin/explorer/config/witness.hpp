@@ -19,8 +19,6 @@
 #ifndef BX_WITNESS_HPP
 #define BX_WITNESS_HPP
 
-#include <iostream>
-#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

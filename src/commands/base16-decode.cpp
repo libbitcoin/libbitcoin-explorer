@@ -18,7 +18,6 @@
  */
 #include <bitcoin/explorer/commands/base16-decode.hpp>
 
-#include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/bytes.hpp>

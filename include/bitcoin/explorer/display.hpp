@@ -19,7 +19,6 @@
 #ifndef BX_DISPLAY_HPP
 #define BX_DISPLAY_HPP
 
-#include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/command.hpp>

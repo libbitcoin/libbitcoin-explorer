@@ -17,11 +17,6 @@
 #ifndef BX_$(symbol:upper,c)_HPP
 #define BX_$(symbol:upper,c)_HPP
 
-#include <cstdint>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>

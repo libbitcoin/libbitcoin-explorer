@@ -18,8 +18,6 @@
  */
 #include <bitcoin/explorer/commands/input-sign.hpp>
 
-#include <iostream>
-#include <cstdint>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/utility.hpp>
 

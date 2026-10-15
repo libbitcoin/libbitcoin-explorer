@@ -18,8 +18,6 @@
  */
 #include <bitcoin/explorer/commands/address-embed.hpp>
 
-#include <iostream>
-#include <utility>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>

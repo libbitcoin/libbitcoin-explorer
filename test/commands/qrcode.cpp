@@ -19,8 +19,6 @@
 
 #include "command.hpp"
 
-#include <string>
-
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(offline)

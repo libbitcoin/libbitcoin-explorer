@@ -18,12 +18,6 @@
  */
 #include <bitcoin/explorer/utility.hpp>
 
-#include <cstdint>
-#include <iostream>
-#include <iterator>
-#include <string>
-#include <boost/json.hpp>
-
 using namespace bc::system;
 
 namespace libbitcoin {

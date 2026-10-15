@@ -18,8 +18,6 @@
  */
 #include <bitcoin/explorer/commands/uri-encode.hpp>
 
-#include <iostream>
-#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

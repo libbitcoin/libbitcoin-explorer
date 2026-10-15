@@ -16,11 +16,7 @@
 #ifndef BX_COMMAND_HPP
 #define BX_COMMAND_HPP
 
-#include <iostream>
-#include <string>
-#include <vector>
 #include <filesystem>
-#include <boost/program_options.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 .primitives()

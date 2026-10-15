@@ -19,7 +19,6 @@
 #ifndef BX_DISPATCH_HPP
 #define BX_DISPATCH_HPP
 
-#include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 

@@ -19,9 +19,6 @@
 #ifndef BX_GENERATED_HPP
 #define BX_GENERATED_HPP
 
-#include <functional>
-#include <memory>
-#include <string>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/commands/address-decode.hpp>
 #include <bitcoin/explorer/commands/address-embed.hpp>

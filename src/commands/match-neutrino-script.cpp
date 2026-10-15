@@ -21,7 +21,6 @@
 
 #include <bitcoin/explorer/commands/match-neutrino-script.hpp>
 
-#include <iostream>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
