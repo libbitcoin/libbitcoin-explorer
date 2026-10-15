@@ -18,7 +18,7 @@
  */
 #include <bitcoin/explorer/commands/dice-entropy.hpp>
 
-#include <iostream>
+#include <unordered_map>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -28,23 +28,14 @@ namespace commands {
 
 using namespace bc::system;
 using namespace bc::system::config;
-
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <map>
-#include <algorithm>
-
-using bc::uintx;
-
-static constexpr auto bits_per_byte = 8;
-static constexpr auto max_die_value = 6;
+using namespace boost::multiprecision;
 
 static constexpr char min_die_char = '1';
 static constexpr char max_die_char = '6';
+static constexpr auto max_die_value = 6;
 
-// Acceptable configuration settings: dice rolls, entropy bits
-const std::unordered_map<uint16_t, uint16_t> configurations =
+// Acceptable configuration settings: dice rolls, entropy bits.
+const std::unordered_map<size_t, size_t> configurations
 {
     {  50, 128 },
     { 100, 256 }
@@ -56,37 +47,26 @@ data_chunk dice_to_entropy(const std::string& rolls)
     if (config == configurations.end())
         return {};
 
-    uintx n = 0;
-
-    for (char c : rolls) {
-        if (c < min_die_char || c > max_die_char)
+    for (auto roll: rolls)
+        if (is_limited(roll, min_die_char, max_die_char))
             return {};
 
-        n = n * max_die_value + (c - min_die_char);
-    }
+    uintx value{};
+    for (auto roll: rolls)
+        value = value * max_die_value + (roll - min_die_char);
 
+    // Reject incomplete range to avoid modulo bias.
     const auto bits = config->second;
-    const auto range = uintx(1) << bits;
-
-    const uintx input_space = boost::multiprecision::pow(
-        uintx(max_die_value), config->first);
-    const auto limit = (input_space / range) * range;
-
-    // Reject the incomplete range to avoid modulo bias.
-    if (n >= limit)
+    const auto count = possible_narrow_cast<unsigned>(config->first);
+    const uintx die = max_die_value;
+    const uintx range = uintx{ one } << bits;
+    const uintx limit = (pow(die, count) / range) * range;
+    if (value >= limit)
         return {};
 
-    n %= range;
-
-    data_chunk result(bits / bits_per_byte);
-
     // Big-endian output.
-    for (int i = (bits / bits_per_byte) - 1; i >= 0; --i) {
-        result[i] = static_cast<unsigned char>(n & 0xff);
-        n >>= bits_per_byte;
-    }
-
-    return result;
+    const uintx number = value % range;
+    return to_big_data(data_chunk(bits / byte_bits), number);
 }
 
 console_result dice_entropy::invoke(std::ostream& output, std::ostream& error)
