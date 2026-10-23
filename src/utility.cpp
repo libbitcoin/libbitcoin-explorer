@@ -24,9 +24,9 @@ namespace libbitcoin {
 namespace explorer {
 
 std::ostream& write_stream(std::ostream& output,
-    const boost::json::value& value)
+    const system::json::value& value)
 {
-    output << boost::json::serialize(value) << std::endl;
+    output << system::json::serialize(value) << std::endl;
     return output;
 }
 

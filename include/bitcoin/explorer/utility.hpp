@@ -66,7 +66,7 @@ void write_file(std::ostream& output, const std::string& path,
  * @return             The output stream (for convenience).
  */
 BCX_API std::ostream& write_stream(std::ostream& output,
-    const boost::json::value& value);
+    const system::json::value& value);
 
 } // namespace explorer
 } // namespace libbitcoin
