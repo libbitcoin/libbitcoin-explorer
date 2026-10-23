@@ -25,7 +25,7 @@ namespace libbitcoin {
 namespace explorer {
 
 using namespace bc::system;
-using namespace boost::json;
+using namespace bc::system::json;
 
 // Settings keys are dot-delimited section paths.
 static void put_path(object& out, const std::string& path,
