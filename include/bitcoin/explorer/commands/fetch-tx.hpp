@@ -48,8 +48,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FETCH_TX_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_FETCH_TX_FAILED \
+    "Server query failed: {}."
 
 /**
  * Class to implement the fetch-tx command.
@@ -114,7 +114,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HASH", 1);
+            .add("HASH", 1)
+            .add("server-url", 1);
     }
 
     /**
@@ -151,12 +152,17 @@ public:
         (
             "witness,w",
             value<bool>(&option_.witness)->zero_tokens(),
-            "Include witness as applicable. Requires a version 3.4 or later Libbitcoin server connection."
+            "Include witness as applicable."
         )
         (
             "HASH",
             value<system::config::hash256>(&argument_.hash),
             "The Base16 transaction hash of the transaction to get. If not specified the transaction hash is read from STDIN."
+        )
+        (
+            "server-url",
+            value<system::config::url>(&argument_.server_url),
+            "The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."
         );
 
         return options;
@@ -199,6 +205,23 @@ public:
     }
 
     /**
+     * Get the value of the server-url argument.
+     */
+    virtual system::config::url& get_server_url_argument()
+    {
+        return argument_.server_url;
+    }
+
+    /**
+     * Set the value of the server-url argument.
+     */
+    virtual void set_server_url_argument(
+        const system::config::url& value)
+    {
+        argument_.server_url = value;
+    }
+
+    /**
      * Get the value of the witness option.
      */
     virtual bool& get_witness_option()
@@ -225,11 +248,13 @@ private:
     struct argument
     {
         argument()
-          : hash()
+          : hash(),
+            server_url()
         {
         }
 
         system::config::hash256 hash;
+        system::config::url server_url;
     } argument_;
 
     /**

@@ -20,6 +20,7 @@
 #include <bitcoin/explorer/commands/fetch-block-height.hpp>
 
 #include <bitcoin/system.hpp>
+#include <bitcoin/explorer/client.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -28,10 +29,38 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result fetch_block_height::invoke(std::ostream&, std::ostream& error)
+console_result fetch_block_height::invoke(std::ostream& output,
+    std::ostream& error)
 {
-    error << BX_FETCH_BLOCK_HEIGHT_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    // Bound parameters.
+    const auto& argument = get_server_url_argument();
+    const auto& url = is_zero(argument.port()) ?
+        get_server_url_setting() : argument;
+    const hash_digest& hash = get_hash_argument();
+
+    client server(url, get_server_connect_retries_setting(),
+        get_server_connect_timeout_seconds_setting());
+
+    json::value response{};
+    std::string message{};
+
+    if (!server.get(response, message,
+        "block/hash/" + encode_hash(hash) + "/header"))
+    {
+        error << std::format(BX_FETCH_BLOCK_HEIGHT_FAILED, message)
+            << std::endl;
+        return console_result::failure;
+    }
+
+    const auto height = response.if_object();
+    if (!height || !height->contains("height"))
+    {
+        error << BX_FETCH_BLOCK_HEIGHT_MISSING << std::endl;
+        return console_result::failure;
+    }
+
+    output << json::value_to<uint32_t>(height->at("height")) << std::endl;
+    return console_result::okay;
 }
 
 } //namespace commands

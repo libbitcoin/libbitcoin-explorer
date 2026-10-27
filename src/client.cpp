@@ -97,9 +97,10 @@ static bool fetch(std::string& out, std::string& error,
 }
 
 bool client::get(system::json::value& out, std::string& error,
-    const std::string& path) NOEXCEPT
+    const std::string& path, const std::string& query) NOEXCEPT
 {
-    const auto target = version_prefix + path + json_format;
+    const auto target = version_prefix + path + json_format +
+        (query.empty() ? "" : "&" + query);
 
     std::string body{};
     for (uint8_t attempt{}; attempt <= retries_; ++attempt)

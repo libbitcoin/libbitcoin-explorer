@@ -20,7 +20,9 @@
 #include <bitcoin/explorer/commands/fetch-tx.hpp>
 
 #include <bitcoin/system.hpp>
+#include <bitcoin/explorer/client.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -28,10 +30,30 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result fetch_tx::invoke(std::ostream&, std::ostream& error)
+console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
 {
-    error << BX_FETCH_TX_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    // Bound parameters.
+    const auto& argument = get_server_url_argument();
+    const auto& url = is_zero(argument.port()) ?
+        get_server_url_setting() : argument;
+    const hash_digest& hash = get_hash_argument();
+    const auto witness = get_witness_option();
+
+    client server(url, get_server_connect_retries_setting(),
+        get_server_connect_timeout_seconds_setting());
+
+    json::value response{};
+    std::string message{};
+
+    if (!server.get(response, message, "tx/" + encode_hash(hash),
+        witness ? "" : "witness=false"))
+    {
+        error << std::format(BX_FETCH_TX_FAILED, message) << std::endl;
+        return console_result::failure;
+    }
+
+    write_stream(output, response);
+    return console_result::okay;
 }
 
 } //namespace commands

@@ -35,10 +35,11 @@ public:
         uint16_t timeout_seconds) NOEXCEPT;
 
     /// Get the json response for a native interface path, such as
-    /// "block/height/42". The version prefix and format are supplied here.
+    /// "block/height/42". The version prefix and format are supplied here,
+    /// and query is appended to the format parameter, such as "witness=false".
     /// Returns false and sets error on transport, status or decode failure.
     bool get(system::json::value& out, std::string& error,
-        const std::string& path) NOEXCEPT;
+        const std::string& path, const std::string& query="") NOEXCEPT;
 
 private:
     const system::config::url url_;

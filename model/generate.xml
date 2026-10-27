@@ -326,10 +326,11 @@
     <define name="BX_FETCH_BALANCE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="fetch-block" stub="true" category="ONLINE" output="block" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-block" category="ONLINE" output="block" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
-    <define name="BX_FETCH_BLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_FETCH_BLOCK_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-block-hashes" stub="true" category="ONLINE" output="hash_list" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
@@ -404,9 +405,11 @@
     <define name="BX_FETCH_HEADER_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-block-height" stub="true" category="ONLINE" output="uint32_t" network="true" description="Get the block height from the specified hash. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-block-height" category="ONLINE" output="uint32_t" network="true" description="Get the block height from the specified hash. Requires a Libbitcoin server connection.">
     <argument name="hash" stdin="true" type="hash256" description="The Base16 block hash."/>
-    <define name="BX_FETCH_BLOCK_HEIGHT_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_FETCH_BLOCK_HEIGHT_MISSING" value="The server response contained no height." />
+    <define name="BX_FETCH_BLOCK_HEIGHT_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-height" formerly="fetch-last-height" output="uint32_t" category="ONLINE" network="true" description="Get the last block height. Requires a Libbitcoin server connection.">
@@ -425,10 +428,11 @@
     <define name="BX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="fetch-tx" stub="true" formerly="fetch-transaction" output="transaction" category="ONLINE" network="true" description="Get a transaction by its hash. Requires a Libbitcoin server connection.">
-    <option name="witness" description="Include witness as applicable. Requires a version 3.4 or later Libbitcoin server connection." />
+  <command symbol="fetch-tx" formerly="fetch-transaction" output="transaction" category="ONLINE" network="true" description="Get a transaction by its hash. Requires a Libbitcoin server connection.">
+    <option name="witness" description="Include witness as applicable." />
     <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash of the transaction to get. If not specified the transaction hash is read from STDIN." />
-    <define name="BX_FETCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_FETCH_TX_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-tx-index" stub="true" formerly="fetch-transaction-index" output="string" multipleX="true" category="ONLINE" network="true" description="Get the block height and index of a transaction. Requires a Libbitcoin server connection.">
