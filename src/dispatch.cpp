@@ -101,7 +101,6 @@ console_result dispatch_command(int argc, const char* argv[],
 
     auto& in = get_command_input(*command, input);
     auto& err = get_command_error(*command, error);
-    auto& out = get_command_output(*command, output);
 
     parser metadata(*command);
     std::string error_message;
@@ -117,6 +116,8 @@ console_result dispatch_command(int argc, const char* argv[],
         command->write_help(output);
         return console_result::okay;
     }
+
+    auto& out = get_command_output(*command, output);
 
     return command->invoke(out, err);
 }
