@@ -48,6 +48,7 @@ src_libbitcoin_explorer_la_LIBADD = \
     ${libbitcoin_system_LIBS}
 
 src_libbitcoin_explorer_la_SOURCES = \
+    ${srcdir}/../../src/client.cpp \
     ${srcdir}/../../src/dispatch.cpp \
     ${srcdir}/../../src/display.cpp \
     ${srcdir}/../../src/generated.cpp \
@@ -194,6 +195,7 @@ include_bitcoin_explorerdir = \
     ${includedir}/bitcoin/explorer
 
 include_bitcoin_explorer_HEADERS = \
+    ${srcdir}/../../include/bitcoin/explorer/client.hpp \
     ${srcdir}/../../include/bitcoin/explorer/command.hpp \
     ${srcdir}/../../include/bitcoin/explorer/define.hpp \
     ${srcdir}/../../include/bitcoin/explorer/dispatch.hpp \
