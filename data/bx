@@ -118,16 +118,162 @@ _bx()
         witness-to-key
     "
 
-    if [[ $COMP_CWORD == 1 ]]; then
-        COMPREPLY=( `compgen -W "$commands" -- $current` )
+    if [[ $COMP_CWORD -eq 1 ]]; then
+        COMPREPLY=( `compgen -W "$commands" -- "$current"` )
         return
     fi
 
-    local command=COMP_WORDS[1]
-    local options="--config --help -c -h"
+    local common="--config -c --help -h"
+    local options=""
 
-    # TODO: Generate per-command options here
+    # Generated from XML data source.
+    case "${COMP_WORDS[1]}" in
+        address-embed)
+            options="--version -v"
+            ;;
+        address-encode)
+            options="--version -v"
+            ;;
+        bech32-encode)
+            options="--version -v"
+            ;;
+        broadcast-tx)
+            options="--nodes -n"
+            ;;
+        checked-encode)
+            options="--version -v"
+            ;;
+        ec-to-address)
+            options="--version -v"
+            ;;
+        ec-to-ek)
+            options="--uncompressed -u --version -v"
+            ;;
+        ec-to-public)
+            options="--uncompressed -u"
+            ;;
+        ec-to-wif)
+            options="--uncompressed -u --version -v"
+            ;;
+        ek-address)
+            options="--uncompressed -u --version -v"
+            ;;
+        ek-new)
+            options="--uncompressed -u --version -v"
+            ;;
+        ek-public)
+            options="--uncompressed -u --version -v"
+            ;;
+        electrum-decode)
+            options="--language -l"
+            ;;
+        electrum-new)
+            options="--language -l --prefix -p"
+            ;;
+        electrum-to-seed)
+            options="--language -l --passphrase -p"
+            ;;
+        fetch-block)
+            options="--hash -s --height -t"
+            ;;
+        fetch-block-hashes)
+            options="--hash -s --height -t"
+            ;;
+        fetch-filter)
+            options="--hash -s --height -t"
+            ;;
+        fetch-filter-headers)
+            options="--stop_hash -s --stop_height -t"
+            ;;
+        fetch-header)
+            options="--hash -s --height -t"
+            ;;
+        fetch-tx)
+            options="--witness -w"
+            ;;
+        fetch-utxo)
+            options="--algorithm -a"
+            ;;
+        get-filter-checkpoint)
+            options="--host -t --port -p"
+            ;;
+        get-filter-headers)
+            options="--host -t --port -p"
+            ;;
+        get-filters)
+            options="--host -t --port -p"
+            ;;
+        hd-new)
+            options="--version -v"
+            ;;
+        hd-private)
+            options="--hard -d --index -i --secret_version -s --public_version -p"
+            ;;
+        hd-public)
+            options="--hard -d --index -i --secret_version -s --public_version -p"
+            ;;
+        hd-to-ec)
+            options="--secret_version -s --public_version -p"
+            ;;
+        hd-to-public)
+            options="--secret_version -s --version -v"
+            ;;
+        input-set)
+            options="--index -i"
+            ;;
+        input-sign)
+            options="--anyone -a --index -i --sign_type -s"
+            ;;
+        input-validate)
+            options="--index -i"
+            ;;
+        mnemonic-decode)
+            options="--language -l"
+            ;;
+        mnemonic-encode)
+            options="--language -l"
+            ;;
+        mnemonic-to-seed)
+            options="--language -l --passphrase -p"
+            ;;
+        put-tx)
+            options="--host -t --port -p"
+            ;;
+        qrcode)
+            options="--margin -m --pixels -p --scheme -s --version -v"
+            ;;
+        script-decode)
+            options="--flags -f"
+            ;;
+        script-to-address)
+            options="--version -v"
+            ;;
+        script-to-key)
+            options="--version -v"
+            ;;
+        subscribe-block)
+            options="--duration -d"
+            ;;
+        subscribe-tx)
+            options="--duration -d"
+            ;;
+        token-new)
+            options="--lot -l --sequence -s"
+            ;;
+        tx-encode)
+            options="--lock_time -l --version -v --input -i --output -o"
+            ;;
+        uri-encode)
+            options="--amount -a --label -l --message -m --request -r"
+            ;;
+        watch-key)
+            options="--duration -d"
+            ;;
+    esac
 
-    COMPREPLY=( `compgen -W "$options" -- $current` )
+    # Only options are completed; other words fall back to the default.
+    if [[ "$current" == -* ]]; then
+        COMPREPLY=( `compgen -W "$common $options" -- "$current"` )
+    fi
 }
-complete -F _bx bx
+complete -o default -F _bx bx

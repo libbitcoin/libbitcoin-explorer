@@ -26,17 +26,40 @@ _bx()
 .endfor _command
     "
 
-    if [[ $COMP_CWORD == 1 ]]; then
-        COMPREPLY=( `compgen -W "$commands" -- $current` )
+    if [[ $COMP_CWORD -eq 1 ]]; then
+        COMPREPLY=( `compgen -W "$commands" -- "$current"` )
         return
     fi
 
-    local command=COMP_WORDS[1]
-    local options="--config --help -c -h"
+    local common="--config -c --help -h"
+    local options=""
 
-    # TODO: Generate per-command options here
+    # Generated from XML data source.
+    case "${COMP_WORDS[1]}" in
+.for command by symbol as _command where !is_xml_true(_command.obsolete)
+.   define option_list = ""
+.   for _command.option as _option
+.       short_name = _option.shortcut ? first_char(_option.name)
+.       if (option_list <> "")
+.           option_list += " "
+.       endif
+.       option_list += "--$(_option.name:lower,c)"
+.       if (short_name <> "")
+.           option_list += " -$(short_name)"
+.       endif
+.   endfor _option
+.   if (option_list <> "")
+        $(_command.symbol))
+            options="$(option_list)"
+            ;;
+.   endif
+.endfor _command
+    esac
 
-    COMPREPLY=( `compgen -W "$options" -- $current` )
+    # Only options are completed; other words fall back to the default.
+    if [[ "$current" == -* ]]; then
+        COMPREPLY=( `compgen -W "$common $options" -- "$current"` )
+    fi
 }
-complete -F _bx bx
+complete -o default -F _bx bx
 .endtemplate

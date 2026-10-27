@@ -28,6 +28,12 @@ doc_DATA = \
     NEWS \
     README
 
+# files => ${bashcompletiondir}
+#------------------------------------------------------------------------------
+bashcompletiondir = ${datadir}/bash-completion/completions
+dist_bashcompletion_DATA = \
+    ${srcdir}/../../data/bx
+
 # Libraries.
 #==============================================================================
 # Target library 'src/libbitcoin-explorer.la'
@@ -428,6 +434,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/electrum-new.cpp \
     ${srcdir}/../../test/commands/electrum-to-seed.cpp \
     ${srcdir}/../../test/commands/fetch-balance.cpp \
+    ${srcdir}/../../test/commands/fetch-block-height.cpp \
     ${srcdir}/../../test/commands/fetch-block.cpp \
     ${srcdir}/../../test/commands/fetch-header.cpp \
     ${srcdir}/../../test/commands/fetch-height.cpp \
