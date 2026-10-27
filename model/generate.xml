@@ -435,9 +435,11 @@
     <define name="BX_FETCH_TX_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-tx-index" stub="true" formerly="fetch-transaction-index" output="string" multipleX="true" category="ONLINE" network="true" description="Get the block height and index of a transaction. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-tx-index" formerly="fetch-transaction-index" output="string" multipleX="true" category="ONLINE" network="true" description="Get the block height and index of a transaction. Requires a Libbitcoin server connection.">
     <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash of the transaction index to get. If not specified the transaction hash is read from STDIN." />
-    <define name="BX_FETCH_TX_INDEX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_FETCH_TX_INDEX_UNCONFIRMED" value="The transaction is not confirmed." />
+    <define name="BX_FETCH_TX_INDEX_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-utxo" stub="true" formerly="get-utxo" output="output" multipleX="true" category="ONLINE" network="true" description="Get enough unspent transaction outputs from a payment address to pay a number of satoshi. Requires a Libbitcoin server connection.">
