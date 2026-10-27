@@ -83,7 +83,15 @@ console_result dispatch(int argc, const char* argv[],
         return console_result::okay;
     }
 
-    return dispatch_command(argc - 1, &argv[1], input, output, error);
+    try
+    {
+        return dispatch_command(argc - 1, &argv[1], input, output, error);
+    }
+    catch (const std::exception& e)
+    {
+        display_invalid_parameter(error, e.what());
+        return console_result::failure;
+    }
 }
 
 console_result dispatch_command(int argc, const char* argv[],
