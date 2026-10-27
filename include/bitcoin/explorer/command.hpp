@@ -235,23 +235,8 @@ public:
         )
         (
             "server.url",
-            value<system::config::url>(&setting_.server.url)->default_value({ "tcp://mainnet.libbitcoin.net:9091" }),
-            "The URL of the Libbitcoin query service."
-        )
-        (
-            "server.block_url",
-            value<system::config::url>(&setting_.server.block_url)->default_value({ "tcp://mainnet.libbitcoin.net:9093" }),
-            "The URL of the Libbitcoin block service."
-        )
-        (
-            "server.transaction_url",
-            value<system::config::url>(&setting_.server.transaction_url)->default_value({ "tcp://mainnet.libbitcoin.net:9094" }),
-            "The URL of the Libbitcoin transaction service."
-        )
-        (
-            "server.socks_proxy",
-            value<system::config::authority>(&setting_.server.socks_proxy)->default_value({ "0.0.0.0" }),
-            "The address of a SOCKS5 proxy to use, defaults to none."
+            value<system::config::url>(&setting_.server.url)->default_value({ "http://mainnet.libbitcoin.net:8181" }),
+            "The URL of the Libbitcoin server native interface."
         )
         (
             "server.connect_retries",
@@ -475,54 +460,6 @@ public:
     }
 
     /**
-     * Get the value of the server.block_url setting.
-     */
-    virtual system::config::url get_server_block_url_setting() const
-    {
-        return setting_.server.block_url;
-    }
-
-    /**
-     * Set the value of the server.block_url setting.
-     */
-    virtual void set_server_block_url_setting(system::config::url value)
-    {
-        setting_.server.block_url = value;
-    }
-
-    /**
-     * Get the value of the server.transaction_url setting.
-     */
-    virtual system::config::url get_server_transaction_url_setting() const
-    {
-        return setting_.server.transaction_url;
-    }
-
-    /**
-     * Set the value of the server.transaction_url setting.
-     */
-    virtual void set_server_transaction_url_setting(system::config::url value)
-    {
-        setting_.server.transaction_url = value;
-    }
-
-    /**
-     * Get the value of the server.socks_proxy setting.
-     */
-    virtual system::config::authority get_server_socks_proxy_setting() const
-    {
-        return setting_.server.socks_proxy;
-    }
-
-    /**
-     * Set the value of the server.socks_proxy setting.
-     */
-    virtual void set_server_socks_proxy_setting(system::config::authority value)
-    {
-        setting_.server.socks_proxy = value;
-    }
-
-    /**
      * Get the value of the server.connect_retries setting.
      */
     virtual explorer::config::byte get_server_connect_retries_setting() const
@@ -626,18 +563,12 @@ private:
         {
             server()
               : url(),
-                block_url(),
-                transaction_url(),
-                socks_proxy(),
                 connect_retries(),
                 connect_timeout_seconds()
             {
             }
 
             system::config::url url;
-            system::config::url block_url;
-            system::config::url transaction_url;
-            system::config::authority socks_proxy;
             explorer::config::byte connect_retries;
             uint16_t connect_timeout_seconds;
         } server;
