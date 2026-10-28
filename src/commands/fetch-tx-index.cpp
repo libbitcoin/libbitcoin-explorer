@@ -20,7 +20,9 @@
 #include <bitcoin/explorer/commands/fetch-tx-index.hpp>
 
 #include <bitcoin/system.hpp>
+#include <bitcoin/explorer/client.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -28,10 +30,37 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result fetch_tx_index::invoke(std::ostream&, std::ostream& error)
+console_result fetch_tx_index::invoke(std::ostream& output,
+    std::ostream& error)
 {
-    error << BX_FETCH_TX_INDEX_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    // Bound parameters.
+    const auto& argument = get_server_url_argument();
+    const auto& url = is_zero(argument.port()) ?
+        get_server_url_setting() : argument;
+    const hash_digest& hash = get_hash_argument();
+
+    client server(url, get_server_connect_retries_setting(),
+        get_server_connect_timeout_seconds_setting());
+
+    json::value response{};
+    std::string message{};
+
+    if (!server.get(response, message,
+        "tx/" + encode_hash(hash) + "/details"))
+    {
+        error << std::format(BX_FETCH_TX_INDEX_FAILED, message) << std::endl;
+        return console_result::failure;
+    }
+
+    const auto details = response.if_object();
+    if (!details || !details->contains("confirmed"))
+    {
+        error << BX_FETCH_TX_INDEX_UNCONFIRMED << std::endl;
+        return console_result::failure;
+    }
+
+    write_stream(output, details->at("confirmed"));
+    return console_result::okay;
 }
 
 } //namespace commands

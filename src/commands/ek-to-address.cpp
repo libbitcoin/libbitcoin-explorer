@@ -28,9 +28,8 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result ek_to_address::invoke(std::ostream&, std::ostream& error)
+console_result ek_to_address::invoke(std::ostream& output, std::ostream& error)
 {
-#ifdef WITH_ICU
     const auto& passphrase = get_passphrase_argument();
     const auto& key = get_ek_private_key_argument();
 
@@ -47,14 +46,10 @@ console_result ek_to_address::invoke(std::ostream&, std::ostream& error)
 
     // It is not possible for the validated secret to fail conversion.
     secret_to_public(point, secret);
-    const payment_address address({ point, compressed }, version);
+    const payment_address address(ec_public{ point, compressed }, version);
 
     output << address << std::endl;
     return console_result::okay;
-#else
-    error << BX_EK_TO_ADDRESS_REQUIRES_ICU << std::endl;
-    return console_result::failure;
-#endif
 }
 
 } //namespace commands

@@ -29,9 +29,8 @@ using namespace bc::explorer::config;
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result token_new::invoke(std::ostream&, std::ostream& error)
+console_result token_new::invoke(std::ostream& output, std::ostream& error)
 {
-#ifdef WITH_ICU
     const auto lot = get_lot_option();
     const auto sequence = get_sequence_option();
     const auto& passphrase = get_passphrase_argument();
@@ -73,10 +72,6 @@ console_result token_new::invoke(std::ostream&, std::ostream& error)
     // In the case of creation failure a null token is presented.
     output << ek_token(token) << std::endl;
     return console_result::okay;
-#else
-    error << BX_TOKEN_NEW_REQUIRES_ICU << std::endl;
-    return console_result::failure;
-#endif
 }
 
 } //namespace commands

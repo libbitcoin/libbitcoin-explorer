@@ -11,7 +11,6 @@
     <shorthand name="EC" description="Elliptic Curve" />
     <shorthand name="EK" description="Encrypted Key" />
     <shorthand name="HD" description="Hierarchical Deterministic" />
-    <shorthand name="ICU" description="International Components for Unicode" />
     <shorthand name="PREVOUT" description="Previous Output" />
     <shorthand name="PUBKEY" description="EC Public Key" />
     <shorthand name="QRCODE" description="Quick Response Code" />
@@ -20,7 +19,7 @@
     <shorthand name="SHA" description="Secure Hash Algorithm" />
     <shorthand name="SOCKS" description="Socket Secure (proxy protocol)" />
     <shorthand name="SX" description="Spesmilo Exchanger (the original version of Bitcoin Explorer)" />
-    <shorthand name="TIFF" description="Tagged Image File Format" />
+    <shorthand name="PNG" description="Portable Network Graphics" />
     <shorthand name="TX" description="Transaction" />
     <shorthand name="UTXO" description="Unspent Transaction Output" />
     <shorthand name="WIF" description="Wallet Import Format" />
@@ -43,10 +42,7 @@
   </configuration>
 
   <configuration section="server">
-    <setting name="url" type="url" default="tcp://mainnet.libbitcoin.net:9091" description="The URL of the Libbitcoin query service." />
-    <setting name="block_url" type="url" default="tcp://mainnet.libbitcoin.net:9093" description="The URL of the Libbitcoin block service." />
-    <setting name="transaction_url" type="url" default="tcp://mainnet.libbitcoin.net:9094" description="The URL of the Libbitcoin transaction service." />
-    <setting name="socks_proxy" type="authority" default="0.0.0.0" description="The address of a SOCKS5 proxy to use, defaults to none." />
+    <setting name="url" type="url" default="http://mainnet.libbitcoin.net:8181" description="The URL of the Libbitcoin server native interface." />
     <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a server, defaults to 0." />
     <setting name="connect_timeout_seconds" default="5" type="uint16_t" description="The time limit for connection establishment, defaults to 5." />
   </configuration>
@@ -226,7 +222,6 @@
     <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
     <argument name="PASSPHRASE" required="true" description="The passphrase for encrypting the private key." />
     <argument name="EC_PRIVATE_KEY" stdin="true" type="ec_private" description="The EC private key to encrypt. If not specified the key is read from STDIN." />
-    <define name="BX_EC_TO_EK_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
 
   <command symbol="ec-to-public" formerly="pubkey" output="ec_public" category="WALLET" description="Derive the EC public key of an EC private key. Defaults to the compressed public key format.">
@@ -274,28 +269,24 @@
     <argument name="PASSPHRASE" required="true" description="The passphrase that was used to generate the intermediate passphrase token." />
     <argument name="EK_PUBLIC_KEY" stdin="true" type="ek_public" description="The encrypted public key from which to extract the payment address. If not specified the key is read from STDIN." />
     <define name="BX_EK_PUBLIC_TO_ADDRESS_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
-    <define name="BX_EK_PUBLIC_TO_ADDRESS_REQUIRES_ICU" value="The command requires an ICU build." />
   </command> 
 
   <command symbol="ek-public-to-ec" output="ec_public" category="KEY_ENCRYPTION" description="Extract the EC public key of an encrypted public key (BIP38). ">
     <argument name="PASSPHRASE" required="true" description="The passphrase that was used to generate the encrypted private key." />
     <argument name="EK_PUBLIC_KEY" stdin="true" type="ek_public" description="The encrypted public key to decrypt. If not specified the key is read from STDIN." />
     <define name="BX_EK_PUBLIC_TO_EC_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
-    <define name="BX_EK_PUBLIC_TO_EC_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
 
   <command symbol="ek-to-address" output="payment_address" category="KEY_ENCRYPTION" description="Extract the payment address of an encrypted private key (BIP38).">
     <argument name="PASSPHRASE" required="true" description="The passphrase that was used to generate the intermediate passphrase token or to encrypt the encrypted private key." />
     <argument name="EK_PRIVATE_KEY" stdin="true" type="ek_private" description="The encrypted private key from which to extract the payment address.  If not specified the key is read from STDIN." />
     <define name="BX_EK_TO_ADDRESS_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
-    <define name="BX_EK_TO_ADDRESS_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
 
   <command symbol="ek-to-ec" output="ec_private" category="KEY_ENCRYPTION" description="Recover the EC private key from an encrypted private key (BIP38).">
     <argument name="PASSPHRASE" required="true" description="The passphrase that was used to encrypt the encrypted private key." />
     <argument name="EK_PRIVATE_KEY" stdin="true" type="ek_private" description="The encrypted private key to decrypt. If not specified the key is read from STDIN." />
     <define name="BX_EK_TO_EC_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
-    <define name="BX_EK_TO_EC_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
  
   <command symbol="electrum-new" output="string" multipleX="true" category="WALLET" description="Create an Electrum mnemonic from entropy. After the mnemonic is created, entropy round-trips with the electrum-decode command.">
@@ -310,7 +301,6 @@
     <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_ELECTRUM_DECODE_INVALID_WORD_COUNT" value="The word count is not 12 to 46." />
     <define name="BX_ELECTRUM_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
-    <define name="BX_ELECTRUM_DECODE_INVALID_WORDS_ICU" value="The mnemonic is not from the specified dictionary. This is not an ICU build. Ensure that the mnemonic is prenormalized." />
   </command>
 
   <command symbol="electrum-to-seed" output="base16" category="WALLET" description="Convert an Electrum dictionary-based mnemonic to a wallet seed. Entropy cannot be derived from the seed. WARNING: mnemonic should be created from properly generated entropy.">
@@ -319,8 +309,6 @@
     <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_ELECTRUM_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12 to 46." />
     <define name="BX_ELECTRUM_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
-    <define name="BX_ELECTRUM_TO_SEED_INVALID_WORDS_ICU" value="The mnemonic is not from the specified dictionary. This is not an ICU build, so ensure that the mnemonic is prenormalized. Non-dictionary mnemonics are not supported." />
-    <define name="BX_ELECTRUM_TO_SEED_PASSPHRASE_ICU" value="This is not an ICU build, so the passphrase is limited to ascii characters." />
   </command>
 
   <command symbol="fetch-balance" stub="true" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
@@ -329,10 +317,11 @@
     <define name="BX_FETCH_BALANCE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="fetch-block" stub="true" category="ONLINE" output="block" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-block" category="ONLINE" output="block" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
-    <define name="BX_FETCH_BLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_FETCH_BLOCK_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-block-hashes" stub="true" category="ONLINE" output="hash_list" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
@@ -400,21 +389,23 @@
     <define name="BX_GET_FILTER_HEADERS_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="fetch-header" stub="true" category="ONLINE" output="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-header" category="ONLINE" output="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
-    <define name="BX_FETCH_HEADER_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_FETCH_HEADER_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-block-height" stub="true" category="ONLINE" output="uint32_t" network="true" description="Get the block height from the specified hash. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-block-height" category="ONLINE" output="uint32_t" network="true" description="Get the block height from the specified hash. Requires a Libbitcoin server connection.">
     <argument name="hash" stdin="true" type="hash256" description="The Base16 block hash."/>
-    <define name="BX_FETCH_BLOCK_HEIGHT_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_FETCH_BLOCK_HEIGHT_MISSING" value="The server response contained no height." />
+    <define name="BX_FETCH_BLOCK_HEIGHT_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-height" stub="true" formerly="fetch-last-height" output="uint32_t" category="ONLINE" network="true" description="Get the last block height. Requires a Libbitcoin server connection.">
-    <argument name="server-url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
-    <argument name="public-key" description="The public key of the Libbitcoin server. If not specified the key is obtained from configuration settings or defaults."/>
-    <define name="BX_FETCH_HEIGHT_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  <command symbol="fetch-height" formerly="fetch-last-height" output="uint32_t" category="ONLINE" network="true" description="Get the last block height. Requires a Libbitcoin server connection.">
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_FETCH_HEIGHT_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-history" stub="true" output="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a payment key. Requires a Libbitcoin server connection.">
@@ -428,15 +419,18 @@
     <define name="BX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="fetch-tx" stub="true" formerly="fetch-transaction" output="transaction" category="ONLINE" network="true" description="Get a transaction by its hash. Requires a Libbitcoin server connection.">
-    <option name="witness" description="Include witness as applicable. Requires a version 3.4 or later Libbitcoin server connection." />
+  <command symbol="fetch-tx" formerly="fetch-transaction" output="transaction" category="ONLINE" network="true" description="Get a transaction by its hash. Requires a Libbitcoin server connection.">
+    <option name="witness" description="Include witness as applicable." />
     <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash of the transaction to get. If not specified the transaction hash is read from STDIN." />
-    <define name="BX_FETCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_FETCH_TX_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-tx-index" stub="true" formerly="fetch-transaction-index" output="string" multipleX="true" category="ONLINE" network="true" description="Get the block height and index of a transaction. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-tx-index" formerly="fetch-transaction-index" output="string" multipleX="true" category="ONLINE" network="true" description="Get the block height and index of a transaction. Requires a Libbitcoin server connection.">
     <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash of the transaction index to get. If not specified the transaction hash is read from STDIN." />
-    <define name="BX_FETCH_TX_INDEX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_FETCH_TX_INDEX_UNCONFIRMED" value="The transaction is not confirmed." />
+    <define name="BX_FETCH_TX_INDEX_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-utxo" stub="true" formerly="get-utxo" output="output" multipleX="true" category="ONLINE" network="true" description="Get enough unspent transaction outputs from a payment address to pay a number of satoshi. Requires a Libbitcoin server connection.">
@@ -566,7 +560,6 @@
     <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12, 15, 18, 21, or 24 words that that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_MNEMONIC_DECODE_INVALID_WORD_COUNT" value="The word count is not 12, 15, 18, 21, or 24." />
     <define name="BX_MNEMONIC_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
-    <define name="BX_MNEMONIC_DECODE_INVALID_WORDS_ICU" value="The mnemonic is not from the specified dictionary. This is not an ICU build. Ensure that the mnemonic is prenormalized." />
   </command>
 
   <command symbol="mnemonic-encode" output="string" multipleX="true" category="WALLET" description="Convert numeric entropy to its BIP39 mnemonic.">
@@ -581,18 +574,16 @@
     <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_MNEMONIC_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12, 15, 18, 21, or 24." />
     <define name="BX_MNEMONIC_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
-    <define name="BX_MNEMONIC_TO_SEED_INVALID_WORDS_ICU" value="The mnemonic is not from the specified dictionary. This is not an ICU build, so ensure that the mnemonic is prenormalized. Non-dictionary mnemonics are not supported." />
-    <define name="BX_MNEMONIC_TO_SEED_PASSPHRASE_ICU" value="This is not an ICU build, so the passphrase is limited to ascii characters." />
   </command>
 
-  <command symbol="qrcode" category="WALLET" output="bytes" description="Create a square QRCODE TIFF file for a payment address.">
+  <command symbol="qrcode" category="WALLET" output="bytes" description="Create a square QRCODE PNG file for a payment address.">
     <option name="margin" type="uint16_t" default="2" description="The pixel width of the QRCODE margin, defaults to 2." />
     <option name="pixels" type="uint16_t" default="8" description="The pixel width of the QRCODE modules, defaults to 8." />
     <option name="scheme" type="string" default="bitcoin" description="The URI scheme of the QRCODE data, defaults to 'bitcoin'." />
     <option name="version" type="uint8_t" description="The version of the QRCODE, defaults to 0 which is the minimum size." />
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" required="true" description="The payment address. If not specified the address is read from STDIN."/>
     <define name="BX_QRCODE_MINIMUM_SIZE" value="The pixel size of modules must be greater than 0. " />
-    <define name="BX_QRCODE_MAXIMUM_SIZE" value="The image is too large for uncompressed TIFF encoding." />
+    <define name="BX_QRCODE_MAXIMUM_SIZE" value="The image is too large for PNG encoding." />
     <define name="BX_QRCODE_MAXIMUM_VERSION" value="The version exceeds the maximum value of 40." />
   </command>
 
@@ -712,7 +703,6 @@
     <define name="BX_TOKEN_NEW_MAXIMUM_LOT" value="The lot exceeds the maximum value of 1048575." />
     <define name="BX_TOKEN_NEW_MAXIMUM_SEQUENCE" value="The sequence exceeds the maximum value of 4095." />
     <define name="BX_TOKEN_NEW_SHORT_SALT" value="The salt is less than 32 bits long." />
-    <define name="BX_TOKEN_NEW_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
 
   <command symbol="tx-decode" output="transaction" category="TRANSACTION" description="Decode a Base16 transaction.">

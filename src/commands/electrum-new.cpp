@@ -71,7 +71,6 @@ console_result electrum_new::invoke(std::ostream&, std::ostream&)
     ////output << join(mnemonic) << std::endl;
     ////return console_result::okay;
 
-    ////error << BX_ELECTRUM_REQUIRES_ICU << std::endl;
     return console_result::failure;
 }
 

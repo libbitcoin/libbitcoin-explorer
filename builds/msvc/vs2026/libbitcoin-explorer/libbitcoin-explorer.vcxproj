@@ -107,6 +107,7 @@
     <ClInclude Include="..\..\..\..\build\include\bitcoin\explorer\version.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\client.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-embed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-encode.cpp" />
@@ -245,6 +246,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\client.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\command.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-embed.hpp" />

@@ -21,14 +21,15 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(stub)
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(fetch_tx_index__invoke)
 
-BOOST_AUTO_TEST_CASE(fetch_tx_index__invoke__always__failure_error)
+BOOST_AUTO_TEST_CASE(fetch_tx_index__invoke__unreachable__failure_error)
 {
     BX_DECLARE_COMMAND(fetch_tx_index);
+    command.set_server_url_setting({ "http://127.0.0.1:1" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_FETCH_TX_INDEX_NOT_IMPLEMENTED "\n");
+    BOOST_REQUIRE(!error.str().empty());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

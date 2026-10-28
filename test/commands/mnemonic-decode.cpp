@@ -89,9 +89,7 @@
 ////    command.set_language_option({ "es" });
 ////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));
-////#ifdef WITH_ICU
 ////    BX_REQUIRE_OUTPUT(to_normal_nfkd_form("previo humilde actuar jarabe tabique ahorro tope pulpo anís señal lavar bahía") + "\n");
-////#endif
 ////}
 ////
 ////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_fr__okay_output)

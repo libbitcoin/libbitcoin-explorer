@@ -24,7 +24,6 @@
 ////BOOST_AUTO_TEST_SUITE(offline)
 ////BOOST_AUTO_TEST_SUITE(electrum_decode__invoke)
 ////
-////#ifdef WITH_ICU
 ////
 ////BOOST_AUTO_TEST_CASE(electrum_decode__invoke__17_bytes__okay_output)
 ////{
@@ -62,7 +61,6 @@
 ////    BX_REQUIRE_OUTPUT("divide february web hire limb run reject nuclear army zone brick below public ladder deer below again cluster divorce ketchup aerobic flee lonely absent\n");
 ////}
 ////
-////#endif
 ////
 ////BOOST_AUTO_TEST_SUITE_END()
 ////BOOST_AUTO_TEST_SUITE_END()

@@ -23,8 +23,6 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(ek_public_to_ec__invoke)
 
-#ifdef WITH_ICU
-
 // Wiki Examples
 
 BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_1_lot_sequence__okay)
@@ -89,17 +87,6 @@ BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_7_testnet_uncompressed__ok
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("047b49ab1aadf965a885932451c87de4265799cb29749f5713c2f8ace9d7e838753b15f90fb4032de40029a80c45bf9d8fc8653d81b4f18d36464840ddce50a4f9\n");
 }
-
-#else // WITH_ICU
-
-BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__not_icu__failure_error)
-{
-    BX_DECLARE_COMMAND(ek_to_ec);
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EK_PUBLIC_TO_EC_REQUIRES_ICU "\n");
-}
-
-#endif // !WITH_ICU
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

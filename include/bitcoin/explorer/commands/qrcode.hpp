@@ -51,7 +51,7 @@ namespace commands {
 #define BX_QRCODE_MINIMUM_SIZE \
     "The pixel size of modules must be greater than 0. "
 #define BX_QRCODE_MAXIMUM_SIZE \
-    "The image is too large for uncompressed TIFF encoding."
+    "The image is too large for PNG encoding."
 #define BX_QRCODE_MAXIMUM_VERSION \
     "The version exceeds the maximum value of 40."
 
@@ -99,7 +99,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a square QRCODE TIFF file for a payment address.";
+        return "Create a square QRCODE PNG file for a payment address.";
     }
 
     /**

@@ -28,9 +28,8 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::config;
 
-console_result ek_to_ec::invoke(std::ostream&, std::ostream& error)
+console_result ek_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
-#ifdef WITH_ICU
     const auto& passphrase = get_passphrase_argument();
     const auto& key = get_ek_private_key_argument();
 
@@ -45,10 +44,6 @@ console_result ek_to_ec::invoke(std::ostream&, std::ostream& error)
 
     output << base16(secret) << std::endl;
     return console_result::okay;
-#else
-    error << BX_EK_TO_EC_REQUIRES_ICU << std::endl;
-    return console_result::failure;
-#endif
 }
 
 } //namespace commands

@@ -31,11 +31,9 @@ using namespace bc::system::wallet;
 
 ////<define name="BX_ELECTRUM_DECODE_INVALID_WORD_COUNT" value="The word count is not 12 to 46." />
 ////<define name="BX_ELECTRUM_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
-////<define name="BX_ELECTRUM_DECODE_INVALID_WORDS_ICU" value="The mnemonic is not from the specified dictionary. This is not an ICU build. Ensure that the mnemonic is prenormalized." />
 
 console_result electrum_decode::invoke(std::ostream&, std::ostream&)
 {
-////#ifdef WITH_ICU
 ////    // Requires a seed of at least 17 bytes (136 bits).
 ////    static const size_t minimum_electrum_words = 12;
 ////
@@ -66,10 +64,6 @@ console_result electrum_decode::invoke(std::ostream&, std::ostream&)
 ////
 ////    output << join(mnemonic) << std::endl;
 ////    return console_result::okay;
-////#else
-////    error << BX_ELECTRUM_REQUIRES_ICU << std::endl;
-////    return console_result::failure;
-////#endif
 
     return console_result::failure;
 }

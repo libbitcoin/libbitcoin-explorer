@@ -28,6 +28,12 @@ doc_DATA = \
     NEWS \
     README
 
+# files => ${bashcompletiondir}
+#------------------------------------------------------------------------------
+bashcompletiondir = ${datadir}/bash-completion/completions
+dist_bashcompletion_DATA = \
+    ${srcdir}/../../data/bx
+
 # Libraries.
 #==============================================================================
 # Target library 'src/libbitcoin-explorer.la'
@@ -48,6 +54,7 @@ src_libbitcoin_explorer_la_LIBADD = \
     ${libbitcoin_system_LIBS}
 
 src_libbitcoin_explorer_la_SOURCES = \
+    ${srcdir}/../../src/client.cpp \
     ${srcdir}/../../src/dispatch.cpp \
     ${srcdir}/../../src/display.cpp \
     ${srcdir}/../../src/generated.cpp \
@@ -194,6 +201,7 @@ include_bitcoin_explorerdir = \
     ${includedir}/bitcoin/explorer
 
 include_bitcoin_explorer_HEADERS = \
+    ${srcdir}/../../include/bitcoin/explorer/client.hpp \
     ${srcdir}/../../include/bitcoin/explorer/command.hpp \
     ${srcdir}/../../include/bitcoin/explorer/define.hpp \
     ${srcdir}/../../include/bitcoin/explorer/dispatch.hpp \
@@ -426,6 +434,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/electrum-new.cpp \
     ${srcdir}/../../test/commands/electrum-to-seed.cpp \
     ${srcdir}/../../test/commands/fetch-balance.cpp \
+    ${srcdir}/../../test/commands/fetch-block-height.cpp \
     ${srcdir}/../../test/commands/fetch-block.cpp \
     ${srcdir}/../../test/commands/fetch-header.cpp \
     ${srcdir}/../../test/commands/fetch-height.cpp \
