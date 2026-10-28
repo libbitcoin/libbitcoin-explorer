@@ -30,7 +30,6 @@ using namespace bc::system::wallet;
 
 ////<define name="BX_MNEMONIC_DECODE_INVALID_WORD_COUNT" value="The word count is not 12, 15, 18, 21, or 24." />
 ////<define name="BX_MNEMONIC_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
-////<define name="BX_MNEMONIC_DECODE_INVALID_WORDS_ICU" value="The mnemonic is not from the specified dictionary. This is not an ICU build. Ensure that the mnemonic is prenormalized." />
 
 console_result mnemonic_decode::invoke(std::ostream&,
     std::ostream&)

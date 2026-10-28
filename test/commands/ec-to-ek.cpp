@@ -23,8 +23,6 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(ec_to_ek__invoke)
 
-#ifdef WITH_ICU
-
 // BIP-38 Vectors
 
 BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__vector_0_uncompressed__okay)
@@ -132,17 +130,6 @@ BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__example_7_testnet_uncompressed__okay)
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("8EsMUV3Z5A9m8eA28nSYECHAmKmy4YsyCYpGNvzHocFJBFhVYZARNfrfnt\n");
 }
-
-#else // WITH_ICU
-
-BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__not_icu__failure_error)
-{
-    BX_DECLARE_COMMAND(ec_to_ek);
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_TO_EK_REQUIRES_ICU "\n");
-}
-
-#endif // !WITH_ICU
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

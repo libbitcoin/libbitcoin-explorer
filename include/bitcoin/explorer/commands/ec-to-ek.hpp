@@ -46,12 +46,6 @@ namespace explorer {
 namespace commands {
 
 /**
- * Various localizable strings.
- */
-#define BX_EC_TO_EK_REQUIRES_ICU \
-    "The command requires an ICU build."
-
-/**
  * Class to implement the ec-to-ek command.
  */
 class BCX_API ec_to_ek

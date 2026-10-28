@@ -28,10 +28,9 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result ek_public_to_ec::invoke(std::ostream&,
+console_result ek_public_to_ec::invoke(std::ostream& output,
     std::ostream& error)
 {
-#ifdef WITH_ICU
     const auto& passphrase = get_passphrase_argument();
     const auto& key = get_ek_public_key_argument();
 
@@ -46,10 +45,6 @@ console_result ek_public_to_ec::invoke(std::ostream&,
 
     output << ec_public(point, compressed) << std::endl;
     return console_result::okay;
-#else
-    error << BX_EK_PUBLIC_TO_EC_REQUIRES_ICU << std::endl;
-    return console_result::failure;
-#endif
 }
 
 } //namespace commands

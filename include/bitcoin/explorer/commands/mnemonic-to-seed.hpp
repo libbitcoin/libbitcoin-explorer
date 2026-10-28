@@ -52,10 +52,6 @@ namespace commands {
     "The word count is not 12, 15, 18, 21, or 24."
 #define BX_MNEMONIC_TO_SEED_INVALID_WORDS \
     "The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported."
-#define BX_MNEMONIC_TO_SEED_INVALID_WORDS_ICU \
-    "The mnemonic is not from the specified dictionary. This is not an ICU build, so ensure that the mnemonic is prenormalized. Non-dictionary mnemonics are not supported."
-#define BX_MNEMONIC_TO_SEED_PASSPHRASE_ICU \
-    "This is not an ICU build, so the passphrase is limited to ascii characters."
 
 /**
  * Class to implement the mnemonic-to-seed command.

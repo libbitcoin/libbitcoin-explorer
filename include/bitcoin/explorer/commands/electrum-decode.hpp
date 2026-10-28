@@ -52,8 +52,6 @@ namespace commands {
     "The word count is not 12 to 46."
 #define BX_ELECTRUM_DECODE_INVALID_WORDS \
     "The mnemonic is not from the specified dictionary."
-#define BX_ELECTRUM_DECODE_INVALID_WORDS_ICU \
-    "The mnemonic is not from the specified dictionary. This is not an ICU build. Ensure that the mnemonic is prenormalized."
 
 /**
  * Class to implement the electrum-decode command.

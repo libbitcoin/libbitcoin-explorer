@@ -50,8 +50,6 @@ namespace commands {
  */
 #define BX_EK_TO_ADDRESS_INVALID_PASSPHRASE \
     "The passphrase is incorrect."
-#define BX_EK_TO_ADDRESS_REQUIRES_ICU \
-    "The command requires an ICU build."
 
 /**
  * Class to implement the ek-to-address command.
