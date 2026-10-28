@@ -33,7 +33,7 @@
 // command        : /config utility
 // dispatch       : define
 // display        : command
-// /commands      : command                        [generated.hpp]
+// /commands      : command
 // generated      : /commands
 // json           : define
 // parser         : command
