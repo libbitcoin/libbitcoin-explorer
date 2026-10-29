@@ -24,7 +24,6 @@
 
 using namespace bc::system;
 using namespace boost::program_options;
-using namespace boost::system;
 
 namespace libbitcoin {
 namespace explorer {
