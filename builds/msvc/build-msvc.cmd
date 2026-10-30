@@ -622,9 +622,9 @@ if "!libbitcoin_explorer_TAG!" == "" (
 :msg
     if "%~1" == "" (
         echo.
-    ) else (
-        echo %~1
+        exit /b !ERRORLEVEL!
     )
+    echo %~1
     exit /b !ERRORLEVEL!
 
 :msg_empty
@@ -632,9 +632,10 @@ if "!libbitcoin_explorer_TAG!" == "" (
     exit /b !ERRORLEVEL!
 
 :msg_verbose
-    if "!DISPLAY_VERBOSE!" == "yes" (
-        echo [96m%~1[0m
+    if not "!DISPLAY_VERBOSE!" == "yes" (
+        exit /b !ERRORLEVEL!
     )
+    echo [96m%~1[0m
     exit /b !ERRORLEVEL!
 
 :msg_success
