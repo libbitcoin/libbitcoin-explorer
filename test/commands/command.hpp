@@ -83,6 +83,6 @@ using namespace bc::system;
 
 // exceptions
 #define BX_REQUIRE_THROW_INVALID_OPTION_VALUE(expression) \
-    BOOST_REQUIRE_THROW(expression, po::invalid_option_value)
+    BOOST_REQUIRE_THROW(expression, istream_exception)
 
 #endif

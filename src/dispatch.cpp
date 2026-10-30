@@ -29,8 +29,7 @@ namespace libbitcoin {
 namespace explorer {
 
 using namespace bc::system;
-using namespace boost;
-using namespace boost::program_options;
+using namespace bc::system::options;
 
 // Swap Unicode input stream for binary stream in Windows builds.
 static std::istream& get_command_input([[maybe_unused]] command& command,

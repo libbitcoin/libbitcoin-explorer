@@ -172,7 +172,6 @@ public:
 
     /**
      * Load command option definitions.
-     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded option definitions.
      */
     virtual options_metadata& load_options()
@@ -275,7 +274,7 @@ public:
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
-        system::config::printer help(options, arguments, BX_PROGRAM_NAME,
+        system::options::printer help(options, arguments, BX_PROGRAM_NAME,
             description(), name());
         help.initialize();
         help.commandline(output);

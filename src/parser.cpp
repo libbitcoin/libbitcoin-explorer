@@ -23,7 +23,7 @@
 #include <bitcoin/system.hpp>
 
 using namespace bc::system;
-using namespace boost::program_options;
+using namespace bc::system::options;
 
 namespace libbitcoin {
 namespace explorer {
@@ -65,7 +65,7 @@ options_metadata parser::load_environment()
 void parser::load_command_variables(std::istream& input, int argc,
     const char* argv[])
 {
-    system::config::parser::load_command_variables(argc, argv);
+    system::options::parser::load_command_variables(argc, argv);
 
     // Don't load rest if help is specified.
     // For variable with stdin or file fallback load the input stream.
@@ -102,9 +102,8 @@ bool parser::parse(std::string& out_error, std::istream& input,
             help_ = true;
         }
     }
-    catch (const po::error& e)
+    catch (const option_exception& e)
     {
-        // This is obtained from boost, which circumvents our localization.
         out_error = e.what();
         return false;
     }

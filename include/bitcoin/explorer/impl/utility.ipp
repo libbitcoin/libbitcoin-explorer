@@ -19,7 +19,7 @@
 #ifndef BX_UTILITY_IPP
 #define BX_UTILITY_IPP
 
-#include <boost/any.hpp>
+#include <any>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -44,8 +44,7 @@ void load_path(Value& parameter, const std::string& name,
         return;
 
     // Get the argument value as a string.
-    // boost: overloads taking an any pointer do not throw.
-    const auto path = boost::any_cast<std::string>(variable->second.value());
+    const auto path = std::any_cast<std::string>(variable->second.value());
 
     // The path is the stdio sentinal, so clear parameter and don't read file.
     if (path == BX_STDIO_PATH_SENTINEL)

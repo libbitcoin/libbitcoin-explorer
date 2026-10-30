@@ -59,7 +59,7 @@ namespace libbitcoin {
 namespace explorer {
 
 namespace ph = std::placeholders;
-namespace po = boost::program_options;
+namespace po = bc::system::options;
 
 typedef std::map<std::string, std::string> settings_list;
 typedef bc::system::chain::transaction tx_type;
