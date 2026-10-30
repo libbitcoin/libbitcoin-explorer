@@ -55,6 +55,7 @@ src_libbitcoin_explorer_la_LIBADD = \
 
 src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/client.cpp \
+    ${srcdir}/../../src/define.cpp \
     ${srcdir}/../../src/dispatch.cpp \
     ${srcdir}/../../src/display.cpp \
     ${srcdir}/../../src/generated.cpp \
