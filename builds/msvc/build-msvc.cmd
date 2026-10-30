@@ -23,7 +23,7 @@ REM --enable-sse41              Use SSE4.1 hardware instructions.
 REM --enable-sha                Use ARM SHA1/SHA256 Extensions.
 REM --enable-sha3               Use ARM SHA3 Extensions for SHA512.
 REM --enable-aes                Use ARM AES and PMULL Extensions.
-REM --enable-cuda               Use cuda (gpu) batch signature verification (inert on macOS).
+REM --[enable/disable]-cuda     Use cuda (gpu) batch signature verification (inert on macOS).
 REM --build-config config       Build configuration.
 REM --build-platform platform   Build platform.
 REM --build-version version     Build MSVC version.
@@ -31,6 +31,8 @@ REM --build-mode mode           Determines action on target.
 REM                               Default: Rebuild
 REM --build-symbols mode        Determines treatment of symbols.
 REM                               Values: { default, disabled, public-only }
+REM --build-compiler compiler   Determines the compiler.
+REM                               Values: { msvc, clang }
 REM --build-src-dir path        Location for sources.
 REM                               Default: !CD!
 REM --build-full-repositories   Sync full github repositories.
@@ -144,6 +146,18 @@ if "!libbitcoin_explorer_TAG!" == "" (
         call :msg_verbose "BUILD_SYMBOLS 'public-only'."
     ) else (
         call :msg_error "BUILD_SYMBOLS value '!BUILD_SYMBOLS!' unrecognized."
+        call :help
+        exit /b 1
+    )
+
+    if "!BUILD_COMPILER!" == "" (
+        call :msg_verbose "BUILD_COMPILER not defined or empty, defaulting to 'msvc'."
+    ) else if "!BUILD_COMPILER!" == "msvc" (
+        call :msg_verbose "BUILD_COMPILER 'msvc'."
+    ) else if "!BUILD_COMPILER!" == "clang" (
+        call :msg_verbose "BUILD_COMPILER 'clang'."
+    ) else (
+        call :msg_error "BUILD_COMPILER value '!BUILD_COMPILER!' unrecognized."
         call :help
         exit /b 1
     )
@@ -289,6 +303,12 @@ if "!libbitcoin_explorer_TAG!" == "" (
         ) else (
             set "libbitcoin-system_PARAMS=!libbitcoin-system_PARAMS! /p:Option-cuda=true"
         )
+    ) else if "%~1" == "--disable-cuda" (
+        if "!libbitcoin-system_PARAMS!" == "" (
+            set "libbitcoin-system_PARAMS=/p:Option-cuda=false"
+        ) else (
+            set "libbitcoin-system_PARAMS=!libbitcoin-system_PARAMS! /p:Option-cuda=false"
+        )
     ) else if "%~1" == "--build-config" (
         set "BUILD_CONFIG=%~2"
         shift
@@ -303,6 +323,9 @@ if "!libbitcoin_explorer_TAG!" == "" (
         shift
     ) else if "%~1" == "--build-symbols" (
         set "BUILD_SYMBOLS=%~2"
+        shift
+    ) else if "%~1" == "--build-compiler" (
+        set "BUILD_COMPILER=%~2"
         shift
     ) else if "%~1" == "--build-src-dir" (
         set "BUILD_SRC_DIR=%~2"
@@ -462,6 +485,11 @@ if "!libbitcoin_explorer_TAG!" == "" (
         set "SYMBOLS_ARG=/p:DebugSymbols=false "
     )
 
+    set "COMPILER_ARG="
+    if "!BUILD_COMPILER!" == "clang" (
+        set "COMPILER_ARG=/p:Option-clang=true "
+    )
+
     call :push_directory "!BUILD_SRC_DIR!\%PROJECT%\%RELATIVE_PATH%\!BUILD_VERSION!"
     if %ERRORLEVEL% neq 0 (
         exit /b %ERRORLEVEL%
@@ -472,10 +500,10 @@ if "!libbitcoin_explorer_TAG!" == "" (
         exit /b %ERRORLEVEL%
     )
 
-    !MSBUILD_EXE! /verbosity:!MSBUILD_VERBOSE! !SYMBOLS_ARG!/p:Platform=!BUILD_PLATFORM! /p:Configuration=!BUILD_CONFIG! /p:PreferredToolArchitecture=x64 %TARGET_ARG% %PROJECT%.sln /p:PreBuildEventUseInBuild=false /p:PostBuildEventUseInBuild=false !UNHANDLED_ARGS! !ADDITIONAL_PARAMS!
+    !MSBUILD_EXE! /verbosity:!MSBUILD_VERBOSE! !SYMBOLS_ARG!!COMPILER_ARG!/p:Platform=!BUILD_PLATFORM! /p:Configuration=!BUILD_CONFIG! /p:PreferredToolArchitecture=x64 %TARGET_ARG% %PROJECT%.sln /p:PreBuildEventUseInBuild=false /p:PostBuildEventUseInBuild=false !UNHANDLED_ARGS! !ADDITIONAL_PARAMS!
 
     if %ERRORLEVEL% neq 0 (
-        call :msg_error "!MSBUILD_EXE! /verbosity:!MSBUILD_VERBOSE! !SYMBOLS_ARG!/p:Platform=!BUILD_PLATFORM! /p:Configuration=!BUILD_CONFIG! /p:PreferredToolArchitecture=x64 %TARGET_ARG% %PROJECT%.sln /p:PreBuildEventUseInBuild=false /p:PostBuildEventUseInBuild=false !UNHANDLED_ARGS! !ADDITIONAL_PARAMS!"
+        call :msg_error "!MSBUILD_EXE! /verbosity:!MSBUILD_VERBOSE! !SYMBOLS_ARG!!COMPILER_ARG!/p:Platform=!BUILD_PLATFORM! /p:Configuration=!BUILD_CONFIG! /p:PreferredToolArchitecture=x64 %TARGET_ARG% %PROJECT%.sln /p:PreBuildEventUseInBuild=false /p:PostBuildEventUseInBuild=false !UNHANDLED_ARGS! !ADDITIONAL_PARAMS!"
         call :pop_directory
         exit /b 1
     )
@@ -507,6 +535,7 @@ if "!libbitcoin_explorer_TAG!" == "" (
     call :msg "BUILD_USE_LOCAL_SRC             : !BUILD_USE_LOCAL_SRC!"
     call :msg "BUILD_MODE                      : !BUILD_MODE!"
     call :msg "BUILD_SYMBOLS                   : !BUILD_SYMBOLS!"
+    call :msg "BUILD_COMPILER                  : !BUILD_COMPILER!"
     call :msg "DISPLAY_VERBOSE                 : !DISPLAY_VERBOSE!"
     call :msg "DISPLAY_HELP                    : !DISPLAY_HELP!"
     exit /b %ERRORLEVEL%
@@ -540,7 +569,7 @@ if "!libbitcoin_explorer_TAG!" == "" (
     call :msg "--enable-sha                Use ARM SHA1/SHA256 Extensions."
     call :msg "--enable-sha3               Use ARM SHA3 Extensions for SHA512."
     call :msg "--enable-aes                Use ARM AES and PMULL Extensions."
-    call :msg "--enable-cuda               Use cuda (gpu) batch signature verification (inert on macOS)."
+    call :msg "--[enable/disable]-cuda     Use cuda (gpu) batch signature verification (inert on macOS)."
     call :msg "--build-config config       Build configuration."
     call :msg "--build-platform platform   Build platform."
     call :msg "--build-version version     Build MSVC version."
@@ -548,6 +577,8 @@ if "!libbitcoin_explorer_TAG!" == "" (
     call :msg "                              Default: Rebuild"
     call :msg "--build-symbols mode        Determines treatment of symbols."
     call :msg "                              Values: { default, disabled, public-only }"
+    call :msg "--build-compiler compiler   Determines the compiler."
+    call :msg "                              Values: { msvc, clang }"
     call :msg "--build-src-dir path        Location for sources."
     call :msg "                              Default: !CD!"
     call :msg "--build-full-repositories   Sync full github repositories."
@@ -616,9 +647,9 @@ if "!libbitcoin_explorer_TAG!" == "" (
 :msg
     if "%~1" == "" (
         echo.
-    ) else (
-        echo %~1
+        exit /b !ERRORLEVEL!
     )
+    echo %~1
     exit /b !ERRORLEVEL!
 
 :msg_empty
@@ -626,9 +657,10 @@ if "!libbitcoin_explorer_TAG!" == "" (
     exit /b !ERRORLEVEL!
 
 :msg_verbose
-    if "!DISPLAY_VERBOSE!" == "yes" (
-        echo [96m%~1[0m
+    if not "!DISPLAY_VERBOSE!" == "yes" (
+        exit /b !ERRORLEVEL!
     )
+    echo [96m%~1[0m
     exit /b !ERRORLEVEL!
 
 :msg_success

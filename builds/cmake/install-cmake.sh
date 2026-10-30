@@ -58,6 +58,7 @@
 #                                Default: git clone --depth 1 --single-branch
 # --build-post-install-clean   Clean dependencies after installation (saves space).
 # --build-skip-tests           Skip test compilation and execution.
+# --build-skip-test-run        Compile tests without executing them.
 # --build-parallel=<int>       Number of jobs to run simultaneously.
 #                                Default: supported platforms use nproc/sysctl
 # --build-use-local-src        Use existing sources in relevant paths.
@@ -124,6 +125,7 @@ main()
             (--build-full-repositories)     BUILD_FULL_REPOSITORIES="yes";;
             (--build-post-install-clean)    BUILD_POST_INSTALL_CLEAN="yes";;
             (--build-skip-tests)            BUILD_SKIP_TESTS="yes";;
+            (--build-skip-test-run)         BUILD_SKIP_TEST_RUN="yes";;
             (--build-parallel=*)            PARALLEL="${OPTION#*=}";;
             (--build-use-local-src)         BUILD_USE_LOCAL_SRC="yes";;
             (--prefix=*)                    PREFIX="${OPTION#*=}";;
@@ -151,6 +153,7 @@ main()
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/#--build-full-repositories/}")
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/#--build-post-install-clean/}")
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/#--build-skip-tests/}")
+    CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/#--build-skip-test-run/}")
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/#--build-parallel=*/}")
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/#--build-use-local-src/}")
     CONFIGURE_OPTIONS=("${CONFIGURE_OPTIONS[@]/#--prefix=*/}")
@@ -538,7 +541,7 @@ main()
         local SAVE_CPPFLAGS="${CPPFLAGS}"
         export CPPFLAGS="${CPPFLAGS} ${libbitcoin_explorer_FLAGS[@]}"
         build_cmake "libbitcoin-explorer" "builds/cmake" "." "${PARALLEL}" "${libbitcoin_explorer_OPTIONS[@]}" "${CONFIGURE_OPTIONS_CMAKE[@]}"
-        if ! [[ "${BUILD_SKIP_TESTS}" == "yes" ]]; then
+        if ! [[ "${BUILD_SKIP_TESTS}" == "yes" || "${BUILD_SKIP_TEST_RUN}" == "yes" ]]; then
             test_cmake "libbitcoin-explorer" "." "${PARALLEL}"
         fi
         install_cmake "libbitcoin-explorer" "."
@@ -968,6 +971,7 @@ display_build_variables()
     msg "BUILD_POST_INSTALL_CLEAN        : ${BUILD_POST_INSTALL_CLEAN}"
     msg "BUILD_USE_LOCAL_SRC             : ${BUILD_USE_LOCAL_SRC}"
     msg "BUILD_SKIP_TESTS                : ${BUILD_SKIP_TESTS}"
+    msg "BUILD_SKIP_TEST_RUN             : ${BUILD_SKIP_TEST_RUN}"
     msg "PARALLEL                        : ${PARALLEL}"
     msg "PREFIX                          : ${PREFIX}"
     msg "DISPLAY_VERBOSE                 : ${DISPLAY_VERBOSE}"
@@ -1067,6 +1071,7 @@ help()
     msg "                               Default: git clone --depth 1 --single-branch"
     msg "--build-post-install-clean   Clean dependencies after installation (saves space)."
     msg "--build-skip-tests           Skip test compilation and execution."
+    msg "--build-skip-test-run        Compile tests without executing them."
     msg "--build-parallel=<int>       Number of jobs to run simultaneously."
     msg "                               Default: supported platforms use nproc/sysctl"
     msg "--build-use-local-src        Use existing sources in relevant paths."
