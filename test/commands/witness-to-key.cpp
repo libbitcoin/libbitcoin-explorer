@@ -21,8 +21,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(witness_to_key__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(witness_to_key__invoke)
 
 using namespace bc::explorer;
 using namespace bc::system::wallet;
@@ -39,7 +39,7 @@ const std::vector<test_vector> test_vectors
     { "tb1qq82ajthl5mlm50h6x70esvxs7atp3vfnjwp8z5kjdepsjqqw3zcsj5rufw", "edd374bd7ae9fe2c2cb9f20adbc675724fbb20b6f40b995ad7c9deb617d09d7b\n" }
 };
 
-BOOST_AUTO_TEST_CASE(witness_to_key__invoke__test_list__valid_expected)
+BC_AUTO_TEST_CASE(witness_to_key__invoke__test_list__valid_expected)
 {
     for (const auto& test: test_vectors)
     {
@@ -50,5 +50,5 @@ BOOST_AUTO_TEST_CASE(witness_to_key__invoke__test_list__valid_expected)
     }
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

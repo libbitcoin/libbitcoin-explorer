@@ -21,10 +21,10 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(tx_encode__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(tx_encode__invoke)
 
-BOOST_AUTO_TEST_CASE(tx_encode__invoke__locktime_conflict__locktime_conflict_error)
+BC_AUTO_TEST_CASE(tx_encode__invoke__locktime_conflict__locktime_conflict_error)
 {
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(1);
@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__locktime_conflict__locktime_conflict_err
     BX_REQUIRE_ERROR(BX_TX_ENCODE_LOCKTIME_CONFLICT "\n");
 }
 
-BOOST_AUTO_TEST_CASE(tx_encode__invoke__example1__expected_output)
+BC_AUTO_TEST_CASE(tx_encode__invoke__example1__expected_output)
 {
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(1);
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__example1__expected_output)
 }
 
 // Vector: script from script-decode
-BOOST_AUTO_TEST_CASE(tx_encode__invoke__example3__okay_output)
+BC_AUTO_TEST_CASE(tx_encode__invoke__example3__okay_output)
 {
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(1);
@@ -56,5 +56,5 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__example3__okay_output)
     BX_REQUIRE_OUTPUT("0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee09701000000000700000001f4010000000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000" "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

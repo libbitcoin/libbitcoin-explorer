@@ -21,11 +21,11 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(hd_new__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(hd_new__invoke)
 
 // github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-1
-BOOST_AUTO_TEST_CASE(hd_new__invoke__vector_1_master__okay_output)
+BC_AUTO_TEST_CASE(hd_new__invoke__vector_1_master__okay_output)
 {
     BX_DECLARE_COMMAND(hd_new);
     command.set_version_option(76066276);
@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__vector_1_master__okay_output)
 }
 
 // github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-2
-BOOST_AUTO_TEST_CASE(hd_new__invoke__vector_2_master__okay_output)
+BC_AUTO_TEST_CASE(hd_new__invoke__vector_2_master__okay_output)
 {
     BX_DECLARE_COMMAND(hd_new);
     command.set_version_option(76066276);
@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__vector_2_master__okay_output)
     BX_REQUIRE_OUTPUT("xprv9s21ZrQH143K31xYSDQpPDxsXRTUcvj2iNHm5NUtrGiGG5e2DtALGdso3pGz6ssrdK4PFmM8NSpSBHNqPqm55Qn3LqFtT2emdEXVYsCzC2U\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_mainnet__okay_output)
+BC_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_mainnet__okay_output)
 {
     BX_DECLARE_COMMAND(hd_new);
     command.set_version_option(76066276);
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_mainnet__okay_output)
     BX_REQUIRE_OUTPUT("xprv9s21ZrQH143K3bJ7oEuyFtvSpSHmdsmfiPcDXX2RpArAvnuBwcUo8KbeNXLvdbBPgjeFdEpQCAuxLaAP3bJRiiTdw1Kx4chf9zSGp95KBBR\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_testnet__okay_output)
+BC_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_testnet__okay_output)
 {
     BX_DECLARE_COMMAND(hd_new);
     command.set_version_option(70615956);
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_testnet__okay_output)
     BX_REQUIRE_OUTPUT("tprv8ZgxMBicQKsPeQXeTomURYYS8ZhysPog3wXLPwStJ9LeiPeGvypYe4y6HhWadxZi4BB2dLSAMXVkoRi8AoeNXmjETeYFiyRi56BhFnkm9uh\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_mainnet__failure_error)
+BC_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_mainnet__failure_error)
 {
     BX_DECLARE_COMMAND(hd_new);
     command.set_entropy_argument({ "baadf00dbaadf00d" });
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_mainnet__failure_error)
     BX_REQUIRE_ERROR(BX_HD_NEW_SHORT_ENTROPY "\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_testnet__failure_error)
+BC_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_testnet__failure_error)
 {
     BX_DECLARE_COMMAND(hd_new);
     command.set_version_option(70615956);
@@ -79,5 +79,5 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_testnet__failure_error)
     BX_REQUIRE_ERROR(BX_HD_NEW_SHORT_ENTROPY "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

@@ -21,8 +21,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(embed_address__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(embed_address__invoke)
 
 // vectors
 #define BX_ADDRESS_EMBED_A "Satoshi Nakamoto"
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(embed_address__invoke)
 #define BX_ADDRESS_EMBED_A_V0 "168LnUjqoJLie1PW5dTaF2vKUU9Jf6Fe4a"
 #define BX_ADDRESS_EMBED_A_V111 "mkeJ5XppcKmyR7s7oCRx4x8eLTk1Xrso8t"
 
-BOOST_AUTO_TEST_CASE(address_embed__invoke__mainnet__okay_output)
+BC_AUTO_TEST_CASE(address_embed__invoke__mainnet__okay_output)
 {
     BX_DECLARE_COMMAND(address_embed);
     command.set_data_argument({ BX_ADDRESS_EMBED_A });
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(address_embed__invoke__mainnet__okay_output)
     BX_REQUIRE_OUTPUT(BX_ADDRESS_EMBED_A_V0 "\n");
 }
 
-BOOST_AUTO_TEST_CASE(address_embed__invoke__testnet__okay_output)
+BC_AUTO_TEST_CASE(address_embed__invoke__testnet__okay_output)
 {
     BX_DECLARE_COMMAND(address_embed);
     command.set_version_option(111);
@@ -48,5 +48,5 @@ BOOST_AUTO_TEST_CASE(address_embed__invoke__testnet__okay_output)
     BX_REQUIRE_OUTPUT(BX_ADDRESS_EMBED_A_V111 "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

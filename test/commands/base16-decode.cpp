@@ -21,8 +21,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(bas16_decode__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(bas16_decode__invoke)
 
 // vectors
 #define BX_BASE16_DECODE_NIST_DECODED_A "abc"
@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_SUITE(bas16_decode__invoke)
 
 // Raw output streams are not terniated by "\n".
 
-BOOST_AUTO_TEST_CASE(base16_decode__invoke__NIST_SHA256_A__okay_output)
+BC_AUTO_TEST_CASE(base16_decode__invoke__NIST_SHA256_A__okay_output)
 {
     BX_DECLARE_COMMAND(base16_decode);
     command.set_base16_argument({ BX_BASE16_DECODE_NIST_ENCODED_A });
@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(base16_decode__invoke__NIST_SHA256_A__okay_output)
     BX_REQUIRE_OUTPUT(BX_BASE16_DECODE_NIST_DECODED_A);
 }
 
-BOOST_AUTO_TEST_CASE(base16_decode__invoke__NIST_SHA256_B__okay_output)
+BC_AUTO_TEST_CASE(base16_decode__invoke__NIST_SHA256_B__okay_output)
 {
     BX_DECLARE_COMMAND(base16_decode);
     command.set_base16_argument({ BX_BASE16_DECODE_NIST_ENCODED_B });
@@ -49,5 +49,5 @@ BOOST_AUTO_TEST_CASE(base16_decode__invoke__NIST_SHA256_B__okay_output)
     BX_REQUIRE_OUTPUT(BX_BASE16_DECODE_NIST_DECODED_B);
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

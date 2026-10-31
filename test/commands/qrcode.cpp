@@ -21,10 +21,10 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(qrcode__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(qrcode__invoke)
 
-BOOST_AUTO_TEST_CASE(qrcode__invoke__pixels_0__failure_error)
+BC_AUTO_TEST_CASE(qrcode__invoke__pixels_0__failure_error)
 {
     BX_DECLARE_COMMAND(qrcode);
 
@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__pixels_0__failure_error)
     BX_REQUIRE_ERROR(BX_QRCODE_MINIMUM_SIZE "\n");
 }
 
-BOOST_AUTO_TEST_CASE(qrcode__invoke__invalid_pixels__failure_error)
+BC_AUTO_TEST_CASE(qrcode__invoke__invalid_pixels__failure_error)
 {
     BX_DECLARE_COMMAND(qrcode);
 
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__invalid_pixels__failure_error)
     BX_REQUIRE_ERROR(BX_QRCODE_MAXIMUM_SIZE "\n");
 }
 
-BOOST_AUTO_TEST_CASE(qrcode__invoke__invalid_scheme__failure_error)
+BC_AUTO_TEST_CASE(qrcode__invoke__invalid_scheme__failure_error)
 {
     BX_DECLARE_COMMAND(qrcode);
 
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__invalid_scheme__failure_error)
     BX_REQUIRE_ERROR(BX_QRCODE_MAXIMUM_SIZE "\n");
 }
 
-BOOST_AUTO_TEST_CASE(qrcode__invoke__invalid_margin__failure_error)
+BC_AUTO_TEST_CASE(qrcode__invoke__invalid_margin__failure_error)
 {
     BX_DECLARE_COMMAND(qrcode);
 
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__invalid_margin__failure_error)
     BX_REQUIRE_ERROR(BX_QRCODE_MAXIMUM_SIZE "\n");
 }
 
-BOOST_AUTO_TEST_CASE(qrcode__invoke__invalid_version__failure_error)
+BC_AUTO_TEST_CASE(qrcode__invoke__invalid_version__failure_error)
 {
     BX_DECLARE_COMMAND(qrcode);
 
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__invalid_version__failure_error)
     BX_REQUIRE_ERROR(BX_QRCODE_MAXIMUM_VERSION "\n");
 }
 
-BOOST_AUTO_TEST_CASE(qrcode__invoke__non_default_values__success_expected_size)
+BC_AUTO_TEST_CASE(qrcode__invoke__non_default_values__success_expected_size)
 {
     BX_DECLARE_COMMAND(qrcode);
 
@@ -94,10 +94,10 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__non_default_values__success_expected_size)
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
     system::read::bytes::istream reader(output);
-    BOOST_REQUIRE_EQUAL(reader.read_bytes().size(), 2728u);
+    BC_REQUIRE_EQUAL(reader.read_bytes().size(), 2728u);
 }
 
-BOOST_AUTO_TEST_CASE(qrcode__invoke__minimal_size__success_expected)
+BC_AUTO_TEST_CASE(qrcode__invoke__minimal_size__success_expected)
 {
     BX_DECLARE_COMMAND(qrcode);
 
@@ -170,8 +170,8 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__minimal_size__success_expected)
     system::read::bytes::istream reader(output);
 
     // Encode as base16 so that failure message is intelligible.
-    BOOST_REQUIRE_EQUAL(encode_base16(reader.read_bytes()), encode_base16(expected));
+    BC_REQUIRE_EQUAL(encode_base16(reader.read_bytes()), encode_base16(expected));
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

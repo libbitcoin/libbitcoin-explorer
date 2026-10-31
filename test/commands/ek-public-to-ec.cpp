@@ -20,12 +20,12 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(ek_public_to_ec__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(ek_public_to_ec__invoke)
 
 // Wiki Examples
 
-BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_1_lot_sequence__okay)
+BC_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_1_lot_sequence__okay)
 {
     BX_DECLARE_COMMAND(ek_public_to_ec);
     command.set_passphrase_argument({ "my passphrase" });
@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_1_lot_sequence__okay)
     BX_REQUIRE_OUTPUT("03d9cf7e2d52421ba735dc3aeca8a4b42e4fc272d4db6f7b311fb778bac7d4308d\n");
 }
 
-BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_2__okay)
+BC_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_2__okay)
 {
     BX_DECLARE_COMMAND(ek_public_to_ec);
     command.set_passphrase_argument({ "my passphrase" });
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_2__okay)
     BX_REQUIRE_OUTPUT("037b49ab1aadf965a885932451c87de4265799cb29749f5713c2f8ace9d7e83875\n");
 }
 
-BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_3_piped_commands__okay)
+BC_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_3_piped_commands__okay)
 {
     BX_DECLARE_COMMAND(ek_public_to_ec);
     command.set_passphrase_argument({ "my passphrase" });
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_3_piped_commands__okay)
     BX_REQUIRE_OUTPUT("0355ceb3cb0c6b1294c76cb9a6ebb61035c5e7220099647ce4c2df011ee7280460\n");
 }
 
-BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_4_incorrect_passphrase__failure_error)
+BC_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_4_incorrect_passphrase__failure_error)
 {
     BX_DECLARE_COMMAND(ek_public_to_ec);
     command.set_passphrase_argument("i forgot");
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_4_incorrect_passphrase__fa
     BX_REQUIRE_ERROR(BX_EK_PUBLIC_TO_EC_INVALID_PASSPHRASE "\n");
 }
 
-BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_5_uncompressed__okay)
+BC_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_5_uncompressed__okay)
 {
     BX_DECLARE_COMMAND(ek_public_to_ec);
     command.set_passphrase_argument({ "my passphrase" });
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_5_uncompressed__okay)
     BX_REQUIRE_OUTPUT("047b49ab1aadf965a885932451c87de4265799cb29749f5713c2f8ace9d7e838753b15f90fb4032de40029a80c45bf9d8fc8653d81b4f18d36464840ddce50a4f9\n");
 }
 
-BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_6_testnet__okay)
+BC_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_6_testnet__okay)
 {
     BX_DECLARE_COMMAND(ek_public_to_ec);
     command.set_passphrase_argument({ "my passphrase" });
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_6_testnet__okay)
     BX_REQUIRE_OUTPUT("037b49ab1aadf965a885932451c87de4265799cb29749f5713c2f8ace9d7e83875\n");
 }
 
-BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_7_testnet_uncompressed__okay)
+BC_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_7_testnet_uncompressed__okay)
 {
     BX_DECLARE_COMMAND(ek_public_to_ec);
     command.set_passphrase_argument({ "my passphrase" });
@@ -88,5 +88,5 @@ BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_7_testnet_uncompressed__ok
     BX_REQUIRE_OUTPUT("047b49ab1aadf965a885932451c87de4265799cb29749f5713c2f8ace9d7e838753b15f90fb4032de40029a80c45bf9d8fc8653d81b4f18d36464840ddce50a4f9\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

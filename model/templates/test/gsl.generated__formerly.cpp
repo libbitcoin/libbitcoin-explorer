@@ -21,18 +21,18 @@
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-BOOST_AUTO_TEST_SUITE(generated)
-BOOST_AUTO_TEST_SUITE(generated__formerly)
+BC_AUTO_TEST_SUITE(generated)
+BC_AUTO_TEST_SUITE(generated__formerly)
 .for command by symbol
 .   if (!is_empty(formerly))
 
-BOOST_AUTO_TEST_CASE(generated__formerly__$(symbol:c)_was_$(formerly:c)__returns_object)
+BC_AUTO_TEST_CASE(generated__formerly__$(symbol:c)_was_$(formerly:c)__returns_object)
 {
-    BOOST_REQUIRE_EQUAL(formerly("$(formerly)"), $(symbol:c)::symbol());
+    BC_REQUIRE_EQUAL(formerly("$(formerly)"), $(symbol:c)::symbol());
 }
 .   endif
 .endfor
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
 .endtemplate

@@ -21,14 +21,14 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(ec_to_public__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(ec_to_public__invoke)
 
 // The keys are derived in the stealth scenario, confirm here that they are properly related.
 #define BX_STEALTH_SCENARIO_PRIVATE_KEY "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475"
 #define BX_STEALTH_SCENARIO_PUBLIC_KEY "03ac9e60013853128b42a1324609bac2ccff6a0b4844b6301f1f552e15ee14c7a5"
 
-BOOST_AUTO_TEST_CASE(ec_to_public__invoke__stealth_scenario__okay_output)
+BC_AUTO_TEST_CASE(ec_to_public__invoke__stealth_scenario__okay_output)
 {
     BX_DECLARE_COMMAND(ec_to_public);
     command.set_ec_private_key_argument({ BX_STEALTH_SCENARIO_PRIVATE_KEY });
@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE(ec_to_public__invoke__stealth_scenario__okay_output)
     BX_REQUIRE_OUTPUT(BX_STEALTH_SCENARIO_PUBLIC_KEY "\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_to_public__invoke__compressed__okay_output)
+BC_AUTO_TEST_CASE(ec_to_public__invoke__compressed__okay_output)
 {
     BX_DECLARE_COMMAND(ec_to_public);
     command.set_uncompressed_option(false);
@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(ec_to_public__invoke__compressed__okay_output)
     BX_REQUIRE_OUTPUT("0247140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_to_public__invoke__uncompressed__okay_output)
+BC_AUTO_TEST_CASE(ec_to_public__invoke__uncompressed__okay_output)
 {
     BX_DECLARE_COMMAND(ec_to_public);
     command.set_uncompressed_option(true);
@@ -54,5 +54,5 @@ BOOST_AUTO_TEST_CASE(ec_to_public__invoke__uncompressed__okay_output)
     BX_REQUIRE_OUTPUT("0447140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36e87bb04f401be3b770a0f3e2267a6c3b14a3074f6b5ce4419f1fcdc1ca4b1cb6\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

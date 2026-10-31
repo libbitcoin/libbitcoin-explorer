@@ -21,15 +21,15 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(stub)
-BOOST_AUTO_TEST_SUITE(watch_tx__invoke)
+BC_AUTO_TEST_SUITE(stub)
+BC_AUTO_TEST_SUITE(watch_tx__invoke)
 
-BOOST_AUTO_TEST_CASE(watch_tx__invoke__invoke__always__failure_error)
+BC_AUTO_TEST_CASE(watch_tx__invoke__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(watch_tx);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_WATCH_TX_NOT_IMPLEMENTED "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

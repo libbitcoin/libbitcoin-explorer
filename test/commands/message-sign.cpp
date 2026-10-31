@@ -20,8 +20,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(message_sign__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(message_sign__invoke)
 
 #define MESSAGE_SIGN_WIF_COMPRESSED "KwE19y2Ud8EUEBjeUG4Uc4qWUJUUoZJxHR3xUfTpCSsJEDv2o8fu"
 #define MESSAGE_SIGN_SIGNATURE_COMPRESSED "HxQp3cXgOIhBEGXks27sfeSQHVgNUeYgl5i5wG/dOUYaSIRnnzXR6NcyH+AfNAHtkWcyOD9rX4pojqmuQyH79K4="
@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_SUITE(message_sign__invoke)
 #define MESSAGE_SIGN_WIF_UNCOMPRESSED "5HpMRgt5u8yyU1AfPwcgLGphD5Qu4ka4v7McE4jKrGNpQPyRqXC"
 #define MESSAGE_SIGN_SIGNATURE_UNCOMPRESSED "GxQp3cXgOIhBEGXks27sfeSQHVgNUeYgl5i5wG/dOUYaSIRnnzXR6NcyH+AfNAHtkWcyOD9rX4pojqmuQyH79K4="
 
-BOOST_AUTO_TEST_CASE(message_sign__invoke__compressed__okay_output)
+BC_AUTO_TEST_CASE(message_sign__invoke__compressed__okay_output)
 {
     BX_DECLARE_COMMAND(message_sign);
     command.set_message_argument({ "Nakomoto" });
@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(message_sign__invoke__compressed__okay_output)
     BX_REQUIRE_OUTPUT(MESSAGE_SIGN_SIGNATURE_COMPRESSED "\n");
 }
 
-BOOST_AUTO_TEST_CASE(message_sign__invoke__uncompressed__okay_output)
+BC_AUTO_TEST_CASE(message_sign__invoke__uncompressed__okay_output)
 {
     BX_DECLARE_COMMAND(message_sign);
     command.set_message_argument({ "Nakomoto" });
@@ -47,5 +47,5 @@ BOOST_AUTO_TEST_CASE(message_sign__invoke__uncompressed__okay_output)
     BX_REQUIRE_OUTPUT(MESSAGE_SIGN_SIGNATURE_UNCOMPRESSED "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

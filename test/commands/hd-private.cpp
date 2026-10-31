@@ -21,12 +21,12 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(hd_private__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(hd_private__invoke)
 
 // github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-1
 
-BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h__okay_output)
+BC_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h__okay_output)
 {
     BX_DECLARE_COMMAND(hd_private);
     command.set_secret_version_option(76066276);
@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h__okay_output)
     BX_REQUIRE_OUTPUT("xprv9uHRZZhk6KAJC1avXpDAp4MDc3sQKNxDiPvvkX8Br5ngLNv1TxvUxt4cV1rGL5hj6KCesnDYUhd7oWgT11eZG7XnxHrnYeSvkzY7d2bhkJ7\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h_1__okay_output)
+BC_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h_1__okay_output)
 {
     BX_DECLARE_COMMAND(hd_private);
     command.set_secret_version_option(76066276);
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h_1__okay_output)
     BX_REQUIRE_OUTPUT("xprv9wTYmMFdV23N2TdNG573QoEsfRrWKQgWeibmLntzniatZvR9BmLnvSxqu53Kw1UmYPxLgboyZQaXwTCg8MSY3H2EU4pWcQDnRnrVA1xe8fs\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h_1_2h__okay_output)
+BC_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h_1_2h__okay_output)
 {
     BX_DECLARE_COMMAND(hd_private);
     command.set_secret_version_option(76066276);
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h_1_2h__okay_output)
     BX_REQUIRE_OUTPUT("xprv9z4pot5VBttmtdRTWfWQmoH1taj2axGVzFqSb8C9xaxKymcFzXBDptWmT7FwuEzG3ryjH4ktypQSAewRiNMjANTtpgP4mLTj34bhnZX7UiM\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h_1_2h_2__okay_output)
+BC_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h_1_2h_2__okay_output)
 {
     BX_DECLARE_COMMAND(hd_private);
     command.set_secret_version_option(76066276);
@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h_1_2h_2__okay_outpu
     BX_REQUIRE_OUTPUT("xprvA2JDeKCSNNZky6uBCviVfJSKyQ1mDYahRjijr5idH2WwLsEd4Hsb2Tyh8RfQMuPh7f7RtyzTtdrbdqqsunu5Mm3wDvUAKRHSC34sJ7in334\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h_1_2h_2_1000000000__okay_output)
+BC_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h_1_2h_2_1000000000__okay_output)
 {
     BX_DECLARE_COMMAND(hd_private);
     command.set_secret_version_option(76066276);
@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector1_m_0h_1_2h_2_1000000000_
 
 // github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-2
 
-BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0__okay_output)
+BC_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0__okay_output)
 {
     BX_DECLARE_COMMAND(hd_private);
     command.set_secret_version_option(76066276);
@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0__okay_output)
     BX_REQUIRE_OUTPUT("xprv9vHkqa6EV4sPZHYqZznhT2NPtPCjKuDKGY38FBWLvgaDx45zo9WQRUT3dKYnjwih2yJD9mkrocEZXo1ex8G81dwSM1fwqWpWkeS3v86pgKt\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h__okay_output)
+BC_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h__okay_output)
 {
     BX_DECLARE_COMMAND(hd_private);
     command.set_secret_version_option(76066276);
@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h__okay_o
     BX_REQUIRE_OUTPUT("xprv9wSp6B7kry3Vj9m1zSnLvN3xH8RdsPP1Mh7fAaR7aRLcQMKTR2vidYEeEg2mUCTAwCd6vnxVrcjfy2kRgVsFawNzmjuHc2YmYRmagcEPdU9\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h_1__okay_output)
+BC_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h_1__okay_output)
 {
     BX_DECLARE_COMMAND(hd_private);
     command.set_secret_version_option(76066276);
@@ -124,7 +124,7 @@ BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h_1__okay
     BX_REQUIRE_OUTPUT("xprv9zFnWC6h2cLgpmSA46vutJzBcfJ8yaJGg8cX1e5StJh45BBciYTRXSd25UEPVuesF9yog62tGAQtHjXajPPdbRCHuWS6T8XA2ECKADdw4Ef\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h_1_2147483646h__okay_output)
+BC_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h_1_2147483646h__okay_output)
 {
     BX_DECLARE_COMMAND(hd_private);
     command.set_secret_version_option(76066276);
@@ -136,7 +136,7 @@ BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h_1_21474
     BX_REQUIRE_OUTPUT("xprvA1RpRA33e1JQ7ifknakTFpgNXPmW2YvmhqLQYMmrj4xJXXWYpDPS3xz7iAxn8L39njGVyuoseXzU6rcxFLJ8HFsTjSyQbLYnMpCqE2VbFWc\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h_1_2147483646h_2__okay_output)
+BC_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h_1_2147483646h_2__okay_output)
 {
     BX_DECLARE_COMMAND(hd_private);
     command.set_secret_version_option(76066276);
@@ -148,7 +148,7 @@ BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h_1_21474
     BX_REQUIRE_OUTPUT("xprvA2nrNbFZABcdryreWet9Ea4LvTJcGsqrMzxHx98MMrotbir7yrKCEXw7nadnHM8Dq38EGfSh6dqA9QWTyefMLEcBYJUuekgW4BYPJcr9E7j\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_private__invoke__testnet__okay_output)
+BC_AUTO_TEST_CASE(hd_private__invoke__testnet__okay_output)
 {
     BX_DECLARE_COMMAND(hd_private);
     command.set_secret_version_option(70615956);
@@ -160,5 +160,5 @@ BOOST_AUTO_TEST_CASE(hd_private__invoke__testnet__okay_output)
     BX_REQUIRE_OUTPUT("tprv8ceMhknangxznNWYWLbRe6ovqv4rPkrnv61XEwfaoaXwHtPQVT8Rg4PUQaGuuHCEyRC4bAthkWKmmKGML38nCcn7sEZ4v1Cw5Ar6TP63QcC\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

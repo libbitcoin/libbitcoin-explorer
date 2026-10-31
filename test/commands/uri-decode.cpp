@@ -21,8 +21,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(uri_decode__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(uri_decode__invoke)
 
 #define URI_DECODE_BIP21_ADDRESS "{\"uri\":{\"address\":\"1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L\",\"scheme\":\"bitcoin\"}}\n"
 
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_SUITE(uri_decode__invoke)
 
 #define URI_DECODE_COMPOSITE "{\"uri\":{\"address\":\"1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E\",\"amount\":10000120000,\"label\":\"&=\\\\n#\",\"message\":\"hello bitcoin\",\"r\":\"http://example.com?purchase=shoes&user=bob\",\"scheme\":\"bitcoin\"}}\n"
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__bip21_address__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__bip21_address__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__bip21_address__okay_output)
     BX_REQUIRE_OUTPUT(URI_DECODE_BIP21_ADDRESS);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__bip21_address_label__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__bip21_address_label__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L?label=Luke-Jr" });
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__bip21_address_label__okay_output)
     BX_REQUIRE_OUTPUT(URI_DECODE_BIP21_ADDRESS_LABEL);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__bip21_address_amount_label__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__bip21_address_amount_label__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L?amount=20.3&label=Luke-Jr" });
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__bip21_address_amount_label__okay_output
     BX_REQUIRE_OUTPUT(URI_DECODE_BIP21_ADDRESS_AMOUNT_LABEL);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__bip21_address_amount_label_message__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__bip21_address_amount_label_message__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L?amount=50&label=Luke-Jr&message=Donation%20for%20project%20xyz" });
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__bip21_address_amount_label_message__oka
     BX_REQUIRE_OUTPUT(URI_DECODE_BIP21_ADDRESS_AMOUNT_LABEL_MESSAGE);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__bip21_address_extra_valid__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__bip21_address_extra_valid__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L?somethingyoudontunderstand=50&somethingelseyoudontget=999" });
@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__bip21_address_extra_valid__okay_output)
     BX_REQUIRE_OUTPUT(URI_DECODE_BIP21_ADDRESS);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__lower_case_scheme_empty__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__lower_case_scheme_empty__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "bitcoin:" });
@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__lower_case_scheme_empty__okay_output)
     BX_REQUIRE_OUTPUT(URI_DECODE_EMPTY);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__upper_case_scheme_empty__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__upper_case_scheme_empty__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "BITCOIN:" });
@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__upper_case_scheme_empty__okay_output)
     BX_REQUIRE_OUTPUT(URI_DECODE_EMPTY);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__address__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__address__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "bitcoin:1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E" });
@@ -110,7 +110,7 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__address__okay_output)
     BX_REQUIRE_OUTPUT(URI_DECODE_ADDRESS);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__amount__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__amount__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "bitcoin:?amount=100.0012" });
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__amount__okay_output)
     BX_REQUIRE_OUTPUT(URI_DECODE_AMOUNT);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__label__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__label__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "bitcoin:?label=%26%3D%5Cn%23" });
@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__label__okay_output)
     BX_REQUIRE_OUTPUT(URI_DECODE_LABEL);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__message__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__message__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "bitcoin:?message=hello%20bitcoin" });
@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__message__okay_output)
     BX_REQUIRE_OUTPUT(URI_DECODE_MESSAGE);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__payment_request__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__payment_request__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "bitcoin:?r=http%3A%2F%2Fexample.com%3Fpurchase%3Dshoes%26user%3Dbob" });
@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__payment_request__okay_output)
     BX_REQUIRE_OUTPUT(URI_DECODE_PAYMENT_REQUEST);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__composite__okay_output)
+BC_AUTO_TEST_CASE(uri_decode__invoke__composite__okay_output)
 {
     BX_DECLARE_COMMAND(uri_decode);
     command.set_uri_argument({ "bItCoIn:1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E?amount=100.0012&label=%26%3D%5Cn%23&message=hello%20bitcoin&r=http%3A%2F%2Fexample.com%3Fpurchase%3Dshoes%26user%3Dbob" });
@@ -150,5 +150,5 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__composite__okay_output)
     BX_REQUIRE_OUTPUT(URI_DECODE_COMPOSITE);
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

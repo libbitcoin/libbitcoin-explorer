@@ -21,15 +21,15 @@
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-BOOST_AUTO_TEST_SUITE(generated)
-BOOST_AUTO_TEST_SUITE(generated__broadcast)
+BC_AUTO_TEST_SUITE(generated)
+BC_AUTO_TEST_SUITE(generated__broadcast)
 
-BOOST_AUTO_TEST_CASE(generated__broadcast__always__does_not_throw)
+BC_AUTO_TEST_CASE(generated__broadcast__always__does_not_throw)
 {
     // TODO: mocks and dependency injection required to test proper execution.
     auto func = [](std::shared_ptr<bc::explorer::command>) -> void {};
     bc::explorer::broadcast(func);
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

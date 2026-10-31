@@ -21,10 +21,10 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(ec_to_wif__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(ec_to_wif__invoke)
 
-BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__mainnet_compressed_key__okay_output)
+BC_AUTO_TEST_CASE(ec_to_wif__invoke__mainnet_compressed_key__okay_output)
 {
     BX_DECLARE_COMMAND(ec_to_wif);
     command.set_version_option(128);
@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__mainnet_compressed_key__okay_output)
     BX_REQUIRE_OUTPUT("L21LJEeJwK35wby1BeTjwWssrhrgQE2MZrpTm2zbMC677czAHHu3\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__mainnet_uncompressed_key__okay_output)
+BC_AUTO_TEST_CASE(ec_to_wif__invoke__mainnet_uncompressed_key__okay_output)
 {
     BX_DECLARE_COMMAND(ec_to_wif);
     command.set_version_option(128);
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__mainnet_uncompressed_key__okay_output)
 
 // vectors: en.bitcoin.it/wiki/Wallet_import_format
 
-BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__wiki_uncompressed_key__okay_output)
+BC_AUTO_TEST_CASE(ec_to_wif__invoke__wiki_uncompressed_key__okay_output)
 {
     BX_DECLARE_COMMAND(ec_to_wif);
     command.set_version_option(128);
@@ -56,5 +56,5 @@ BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__wiki_uncompressed_key__okay_output)
     BX_REQUIRE_OUTPUT("5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

@@ -21,8 +21,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(input_sign__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(input_sign__invoke)
 
 // Vector A from sx.dyne.org/offlinetx.html
 // The private key must correspond to the input for the signature to validate.
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_SUITE(input_sign__invoke)
 //#define INPUT_SIGN_ENDORSEMENT_B "3044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c2022013d279c191f296349f59ba1cb6e17ea1f0db8f80a26714ef573e887818d544af01"
 #define INPUT_SIGN_ENDORSEMENT_B "304402204c8006959f65cb270f424521b34444198c2c80e7bf53b302085ef271b30eecf502202cf49e9136ded201e7268051eeb3838bb7e5763e0eb8aa5ed90d84a373aaaea301"
 
-BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_single_output__okay_output)
+BC_AUTO_TEST_CASE(input_sign__invoke__single_input_single_output__okay_output)
 {
     BX_DECLARE_COMMAND(input_sign);
     command.set_sign_type_option({ "all" });
@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_single_output__okay_output
     BX_REQUIRE_OUTPUT(INPUT_SIGN_ENDORSEMENT_A "\n");
 }
 
-BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_no_output__okay_output)
+BC_AUTO_TEST_CASE(input_sign__invoke__single_input_no_output__okay_output)
 {
     BX_DECLARE_COMMAND(input_sign);
     command.set_sign_type_option({ "all" });
@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_no_output__okay_output)
     BX_REQUIRE_OUTPUT(INPUT_SIGN_ENDORSEMENT_B "\n");
 }
 
-BOOST_AUTO_TEST_CASE(input_sign__invoke__invalid_index__failure_error)
+BC_AUTO_TEST_CASE(input_sign__invoke__invalid_index__failure_error)
 {
     BX_DECLARE_COMMAND(input_sign);
     command.set_index_option(42);
@@ -76,5 +76,5 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__invalid_index__failure_error)
     BX_REQUIRE_ERROR(BX_INPUT_SIGN_INDEX_OUT_OF_RANGE "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

@@ -24,19 +24,19 @@ using namespace bc::system;
 
 #define ADDRESS_MAINNET_A "15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma"
 
-BOOST_AUTO_TEST_SUITE(config)
-BOOST_AUTO_TEST_SUITE(config__address)
+BC_AUTO_TEST_SUITE(config)
+BC_AUTO_TEST_SUITE(config__address)
 
-BOOST_AUTO_TEST_CASE(address__constructor__default__does_not_throw)
+BC_AUTO_TEST_CASE(address__constructor__default__does_not_throw)
 {
-    BOOST_REQUIRE_NO_THROW(address());
+    BC_REQUIRE_NO_THROW(address());
 }
 
-BOOST_AUTO_TEST_CASE(address__constructor__valid_string_cast__round_trips)
+BC_AUTO_TEST_CASE(address__constructor__valid_string_cast__round_trips)
 {
     const wallet::payment_address address(ADDRESS_MAINNET_A);
-    BOOST_REQUIRE_EQUAL(address.encoded(), ADDRESS_MAINNET_A);
+    BC_REQUIRE_EQUAL(address.encoded(), ADDRESS_MAINNET_A);
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

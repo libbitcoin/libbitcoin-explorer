@@ -21,12 +21,12 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(ec_add_secrets__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(ec_add_secrets__invoke)
 
 // TODO: generate overflow condition
 
-////BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__overflow__failure_error)
+////BC_AUTO_TEST_CASE(ec_add_secrets__invoke__overflow__failure_error)
 ////{
 ////    BX_DECLARE_COMMAND(ec_add_secrets);
 ////    command.set_secrets_argument(
@@ -38,14 +38,14 @@ BOOST_AUTO_TEST_SUITE(ec_add_secrets__invoke)
 ////    BX_REQUIRE_ERROR(BX_EC_ADD_SECRETS_OUT_OF_RANGE "\n");
 ////}
 
-BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__no_value__okay_output)
+BC_AUTO_TEST_CASE(ec_add_secrets__invoke__no_value__okay_output)
 {
     BX_DECLARE_COMMAND(ec_add_secrets);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("0000000000000000000000000000000000000000000000000000000000000000\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__one_value__okay_output)
+BC_AUTO_TEST_CASE(ec_add_secrets__invoke__one_value__okay_output)
 {
     BX_DECLARE_COMMAND(ec_add_secrets);
 
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__one_value__okay_output)
     BX_REQUIRE_OUTPUT("1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__two_same_values__okay_output)
+BC_AUTO_TEST_CASE(ec_add_secrets__invoke__two_same_values__okay_output)
 {
     BX_DECLARE_COMMAND(ec_add_secrets);
     command.set_secrets_argument(
@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__two_same_values__okay_output)
     BX_REQUIRE_OUTPUT("375709cd0fc6ca29dd5eb402f861a6583eb3ba9d4cc53b4f2e1946e8a27ba00c\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__three_same_values__okay_output)
+BC_AUTO_TEST_CASE(ec_add_secrets__invoke__three_same_values__okay_output)
 {
     BX_DECLARE_COMMAND(ec_add_secrets);
     command.set_secrets_argument(
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__three_same_values__okay_output)
     BX_REQUIRE_OUTPUT("53028eb397aa2f3ecc0e0e04749279845e0d97ebf327d8f6c525ea5cf3b97012\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__two_secret_values__okay_output)
+BC_AUTO_TEST_CASE(ec_add_secrets__invoke__two_secret_values__okay_output)
 {
     BX_DECLARE_COMMAND(ec_add_secrets);
     command.set_secrets_argument(
@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__two_secret_values__okay_output)
     BX_REQUIRE_OUTPUT("53028eb397aa2f3ecc0e0e04749279845e0d97ebf327d8f6c525ea5cf3b97012\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__increment_value__okay_output)
+BC_AUTO_TEST_CASE(ec_add_secrets__invoke__increment_value__okay_output)
 {
     BX_DECLARE_COMMAND(ec_add_secrets);
     command.set_secrets_argument(
@@ -106,5 +106,5 @@ BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__increment_value__okay_output)
     BX_REQUIRE_OUTPUT("1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd007\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

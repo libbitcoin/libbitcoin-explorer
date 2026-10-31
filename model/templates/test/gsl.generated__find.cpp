@@ -21,16 +21,16 @@
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-BOOST_AUTO_TEST_SUITE(generated)
-BOOST_AUTO_TEST_SUITE(generated__find)
+BC_AUTO_TEST_SUITE(generated)
+BC_AUTO_TEST_SUITE(generated__find)
 .for command by symbol
 
-BOOST_AUTO_TEST_CASE(generated__find__$(symbol:c)__returns_object)
+BC_AUTO_TEST_CASE(generated__find__$(symbol:c)__returns_object)
 {
-    BOOST_REQUIRE(find("$(symbol)") != nullptr);
+    BC_REQUIRE(find("$(symbol)") != nullptr);
 }
 .endfor
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
 .endtemplate
