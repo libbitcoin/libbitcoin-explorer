@@ -163,6 +163,7 @@ if "!libbitcoin_explorer_TAG!" == "" (
     )
 
     set "REMAPPED_PARAMS=!REMAPPED_PARAMS! !libbitcoin-system_PARAMS!"
+    set "REMAPPED_PARAMS=!REMAPPED_PARAMS! !bitcoin-selector_PARAMS!"
     set "REMAPPED_PARAMS=!REMAPPED_PARAMS! !libbitcoin-system-test_PARAMS!"
     set "REMAPPED_PARAMS=!REMAPPED_PARAMS! !libbitcoin-explorer_PARAMS!"
 
