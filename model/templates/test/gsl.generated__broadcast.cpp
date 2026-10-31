@@ -13,7 +13,6 @@
 .echo "Generating test/generated__broadcast.cpp..."
 .output "../test/generated__broadcast.cpp"
 .copyleft()
-#include <boost/test/unit_test.hpp>
 
 #include <bitcoin/explorer.hpp>
 

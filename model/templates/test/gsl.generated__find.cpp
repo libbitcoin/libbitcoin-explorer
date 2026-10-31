@@ -13,7 +13,6 @@
 .echo "Generating test/generated__find.cpp..."
 .output "../test/generated__find.cpp"
 .copyleft()
-#include <boost/test/unit_test.hpp>
 
 #include <bitcoin/explorer.hpp>
 

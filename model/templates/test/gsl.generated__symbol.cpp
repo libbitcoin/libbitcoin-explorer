@@ -13,7 +13,6 @@
 .echo "Generating test/generated__symbol.cpp..."
 .output "../test/generated__symbol.cpp"
 .copyleft()
-#include <boost/test/unit_test.hpp>
 
 #include <bitcoin/explorer.hpp>
 
