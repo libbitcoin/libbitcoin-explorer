@@ -98,16 +98,12 @@ option( with-console "Compile with console application." ON )
 #------------------------------------------------------------------------------
 if ( BUILD_SHARED_LIBS )
   set( libbitcoin-network_USE_STATIC_LIBS "OFF" )
-  set( Boost_USE_STATIC_LIBS "OFF" )
 else()
   set( libbitcoin-network_USE_STATIC_LIBS "ON" )
-  set( Boost_USE_STATIC_LIBS "ON" )
 endif()
 
 find_package( libbitcoin-network 4.0.0 REQUIRED )
 set( libbitcoin_network_VERSION ${libbitcoin-network_VERSION} )
-
-find_package( Boost 1.86.0 REQUIRED )
 
 #------------------------------------------------------------------------------
 # Architecture options.
@@ -348,7 +344,6 @@ if ( with-tests )
 
   target_link_libraries( libbitcoin-explorer-test
     PRIVATE
-      Boost::headers
       bitcoin::explorer
   )
 
