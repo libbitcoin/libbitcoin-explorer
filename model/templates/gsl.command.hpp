@@ -139,7 +139,7 @@ public:
         (
             /* This composes with the command line options. */
             BX_CONFIG_VARIABLE,
-            value<std::filesystem::path>()->composing(),
+            value<system::config::path>()->composing(),
             "$(config_description)"
         );
     }

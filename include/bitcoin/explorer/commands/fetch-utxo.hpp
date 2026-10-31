@@ -146,7 +146,7 @@ public:
         )
         (
             BX_CONFIG_VARIABLE ",c",
-            value<std::filesystem::path>(),
+            value<system::config::path>(),
             "The path to the configuration settings file."
         )
         (

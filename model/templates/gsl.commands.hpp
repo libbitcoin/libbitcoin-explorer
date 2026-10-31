@@ -201,7 +201,7 @@ public:
         )
         (
             BX_CONFIG_VARIABLE ",c",
-            value<std::filesystem::path>(),
+            value<system::config::path>(),
             "$(config_description)"
         )$((!has_arguments & !has_options) ?? ";")
 .for option
