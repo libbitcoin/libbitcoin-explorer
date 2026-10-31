@@ -45,13 +45,13 @@ src_libbitcoin_explorer_la_LIBS = src/libbitcoin-explorer.la
 src_libbitcoin_explorer_la_CPPFLAGS = \
     -I${top_builddir}/include \
     -I${srcdir}/../../include \
-    ${libbitcoin_system_BUILD_CPPFLAGS}
+    ${libbitcoin_network_BUILD_CPPFLAGS}
 
 src_libbitcoin_explorer_la_LDFLAGS = \
-    ${libbitcoin_system_LDFLAGS}
+    ${libbitcoin_network_LDFLAGS}
 
 src_libbitcoin_explorer_la_LIBADD = \
-    ${libbitcoin_system_LIBS}
+    ${libbitcoin_network_LIBS}
 
 src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/client.cpp \

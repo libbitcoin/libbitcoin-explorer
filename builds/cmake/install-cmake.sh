@@ -101,6 +101,13 @@ if [[ -z ${libbitcoin_system_TAG} ]]; then
     libbitcoin_system_TAG="master"
 fi
 
+if [[ -z ${libbitcoin_network_OWNER} ]]; then
+    libbitcoin_network_OWNER="libbitcoin"
+fi
+if [[ -z ${libbitcoin_network_TAG} ]]; then
+    libbitcoin_network_TAG="master"
+fi
+
 if [[ -z ${libbitcoin_explorer_OWNER} ]]; then
     libbitcoin_explorer_OWNER="libbitcoin"
 fi
@@ -491,6 +498,11 @@ main()
         "-Dwith-tests:BOOL=OFF"
         "-Dwith-console:BOOL=OFF")
 
+    libbitcoin_network_FLAGS=()
+
+    libbitcoin_network_OPTIONS=(
+        "-Dwith-tests:BOOL=OFF")
+
     libbitcoin_explorer_FLAGS=()
 
     libbitcoin_explorer_OPTIONS=()
@@ -532,6 +544,19 @@ main()
         install_cmake "libbitcoin-system" "."
         if [[ "${BUILD_POST_INSTALL_CLEAN}" == "yes" ]]; then
             clean_cmake "libbitcoin-system" "."
+        fi
+        export CPPFLAGS="${SAVE_CPPFLAGS}"
+    fi
+
+    if [[ ${BUILD_LIMIT} == "dependencies" ]] ||
+       [[ ${BUILD_LIMIT} == "none" ]]; then
+        source_github "${libbitcoin_network_OWNER}" "libbitcoin-network" "${libbitcoin_network_TAG}"
+        local SAVE_CPPFLAGS="${CPPFLAGS}"
+        export CPPFLAGS="${CPPFLAGS} ${libbitcoin_network_FLAGS[@]}"
+        build_cmake "libbitcoin-network" "builds/cmake" "." "${PARALLEL}" "${libbitcoin_network_OPTIONS[@]}" "${CONFIGURE_OPTIONS_CMAKE[@]}"
+        install_cmake "libbitcoin-network" "."
+        if [[ "${BUILD_POST_INSTALL_CLEAN}" == "yes" ]]; then
+            clean_cmake "libbitcoin-network" "."
         fi
         export CPPFLAGS="${SAVE_CPPFLAGS}"
     fi
@@ -1012,6 +1037,9 @@ display_constants()
 
     msg "libbitcoin_system_OWNER         : ${libbitcoin_system_OWNER}"
     msg "libbitcoin_system_TAG           : ${libbitcoin_system_TAG}"
+
+    msg "libbitcoin_network_OWNER        : ${libbitcoin_network_OWNER}"
+    msg "libbitcoin_network_TAG          : ${libbitcoin_network_TAG}"
 
     msg "libbitcoin_explorer_OWNER       : ${libbitcoin_explorer_OWNER}"
     msg "libbitcoin_explorer_TAG         : ${libbitcoin_explorer_TAG}"

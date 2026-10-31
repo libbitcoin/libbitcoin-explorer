@@ -442,6 +442,24 @@ jobs:
           rm -rf ${{ github.workspace }}/libbitcoin-system
 
 
+      - name: Checkout repository [libbitcoin-network]
+        id: checkout-libbitcoin-network
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          path: 'libbitcoin-network'
+          ref: ${{ steps.get-branch.outputs.branch }}
+          repository: ${{ github.repository_owner }}/libbitcoin-network
+
+      - name: Checkout repository [libbitcoin-network] cleanup on failure
+        continue-on-error: true
+        if: steps.checkout-libbitcoin-network.outcome == 'failure'
+        shell: bash
+        run: |
+          rm -rf ${{ github.workspace }}/libbitcoin-network
+
+
       - name: Checkout repository [libbitcoin-explorer]
         id: checkout-libbitcoin-explorer
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -568,6 +586,15 @@ jobs:
           fi
           if [[ -e "libbitcoin-system/obj/test.log" ]]; then
             cp "libbitcoin-system/obj/test.log" libbitcoin-system-test.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/Testing/Temporary/LastTest.log" ]]; then
+            cp "libbitcoin-network/obj/Testing/Temporary/LastTest.log" libbitcoin-network-LastTest.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/test-suite.log" ]]; then
+            cp "libbitcoin-network/obj/test-suite.log" libbitcoin-network-test-suite.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/test.log" ]]; then
+            cp "libbitcoin-network/obj/test.log" libbitcoin-network-test.errors
           fi
           if [[ -e "libbitcoin-explorer/obj/Testing/Temporary/LastTest.log" ]]; then
             cp "libbitcoin-explorer/obj/Testing/Temporary/LastTest.log" libbitcoin-explorer-LastTest.errors
@@ -924,6 +951,24 @@ jobs:
           rm -rf ${{ github.workspace }}/libbitcoin-system
 
 
+      - name: Checkout repository [libbitcoin-network]
+        id: checkout-libbitcoin-network
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          path: 'libbitcoin-network'
+          ref: ${{ steps.get-branch.outputs.branch }}
+          repository: ${{ github.repository_owner }}/libbitcoin-network
+
+      - name: Checkout repository [libbitcoin-network] cleanup on failure
+        continue-on-error: true
+        if: steps.checkout-libbitcoin-network.outcome == 'failure'
+        shell: bash
+        run: |
+          rm -rf ${{ github.workspace }}/libbitcoin-network
+
+
       - name: Checkout repository [libbitcoin-explorer]
         id: checkout-libbitcoin-explorer
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -1018,6 +1063,15 @@ jobs:
           fi
           if [[ -e "libbitcoin-system/obj/test.log" ]]; then
             cp "libbitcoin-system/obj/test.log" libbitcoin-system-test.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/Testing/Temporary/LastTest.log" ]]; then
+            cp "libbitcoin-network/obj/Testing/Temporary/LastTest.log" libbitcoin-network-LastTest.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/test-suite.log" ]]; then
+            cp "libbitcoin-network/obj/test-suite.log" libbitcoin-network-test-suite.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/test.log" ]]; then
+            cp "libbitcoin-network/obj/test.log" libbitcoin-network-test.errors
           fi
           if [[ -e "libbitcoin-explorer/obj/Testing/Temporary/LastTest.log" ]]; then
             cp "libbitcoin-explorer/obj/Testing/Temporary/LastTest.log" libbitcoin-explorer-LastTest.errors
@@ -1310,6 +1364,24 @@ jobs:
           rm -rf ${{ github.workspace }}/libbitcoin-system
 
 
+      - name: Checkout repository [libbitcoin-network]
+        id: checkout-libbitcoin-network
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          path: 'libbitcoin-network'
+          ref: ${{ steps.get-branch.outputs.branch }}
+          repository: ${{ github.repository_owner }}/libbitcoin-network
+
+      - name: Checkout repository [libbitcoin-network] cleanup on failure
+        continue-on-error: true
+        if: steps.checkout-libbitcoin-network.outcome == 'failure'
+        shell: bash
+        run: |
+          rm -rf ${{ github.workspace }}/libbitcoin-network
+
+
       - name: Checkout repository [libbitcoin-explorer]
         id: checkout-libbitcoin-explorer
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -1399,6 +1471,15 @@ jobs:
           fi
           if [[ -e "libbitcoin-system/obj/test.log" ]]; then
             cp "libbitcoin-system/obj/test.log" libbitcoin-system-test.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/Testing/Temporary/LastTest.log" ]]; then
+            cp "libbitcoin-network/obj/Testing/Temporary/LastTest.log" libbitcoin-network-LastTest.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/test-suite.log" ]]; then
+            cp "libbitcoin-network/obj/test-suite.log" libbitcoin-network-test-suite.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/test.log" ]]; then
+            cp "libbitcoin-network/obj/test.log" libbitcoin-network-test.errors
           fi
           if [[ -e "libbitcoin-explorer/obj/Testing/Temporary/LastTest.log" ]]; then
             cp "libbitcoin-explorer/obj/Testing/Temporary/LastTest.log" libbitcoin-explorer-LastTest.errors
@@ -1525,6 +1606,24 @@ jobs:
         shell: powershell
         run: |
           Remove-Item -Path ${{ github.workspace }}\libbitcoin-system -Recurse -Force -ErrorAction SilentlyContinue
+
+      - name: Checkout repository [libbitcoin-network]
+        id: checkout-libbitcoin-network
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          path: 'libbitcoin-network'
+          persist-credentials: false
+          ref: ${{ steps.get-branch.outputs.branch }}
+          repository: ${{ github.repository_owner }}/libbitcoin-network
+
+      - name: Checkout repository [libbitcoin-network] cleanup on failure
+        continue-on-error: true
+        if: steps.checkout-libbitcoin-network.outcome == 'failure'
+        shell: powershell
+        run: |
+          Remove-Item -Path ${{ github.workspace }}\libbitcoin-network -Recurse -Force -ErrorAction SilentlyContinue
 
       - name: Checkout repository [libbitcoin-explorer]
         id: checkout-libbitcoin-explorer

@@ -23,6 +23,7 @@
 
   <ImportGroup Label="PropertySheets">
     <Import Project="$(SolutionDir)libbitcoin-system.import.props" />
+    <Import Project="$(SolutionDir)libbitcoin-network.import.props" />
   </ImportGroup>
 
   <PropertyGroup Condition="'$(NuGetPackageRoot)' == ''">
@@ -32,14 +33,17 @@
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
     <Linkage-secp256k1 Condition="'$(Option-secp256k1)' == 'true'">dynamic</Linkage-secp256k1>
     <Linkage-libbitcoin-system>dynamic</Linkage-libbitcoin-system>
+    <Linkage-libbitcoin-network>dynamic</Linkage-libbitcoin-network>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
     <Linkage-secp256k1 Condition="'$(Option-secp256k1)' == 'true'">ltcg</Linkage-secp256k1>
     <Linkage-libbitcoin-system>ltcg</Linkage-libbitcoin-system>
+    <Linkage-libbitcoin-network>ltcg</Linkage-libbitcoin-network>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'static'">
     <Linkage-secp256k1 Condition="'$(Option-secp256k1)' == 'true'">static</Linkage-secp256k1>
     <Linkage-libbitcoin-system>static</Linkage-libbitcoin-system>
+    <Linkage-libbitcoin-network>static</Linkage-libbitcoin-network>
   </PropertyGroup>
 
   <!-- Messages -->
@@ -47,6 +51,7 @@
   <Target Name="LinkageInfo" BeforeTargets="PrepareForBuild">
     <Message Text="Linkage-secp256k1 : $(Linkage-secp256k1)" Importance="high"/>
     <Message Text="Linkage-_system   : $(Linkage-libbitcoin-system)" Importance="high"/>
+    <Message Text="Linkage-_network  : $(Linkage-libbitcoin-network)" Importance="high"/>
   </Target>
 
 </Project>

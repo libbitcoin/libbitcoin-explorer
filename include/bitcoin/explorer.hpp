@@ -14,7 +14,7 @@
  * Maintainers: Do not include this header internal to this library.
  */
 
-#include <bitcoin/system.hpp>
+#include <bitcoin/network.hpp>
 #include <bitcoin/explorer/client.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
