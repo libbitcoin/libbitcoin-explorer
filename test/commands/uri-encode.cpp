@@ -62,11 +62,7 @@ BC_AUTO_TEST_CASE(uri_encode__invoke__address_label_amount_message__okay_output)
     command.set_message_option("Donation for project xyz");
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
-    // % escaping changed when upgrading from boost 1.87 to boost 1.91.
-    ////BX_REQUIRE_OUTPUT("bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L?amount=50&label=Luke-Jr&message=Donation%20for%20project%20xyz\n");
-
-    // TODO: enable when all on boost 1.91.
-    ////BX_REQUIRE_OUTPUT("bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L?amount=50&label=Luke-Jr&message=Donation+for+project+xyz\n");
+    BX_REQUIRE_OUTPUT("bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L?amount=50&label=Luke-Jr&message=Donation%20for%20project%20xyz\n");
 }
 
 // additional (similar to libbitcoin vectors)
@@ -96,11 +92,7 @@ BC_AUTO_TEST_CASE(uri_encode__invoke__composite__okay_output)
     command.set_request_option("http://example.com?purchase=shoes&user=bob");
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
-    // % escaping changed when upgrading from boost 1.87 to boost 1.91.
-    ////BX_REQUIRE_OUTPUT("bitcoin:1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E?amount=100.0012&label=%26=%5Cn%23&message=hello%20bitcoin&r=http://example.com?purchase=shoes%26user=bob\n");
-
-    // TODO: enable when all on boost 1.91.
-    ////BX_REQUIRE_OUTPUT("bitcoin:1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E?amount=100.0012&label=%26=%5Cn%23&message=hello+bitcoin&r=http://example.com?purchase=shoes%26user=bob\n");
+    BX_REQUIRE_OUTPUT("bitcoin:1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E?amount=100.0012&label=%26%3D%5Cn%23&message=hello%20bitcoin&r=http://example.com?purchase%3Dshoes%26user%3Dbob\n");
 }
 
 BC_AUTO_TEST_SUITE_END()
