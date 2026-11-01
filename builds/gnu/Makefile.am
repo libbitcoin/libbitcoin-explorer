@@ -201,12 +201,12 @@ src/version.cpp: FORCE
 	height=`git -C ${srcdir} rev-list --count HEAD 2>/dev/null || echo 0`; \
 	url=`git -C ${srcdir} ls-remote --get-url 2>/dev/null | grep -e '://' -e '@' || echo unknown`; \
 	if git -C ${srcdir} status --porcelain 2>/dev/null | grep -q . ; then dirty=1; else dirty=0; fi; \
-	sed -e "s|@LIBBITCOIN_VERSION_MAJOR@|${LIBBITCOIN_VERSION_MAJOR}|g" \
-	    -e "s|@LIBBITCOIN_VERSION_MINOR@|${LIBBITCOIN_VERSION_MINOR}|g" \
-	    -e "s|@LIBBITCOIN_VERSION_PATCH@|$$height|g" \
-	    -e "s|@GIT_COMMIT_HASH@|$$commit|g" \
-	    -e "s|@GIT_ORIGIN_URL@|$$url|g" \
-	    -e "s|@GIT_DIRTY@|$$dirty|g" \
+	sed -e "s|[@]LIBBITCOIN_VERSION_MAJOR[@]|${LIBBITCOIN_VERSION_MAJOR}|g" \
+	    -e "s|[@]LIBBITCOIN_VERSION_MINOR[@]|${LIBBITCOIN_VERSION_MINOR}|g" \
+	    -e "s|[@]LIBBITCOIN_VERSION_PATCH[@]|$$height|g" \
+	    -e "s|[@]GIT_COMMIT_HASH[@]|$$commit|g" \
+	    -e "s|[@]GIT_ORIGIN_URL[@]|$$url|g" \
+	    -e "s|[@]GIT_DIRTY[@]|$$dirty|g" \
 	    ${srcdir}/../../src/version.cpp.in > $@.tmp; \
 	if cmp -s $@.tmp $@; then rm -f $@.tmp; else mv -f $@.tmp $@; fi
 
@@ -394,6 +394,7 @@ test_libbitcoin_explorer_test_CPPFLAGS = \
     ${src_libbitcoin_explorer_la_CPPFLAGS}
 
 test_libbitcoin_explorer_test_LDFLAGS = \
+    ${mingw_program_LDFLAGS} \
     ${boost_LDFLAGS} \
     ${src_libbitcoin_explorer_la_LDFLAGS}
 
@@ -537,6 +538,8 @@ console_bx_CPPFLAGS = \
     ${src_libbitcoin_explorer_la_CPPFLAGS}
 
 console_bx_LDFLAGS = \
+    ${mingw_program_LDFLAGS} \
+    ${mingw_wmain_LDFLAGS} \
     ${src_libbitcoin_explorer_la_LDFLAGS}
 
 console_bx_LDADD = \
