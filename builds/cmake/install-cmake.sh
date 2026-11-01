@@ -488,7 +488,8 @@ main()
     libbitcoin_system_FLAGS=()
 
     libbitcoin_system_OPTIONS=(
-        "-Dwith-tests:BOOL=OFF")
+        "-Dwith-tests:BOOL=OFF"
+        "-Dwith-console:BOOL=OFF")
 
     libbitcoin_explorer_FLAGS=()
 
