@@ -31,6 +31,8 @@
         $(ProjectDir)..\..\..\..\..\libbitcoin-explorer\bin\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libbitcoin-explorer)\;
         $(ProjectDir)..\..\..\..\..\libbitcoin-explorer\obj\libbitcoin-explorer\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libbitcoin-explorer)\;%(AdditionalLibraryDirectories)
       </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Linkage-libbitcoin-explorer)' == 'dynamic' And $(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\bin\$(PlatformName)\Debug\$(PlatformToolset)\dynamic\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Linkage-libbitcoin-explorer)' == 'dynamic' And $(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\bin\$(PlatformName)\Release\$(PlatformToolset)\dynamic\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
 </Project>
