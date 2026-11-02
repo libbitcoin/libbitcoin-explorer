@@ -390,15 +390,15 @@ endif()
 # bitcoin-explorer executable
 #------------------------------------------------------------------------------
 if ( with-console )
-  add_executable( bitcoin-explorer )
+  add_library( bitcoin-explorer-objects STATIC )
 
-  target_compile_features( bitcoin-explorer
+  target_compile_features( bitcoin-explorer-objects
     PUBLIC
       cxx_std_20
   )
 
   if ( NOT MSVC )
-    target_compile_options( bitcoin-explorer
+    target_compile_options( bitcoin-explorer-objects
       PRIVATE
         -Wall
         -Wextra
@@ -415,19 +415,27 @@ if ( with-console )
     )
   endif()
 
-  file( GLOB_RECURSE bitcoin_explorer_SOURCES CONFIGURE_DEPENDS
+  file( GLOB_RECURSE bitcoin_explorer_objects_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/../../console/*.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../console/*.cpp"
   )
 
-  target_sources( bitcoin-explorer
+  target_sources( bitcoin-explorer-objects
     PRIVATE
-      ${bitcoin_explorer_SOURCES}
+      ${bitcoin_explorer_objects_SOURCES}
   )
+
+  target_link_libraries( bitcoin-explorer-objects
+    PRIVATE
+      bitcoin::explorer
+  )
+
+  file( CONFIGURE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/bitcoin-explorer.cpp" CONTENT "" )
+  add_executable( bitcoin-explorer "${CMAKE_CURRENT_BINARY_DIR}/bitcoin-explorer.cpp" )
 
   target_link_libraries( bitcoin-explorer
     PRIVATE
-      bitcoin::explorer
+      $<LINK_LIBRARY:WHOLE_ARCHIVE,bitcoin-explorer-objects>
   )
 
   set_target_properties( bitcoin-explorer
