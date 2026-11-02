@@ -21,8 +21,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(address_to_key__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(address_to_key__invoke)
 
 // Vectors.
 #define BX_ADDRESS_TO_KEY_ADDRESS1 "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz"
@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_SUITE(address_to_key__invoke)
 #define BX_ADDRESS_TO_KEY_KEY3 "6191c3b590bfcfa0475e877c302da1e323497acf3b42c08d8fa28e364edf018b\n"
 #define BX_ADDRESS_TO_KEY_TESTNET_KEY1 "1abf6c34c4370673aee3ce1c1e6c16de549cc6baa065ff3e4b23414b1dc2eca7\n"
 
-BOOST_AUTO_TEST_CASE(address_to_key__invoke__address1__okay_output)
+BC_AUTO_TEST_CASE(address_to_key__invoke__address1__okay_output)
 {
     BX_DECLARE_COMMAND(bc::explorer::commands::address_to_key);
     command.set_payment_address_argument({ BX_ADDRESS_TO_KEY_ADDRESS1 });
@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(address_to_key__invoke__address1__okay_output)
     BX_REQUIRE_OUTPUT(BX_ADDRESS_TO_KEY_KEY1);
 }
 
-BOOST_AUTO_TEST_CASE(address_to_key__invoke__address2__okay_output)
+BC_AUTO_TEST_CASE(address_to_key__invoke__address2__okay_output)
 {
     BX_DECLARE_COMMAND(bc::explorer::commands::address_to_key);
     command.set_wallet_pay_to_script_hash_version_setting(5);
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(address_to_key__invoke__address2__okay_output)
     BX_REQUIRE_OUTPUT(BX_ADDRESS_TO_KEY_KEY2);
 }
 
-BOOST_AUTO_TEST_CASE(address_to_key__invoke__address3__okay_output)
+BC_AUTO_TEST_CASE(address_to_key__invoke__address3__okay_output)
 {
     BX_DECLARE_COMMAND(bc::explorer::commands::address_to_key);
     command.set_payment_address_argument({ BX_ADDRESS_TO_KEY_ADDRESS3 });
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE(address_to_key__invoke__address3__okay_output)
     BX_REQUIRE_OUTPUT(BX_ADDRESS_TO_KEY_KEY3);
 }
 
-BOOST_AUTO_TEST_CASE(address_to_key__invoke__testnet_address1__okay_output)
+BC_AUTO_TEST_CASE(address_to_key__invoke__testnet_address1__okay_output)
 {
     BX_DECLARE_COMMAND(bc::explorer::commands::address_to_key);
     command.set_wallet_pay_to_public_key_hash_version_setting(111);
@@ -70,5 +70,5 @@ BOOST_AUTO_TEST_CASE(address_to_key__invoke__testnet_address1__okay_output)
     BX_REQUIRE_OUTPUT(BX_ADDRESS_TO_KEY_TESTNET_KEY1);
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

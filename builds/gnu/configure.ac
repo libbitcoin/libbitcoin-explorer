@@ -154,7 +154,6 @@ AC_MSG_RESULT([$enable_ndebug])
 AM_CONDITIONAL([ENABLE_NDEBUG], [test "x${enable_ndebug}" != "xno"])
 AS_IF([test "x${enable_ndebug}" != "xno"], [AC_DEFINE([NDEBUG])])
 
-AS_IF([test "x${enable_shared}" != "xno"], [AC_DEFINE([BOOST_ALL_DYN_LINK])])
 
 AC_MSG_CHECKING([--with-tests option])
 AC_ARG_WITH([tests],
@@ -250,45 +249,26 @@ AS_CASE([${CC}], [*gnu*],
 # Check dependencies.
 #==============================================================================
 PKG_CHECK_MODULES(
-  [libbitcoin_system],
-  [libbitcoin-system >= 4.0.0],
+  [libbitcoin_network],
+  [libbitcoin-network >= 4.0.0],
   [],
   [
-    AC_MSG_ERROR([libbitcoin-system >= 4.0.0 is required but was not found.])
+    AC_MSG_ERROR([libbitcoin-network >= 4.0.0 is required but was not found.])
   ])
-AC_SUBST([libbitcoin_system_PKG], ['libbitcoin-system >= 4.0.0'])
-AC_SUBST([libbitcoin_system_VERSION], [`${PKG_CONFIG} --modversion libbitcoin-system`])
-AC_SUBST([libbitcoin_system_CPPFLAGS], [${libbitcoin_system_CFLAGS}])
-AC_SUBST([libbitcoin_system_ISYS_CPPFLAGS], [`echo ${libbitcoin_system_CPPFLAGS} | ${SED} s/^-I/-isystem/g | ${SED} s/' -I'/' -isystem'/g`])
-AC_MSG_NOTICE([libbitcoin_system_VERSION : ${libbitcoin_system_VERSION}])
-AC_MSG_NOTICE([libbitcoin_system_CPPFLAGS : ${libbitcoin_system_CPPFLAGS}])
-AC_MSG_NOTICE([libbitcoin_system_ISYS_CPPFLAGS : ${libbitcoin_system_ISYS_CPPFLAGS}])
-AC_MSG_NOTICE([libbitcoin_system_OTHER_CFLAGS : ${libbitcoin_system_OTHER_CFLAGS}])
-AC_MSG_NOTICE([libbitcoin_system_INCLUDEDIR : ${libbitcoin_system_INCLUDEDIR}])
-AC_MSG_NOTICE([libbitcoin_system_LIBS : ${libbitcoin_system_LIBS}])
+AC_SUBST([libbitcoin_network_PKG], ['libbitcoin-network >= 4.0.0'])
+AC_SUBST([libbitcoin_network_VERSION], [`${PKG_CONFIG} --modversion libbitcoin-network`])
+AC_SUBST([libbitcoin_network_CPPFLAGS], [${libbitcoin_network_CFLAGS}])
+AC_SUBST([libbitcoin_network_ISYS_CPPFLAGS], [`echo ${libbitcoin_network_CPPFLAGS} | ${SED} s/^-I/-isystem/g | ${SED} s/' -I'/' -isystem'/g`])
+AC_MSG_NOTICE([libbitcoin_network_VERSION : ${libbitcoin_network_VERSION}])
+AC_MSG_NOTICE([libbitcoin_network_CPPFLAGS : ${libbitcoin_network_CPPFLAGS}])
+AC_MSG_NOTICE([libbitcoin_network_ISYS_CPPFLAGS : ${libbitcoin_network_ISYS_CPPFLAGS}])
+AC_MSG_NOTICE([libbitcoin_network_OTHER_CFLAGS : ${libbitcoin_network_OTHER_CFLAGS}])
+AC_MSG_NOTICE([libbitcoin_network_INCLUDEDIR : ${libbitcoin_network_INCLUDEDIR}])
+AC_MSG_NOTICE([libbitcoin_network_LIBS : ${libbitcoin_network_LIBS}])
 AS_IF([test "x${enable_isystem}" != "xno"],
-  [AC_SUBST([libbitcoin_system_BUILD_CPPFLAGS], [${libbitcoin_system_ISYS_CPPFLAGS}])],
-  [AC_SUBST([libbitcoin_system_BUILD_CPPFLAGS], [${libbitcoin_system_CPPFLAGS}])])
-AC_MSG_NOTICE([libbitcoin_system_BUILD_CPPFLAGS : ${libbitcoin_system_BUILD_CPPFLAGS}])
-
-AX_BOOST_BASE([1.86.0],
-  [
-    AC_SUBST([boost_CPPFLAGS], [${BOOST_CPPFLAGS}])
-    AC_SUBST([boost_ISYSTEM_CPPFLAGS], [`echo ${boost_CPPFLAGS} | ${SED} s/^-I/-isystem/g | ${SED} s/' -I'/' -isystem'/g`])
-    AC_SUBST([boost_LDFLAGS], [${BOOST_LDFLAGS}])
-    AC_MSG_NOTICE([boost_CPPFLAGS : ${boost_CPPFLAGS}])
-    AC_MSG_NOTICE([boost_ISYS_CPPFLAGS : ${boost_ISYS_CPPFLAGS}])
-    AC_MSG_NOTICE([boost_LDFLAGS : ${boost_LDFLAGS}])
-  ],
-  [
-    AC_MSG_ERROR([Boost 1.86.0 or later is required but was not found.])
-  ])
-
-AS_IF([test "x${enable_isystem}" != "xno"],
-  [ AC_SUBST([boost_BUILD_CPPFLAGS], [${boost_ISYSTEM_CPPFLAGS}]) ],
-  [ AC_SUBST([boost_BUILD_CPPFLAGS], [${boost_CPPFLAGS}]) ])
-
-AC_MSG_NOTICE([boost_BUILD_CPPFLAGS : ${boost_BUILD_CPPFLAGS}])
+  [AC_SUBST([libbitcoin_network_BUILD_CPPFLAGS], [${libbitcoin_network_ISYS_CPPFLAGS}])],
+  [AC_SUBST([libbitcoin_network_BUILD_CPPFLAGS], [${libbitcoin_network_CPPFLAGS}])])
+AC_MSG_NOTICE([libbitcoin_network_BUILD_CPPFLAGS : ${libbitcoin_network_BUILD_CPPFLAGS}])
 
 AC_CONFIG_FILES([
     Makefile

@@ -21,8 +21,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(address_encode__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(address_encode__invoke)
 
 // vectors
 #define BX_ADDRESS_ENCODE_RIPEMD160_A "b472a266d0bd89c13706a4132ccfb16f7c3b9fcb"
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(address_encode__invoke)
 #define BX_ADDRESS_ENCODE_ADDRESS_A_MAINNET "1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E"
 #define BX_ADDRESS_ENCODE_ADDRESS_A_TESTNET "mwy5FX7MVgDutKYbXBxQG5q7EL6pmhHT58"
 
-BOOST_AUTO_TEST_CASE(address_encode__invoke__mainnet__okay_output)
+BC_AUTO_TEST_CASE(address_encode__invoke__mainnet__okay_output)
 {
     BX_DECLARE_COMMAND(address_encode);
     command.set_ripemd160_argument({ BX_ADDRESS_ENCODE_RIPEMD160_A });
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(address_encode__invoke__mainnet__okay_output)
     BX_REQUIRE_OUTPUT(BX_ADDRESS_ENCODE_ADDRESS_A_MAINNET "\n");
 }
 
-BOOST_AUTO_TEST_CASE(address_encode__invoke__testnet__okay_output)
+BC_AUTO_TEST_CASE(address_encode__invoke__testnet__okay_output)
 {
     BX_DECLARE_COMMAND(address_encode);
     command.set_version_option(111);
@@ -48,5 +48,5 @@ BOOST_AUTO_TEST_CASE(address_encode__invoke__testnet__okay_output)
     BX_REQUIRE_OUTPUT(BX_ADDRESS_ENCODE_ADDRESS_A_TESTNET "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

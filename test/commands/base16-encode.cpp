@@ -21,8 +21,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(base16_encode__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(base16_encode__invoke)
 
 // vectors
 #define BX_BASE16_ENCODE_NIST_DECODED_A "abc"
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(base16_encode__invoke)
 #define BX_BASE16_ENCODE_NIST_ENCODED_A "616263"
 #define BX_BASE16_ENCODE_NIST_ENCODED_B "6162636462636465636465666465666765666768666768696768696a68696a6b696a6b6c6a6b6c6d6b6c6d6e6c6d6e6f6d6e6f706e6f7071"
 
-BOOST_AUTO_TEST_CASE(base16_encode__invoke__NIST_SHA256_A__okay_output)
+BC_AUTO_TEST_CASE(base16_encode__invoke__NIST_SHA256_A__okay_output)
 {
     BX_DECLARE_COMMAND(base16_encode);
     command.set_data_argument({ BX_BASE16_ENCODE_NIST_DECODED_A });
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(base16_encode__invoke__NIST_SHA256_A__okay_output)
     BX_REQUIRE_OUTPUT(BX_BASE16_ENCODE_NIST_ENCODED_A "\n");
 }
 
-BOOST_AUTO_TEST_CASE(base16_encode__invoke__NIST_SHA256_B__okay_output)
+BC_AUTO_TEST_CASE(base16_encode__invoke__NIST_SHA256_B__okay_output)
 {
     BX_DECLARE_COMMAND(base16_encode);
     command.set_data_argument({ BX_BASE16_ENCODE_NIST_DECODED_B });
@@ -47,5 +47,5 @@ BOOST_AUTO_TEST_CASE(base16_encode__invoke__NIST_SHA256_B__okay_output)
     BX_REQUIRE_OUTPUT(BX_BASE16_ENCODE_NIST_ENCODED_B "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

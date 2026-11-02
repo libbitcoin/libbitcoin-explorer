@@ -21,10 +21,10 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(sha512__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(sha512__invoke)
 
-BOOST_AUTO_TEST_CASE(sha1512__invoke__always__okay_output)
+BC_AUTO_TEST_CASE(sha1512__invoke__always__okay_output)
 {
     BX_DECLARE_COMMAND(commands::sha512);
     command.set_base16_argument({ "900df00d" });
@@ -32,5 +32,5 @@ BOOST_AUTO_TEST_CASE(sha1512__invoke__always__okay_output)
     BX_REQUIRE_OUTPUT("d1f51c57b00d399be4e708bfd1d76d711bbbdda534383df4f06933187bce41fdfdaa6385cfa960f68abcd33ae0573deb39503f73e8e2b7645845671f11855f8e\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

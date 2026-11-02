@@ -21,8 +21,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(script_to_witness__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(script_to_witness__invoke)
 
 using namespace bc::system::wallet;
 
@@ -44,7 +44,7 @@ using namespace bc::system::wallet;
 ////    { PUBLIC_KEY2, "tb", "tb1qr47dd36u96r0fjle36hdygdnp0v6pwfgqe6jxg\n" }
 ////};
 ////
-////BOOST_AUTO_TEST_CASE(ec_to_witness__invoke__test_list__valid_expected)
+////BC_AUTO_TEST_CASE(ec_to_witness__invoke__test_list__valid_expected)
 ////{
 ////    for (const auto& test: test_vectors)
 ////    {
@@ -56,5 +56,5 @@ using namespace bc::system::wallet;
 ////    }
 ////}
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

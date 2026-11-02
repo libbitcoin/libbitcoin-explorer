@@ -21,12 +21,12 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(hd_to_public__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(hd_to_public__invoke)
 
 // github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-1
 
-BOOST_AUTO_TEST_CASE(hd_to_public__invoke__mainnet_vector_1__okay_output)
+BC_AUTO_TEST_CASE(hd_to_public__invoke__mainnet_vector_1__okay_output)
 {
     BX_DECLARE_COMMAND(hd_to_public);
     command.set_secret_version_option(76066276);
@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(hd_to_public__invoke__mainnet_vector_1__okay_output)
 
 // github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-2
 
-BOOST_AUTO_TEST_CASE(hd_to_public__invoke__mainnet_vector_2__okay_output)
+BC_AUTO_TEST_CASE(hd_to_public__invoke__mainnet_vector_2__okay_output)
 {
     BX_DECLARE_COMMAND(hd_to_public);
     command.set_secret_version_option(76066276);
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(hd_to_public__invoke__mainnet_vector_2__okay_output)
 
 // testnet
 
-BOOST_AUTO_TEST_CASE(hd_to_public__invoke__testnet__okay_output)
+BC_AUTO_TEST_CASE(hd_to_public__invoke__testnet__okay_output)
 {
     BX_DECLARE_COMMAND(hd_to_public);
     command.set_secret_version_option(70615956);
@@ -60,5 +60,5 @@ BOOST_AUTO_TEST_CASE(hd_to_public__invoke__testnet__okay_output)
     BX_REQUIRE_OUTPUT("tpubD6NzVbkrYhZ4XsZSMTS4pxCYhbDv2izadF87gTVBiR93Ysu3ZNe8pZaxTout4ifQXCUfp2wAChtcHNrbVka3KzfXNRM7gv9pwM57SB7AMFx\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

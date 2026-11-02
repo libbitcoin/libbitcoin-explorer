@@ -10,6 +10,6 @@ include( CMakeFindDependencyMacro )
 
 include( "${CMAKE_CURRENT_LIST_DIR}/libbitcoin-explorer-targets.cmake" )
 
-find_dependency( libbitcoin-system 4.0.0 REQUIRED )
+find_dependency( libbitcoin-network 4.0.0 REQUIRED )
 
 check_required_components(@PROJECT_NAME@)

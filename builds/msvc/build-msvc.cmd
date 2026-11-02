@@ -59,6 +59,13 @@ if "!libbitcoin_system_TAG!" == "" (
     set "libbitcoin_system_TAG=master"
 )
 
+if "!libbitcoin_network_OWNER!" == "" (
+    set "libbitcoin_network_OWNER=libbitcoin"
+)
+if "!libbitcoin_network_TAG!" == "" (
+    set "libbitcoin_network_TAG=master"
+)
+
 if "!libbitcoin_explorer_OWNER!" == "" (
     set "libbitcoin_explorer_OWNER=libbitcoin"
 )
@@ -165,6 +172,8 @@ if "!libbitcoin_explorer_TAG!" == "" (
     set "REMAPPED_PARAMS=!REMAPPED_PARAMS! !libbitcoin-system_PARAMS!"
     set "REMAPPED_PARAMS=!REMAPPED_PARAMS! !bitcoin-selector_PARAMS!"
     set "REMAPPED_PARAMS=!REMAPPED_PARAMS! !libbitcoin-system-test_PARAMS!"
+    set "REMAPPED_PARAMS=!REMAPPED_PARAMS! !libbitcoin-network_PARAMS!"
+    set "REMAPPED_PARAMS=!REMAPPED_PARAMS! !libbitcoin-network-test_PARAMS!"
     set "REMAPPED_PARAMS=!REMAPPED_PARAMS! !libbitcoin-explorer_PARAMS!"
 
     call :msg_heading "Configuration"
@@ -188,6 +197,15 @@ if "!libbitcoin_explorer_TAG!" == "" (
         exit /b %ERRORLEVEL%
     )
     call :build_msbuild "libbitcoin-system" "builds\msvc\%proj_version%" "libbitcoin-system" "!REMAPPED_PARAMS!"
+    if %ERRORLEVEL% neq 0 (
+        exit /b %ERRORLEVEL%
+    )
+
+    call :source_github "!libbitcoin_network_OWNER!" "libbitcoin-network" "!libbitcoin_network_TAG!"
+    if %ERRORLEVEL% neq 0 (
+        exit /b %ERRORLEVEL%
+    )
+    call :build_msbuild "libbitcoin-network" "builds\msvc\%proj_version%" "libbitcoin-network" "!REMAPPED_PARAMS!"
     if %ERRORLEVEL% neq 0 (
         exit /b %ERRORLEVEL%
     )
@@ -550,6 +568,8 @@ if "!libbitcoin_explorer_TAG!" == "" (
 :display_constants
     call :msg "libbitcoin_system_OWNER         : !libbitcoin_system_OWNER!"
     call :msg "libbitcoin_system_TAG           : !libbitcoin_system_TAG!"
+    call :msg "libbitcoin_network_OWNER        : !libbitcoin_network_OWNER!"
+    call :msg "libbitcoin_network_TAG          : !libbitcoin_network_TAG!"
     call :msg "libbitcoin_explorer_OWNER       : !libbitcoin_explorer_OWNER!"
     call :msg "libbitcoin_explorer_TAG         : !libbitcoin_explorer_TAG!"
     exit /b %ERRORLEVEL%

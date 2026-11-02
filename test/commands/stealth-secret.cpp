@@ -22,8 +22,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(stealth_secret__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(stealth_secret__invoke)
 
 // vector
 #define BX_STEALTH_SECRET_SPEND_SECRET "d39758028e201e8edf6d6eec6910ae4038f9b1db3f2d4e2d109ed833be94a026"
@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_SUITE(stealth_secret__invoke)
 // expecatation
 #define BX_STEALTH_SECRET_STEALTH_PRIVATE_KEY "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475"
 
-BOOST_AUTO_TEST_CASE(stealth_secret__invoke__always__okay_output)
+BC_AUTO_TEST_CASE(stealth_secret__invoke__always__okay_output)
 {
     BX_DECLARE_COMMAND(stealth_secret);
     command.set_spend_secret_argument({ BX_STEALTH_SECRET_SPEND_SECRET });
@@ -41,5 +41,5 @@ BOOST_AUTO_TEST_CASE(stealth_secret__invoke__always__okay_output)
     BX_REQUIRE_OUTPUT(BX_STEALTH_SECRET_STEALTH_PRIVATE_KEY "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

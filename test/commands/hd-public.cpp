@@ -21,14 +21,14 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(hd_public__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(hd_public__invoke)
 
 // github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-1
 
 // public derivation
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h__failure_error)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h__failure_error)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h__failure_err
     BX_REQUIRE_ERROR(BX_HD_PUBLIC_HARD_OPTION_CONFLICT "\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1__okay_outp
     BX_REQUIRE_OUTPUT("xpub6ASuArnXKPbfEwhqN6e3mwBcDTgzisQN1wXN9BJcM47sSikHjJf3UFHKkNAWbWMiGj7Wf5uMash7SyYq527Hqck2AxYysAA7xmALppuCkwQ\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1_2h__failure_error)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1_2h__failure_error)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1_2h__failur
     BX_REQUIRE_ERROR(BX_HD_PUBLIC_HARD_OPTION_CONFLICT "\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1_2h_2__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1_2h_2__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1_2h_2__okay
     BX_REQUIRE_OUTPUT("xpub6FHa3pjLCk84BayeJxFW2SP4XRrFd1JYnxeLeU8EqN3vDfZmbqBqaGJAyiLjTAwm6ZLRQUMv1ZACTj37sR62cfN7fe5JnJ7dh8zL4fiyLHV\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1_2h_2_1000000000__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1_2h_2_1000000000__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1_2h_2_10000
 
 // private derivation
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h__okay_outpu
     BX_REQUIRE_OUTPUT("xpub68Gmy5EdvgibQVfPdqkBBCHxA5htiqg55crXYuXoQRKfDBFA1WEjWgP6LHhwBZeNK1VTsfTFUHCdrfp1bgwQ9xv5ski8PX9rL2dZXvgGDnw\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1__okay_out
     BX_REQUIRE_OUTPUT("xpub6ASuArnXKPbfEwhqN6e3mwBcDTgzisQN1wXN9BJcM47sSikHjJf3UFHKkNAWbWMiGj7Wf5uMash7SyYq527Hqck2AxYysAA7xmALppuCkwQ\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h__okay_
     BX_REQUIRE_OUTPUT("xpub6D4BDPcP2GT577Vvch3R8wDkScZWzQzMMUm3PWbmWvVJrZwQY4VUNgqFJPMM3No2dFDFGTsxxpG5uJh7n7epu4trkrX7x7DogT5Uv6fcLW5\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h_2__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h_2__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -138,7 +138,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h_2__oka
     BX_REQUIRE_OUTPUT("xpub6FHa3pjLCk84BayeJxFW2SP4XRrFd1JYnxeLeU8EqN3vDfZmbqBqaGJAyiLjTAwm6ZLRQUMv1ZACTj37sR62cfN7fe5JnJ7dh8zL4fiyLHV\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h_2_1000000000__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h_2_1000000000__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -154,7 +154,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h_2_1000
 
 // public derivation
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -166,7 +166,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0__okay_output)
     BX_REQUIRE_OUTPUT("xpub69H7F5d8KSRgmmdJg2KhpAK8SR3DjMwAdkxj3ZuxV27CprR9LgpeyGmXUbC6wb7ERfvrnKZjXoUmmDznezpbZb7ap6r1D3tgFxHmwMkQTPH\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h__failure_error)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h__failure_error)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
@@ -178,7 +178,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h__
     BX_REQUIRE_ERROR(BX_HD_PUBLIC_HARD_OPTION_CONFLICT "\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h_1__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h_1__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -190,7 +190,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h_1
     BX_REQUIRE_OUTPUT("xpub6DF8uhdarytz3FWdA8TvFSvvAh8dP3283MY7p2V4SeE2wyWmG5mg5EwVvmdMVCQcoNJxGoWaU9DCWh89LojfZ537wTfunKau47EL2dhHKon\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h_1_2147483646h__failure_error)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h_1_2147483646h__failure_error)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
@@ -202,7 +202,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h_1
     BX_REQUIRE_ERROR(BX_HD_PUBLIC_HARD_OPTION_CONFLICT "\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h_1_2147483646h_2__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h_1_2147483646h_2__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -216,7 +216,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h_1
 
 // private derivation
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -228,7 +228,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0__okay_output
     BX_REQUIRE_OUTPUT("xpub69H7F5d8KSRgmmdJg2KhpAK8SR3DjMwAdkxj3ZuxV27CprR9LgpeyGmXUbC6wb7ERfvrnKZjXoUmmDznezpbZb7ap6r1D3tgFxHmwMkQTPH\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
@@ -240,7 +240,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_
     BX_REQUIRE_OUTPUT("xpub6ASAVgeehLbnwdqV6UKMHVzgqAG8Gr6riv3Fxxpj8ksbH9ebxaEyBLZ85ySDhKiLDBrQSARLq1uNRts8RuJiHjaDMBU4Zn9h8LZNnBC5y4a\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_1__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_1__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -252,7 +252,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_
     BX_REQUIRE_OUTPUT("xpub6DF8uhdarytz3FWdA8TvFSvvAh8dP3283MY7p2V4SeE2wyWmG5mg5EwVvmdMVCQcoNJxGoWaU9DCWh89LojfZ537wTfunKau47EL2dhHKon\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_1_2147483646h__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_1_2147483646h__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
@@ -264,7 +264,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_
     BX_REQUIRE_OUTPUT("xpub6ERApfZwUNrhLCkDtcHTcxd75RbzS1ed54G1LkBUHQVHQKqhMkhgbmJbZRkrgZw4koxb5JaHWkY4ALHY2grBGRjaDMzQLcgJvLJuZZvRcEL\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_1_2147483646h_2__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_1_2147483646h_2__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -278,7 +278,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_
 
 // testnet
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__private_derivation_testnet__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__private_derivation_testnet__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -290,7 +290,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__private_derivation_testnet__okay_output)
     BX_REQUIRE_OUTPUT("tpubD9LPrAppw4effqYLPzG23WU3QwanZ63hVPcJXThtDrLL8NeB7qx1rZ1Lage8GLtHHjiJMNFhMS1pL6xBiM2MwpmBpZbDLXZxfUFEg9Fvh4t\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__public_derivation_testnet__okay_output)
+BC_AUTO_TEST_CASE(hd_public__invoke__public_derivation_testnet__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
@@ -302,5 +302,5 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__public_derivation_testnet__okay_output)
     BX_REQUIRE_OUTPUT("tpubDBUXE2QrFFQBfPLxoKD3U1zG294LmLSG3rD9MvREmKcExYBeH4U1gyHcrtZDZe6JFxMFYVzYYhRDWCuJAQE3AbdpD3Qz4FdPVu5UHLT1NKa\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

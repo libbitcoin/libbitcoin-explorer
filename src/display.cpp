@@ -61,8 +61,8 @@ void display_invalid_command(std::ostream& stream, const std::string& command,
     stream << std::endl;
 }
 
-// English only hack to patch missing arg name in boost exception message.
-static std::string fixup_boost_po_what_en(const std::string& what)
+// English only hack to patch missing option name in an exception message.
+static std::string fixup_option_message(const std::string& what)
 {
     std::string message(what);
     system::replace(message, "for option is invalid", "is invalid");
@@ -73,7 +73,7 @@ void display_invalid_parameter(std::ostream& stream,
     const std::string& message)
 {
     stream << std::format(BX_INVALID_PARAMETER,
-        fixup_boost_po_what_en(message)) << std::endl;
+        fixup_option_message(message)) << std::endl;
 }
 
 void display_usage(std::ostream& stream)

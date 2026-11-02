@@ -21,21 +21,21 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(settings__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(settings__invoke)
 
 #define BX_SETTINGS_EMPTY "{\"settings\":{\"server\":{\"connect_retries\":\"0\",\"connect_timeout_seconds\":\"0\",\"url\":\"localhost\"},\"wallet\":{\"hd_public_version\":\"0\",\"hd_secret_version\":\"0\",\"pay_to_public_key_hash_version\":\"0\",\"pay_to_script_hash_version\":\"0\",\"rule_fork_flags\":\"0\",\"transaction_version\":\"0\",\"wif_version\":\"0\"}}}\n"
 
 #define BX_SETTINGS_TEST_VALUES "{\"settings\":{\"server\":{\"connect_retries\":\"21\",\"connect_timeout_seconds\":\"22\",\"url\":\"https://mainnet.obelisk.net:42\"},\"wallet\":{\"hd_public_version\":\"2\",\"hd_secret_version\":\"3\",\"pay_to_public_key_hash_version\":\"4\",\"pay_to_script_hash_version\":\"5\",\"rule_fork_flags\":\"4294967295\",\"transaction_version\":\"6\",\"wif_version\":\"1\"}}}\n"
 
-BOOST_AUTO_TEST_CASE(settings__invoke__empty__okay_output)
+BC_AUTO_TEST_CASE(settings__invoke__empty__okay_output)
 {
     BX_DECLARE_COMMAND(commands::settings);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_SETTINGS_EMPTY);
 }
 
-BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
+BC_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
 {
     BX_DECLARE_COMMAND(commands::settings);
     command.set_wallet_wif_version_setting(1);
@@ -52,5 +52,5 @@ BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
     BX_REQUIRE_OUTPUT(BX_SETTINGS_TEST_VALUES);
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

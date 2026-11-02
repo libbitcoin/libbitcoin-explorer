@@ -21,8 +21,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(input_validate__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(input_validate__invoke)
 
 // The public key of the signer, who is also the owner of the output, derived from INPUT_SIGN_PRIVATE_KEY_A.
 #define INPUT_VALIDATE_PUBLIC_KEY_A "03c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0"
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_SUITE(input_validate__invoke)
 // One input no output.
 #define INPUT_VALIDATE_TX_B "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970000000000ffffffff0000000000"
 
-BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_single_output__okay_output)
+BC_AUTO_TEST_CASE(input_validate__invoke__single_input_single_output__okay_output)
 {
     BX_DECLARE_COMMAND(input_validate);
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_single_output__okay_ou
     BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_VALID_ENDORSEMENT "\n");
 }
 
-BOOST_AUTO_TEST_CASE(input_validate__invoke__invalid_index__failure_error)
+BC_AUTO_TEST_CASE(input_validate__invoke__invalid_index__failure_error)
 {
     BX_DECLARE_COMMAND(input_validate);
     command.set_index_option(42);
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__invalid_index__failure_error)
     BX_REQUIRE_ERROR(BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE "\n");
 }
 
-BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_no_output__invalid_output)
+BC_AUTO_TEST_CASE(input_validate__invoke__single_input_no_output__invalid_output)
 {
     BX_DECLARE_COMMAND(input_validate);
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
@@ -73,5 +73,5 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_no_output__invalid_out
     BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

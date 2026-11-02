@@ -21,15 +21,15 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(obsolete)
-BOOST_AUTO_TEST_SUITE(wrap_encode__invoke)
+BC_AUTO_TEST_SUITE(obsolete)
+BC_AUTO_TEST_SUITE(wrap_encode__invoke)
 
-BOOST_AUTO_TEST_CASE(wrap_encode__invoke__always__failure_error)
+BC_AUTO_TEST_CASE(wrap_encode__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(wrap_encode);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_WRAP_ENCODE_OBSOLETE "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

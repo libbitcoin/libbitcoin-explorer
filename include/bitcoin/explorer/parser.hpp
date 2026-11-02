@@ -29,7 +29,7 @@ namespace explorer {
 /// Parse configurable values from environment variables, settings file, and
 /// command line positional and non-positional options.
 class BCX_API parser
-  : public system::config::parser
+  : public system::options::parser
 {
 public:
     /// Construct the parser for the given command.
@@ -58,7 +58,7 @@ protected:
         const char* argv[]);
 
     // Expose polymorphic load_command_variables method from base.
-    using system::config::parser::load_command_variables;
+    using system::options::parser::load_command_variables;
 
     bool help_;
     command& instance_;

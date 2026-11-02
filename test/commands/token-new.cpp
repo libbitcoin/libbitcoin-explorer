@@ -20,17 +20,17 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(token_new__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(token_new__invoke)
 
-BOOST_AUTO_TEST_CASE(token_new__invoke__empty_salt__failure_error)
+BC_AUTO_TEST_CASE(token_new__invoke__empty_salt__failure_error)
 {
     BX_DECLARE_COMMAND(token_new);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_TOKEN_NEW_SHORT_SALT "\n");
 }
 
-BOOST_AUTO_TEST_CASE(token_new__invoke__max_lot_4_byte_salt__okay)
+BC_AUTO_TEST_CASE(token_new__invoke__max_lot_4_byte_salt__okay)
 {
     BX_DECLARE_COMMAND(token_new);
     command.set_lot_option(1048575);
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(token_new__invoke__max_lot_4_byte_salt__okay)
     BX_REQUIRE_OUTPUT("passphrasecpXbDqG47STo6Rxes8CN6m1f8rV8SixGq3MQ3XWmWeBShSN4dXoKETuoM9oKPP\n");
 }
 
-BOOST_AUTO_TEST_CASE(token_new__invoke__max_sequence_4_byte_salt__okay)
+BC_AUTO_TEST_CASE(token_new__invoke__max_sequence_4_byte_salt__okay)
 {
     BX_DECLARE_COMMAND(token_new);
     command.set_sequence_option(4095);
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(token_new__invoke__max_sequence_4_byte_salt__okay)
 
 // Wiki Examples
 
-BOOST_AUTO_TEST_CASE(token_new__invoke__example_1_lot_sequence_defaults__okay)
+BC_AUTO_TEST_CASE(token_new__invoke__example_1_lot_sequence_defaults__okay)
 {
     BX_DECLARE_COMMAND(token_new);
     command.set_salt_argument({ "baadf00d" });
@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE(token_new__invoke__example_1_lot_sequence_defaults__okay)
     BX_REQUIRE_OUTPUT("passphrasecpXbDpHuo8F7yuZqR49koDA9uQojPijjjZaxsar7Woo9pfHJbeWF3VMU9EPBqJ\n");
 }
 
-BOOST_AUTO_TEST_CASE(token_new__invoke__example_2_lot_sequence__okay)
+BC_AUTO_TEST_CASE(token_new__invoke__example_2_lot_sequence__okay)
 {
     BX_DECLARE_COMMAND(token_new);
     command.set_lot_option(7);
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE(token_new__invoke__example_2_lot_sequence__okay)
     BX_REQUIRE_OUTPUT("passphrasecpXbDpHupPUjQAZSn3kLNyE2ubf6yEjgXFWcHzvjr3gn6Mk9yxNBhGxM7x75Sv\n");
 }
 
-BOOST_AUTO_TEST_CASE(token_new__invoke__example_3_invalid_salt__failure_error)
+BC_AUTO_TEST_CASE(token_new__invoke__example_3_invalid_salt__failure_error)
 {
     BX_DECLARE_COMMAND(token_new);
     command.set_salt_argument({ "baadf0" });
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE(token_new__invoke__example_3_invalid_salt__failure_error)
     BX_REQUIRE_ERROR(BX_TOKEN_NEW_SHORT_SALT "\n");
 }
 
-BOOST_AUTO_TEST_CASE(token_new__invoke__example_4_invalid_lot__failure_error)
+BC_AUTO_TEST_CASE(token_new__invoke__example_4_invalid_lot__failure_error)
 {
     BX_DECLARE_COMMAND(token_new);
     command.set_lot_option(1048575 + 1);
@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE(token_new__invoke__example_4_invalid_lot__failure_error)
     BX_REQUIRE_ERROR(BX_TOKEN_NEW_MAXIMUM_LOT "\n");
 }
 
-BOOST_AUTO_TEST_CASE(token_new__invoke__example_5_invalid_sequence__failure_error)
+BC_AUTO_TEST_CASE(token_new__invoke__example_5_invalid_sequence__failure_error)
 {
     BX_DECLARE_COMMAND(token_new);
     command.set_sequence_option(4095 + 1);
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE(token_new__invoke__example_5_invalid_sequence__failure_erro
     BX_REQUIRE_ERROR(BX_TOKEN_NEW_MAXIMUM_SEQUENCE "\n");
 }
 
-BOOST_AUTO_TEST_CASE(token_new__invoke__example_6_piped_input_lot_sequence__okay)
+BC_AUTO_TEST_CASE(token_new__invoke__example_6_piped_input_lot_sequence__okay)
 {
     BX_DECLARE_COMMAND(token_new);
     command.set_lot_option(7);
@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE(token_new__invoke__example_6_piped_input_lot_sequence__okay
     BX_REQUIRE_OUTPUT("passphraseeJe8Psbqrj3z8KmyVD1rrtmuvBVoGn8iVSve5HQS4ZG6m8mKws2P4ijJ3Mc1nC\n");
 }
 
-BOOST_AUTO_TEST_CASE(token_new__invoke__example_7_unused_salt_bits__okay)
+BC_AUTO_TEST_CASE(token_new__invoke__example_7_unused_salt_bits__okay)
 {
     BX_DECLARE_COMMAND(token_new);
     command.set_lot_option(7);
@@ -120,7 +120,7 @@ BOOST_AUTO_TEST_CASE(token_new__invoke__example_7_unused_salt_bits__okay)
     BX_REQUIRE_OUTPUT("passphraseeJe8Psbqrj3z8KmyVD1rrtmuvBVoGn8iVSve5HQS4ZG6m8mKws2P4ijJ3Mc1nC\n");
 }
 
-BOOST_AUTO_TEST_CASE(token_new__invoke__example_8_piped_commands__okay)
+BC_AUTO_TEST_CASE(token_new__invoke__example_8_piped_commands__okay)
 {
     BX_DECLARE_COMMAND(token_new);
     command.set_salt_argument({ "f6af40a01b79c95fef5e397eca05e27d7a3d1c35b01108db" });
@@ -129,5 +129,5 @@ BOOST_AUTO_TEST_CASE(token_new__invoke__example_8_piped_commands__okay)
     BX_REQUIRE_OUTPUT("passphraseryQXuRZZQ3Jw5rAT7m6MzxkGSSRmysq3Ayj9vuEHEnbVPJSmRQ2xYFKDKjGYrq\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

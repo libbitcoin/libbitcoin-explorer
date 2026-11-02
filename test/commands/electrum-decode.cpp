@@ -21,11 +21,11 @@
 ////
 ////BX_USING_NAMESPACES()
 ////
-////BOOST_AUTO_TEST_SUITE(offline)
-////BOOST_AUTO_TEST_SUITE(electrum_decode__invoke)
+////BC_AUTO_TEST_SUITE(offline)
+////BC_AUTO_TEST_SUITE(electrum_decode__invoke)
 ////
 ////
-////BOOST_AUTO_TEST_CASE(electrum_decode__invoke__17_bytes__okay_output)
+////BC_AUTO_TEST_CASE(electrum_decode__invoke__17_bytes__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(electrum_decode);
 ////    command.set_entropy_argument({ "05e669b4270f4e25bce6fc3736170d423c" });
@@ -33,7 +33,7 @@
 ////    BX_REQUIRE_OUTPUT("giggle crush argue inflict wear defy combine evolve tiger spatial crumble fury\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(electrum_decode__invoke__en_dictionary_prefix__okay_output)
+////BC_AUTO_TEST_CASE(electrum_decode__invoke__en_dictionary_prefix__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(electrum_decode);
 ////    command.set_entropy_argument({ "05e669b4270f4e25bce6fc3736170d423c" });
@@ -43,7 +43,7 @@
 ////    BX_REQUIRE_OUTPUT("giggle crush argue inflict wear defy combine evolve tiger spatial crumble fury\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(electrum_decode__invoke__es_dictionary_prefix__okay_output)
+////BC_AUTO_TEST_CASE(electrum_decode__invoke__es_dictionary_prefix__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(electrum_decode);
 ////    command.set_entropy_argument({ "05e669b4270f4e25bce6fc3736170d423c" });
@@ -53,7 +53,7 @@
 ////    BX_REQUIRE_OUTPUT("gráfico codo ámbar insecto verbo cráter celoso entrar tarjeta sala coco frito\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(electrum_decode__invoke__32_bytes__okay_output)
+////BC_AUTO_TEST_CASE(electrum_decode__invoke__32_bytes__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(electrum_decode);
 ////    command.set_entropy_argument({ "b0756302179e800b182514c729f1d6814c377ff06097569ef540e6c1f1950f08" });
@@ -62,5 +62,5 @@
 ////}
 ////
 ////
-////BOOST_AUTO_TEST_SUITE_END()
-////BOOST_AUTO_TEST_SUITE_END()
+////BC_AUTO_TEST_SUITE_END()
+////BC_AUTO_TEST_SUITE_END()

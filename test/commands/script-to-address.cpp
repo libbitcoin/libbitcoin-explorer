@@ -21,10 +21,10 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(script_to_address__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(script_to_address__invoke)
 
-BOOST_AUTO_TEST_CASE(script_to_address__invoke__mainnet__expected_output)
+BC_AUTO_TEST_CASE(script_to_address__invoke__mainnet__expected_output)
 {
     BX_DECLARE_COMMAND(script_to_address);
     command.set_version_option(5);
@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(script_to_address__invoke__mainnet__expected_output)
     BX_REQUIRE_OUTPUT("3F6i6kwkevjR7AsAd4te2YB2zZyASEm1HM\n");
 }
 
-BOOST_AUTO_TEST_CASE(script_to_address__invoke__testnet__expected_output)
+BC_AUTO_TEST_CASE(script_to_address__invoke__testnet__expected_output)
 {
     BX_DECLARE_COMMAND(script_to_address);
     command.set_version_option(196);
@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(script_to_address__invoke__testnet__expected_output)
 }
 
 // Vector: www.reddit.com/r/Bitcoin/comments/2h4ic8/why_dont_rbitcoin_community_donate_towards/
-BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig_mainnet__expected_output)
+BC_AUTO_TEST_CASE(script_to_address__invoke__multisig_mainnet__expected_output)
 {
     BX_DECLARE_COMMAND(script_to_address);
     command.set_version_option(5);
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig_mainnet__expected_outpu
     BX_REQUIRE_OUTPUT("3CS58tZGJtjz4qBFyNgQRtneKaWUjeEZVM\n");
 }
 
-BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig_testnet__expected_output)
+BC_AUTO_TEST_CASE(script_to_address__invoke__multisig_testnet__expected_output)
 {
     BX_DECLARE_COMMAND(script_to_address);
     command.set_version_option(196);
@@ -83,5 +83,5 @@ BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig_testnet__expected_outpu
     BX_REQUIRE_OUTPUT("2N3zHCdVHvMFLGcooeWJH3qmuXvieWfEFKG\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

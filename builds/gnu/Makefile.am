@@ -45,13 +45,13 @@ src_libbitcoin_explorer_la_LIBS = src/libbitcoin-explorer.la
 src_libbitcoin_explorer_la_CPPFLAGS = \
     -I${top_builddir}/include \
     -I${srcdir}/../../include \
-    ${libbitcoin_system_BUILD_CPPFLAGS}
+    ${libbitcoin_network_BUILD_CPPFLAGS}
 
 src_libbitcoin_explorer_la_LDFLAGS = \
-    ${libbitcoin_system_LDFLAGS}
+    ${libbitcoin_network_LDFLAGS}
 
 src_libbitcoin_explorer_la_LIBADD = \
-    ${libbitcoin_system_LIBS}
+    ${libbitcoin_network_LIBS}
 
 src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/client.cpp \
@@ -390,16 +390,13 @@ check_PROGRAMS = test/libbitcoin-explorer-test
 test_libbitcoin_explorer_test_CPPFLAGS = \
     -I${top_builddir}/test \
     -I${srcdir}/../../test \
-    ${boost_BUILD_CPPFLAGS} \
     ${src_libbitcoin_explorer_la_CPPFLAGS}
 
 test_libbitcoin_explorer_test_LDFLAGS = \
     ${mingw_program_LDFLAGS} \
-    ${boost_LDFLAGS} \
     ${src_libbitcoin_explorer_la_LDFLAGS}
 
 test_libbitcoin_explorer_test_LDADD = \
-    ${boost_LIBS} \
     ${src_libbitcoin_explorer_la_LIBS} \
     ${src_libbitcoin_explorer_la_LIBADD}
 

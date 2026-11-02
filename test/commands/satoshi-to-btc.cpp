@@ -21,10 +21,10 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(satoshi_to_btc__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(satoshi_to_btc__invoke)
 
-BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__0_satoshi__okay_output)
+BC_AUTO_TEST_CASE(satoshi_to_btc__invoke__0_satoshi__okay_output)
 {
     BX_DECLARE_COMMAND(commands::satoshi_to_btc);
     command.set_satoshi_argument(0);
@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__0_satoshi__okay_output)
     BX_REQUIRE_OUTPUT("0\n");
 }
 
-BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__4200000000_satoshi__okay_output)
+BC_AUTO_TEST_CASE(satoshi_to_btc__invoke__4200000000_satoshi__okay_output)
 {
     BX_DECLARE_COMMAND(commands::satoshi_to_btc);
     auto satoshi = 42 * system::settings().bitcoin_to_satoshi(1);
@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__4200000000_satoshi__okay_output)
     BX_REQUIRE_OUTPUT("42\n");
 }
 
-BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__max_money_satoshi__okay_output)
+BC_AUTO_TEST_CASE(satoshi_to_btc__invoke__max_money_satoshi__okay_output)
 {
     BX_DECLARE_COMMAND(commands::satoshi_to_btc);
     auto satoshi = system::settings(
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__max_money_satoshi__okay_output)
     BX_REQUIRE_OUTPUT("20999999.9769\n");
 }
 
-BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__max_uint64_satoshi__okay_output)
+BC_AUTO_TEST_CASE(satoshi_to_btc__invoke__max_uint64_satoshi__okay_output)
 {
     BX_DECLARE_COMMAND(commands::satoshi_to_btc);
     command.set_satoshi_argument(max_uint64);
@@ -59,5 +59,5 @@ BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__max_uint64_satoshi__okay_output)
     BX_REQUIRE_OUTPUT("184467440737.09551615\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

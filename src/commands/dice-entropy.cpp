@@ -28,7 +28,6 @@ namespace commands {
 
 using namespace bc::system;
 using namespace bc::system::config;
-using namespace boost::multiprecision;
 
 static constexpr char min_die_char = '1';
 static constexpr char max_die_char = '6';
@@ -51,21 +50,22 @@ data_chunk dice_to_entropy(const std::string& rolls)
         if (is_limited(roll, min_die_char, max_die_char))
             return {};
 
-    uintx value{};
+    // 6^100 < 2^259, so the largest configuration fits 512 bits.
+    uint512_t value{};
     for (auto roll: rolls)
         value = value * max_die_value + (roll - min_die_char);
 
     // Reject incomplete range to avoid modulo bias.
     const auto bits = config->second;
-    const auto count = possible_narrow_cast<unsigned>(config->first);
-    const uintx die = max_die_value;
-    const uintx range = uintx{ one } << bits;
-    const uintx limit = (pow(die, count) / range) * range;
+    const auto count = config->first;
+    const uint512_t range = uint512_t{ one } << bits;
+    const auto limit = (power<uint512_t>(to_unsigned(max_die_value), count) /
+        range) * range;
     if (value >= limit)
         return {};
 
     // Big-endian output.
-    const uintx number = value % range;
+    const uint512_t number = value % range;
     return to_big_data(data_chunk(bits / byte_bits), number);
 }
 

@@ -75,7 +75,6 @@ jobs:
             cxx: "clang++"
             flags: ""
             coverage: ""
-            boost: "--build-boost"
             options: "--enable-isystem"
 
           - image: ubuntu-24.04
@@ -86,7 +85,6 @@ jobs:
             flags: ""
             coverage: ""
             package: "clang-19 clang++-19"
-            boost: "--build-boost"
             options: "--enable-isystem"
 
           - image: ubuntu-24.04
@@ -96,7 +94,6 @@ jobs:
             cxx: "clang++-18"
             flags: ""
             coverage: ""
-            boost: "--build-boost"
             options: "--enable-isystem"
 
           - image: ubuntu-24.04
@@ -106,7 +103,6 @@ jobs:
             cxx: "g++-13"
             flags: "--coverage -fprofile-update=atomic"
             coverage: "lcov"
-            boost: "--build-boost"
             options: "--enable-isystem"
 
           - image: ubuntu-24.04
@@ -118,7 +114,6 @@ jobs:
             coverage: ""
             package: "gcc-s390x-linux-gnu g++-s390x-linux-gnu qemu-user-static"
             host: "s390x-linux-gnu"
-            boost: ""
             options: "--enable-isystem --build-skip-test-run"
 
           - image: macos-26-intel
@@ -128,7 +123,6 @@ jobs:
             cxx: "clang++"
             flags: ""
             coverage: ""
-            boost: "--build-boost"
             options: "--enable-isystem"
 
           - image: ubuntu-24.04-arm
@@ -139,7 +133,6 @@ jobs:
             flags: ""
             coverage: ""
             package: "gcc-14 g++-14"
-            boost: "--build-boost"
             options: "--enable-isystem"
 
           - image: ubuntu-24.04
@@ -150,7 +143,6 @@ jobs:
             flags: "-m32"
             coverage: ""
             package: "gcc-15-multilib g++-15-multilib"
-            boost: "--build-boost"
             options: "--enable-isystem"
 
           - image: ubuntu-24.04
@@ -162,7 +154,6 @@ jobs:
             coverage: ""
             package: "gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf"
             host: "arm-linux-gnueabihf"
-            boost: ""
             options: "--enable-isystem --build-skip-test-run"
 
           - image: ubuntu-26.04
@@ -174,7 +165,6 @@ jobs:
             coverage: ""
             package: "gcc-mingw-w64-x86-64-posix g++-mingw-w64-x86-64-posix"
             host: "x86_64-w64-mingw32"
-            boost: ""
             options: "--enable-isystem --build-skip-test-run"
 
     runs-on: ${{ matrix.image }}
@@ -189,6 +179,7 @@ jobs:
     steps:
       - name: Get branch name
         id: get-branch
+        shell: bash
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
             echo "branch=${{ github.head_ref }}" >> $GITHUB_OUTPUT
@@ -212,6 +203,24 @@ jobs:
         shell: bash
         run: |
           rm -rf ${{ github.workspace }}/libbitcoin-system
+
+
+      - name: Checkout repository [libbitcoin-network]
+        id: checkout-libbitcoin-network
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          path: 'libbitcoin-network'
+          ref: ${{ steps.get-branch.outputs.branch }}
+          repository: ${{ github.repository_owner }}/libbitcoin-network
+
+      - name: Checkout repository [libbitcoin-network] cleanup on failure
+        continue-on-error: true
+        if: steps.checkout-libbitcoin-network.outcome == 'failure'
+        shell: bash
+        run: |
+          rm -rf ${{ github.workspace }}/libbitcoin-network
 
 
       - name: Checkout repository [libbitcoin-explorer]
@@ -251,6 +260,10 @@ jobs:
               echo "PATH=/opt/homebrew/opt/${{ matrix.llvm }}/bin:${PATH}" >> $GITHUB_ENV
           fi
 
+      - name: Prepare toolchain [windows]
+        if: ${{ startsWith(matrix.image, 'windows') }}
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+
       - name: Environmental Computation
         shell: bash
         run: |
@@ -270,25 +283,6 @@ jobs:
             ./emulation
           fi
 
-      - name: Install boost headers [cross]
-        if: ${{ matrix.host }}
-        shell: bash
-        working-directory: 'libbitcoin-explorer'
-        env:
-          CC: 'gcc'
-          CXX: 'g++'
-        run: >
-          ./builds/gnu/install-gnu.sh
-          --build-use-local-src
-          --build-src-dir="${{ github.workspace }}"
-          --prefix="${{ github.workspace }}/prefix"
-          --build-obj-dir="obj"
-          --build-obj-dir-relative
-          --build-config="${{ matrix.config }}"
-          --build-link="${{ matrix.link }}"
-          --build-limit=external
-          --build-boost
-
       - name: Execute installation
         shell: bash
         working-directory: 'libbitcoin-explorer'
@@ -302,9 +296,8 @@ jobs:
           --build-obj-dir-relative
           --build-config="${{ matrix.config }}"
           --build-link="${{ matrix.link }}"
-          ${{ matrix.boost }}
           ${{ matrix.options }}
-          ${{ matrix.host && format('--host={0} --with-boost={1}/prefix', matrix.host, github.workspace) || '' }}
+          ${{ matrix.host && format('--host={0}', matrix.host) || '' }}
 
       - name: Coverage calculation
         if: ${{ matrix.coverage == 'lcov' }}
@@ -340,6 +333,15 @@ jobs:
           fi
           if [[ -e "libbitcoin-system/obj/test.log" ]]; then
             cp "libbitcoin-system/obj/test.log" libbitcoin-system-test.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/Testing/Temporary/LastTest.log" ]]; then
+            cp "libbitcoin-network/obj/Testing/Temporary/LastTest.log" libbitcoin-network-LastTest.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/test-suite.log" ]]; then
+            cp "libbitcoin-network/obj/test-suite.log" libbitcoin-network-test-suite.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/test.log" ]]; then
+            cp "libbitcoin-network/obj/test.log" libbitcoin-network-test.errors
           fi
           if [[ -e "libbitcoin-explorer/obj/Testing/Temporary/LastTest.log" ]]; then
             cp "libbitcoin-explorer/obj/Testing/Temporary/LastTest.log" libbitcoin-explorer-LastTest.errors
@@ -375,7 +377,6 @@ jobs:
             cxx: "clang++"
             flags: ""
             coverage: ""
-            boost: "--build-boost"
             options: ""
 
           - image: ubuntu-24.04
@@ -386,7 +387,6 @@ jobs:
             flags: ""
             coverage: ""
             package: "g++-16 gcc-16"
-            boost: "--build-boost"
             options: ""
 
     runs-on: ${{ matrix.image }}
@@ -400,6 +400,7 @@ jobs:
     steps:
       - name: Get branch name
         id: get-branch
+        shell: bash
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
             echo "branch=${{ github.head_ref }}" >> $GITHUB_OUTPUT
@@ -423,6 +424,24 @@ jobs:
         shell: bash
         run: |
           rm -rf ${{ github.workspace }}/libbitcoin-system
+
+
+      - name: Checkout repository [libbitcoin-network]
+        id: checkout-libbitcoin-network
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          path: 'libbitcoin-network'
+          ref: ${{ steps.get-branch.outputs.branch }}
+          repository: ${{ github.repository_owner }}/libbitcoin-network
+
+      - name: Checkout repository [libbitcoin-network] cleanup on failure
+        continue-on-error: true
+        if: steps.checkout-libbitcoin-network.outcome == 'failure'
+        shell: bash
+        run: |
+          rm -rf ${{ github.workspace }}/libbitcoin-network
 
 
       - name: Checkout repository [libbitcoin-explorer]
@@ -462,6 +481,10 @@ jobs:
               echo "PATH=/opt/homebrew/opt/${{ matrix.llvm }}/bin:${PATH}" >> $GITHUB_ENV
           fi
 
+      - name: Prepare toolchain [windows]
+        if: ${{ startsWith(matrix.image, 'windows') }}
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+
       - name: Environmental Computation
         shell: bash
         run: |
@@ -482,7 +505,6 @@ jobs:
           --build-obj-dir-relative
           --build-config="${{ matrix.config }}"
           --build-link="${{ matrix.link }}"
-          ${{ matrix.boost }}
           ${{ matrix.options }}
 
       - name: Coverage calculation
@@ -519,6 +541,15 @@ jobs:
           fi
           if [[ -e "libbitcoin-system/obj/test.log" ]]; then
             cp "libbitcoin-system/obj/test.log" libbitcoin-system-test.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/Testing/Temporary/LastTest.log" ]]; then
+            cp "libbitcoin-network/obj/Testing/Temporary/LastTest.log" libbitcoin-network-LastTest.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/test-suite.log" ]]; then
+            cp "libbitcoin-network/obj/test-suite.log" libbitcoin-network-test-suite.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/test.log" ]]; then
+            cp "libbitcoin-network/obj/test.log" libbitcoin-network-test.errors
           fi
           if [[ -e "libbitcoin-explorer/obj/Testing/Temporary/LastTest.log" ]]; then
             cp "libbitcoin-explorer/obj/Testing/Temporary/LastTest.log" libbitcoin-explorer-LastTest.errors
@@ -547,13 +578,28 @@ jobs:
 
       matrix:
         include:
+          - image: windows-latest
+            preset: "win-msvc-release-static"
+            cc: ""
+            cxx: ""
+            flags: ""
+            coverage: ""
+            options: ""
+
+          - image: windows-latest
+            preset: "win-clangcl-release-static"
+            cc: ""
+            cxx: ""
+            flags: ""
+            coverage: ""
+            options: ""
+
           - image: ubuntu-24.04
             preset: "nix-gnu-debug-static"
             cc: "gcc-13"
             cxx: "g++-13"
             flags: ""
             coverage: ""
-            boost: "--build-boost"
             options: "--build-skip-tests"
 
     runs-on: ${{ matrix.image }}
@@ -567,6 +613,7 @@ jobs:
     steps:
       - name: Get branch name
         id: get-branch
+        shell: bash
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
             echo "branch=${{ github.head_ref }}" >> $GITHUB_OUTPUT
@@ -590,6 +637,24 @@ jobs:
         shell: bash
         run: |
           rm -rf ${{ github.workspace }}/libbitcoin-system
+
+
+      - name: Checkout repository [libbitcoin-network]
+        id: checkout-libbitcoin-network
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          path: 'libbitcoin-network'
+          ref: ${{ steps.get-branch.outputs.branch }}
+          repository: ${{ github.repository_owner }}/libbitcoin-network
+
+      - name: Checkout repository [libbitcoin-network] cleanup on failure
+        continue-on-error: true
+        if: steps.checkout-libbitcoin-network.outcome == 'failure'
+        shell: bash
+        run: |
+          rm -rf ${{ github.workspace }}/libbitcoin-network
 
 
       - name: Checkout repository [libbitcoin-explorer]
@@ -629,6 +694,10 @@ jobs:
               echo "PATH=/opt/homebrew/opt/${{ matrix.llvm }}/bin:${PATH}" >> $GITHUB_ENV
           fi
 
+      - name: Prepare toolchain [windows]
+        if: ${{ startsWith(matrix.image, 'windows') }}
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+
       - name: Environmental Computation
         shell: bash
         run: |
@@ -644,7 +713,6 @@ jobs:
           --build-use-local-src
           --build-src-dir="${{ github.workspace }}"
           --build-preset="${{ matrix.preset }}"
-          ${{ matrix.boost }}
           ${{ matrix.options }}
 
       - name: Coverage calculation
@@ -681,6 +749,15 @@ jobs:
           fi
           if [[ -e "libbitcoin-system/obj/test.log" ]]; then
             cp "libbitcoin-system/obj/test.log" libbitcoin-system-test.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/Testing/Temporary/LastTest.log" ]]; then
+            cp "libbitcoin-network/obj/Testing/Temporary/LastTest.log" libbitcoin-network-LastTest.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/test-suite.log" ]]; then
+            cp "libbitcoin-network/obj/test-suite.log" libbitcoin-network-test-suite.errors
+          fi
+          if [[ -e "libbitcoin-network/obj/test.log" ]]; then
+            cp "libbitcoin-network/obj/test.log" libbitcoin-network-test.errors
           fi
           if [[ -e "libbitcoin-explorer/obj/Testing/Temporary/LastTest.log" ]]; then
             cp "libbitcoin-explorer/obj/Testing/Temporary/LastTest.log" libbitcoin-explorer-LastTest.errors
@@ -780,6 +857,24 @@ jobs:
         run: |
           Remove-Item -Path ${{ github.workspace }}\libbitcoin-system -Recurse -Force -ErrorAction SilentlyContinue
 
+      - name: Checkout repository [libbitcoin-network]
+        id: checkout-libbitcoin-network
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          path: 'libbitcoin-network'
+          persist-credentials: false
+          ref: ${{ steps.get-branch.outputs.branch }}
+          repository: ${{ github.repository_owner }}/libbitcoin-network
+
+      - name: Checkout repository [libbitcoin-network] cleanup on failure
+        continue-on-error: true
+        if: steps.checkout-libbitcoin-network.outcome == 'failure'
+        shell: powershell
+        run: |
+          Remove-Item -Path ${{ github.workspace }}\libbitcoin-network -Recurse -Force -ErrorAction SilentlyContinue
+
       - name: Checkout repository [libbitcoin-explorer]
         id: checkout-libbitcoin-explorer
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -819,9 +914,9 @@ jobs:
           }
           Write-Host "Found single test executable: " $BC_TEST_EXES.FullName -ForegroundColor Green;
           $BC_TEST_SINGLETON = $BC_TEST_EXES.FullName;
-          Write-Host "Executing $BC_TEST_SINGLETON $env:BOOST_UNIT_TEST_OPTIONS" -ForegroundColor Yellow;
+          Write-Host "Executing $BC_TEST_SINGLETON" -ForegroundColor Yellow;
           try {
-            Invoke-Expression "$BC_TEST_SINGLETON --log_level=warning --run_test=${{ matrix.tests }} $env:BOOST_UNIT_TEST_OPTIONS"
+            Invoke-Expression "$BC_TEST_SINGLETON --log_level=warning --run_test=${{ matrix.tests }}"
           }
           catch {
             $ERR = $_;

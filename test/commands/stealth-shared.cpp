@@ -22,8 +22,8 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(stealth_shared__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(stealth_shared__invoke)
 
 // vectors
 
@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_SUITE(stealth_shared__invoke)
 // SHARED_SECRET = sha256(EPHEM_SECRET * SCAN_PUBKEY)
 #define BX_STEALTH_SHARED_SECRET_SHARED_SECRET "78dac4cad97b62efc67aff4890c3bc799815d144c5f93b171f559b43bca52590"
 
-BOOST_AUTO_TEST_CASE(stealth_shared__invoke__scan_secret_ephem_pubkey__okay_output)
+BC_AUTO_TEST_CASE(stealth_shared__invoke__scan_secret_ephem_pubkey__okay_output)
 {
     BX_DECLARE_COMMAND(stealth_shared);
     command.set_secret_argument({ BX_STEALTH_SHARED_SECRET_SCAN_SECRET });
@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE(stealth_shared__invoke__scan_secret_ephem_pubkey__okay_outp
     BX_REQUIRE_OUTPUT(BX_STEALTH_SHARED_SECRET_SHARED_SECRET "\n");
 }
 
-BOOST_AUTO_TEST_CASE(stealth_shared__invoke__ephem_secret_scan_pubkey__okay_output)
+BC_AUTO_TEST_CASE(stealth_shared__invoke__ephem_secret_scan_pubkey__okay_output)
 {
     BX_DECLARE_COMMAND(stealth_shared);
     command.set_secret_argument({ BX_STEALTH_SHARED_SECRET_EPHEMERAL_SECRET });
@@ -56,5 +56,5 @@ BOOST_AUTO_TEST_CASE(stealth_shared__invoke__ephem_secret_scan_pubkey__okay_outp
     BX_REQUIRE_OUTPUT(BX_STEALTH_SHARED_SECRET_SHARED_SECRET "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

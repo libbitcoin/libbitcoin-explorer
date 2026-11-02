@@ -20,15 +20,15 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(obsolete)
-BOOST_AUTO_TEST_SUITE(hd_to_wif__invoke)
+BC_AUTO_TEST_SUITE(obsolete)
+BC_AUTO_TEST_SUITE(hd_to_wif__invoke)
 
-BOOST_AUTO_TEST_CASE(hd_to_wif__invoke__always__failure_error)
+BC_AUTO_TEST_CASE(hd_to_wif__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(hd_to_wif);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_HD_TO_WIF_OBSOLETE "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

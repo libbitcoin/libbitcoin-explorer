@@ -21,10 +21,10 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(hd_to_ec__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(hd_to_ec__invoke)
 
-BOOST_AUTO_TEST_CASE(hd_to_ec__invoke__mainnet_private_key__okay_output)
+BC_AUTO_TEST_CASE(hd_to_ec__invoke__mainnet_private_key__okay_output)
 {
     BX_DECLARE_COMMAND(hd_to_ec);
     command.set_public_version_option(76067358);
@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(hd_to_ec__invoke__mainnet_private_key__okay_output)
     BX_REQUIRE_OUTPUT("e8f32e723decf4051aefac8e2c93c9c5b214313817cdb01a1494b917c8436b35\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_to_ec__invoke__mainnet_public_key__okay_output)
+BC_AUTO_TEST_CASE(hd_to_ec__invoke__mainnet_public_key__okay_output)
 {
     BX_DECLARE_COMMAND(hd_to_ec);
     command.set_public_version_option(76067358);
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(hd_to_ec__invoke__mainnet_public_key__okay_output)
 
 // testnet
 
-BOOST_AUTO_TEST_CASE(hd_to_ec__invoke__testnet_private_key__okay_output)
+BC_AUTO_TEST_CASE(hd_to_ec__invoke__testnet_private_key__okay_output)
 {
     BX_DECLARE_COMMAND(hd_to_ec);
     command.set_public_version_option(70617039);
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(hd_to_ec__invoke__testnet_private_key__okay_output)
     BX_REQUIRE_OUTPUT("8ed1d17dabce1fccbbe5e9bf008b318334e5bcc78eb9e7c1ea850b7eb0ddb9c8\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_to_ec__invoke__testnet_public_key__okay_output)
+BC_AUTO_TEST_CASE(hd_to_ec__invoke__testnet_public_key__okay_output)
 {
     BX_DECLARE_COMMAND(hd_to_ec);
     command.set_public_version_option(70617039);
@@ -66,5 +66,5 @@ BOOST_AUTO_TEST_CASE(hd_to_ec__invoke__testnet_public_key__okay_output)
     BX_REQUIRE_OUTPUT("029220af53b11605932e6101c962bdc752a234c6b0c2f0c398844e47b75503a692\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

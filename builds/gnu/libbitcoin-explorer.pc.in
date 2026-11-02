@@ -25,7 +25,7 @@ Version: @PACKAGE_VERSION@
 # Variables
 #==============================================================================
 Requires: \
-    @libbitcoin_system_PKG@
+    @libbitcoin_network_PKG@
 
 Cflags: \
     -I${includedir}

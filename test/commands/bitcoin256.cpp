@@ -21,10 +21,10 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(bitcoin256__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(bitcoin256__invoke)
 
-BOOST_AUTO_TEST_CASE(bitcoin256__invoke__always__okay_output)
+BC_AUTO_TEST_CASE(bitcoin256__invoke__always__okay_output)
 {
     BX_DECLARE_COMMAND(bitcoin256);
     command.set_base16_argument({ "900df00d" });
@@ -32,5 +32,5 @@ BOOST_AUTO_TEST_CASE(bitcoin256__invoke__always__okay_output)
     BX_REQUIRE_OUTPUT("cd7238af127bea88905e274dc31557198fe0a104b933aad4ebb236c44c9b4223\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

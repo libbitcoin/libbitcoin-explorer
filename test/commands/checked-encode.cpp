@@ -21,14 +21,14 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(checked_encode__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(checked_encode__invoke)
 
-BOOST_AUTO_TEST_CASE(checked_encode__invoke__always__failure_error)
+BC_AUTO_TEST_CASE(checked_encode__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(checked_encode);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

@@ -21,14 +21,14 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(bech32_decode__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(bech32_decode__invoke)
 
-BOOST_AUTO_TEST_CASE(bech32_decode__invoke__always__failure_error)
+BC_AUTO_TEST_CASE(bech32_decode__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(bech32_decode);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

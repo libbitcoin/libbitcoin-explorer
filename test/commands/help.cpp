@@ -21,27 +21,27 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(help__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(help__invoke)
 
-BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure)
+BC_AUTO_TEST_CASE(help__invoke__bogus_command__failure)
 {
     BX_DECLARE_COMMAND(help);
     command.set_command_argument("booger");
     BX_REQUIRE_FAILURE(command.invoke(output, error));
 }
 
-BOOST_AUTO_TEST_CASE(help__invoke__no_command__okay_output)
+BC_AUTO_TEST_CASE(help__invoke__no_command__okay_output)
 {
     BX_DECLARE_COMMAND(help);
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
-BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)
+BC_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)
 {
     BX_DECLARE_COMMAND(help);
     command.set_command_argument("help");
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

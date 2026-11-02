@@ -21,15 +21,15 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(obsolete)
-BOOST_AUTO_TEST_SUITE(base58check_decode__invoke)
+BC_AUTO_TEST_SUITE(obsolete)
+BC_AUTO_TEST_SUITE(base58check_decode__invoke)
 
-BOOST_AUTO_TEST_CASE(base58check_decode__invoke__always__failure_error)
+BC_AUTO_TEST_CASE(base58check_decode__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(base58check_decode);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_BASE58CHECK_DECODE_OBSOLETE "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

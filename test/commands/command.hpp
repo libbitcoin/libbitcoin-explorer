@@ -20,8 +20,6 @@
 #define COMMAND_HPP
 
 #include <locale>
-#include <boost/test/test_tools.hpp>
-#include <boost/test/unit_test_suite.hpp>
 #include <bitcoin/explorer.hpp>
 
 #define BX_USING_NAMESPACES()
@@ -63,26 +61,26 @@ using namespace bc::system;
     input >> original; \
     serializer copy(original); \
     output << copy; \
-    BOOST_REQUIRE_EQUAL(output.str(), value)
+    BC_REQUIRE_EQUAL(output.str(), value)
 
 // console results
 #define BX_REQUIRE_OKAY(value) \
-    BOOST_REQUIRE_EQUAL(value, console_result::okay)
+    BC_REQUIRE_EQUAL(value, console_result::okay)
 #define BX_REQUIRE_FAILURE(value) \
-    BOOST_REQUIRE_EQUAL(value, console_result::failure)
+    BC_REQUIRE_EQUAL(value, console_result::failure)
 #define BX_REQUIRE_INVALID(value) \
-    BOOST_REQUIRE_EQUAL(value, console_result::invalid)
+    BC_REQUIRE_EQUAL(value, console_result::invalid)
 
 // stream results
 #define BX_REQUIRE_ERROR(value) \
-    BOOST_REQUIRE_EQUAL(error.str(), value); \
-    BOOST_REQUIRE_EQUAL(output.str(), "")
+    BC_REQUIRE_EQUAL(error.str(), value); \
+    BC_REQUIRE_EQUAL(output.str(), "")
 #define BX_REQUIRE_OUTPUT(value) \
-    BOOST_REQUIRE_EQUAL(output.str(), value); \
-    BOOST_REQUIRE_EQUAL(error.str(), "")
+    BC_REQUIRE_EQUAL(output.str(), value); \
+    BC_REQUIRE_EQUAL(error.str(), "")
 
 // exceptions
 #define BX_REQUIRE_THROW_INVALID_OPTION_VALUE(expression) \
-    BOOST_REQUIRE_THROW(expression, po::invalid_option_value)
+    BC_REQUIRE_THROW(expression, istream_exception)
 
 #endif

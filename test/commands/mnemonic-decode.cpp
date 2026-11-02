@@ -21,10 +21,10 @@
 ////
 ////BX_USING_NAMESPACES()
 ////
-////BOOST_AUTO_TEST_SUITE(offline)
-////BOOST_AUTO_TEST_SUITE(mnemonic_decode__invoke)
+////BC_AUTO_TEST_SUITE(offline)
+////BC_AUTO_TEST_SUITE(mnemonic_decode__invoke)
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__64_bits__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__64_bits__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_entropy_argument({ "baadf00dbaadf00d" });
@@ -32,7 +32,7 @@
 ////    BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant alone\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__136_bits__failure_error)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__136_bits__failure_error)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00dff" });
@@ -40,7 +40,7 @@
 ////    BX_REQUIRE_ERROR(BX_MNEMONIC_NEW_INVALID_SEED "\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
@@ -48,7 +48,7 @@
 ////    BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant almost turkey safe asset step lab boy\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__standard_default__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__standard_default__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_entropy_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
@@ -56,7 +56,7 @@
 ////    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__standard_en__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__standard_en__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "en" });
@@ -65,7 +65,7 @@
 ////    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__standard_all__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__standard_all__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "any" });
@@ -74,7 +74,7 @@
 ////    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_en__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_en__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "en" });
@@ -83,7 +83,7 @@
 ////    BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant almost turkey safe asset step lab boy\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_es__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_es__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "es" });
@@ -92,7 +92,7 @@
 ////    BX_REQUIRE_OUTPUT(to_normal_nfkd_form("previo humilde actuar jarabe tabique ahorro tope pulpo anís señal lavar bahía") + "\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_fr__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_fr__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "fr" });
@@ -101,7 +101,7 @@
 ////    BX_REQUIRE_OUTPUT("placard garantir acerbe gratuit soluble affaire théorie ponctuel anguleux salon horrible bateau\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_it__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_it__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "it" });
@@ -110,7 +110,7 @@
 ////    BX_REQUIRE_OUTPUT("rizoma lastra affabile lucidato sultano algebra tramonto rupe annuncio sonda mega bavosa\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_ja__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_ja__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "ja" });
@@ -119,7 +119,7 @@
 ////    BX_REQUIRE_OUTPUT("ねんかん すずしい あひる せたけ ほとんど あんまり めいあん のべる いなか ふとる ぜんりゃく えいせい\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_ko__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_ko__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "ko" });
@@ -128,7 +128,7 @@
 ////    BX_REQUIRE_OUTPUT("전체 손실 갈비 숫자 큰길 개별 프랑스 정보 계획 초등학생 식빵 귀국\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_zh_Hans__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_zh_Hans__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "zh_Hans" });
@@ -137,7 +137,7 @@
 ////    BX_REQUIRE_OUTPUT("博 肉 地 危 惜 多 陪 荒 因 患 伊 基\n");
 ////}
 ////
-////BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_zh_Hant__okay_output)
+////BC_AUTO_TEST_CASE(mnemonic_decode__invoke__128_bits_zh_Hant__okay_output)
 ////{
 ////    BX_DECLARE_COMMAND(mnemonic_decode);
 ////    command.set_language_option({ "zh_Hant" });
@@ -146,5 +146,5 @@
 ////    BX_REQUIRE_OUTPUT("博 肉 地 危 惜 多 陪 荒 因 患 伊 基\n");
 ////}
 ////
-////BOOST_AUTO_TEST_SUITE_END()
-////BOOST_AUTO_TEST_SUITE_END()
+////BC_AUTO_TEST_SUITE_END()
+////BC_AUTO_TEST_SUITE_END()

@@ -21,10 +21,10 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(wif_to_ec__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(wif_to_ec__invoke)
 
-BOOST_AUTO_TEST_CASE(wif_to_ec__invoke__mainnet_compressed_wif__okay_output)
+BC_AUTO_TEST_CASE(wif_to_ec__invoke__mainnet_compressed_wif__okay_output)
 {
     BX_DECLARE_COMMAND(wif_to_ec);
     command.set_wif_argument({ "L21LJEeJwK35wby1BeTjwWssrhrgQE2MZrpTm2zbMC677czAHHu3" });
@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE(wif_to_ec__invoke__mainnet_compressed_wif__okay_output)
     BX_REQUIRE_OUTPUT("8ed1d17dabce1fccbbe5e9bf008b318334e5bcc78eb9e7c1ea850b7eb0ddb9c8\n");
 }
 
-BOOST_AUTO_TEST_CASE(wif_to_ec__invoke__mainnet_uncompressed_wif__okay_output)
+BC_AUTO_TEST_CASE(wif_to_ec__invoke__mainnet_uncompressed_wif__okay_output)
 {
     BX_DECLARE_COMMAND(wif_to_ec);
     command.set_wif_argument({ "5JuBiWpsjfXNxsWuc39KntBAiAiAP2bHtrMGaYGKCppq4MuVcQL" });
@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(wif_to_ec__invoke__mainnet_uncompressed_wif__okay_output)
 
 // vectors: en.bitcoin.it/wiki/Wallet_import_format
 
-BOOST_AUTO_TEST_CASE(wif_to_ec__invoke__wiki__okay_output)
+BC_AUTO_TEST_CASE(wif_to_ec__invoke__wiki__okay_output)
 {
     BX_DECLARE_COMMAND(wif_to_ec);
     command.set_wif_argument({ "5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ" });
@@ -50,5 +50,5 @@ BOOST_AUTO_TEST_CASE(wif_to_ec__invoke__wiki__okay_output)
     BX_REQUIRE_OUTPUT("0c28fca386c7a227600b2fe50b7cae11ec86d3bf1fbe471be89827e19d72aa1d\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

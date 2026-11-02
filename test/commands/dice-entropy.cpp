@@ -21,12 +21,12 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(dice_entropy__invoke)
+BC_AUTO_TEST_SUITE(offline)
+BC_AUTO_TEST_SUITE(dice_entropy__invoke)
 
 // Note: Test vectors match output from https://frozensecurity.com/tools/dice-entropy/
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output1)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__okay_output1)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "12345612345612345612345612345612345612345612345612" });
@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output1)
    BX_REQUIRE_OUTPUT("184ec4bed56eb86aacaaa224b5672f45\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output2)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__okay_output2)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "12312312312312312312312334456554123341234326545643" });
@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output2)
    BX_REQUIRE_OUTPUT("16a058b2bb69f1d15973a0c73d21b598\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output3)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__okay_output3)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "12312312312312444444444444446554123341234326545643" });
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output3)
    BX_REQUIRE_OUTPUT("16a058b2c4183470b20a7cd360e1b598\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output4)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__okay_output4)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "11111111111111111111111111111111111111111111111111" });
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output4)
    BX_REQUIRE_OUTPUT("00000000000000000000000000000000\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output5)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__okay_output5)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "1234561234561234561234561234561234561234561234561212345612345612345612345612345612345612345612345612" });
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output5)
    BX_REQUIRE_OUTPUT("39bd194e3b989d612e6ed5bf485bae121aa45fa1718ea167dd5ea224b5672f45\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output6)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__okay_output6)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "1231231231231231231231233445655412334123432654564312312312312312312312312334456554123341234326545643" });
@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output6)
    BX_REQUIRE_OUTPUT("35beb4dc84e442e9fa6a56f5ae9176214cdbadaf5a78f8a6cad3a0c73d21b598\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output7)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__okay_output7)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "1231231231231244444444444444655412334123432654564312312312312312444444444444446554123341234326545643" });
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output7)
    BX_REQUIRE_OUTPUT("35beb4dc9982da244aded20982951b2d87ff7eed3b148246236a7cd360e1b598\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output8)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__okay_output8)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" });
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output8)
    BX_REQUIRE_OUTPUT("0000000000000000000000000000000000000000000000000000000000000000\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output9)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__okay_output9)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "61262262611466652634263242642635642166662444332122" });
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output9)
    BX_REQUIRE_OUTPUT("ffffffffffffffffffffffffffffffff\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output10)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__okay_output10)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "6263365546524225314413253522255442433336134252134625323511345453215331453612416422433556351254153322" });
@@ -106,7 +106,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__okay_output10)
    BX_REQUIRE_OUTPUT("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input1)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__error_input1)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "1" });
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input1)
    BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input2)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__error_input2)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "123456123456123456123456123456123456123456123456123" });
@@ -122,7 +122,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input2)
    BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input3)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__error_input3)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "1234561234561234561234561234561234561234561234561" });
@@ -130,7 +130,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input3)
    BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input4)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__error_input4)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "12312312312312444444444444446554123341234326545643123123123123124444444444444465541233412343265456431" });
@@ -138,7 +138,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input4)
    BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input5)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__error_input5)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "123123123123124444444444444465541233412343265456431231231231231244444444444444655412334123432654564" });
@@ -146,14 +146,14 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input5)
    BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input6)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__error_input6)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "7111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" });
    BX_REQUIRE_FAILURE(command.invoke(output, error));
    BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
 }
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input7)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__error_input7)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "61262262611466652634263242642635642166662444332123" });
@@ -161,7 +161,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input7)
    BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input8)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__error_input8)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "66666666666666666666666666666666666666666666666666" });
@@ -169,7 +169,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input8)
    BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input9)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__error_input9)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "6263365546524225314413253522255442433336134252134625323511345453215331453612416422433556351254153323" });
@@ -177,7 +177,7 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input9)
    BX_REQUIRE_ERROR(BX_DICE_ROLLS_INVALID "\n");
 }
 
-BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input10)
+BC_AUTO_TEST_CASE(dice_entropy__invoke__error_input10)
 {
    BX_DECLARE_COMMAND(dice_entropy);
    command.set_rolls_argument({ "6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666" });
@@ -186,5 +186,5 @@ BOOST_AUTO_TEST_CASE(dice_entropy__invoke__error_input10)
 }
 
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

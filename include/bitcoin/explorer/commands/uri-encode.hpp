@@ -114,7 +114,6 @@ public:
 
     /**
      * Load program option definitions.
-     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
     virtual options_metadata& load_options()
@@ -129,7 +128,7 @@ public:
         )
         (
             BX_CONFIG_VARIABLE ",c",
-            value<std::filesystem::path>(),
+            value<system::config::path>(),
             "The path to the configuration settings file."
         )
         (

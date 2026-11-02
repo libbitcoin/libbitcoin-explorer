@@ -21,15 +21,15 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(stub)
-BOOST_AUTO_TEST_SUITE(cert_new__invoke)
+BC_AUTO_TEST_SUITE(stub)
+BC_AUTO_TEST_SUITE(cert_new__invoke)
 
-BOOST_AUTO_TEST_CASE(cert_new__invoke__always__failure_error)
+BC_AUTO_TEST_CASE(cert_new__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(cert_new);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_CERT_NEW_NOT_IMPLEMENTED "\n");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

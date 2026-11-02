@@ -19,6 +19,7 @@
 
 #include <bitcoin/explorer/commands/fetch-tx-index.hpp>
 
+#include <format>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/client.hpp>
 #include <bitcoin/explorer/define.hpp>
