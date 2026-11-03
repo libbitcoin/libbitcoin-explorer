@@ -56,5 +56,14 @@ BC_AUTO_TEST_CASE(ec_to_witness__invoke__test_list__valid_expected)
     }
 }
 
+BC_AUTO_TEST_CASE(ec_to_witness__invoke__default_prefix__failure_error)
+{
+    BX_DECLARE_COMMAND(ec_to_witness);
+    command.set_ec_public_key_argument({ PUBLIC_KEY1 });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_EC_TO_WITNESS_INVALID_PREFIX "\n");
+}
+
+
 BC_AUTO_TEST_SUITE_END()
 BC_AUTO_TEST_SUITE_END()
