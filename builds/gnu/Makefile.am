@@ -405,6 +405,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/generated__find.cpp \
     ${srcdir}/../../test/generated__formerly.cpp \
     ${srcdir}/../../test/generated__help.cpp \
+    ${srcdir}/../../test/generated__property.cpp \
     ${srcdir}/../../test/generated__symbol.cpp \
     ${srcdir}/../../test/main.cpp \
     ${srcdir}/../../test/commands/address-decode.cpp \
