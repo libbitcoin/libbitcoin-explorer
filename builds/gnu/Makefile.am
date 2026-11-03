@@ -401,7 +401,11 @@ test_libbitcoin_explorer_test_LDADD = \
     ${src_libbitcoin_explorer_la_LIBADD}
 
 test_libbitcoin_explorer_test_SOURCES = \
+    ${srcdir}/../../test/client.cpp \
+    ${srcdir}/../../test/define.cpp \
+    ${srcdir}/../../test/dispatch.cpp \
     ${srcdir}/../../test/display.cpp \
+    ${srcdir}/../../test/generated.cpp \
     ${srcdir}/../../test/generated__broadcast.cpp \
     ${srcdir}/../../test/generated__find.cpp \
     ${srcdir}/../../test/generated__formerly.cpp \
@@ -410,7 +414,10 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/generated__parse.cpp \
     ${srcdir}/../../test/generated__property.cpp \
     ${srcdir}/../../test/generated__symbol.cpp \
+    ${srcdir}/../../test/json.cpp \
     ${srcdir}/../../test/main.cpp \
+    ${srcdir}/../../test/parser.cpp \
+    ${srcdir}/../../test/utility.cpp \
     ${srcdir}/../../test/commands/address-decode.cpp \
     ${srcdir}/../../test/commands/address-embed.cpp \
     ${srcdir}/../../test/commands/address-encode.cpp \

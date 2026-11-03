@@ -20,6 +20,7 @@
 #define BX_TEST_FIXTURE_HTTP_SERVER_HPP
 
 #include <string>
+#include <vector>
 #include <bitcoin/explorer.hpp>
 
 #define BX_TEST_HTTP_AUTHORITY "127.0.0.1:65001"
@@ -33,8 +34,13 @@ class http_server
 public:
     DELETE_COPY_MOVE(http_server);
 
+    /// A well-formed response of the given status and body.
     http_server(bc::network::http::status status,
         const std::string& body) NOEXCEPT;
+
+    /// The given bytes, one write per part, with no added headers.
+    explicit http_server(const std::vector<std::string>& parts) NOEXCEPT;
+
     ~http_server() NOEXCEPT;
 
     /// The url of this server.
@@ -43,9 +49,11 @@ public:
 private:
     void accept() NOEXCEPT;
     void handle_accept(const bc::network::code& ec) NOEXCEPT;
+    void respond(bc::network::code& ec, unsigned version) NOEXCEPT;
 
     const bc::network::http::status status_;
     const std::string body_;
+    const std::vector<std::string> parts_;
     bc::network::threadpool pool_{ 1 };
     bc::network::io::acceptor acceptor_;
     bc::network::io::socket peer_;

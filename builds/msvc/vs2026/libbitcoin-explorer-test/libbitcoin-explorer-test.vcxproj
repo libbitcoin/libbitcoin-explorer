@@ -94,6 +94,7 @@
     <Import Project="$(ProjectDir)$(ProjectName).props" />
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\test\client.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\address-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\address-embed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\address-encode.cpp" />
@@ -217,8 +218,11 @@
     <ClCompile Include="..\..\..\..\test\config\electrum.cpp" />
     <ClCompile Include="..\..\..\..\test\config\hd_key.cpp" />
     <ClCompile Include="..\..\..\..\test\config\sighash.cpp" />
+    <ClCompile Include="..\..\..\..\test\define.cpp" />
+    <ClCompile Include="..\..\..\..\test\dispatch.cpp" />
     <ClCompile Include="..\..\..\..\test\display.cpp" />
     <ClCompile Include="..\..\..\..\test\fixture\http_server.cpp" />
+    <ClCompile Include="..\..\..\..\test\generated.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__formerly.cpp" />
@@ -227,7 +231,10 @@
     <ClCompile Include="..\..\..\..\test\generated__parse.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__property.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
+    <ClCompile Include="..\..\..\..\test\json.cpp" />
     <ClCompile Include="..\..\..\..\test\main.cpp" />
+    <ClCompile Include="..\..\..\..\test\parser.cpp" />
+    <ClCompile Include="..\..\..\..\test\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\commands\command.hpp" />

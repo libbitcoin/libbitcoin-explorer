@@ -22,7 +22,7 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::system;
 
-BC_AUTO_TEST_SUITE(display)
+BC_AUTO_TEST_SUITE(display_tests)
 
 BC_AUTO_TEST_CASE(display__command_names__always__lists_commands)
 {

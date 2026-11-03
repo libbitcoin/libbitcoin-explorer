@@ -19,6 +19,7 @@
 #include "http_server.hpp"
 
 #include <string>
+#include <vector>
 #include <bitcoin/explorer.hpp>
 
 namespace io = bc::network::io;
@@ -33,7 +34,15 @@ static io::endpoint test_endpoint() NOEXCEPT
 
 http_server::http_server(http::status status,
     const std::string& body) NOEXCEPT
-  : status_(status), body_(body),
+  : status_(status), body_(body), parts_{},
+    acceptor_(pool_.service().get_executor(), test_endpoint()),
+    peer_(pool_.service().get_executor())
+{
+    accept();
+}
+
+http_server::http_server(const std::vector<std::string>& parts) NOEXCEPT
+  : status_(http::status::ok), body_{}, parts_(parts),
     acceptor_(pool_.service().get_executor(), test_endpoint()),
     peer_(pool_.service().get_executor())
 {
@@ -61,6 +70,29 @@ void http_server::accept() NOEXCEPT
     });
 }
 
+// Raw parts are written one part per write, so a response that arrives in
+// pieces (or without a content length) can be presented to the client.
+void http_server::respond(code& ec, unsigned version) NOEXCEPT
+{
+    if (parts_.empty())
+    {
+        http::message<false, http::string_body> response{ status_, version };
+        response.set(http::field::content_type, "application/json");
+        response.body() = body_;
+        response.prepare_payload();
+        http::write(peer_, response, ec);
+        return;
+    }
+
+    for (const auto& part: parts_)
+    {
+        auto buffer = io::buffer(part);
+
+        while (!ec && bc::is_nonzero(buffer.size()))
+            buffer += peer_.write_some(buffer, ec);
+    }
+}
+
 // The request and response are synchronous on the single pool thread, so
 // the exchange completes before the next accept is armed.
 void http_server::handle_accept(const code& ec) NOEXCEPT
@@ -74,14 +106,7 @@ void http_server::handle_accept(const code& ec) NOEXCEPT
     http::read(peer_, buffer, request, result);
 
     if (!result)
-    {
-        const auto version = request.version();
-        http::message<false, http::string_body> response{ status_, version };
-        response.set(http::field::content_type, "application/json");
-        response.body() = body_;
-        response.prepare_payload();
-        http::write(peer_, response, result);
-    }
+        respond(result, request.version());
 
     peer_.close();
     accept();
