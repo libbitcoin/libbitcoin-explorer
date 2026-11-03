@@ -66,26 +66,9 @@ BC_AUTO_TEST_CASE(ec_to_public__invoke__maximum_secret__okay_output)
 BC_AUTO_TEST_CASE(ec_to_public__invoke__zero_secret__failure_error)
 {
     BX_DECLARE_COMMAND(ec_to_public);
-    command.set_ec_private_key_argument({ "0000000000000000000000000000000000000000000000000000000000000000" });
+    command.set_ec_private_key_argument(explorer::config::ec_private{ ec_secret{} });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_EC_TO_PUBLIC_OUT_OF_RANGE "\n");
 }
-
-BC_AUTO_TEST_CASE(ec_to_public__invoke__curve_order_secret__failure_error)
-{
-    BX_DECLARE_COMMAND(ec_to_public);
-    command.set_ec_private_key_argument({ "fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141" });
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_TO_PUBLIC_OUT_OF_RANGE "\n");
-}
-
-BC_AUTO_TEST_CASE(ec_to_public__invoke__secret_above_curve_order__failure_error)
-{
-    BX_DECLARE_COMMAND(ec_to_public);
-    command.set_ec_private_key_argument({ "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" });
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_TO_PUBLIC_OUT_OF_RANGE "\n");
-}
-
 BC_AUTO_TEST_SUITE_END()
 BC_AUTO_TEST_SUITE_END()

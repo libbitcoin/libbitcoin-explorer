@@ -206,6 +206,7 @@
     <ClCompile Include="..\..\..\..\test\commands\wrap-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wrap-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\config\address.cpp" />
+    <ClCompile Include="..\..\..\..\test\config\ec_private.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__formerly.cpp" />

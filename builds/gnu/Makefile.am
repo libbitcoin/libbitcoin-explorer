@@ -519,7 +519,8 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/witness-to-key.cpp \
     ${srcdir}/../../test/commands/wrap-decode.cpp \
     ${srcdir}/../../test/commands/wrap-encode.cpp \
-    ${srcdir}/../../test/config/address.cpp
+    ${srcdir}/../../test/config/address.cpp \
+    ${srcdir}/../../test/config/ec_private.cpp
 
 TESTS = test_runner.sh
 
