@@ -47,10 +47,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_SEND_TX_NODE_OUTPUT \
-    "Sent transaction."
-#define BX_PUT_TX_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_PUT_TX_OBSOLETE \
+    "This command is obsolete. Use send-tx instead."
 
 /**
  * Class to implement the put-tx command.
@@ -108,14 +106,22 @@ public:
     }
 
     /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    virtual bool obsolete()
+    {
+        return true;
+    }
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("TRANSACTION", 1);
+        return get_argument_metadata();
     }
 
     /**
@@ -123,10 +129,9 @@ public:
      * @param[in]  input      The input stream for loading the parameters.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input,
-        po::variables_map& variables)
+    virtual void load_fallbacks(std::istream&,
+        po::variables_map&)
     {
-        load_input(get_transaction_argument(), "TRANSACTION", variables, input);
     }
 
     /**
@@ -147,21 +152,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<system::config::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "host,t",
-            value<std::string>(&option_.host)->default_value("localhost"),
-            "The IP address or DNS name of the node. Defaults to localhost."
-        )
-        (
-            "port,p",
-            value<uint16_t>(&option_.port)->default_value(8333),
-            "The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet."
-        )
-        (
-            "TRANSACTION",
-            value<system::config::transaction>(&argument_.transaction),
-            "The Base16 transaction to send. If not specified the transaction is read from STDIN."
         );
 
         return options;
@@ -186,57 +176,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the TRANSACTION argument.
-     */
-    virtual system::config::transaction& get_transaction_argument()
-    {
-        return argument_.transaction;
-    }
-
-    /**
-     * Set the value of the TRANSACTION argument.
-     */
-    virtual void set_transaction_argument(
-        const system::config::transaction& value)
-    {
-        argument_.transaction = value;
-    }
-
-    /**
-     * Get the value of the host option.
-     */
-    virtual std::string& get_host_option()
-    {
-        return option_.host;
-    }
-
-    /**
-     * Set the value of the host option.
-     */
-    virtual void set_host_option(
-        const std::string& value)
-    {
-        option_.host = value;
-    }
-
-    /**
-     * Get the value of the port option.
-     */
-    virtual uint16_t& get_port_option()
-    {
-        return option_.port;
-    }
-
-    /**
-     * Set the value of the port option.
-     */
-    virtual void set_port_option(
-        const uint16_t& value)
-    {
-        option_.port = value;
-    }
-
 private:
 
     /**
@@ -247,11 +186,9 @@ private:
     struct argument
     {
         argument()
-          : transaction()
         {
         }
 
-        system::config::transaction transaction;
     } argument_;
 
     /**
@@ -262,13 +199,9 @@ private:
     struct option
     {
         option()
-          : host(),
-            port()
         {
         }
 
-        std::string host;
-        uint16_t port;
     } option_;
 };
 

@@ -1,21 +1,20 @@
 #include <bitcoin/explorer/client.hpp>
 
 #include <chrono>
+#include <format>
 #include <memory>
 #include <string>
 #include <bitcoin/network.hpp>
 #include <bitcoin/system.hpp>
+#include <bitcoin/explorer/command.hpp>
+#include <bitcoin/explorer/generated.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 
 namespace io = network::io;
 namespace http = network::http;
-using request_t = http::message<true, http::empty_body>;
-using request_t = http::message<true, http::empty_body>;
-using request_t = http::message<true, http::empty_body>;
-using request_t = http::message<true, http::empty_body>;
-using request_t = http::message<true, http::empty_body>;
+namespace ws = network::ws;
 using request_t = http::message<true, http::empty_body>;
 
 constexpr auto user_agent = "libbitcoin-explorer";
@@ -26,6 +25,21 @@ client::client(const system::config::url& url, uint8_t retries,
     uint16_t timeout_seconds) NOEXCEPT
   : url_(url.to_local()), retries_(retries),
     timeout_seconds_(timeout_seconds)
+{
+}
+
+static system::config::url server_url(const command& command,
+    const system::config::url& argument) NOEXCEPT
+{
+    return is_zero(argument.port()) ?
+        command.get_server_url_setting() : argument;
+}
+
+client::client(const command& command,
+    const system::config::url& argument) NOEXCEPT
+  : client(server_url(command, argument),
+    command.get_server_connect_retries_setting(),
+    command.get_server_connect_timeout_seconds_setting())
 {
 }
 
@@ -208,8 +222,106 @@ private:
     bool timed_out_{};
 };
 
+// A blocking stream over an asynchronous socket, each operation bounded by
+// the deadline and run on the calling thread.
+class timed_stream
+{
+public:
+    timed_stream(io::context& service) NOEXCEPT
+      : service_(service), resolver_(service), socket_(service),
+        timer_(service)
+    {
+    }
+
+    void expires_after(std::chrono::seconds timeout) NOEXCEPT
+    {
+        deadline_ = std::chrono::steady_clock::now() + timeout;
+    }
+
+    void resolve(io::endpoints& out, const std::string& host,
+        const std::string& port, network::code& ec) NOEXCEPT
+    {
+        run(ec, [&](const auto& complete) NOEXCEPT
+        {
+            resolver_.async_resolve(host, port,
+                [&](const network::code& ec,
+                    const io::endpoints& range) NOEXCEPT
+                {
+                    out = range;
+                    complete(ec, zero);
+                });
+        });
+    }
+
+    void connect(const io::endpoints& range, network::code& ec) NOEXCEPT
+    {
+        run(ec, [&](const auto& complete) NOEXCEPT
+        {
+            io::async_connect(socket_, range,
+                [=](const network::code& ec, const io::endpoint&) NOEXCEPT
+                {
+                    complete(ec, zero);
+                });
+        });
+    }
+
+    template <typename Buffers>
+    size_t read_some(const Buffers& buffers, network::code& ec) NOEXCEPT
+    {
+        return run(ec, [&](const auto& complete) NOEXCEPT
+        {
+            socket_.async_read_some(buffers, complete);
+        });
+    }
+
+    template <typename Buffers>
+    size_t write_some(const Buffers& buffers, network::code& ec) NOEXCEPT
+    {
+        return socket_.write_some(buffers, ec);
+    }
+
+private:
+    // The timer closes the socket at the deadline, completing the operation.
+    template <typename Start>
+    size_t run(network::code& ec, const Start& start) NOEXCEPT
+    {
+        size_t size{};
+        timer_.expires_at(deadline_);
+        timer_.async_wait([this](const network::code& ec) NOEXCEPT
+        {
+            if (!ec)
+            {
+                timed_out_ = true;
+                socket_.close();
+            }
+        });
+
+        start([&](const network::code& result, size_t transferred) NOEXCEPT
+        {
+            ec = result;
+            size = transferred;
+            timer_.cancel();
+        });
+
+        service_.restart();
+        service_.run();
+
+        if (timed_out_)
+            ec = network::error::channel_timeout;
+
+        return size;
+    }
+
+    io::context& service_;
+    io::resolver resolver_;
+    io::socket socket_;
+    io::steady_timer timer_;
+    std::chrono::steady_clock::time_point deadline_{};
+    bool timed_out_{};
+};
+
 // Returns false and populates error on any failure.
-static bool fetch(std::string& out, std::string& error,
+static bool request(std::string& out, std::string& error,
     const system::config::url& url, uint16_t timeout_seconds,
     const std::string& target) NOEXCEPT
 {
@@ -248,7 +360,7 @@ bool client::get(system::json::value& out, std::string& error,
 
     std::string body{};
     for (uint8_t attempt{}; attempt <= retries_; ++attempt)
-        if (fetch(body, error, url_, timeout_seconds_, target))
+        if (request(body, error, url_, timeout_seconds_, target))
             break;
         else if (attempt == retries_)
             return false;
@@ -262,6 +374,92 @@ bool client::get(system::json::value& out, std::string& error,
     }
 
     return true;
+}
+
+bool client::fetch(system::json::value& out, std::ostream& error,
+    const std::string& path, const std::string& query) NOEXCEPT
+{
+    std::string message{};
+    if (get(out, message, path, query))
+        return true;
+
+    error << std::format(BX_SERVER_QUERY_FAILED, message) << std::endl;
+    return false;
+}
+
+static std::string to_string(const http::flat_buffer& buffer) NOEXCEPT
+{
+    const auto data = buffer.data();
+    return { system::pointer_cast<const char>(data.data()), data.size() };
+}
+
+bool client::subscribe(std::ostream& error, const std::string& path,
+    uint32_t seconds, const notifier& handler) NOEXCEPT
+{
+    const auto target = version_prefix + path + json_format;
+    const auto port = std::to_string(url_.port());
+
+    io::context service{};
+    timed_stream stream{ service };
+    ws::client<timed_stream> socket{ stream };
+
+    network::code ec{};
+    io::endpoints range{};
+    stream.expires_after(std::chrono::seconds(timeout_seconds_));
+    stream.resolve(range, url_.host(), port, ec);
+    if (!ec)
+        stream.connect(range, ec);
+
+    if (!ec)
+        ec = socket.handshake(url_.host(), version_prefix);
+
+    if (!ec)
+        ec = socket.write(target);
+
+    stream.expires_after(std::chrono::seconds(seconds));
+    http::flat_buffer buffer{};
+    while (!ec)
+    {
+        buffer.consume(buffer.size());
+        ec = socket.read(buffer);
+        if (ec)
+            break;
+
+        // The initial reply to a subscription may be empty.
+        const auto text = to_string(buffer);
+        if (text.empty())
+            continue;
+
+        system::code parse{};
+        const auto value = system::json::parse(text, parse);
+        if (parse)
+        {
+            error << std::format(BX_SERVER_SUBSCRIBE_FAILED, parse.message())
+                << std::endl;
+            return false;
+        }
+
+        if (!handler(value))
+        {
+            socket.close(ws::close_code::normal);
+            return true;
+        }
+    }
+
+    if (ec == network::error::channel_timeout ||
+        ec == network::error::websocket_closed)
+        return true;
+
+    error << std::format(BX_SERVER_SUBSCRIBE_FAILED, ec.message()) << std::endl;
+    return false;
+}
+
+std::string block_path(const system::hash_digest& hash,
+    uint32_t height) NOEXCEPT
+{
+    return hash == system::null_hash ?
+        "block/height/" + system::serialize(height) :
+        "block/hash/" + system::encode_hash(hash);
 }
 
 } // namespace explorer

@@ -30,7 +30,7 @@ using namespace bc::system;
 
 console_result put_tx::invoke(std::ostream&, std::ostream& error)
 {
-    error << BX_PUT_TX_NOT_IMPLEMENTED << std::endl;
+    error << BX_PUT_TX_OBSOLETE << std::endl;
     return console_result::failure;
 }
 

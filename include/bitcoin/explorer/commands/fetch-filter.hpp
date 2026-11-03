@@ -45,12 +45,6 @@ namespace explorer {
 namespace commands {
 
 /**
- * Various localizable strings.
- */
-#define BX_FETCH_FILTER_FAILED \
-    "Server query failed: {}."
-
-/**
  * Class to implement the fetch-filter command.
  */
 class BCX_API fetch_filter

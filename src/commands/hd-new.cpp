@@ -34,7 +34,7 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& error)
     const auto version = get_version_option();
     const data_chunk& entropy = get_entropy_argument();
 
-    if (entropy.size() < minimum_seed_size)
+    if (entropy.size() < minimum_entropy_size)
     {
         error << BX_HD_NEW_SHORT_ENTROPY << std::endl;
         return console_result::failure;

@@ -59,6 +59,8 @@
     <string name="BX_COMMANDS_HEADER" value="Info: The bx commands are:" />
     <string name="BX_COMMANDS_HOME_PAGE" value="Bitcoin Explorer home page:" />
     <string name="BX_CONNECTION_FAILURE" value="Could not connect to server: {}" />
+    <string name="BX_SERVER_QUERY_FAILED" value="Server query failed: {}." />
+    <string name="BX_SERVER_SUBSCRIBE_FAILED" value="Server subscription failed: {}." />
     <string name="BX_DEPRECATED_COMMAND" value="The '{}' command has been replaced by '{}'."/>
     <string name="BX_INVALID_COMMAND" value="'{}' is not a bx command. Enter 'bx help' for a list of commands." />
     <string name="BX_INVALID_PARAMETER" value="Error: {}" />
@@ -155,15 +157,15 @@
     <argument name="BTC" stdin="true" type="btc" description="The number of BTC to convert. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="cert-new" stub="true" category="MATH" description="Create a Base85 Curve ZMQ private key for use with a Libbitcoin server. WARNING: entropy is obtained from the underlying platform.">
-    <define name="BX_CERT_NEW_FAILURE" value="The key generation failed." />
-    <define name="BX_CERT_NEW_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  <command symbol="cert-new" output="base85" category="MATH" description="Create a Base85 Curve ZMQ private key for use with a Libbitcoin server from entropy.">
+    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN." />
+    <define name="BX_CERT_NEW_SHORT_ENTROPY" value="The entropy is less than 256 bits long." />
+    <define name="BX_CERT_NEW_INVALID_KEY" value="The entropy produced an invalid key." />
   </command>
 
-  <command symbol="cert-public" stub="true" output="base85" category="MATH" description="Derive a Base85 Curve ZMQ public key for use with a Libbitcoin server.">
+  <command symbol="cert-public" output="base85" category="MATH" description="Derive a Base85 Curve ZMQ public key for use with a Libbitcoin server.">
     <argument name="PRIVATE_KEY" stdin="true" type="base85" description="The private key from which to derive the public key." />
     <define name="BX_CERT_PUBLIC_INVALID" value="The private key is not valid." />
-    <define name="BX_CERT_PUBLIC_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="checked-decode" formerly="wrap-decode" output="base16" category="ENCODING" description="Validate the bitcoin checksum of Base16 data and recover its version and payload.">
@@ -294,7 +296,7 @@
  
   <command symbol="electrum-new" output="string" multipleX="true" category="WALLET" description="Create an Electrum mnemonic from entropy. After the mnemonic is created, entropy round-trips with the electrum-decode command.">
     <option name="language" type="language" description="The dictionary to generate the mnemonic from. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'." />
-    <option name="prefix" type="electrum" description="The electrum seed type. Options are 'standard', 'witness', and '2fa', and '2faw', defaults to 'standard'." />
+    <option name="prefix" type="electrum" description="The Electrum mnemonic type. Options are 'standard', 'witness', '2fa' and '2faw', defaults to 'standard'." />
     <argument name="ENTROPY" stdin="true" type="base16" description="The 17 to 64 bytes of Base16 entropy from which the mnemonic is derived. If not specified the entropy is read from STDIN." />
     <define name="BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE" value="The entropy size is not 17 to 64 bytes." />
   </command>
@@ -317,21 +319,18 @@
   <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
     <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
-    <define name="BX_FETCH_BALANCE_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-block" category="ONLINE" output="block" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
     <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
-    <define name="BX_FETCH_BLOCK_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-block-hashes" category="ONLINE" output="hash_list" network="true" description="Get the transaction hashes of the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
     <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
-    <define name="BX_FETCH_BLOCK_HASHES_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-filter" category="ONLINE" output="compact_filter" network="true" description="Get the compact filter of the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
@@ -339,7 +338,6 @@
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
     <option name="type" shortcut="f" type="uint8_t" default="0" description="The compact filter type, defaults to 0." />
-    <define name="BX_FETCH_FILTER_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-filter-checkpoint" stub="true" category="ONLINE" output="compact_filter_checkpoint" network="true" description="Retrieve compact filter checkpoint from a Libbitcoin server.">
@@ -360,61 +358,37 @@
     <define name="BX_FETCH_FILTER_HEADERS_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="get-filters" stub="true" category="ONLINE" output="compact_filter" network="true" description="Retrieve compact filters from a single Bitcoin network node. The distance between provided height and hash must be strictly less than 100.">
-    <option name="host" shortcut="t" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
-    <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
-    <!--<argument name="filter_type" shortcut="r" type="uint16_t" description="The compact filter type." />-->
-    <argument name="height" type="uint32_t" description="The block height."/>
-    <argument name="hash" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
-    <define name="BX_BIP157_UNSUPPORTED" value="The peer does not indicate support for BIP157." />
-    <!--<define name="BX_INVALID_FILTER_TYPE" value="The provided filter type exceeds encodable limits." />-->
-    <define name="BX_GET_FILTERS_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  <command symbol="get-filters" category="ONLINE" obsolete="true" description="Retrieve compact filters from a single Bitcoin network node. The distance between provided height and hash must be strictly less than 100.">
+    <define name="BX_GET_FILTERS_OBSOLETE" value="This command is obsolete. Use fetch-filter instead." />
   </command>
 
-  <command symbol="get-filter-checkpoint" stub="true" category="ONLINE" output="compact_filter_checkpoint" network="true" description="Retrieve compact filter checkpoint from a single Bitcoin network node.">
-    <option name="host" shortcut="t" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
-    <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
-    <!--<argument name="filter_type" shortcut="r" type="uint16_t" description="The compact filter type." />-->
-    <argument name="hash" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
-    <define name="BX_BIP157_UNSUPPORTED" value="The peer does not indicate support for BIP157." />
-    <!--<define name="BX_INVALID_FILTER_TYPE" value="The provided filter type exceeds encodable limits." />-->
-    <define name="BX_GET_FILTER_CHECKPOINT_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  <command symbol="get-filter-checkpoint" category="ONLINE" obsolete="true" description="Retrieve compact filter checkpoint from a single Bitcoin network node.">
+    <define name="BX_GET_FILTER_CHECKPOINT_OBSOLETE" value="This command is obsolete. Use fetch-filter-checkpoint instead." />
   </command>
 
-  <command symbol="get-filter-headers" stub="true" category="ONLINE" output="compact_filter_headers" network="true" description="Retrieve compact filter headers from a single Bitcoin network node. The distance between provided height and hash must be strictly less than 2000.">
-    <option name="host" shortcut="t" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
-    <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
-    <!--<argument name="filter_type" shortcut="r" type="uint16_t" description="The compact filter type." />-->
-    <argument name="height" type="uint32_t" description="The block height."/>
-    <argument name="hash" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
-    <define name="BX_BIP157_UNSUPPORTED" value="The peer does not indicate support for BIP157." />
-    <!--<define name="BX_INVALID_FILTER_TYPE" value="The provided filter type exceeds encodable limits." />-->
-    <define name="BX_GET_FILTER_HEADERS_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  <command symbol="get-filter-headers" category="ONLINE" obsolete="true" description="Retrieve compact filter headers from a single Bitcoin network node. The distance between provided height and hash must be strictly less than 2000.">
+    <define name="BX_GET_FILTER_HEADERS_OBSOLETE" value="This command is obsolete. Use fetch-filter-headers instead." />
   </command>
 
   <command symbol="fetch-header" category="ONLINE" output="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
     <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
-    <define name="BX_FETCH_HEADER_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-block-height" category="ONLINE" output="uint32_t" network="true" description="Get the block height from the specified hash. Requires a Libbitcoin server connection.">
     <argument name="hash" stdin="true" type="hash256" description="The Base16 block hash."/>
     <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <define name="BX_FETCH_BLOCK_HEIGHT_MISSING" value="The server response contained no height." />
-    <define name="BX_FETCH_BLOCK_HEIGHT_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-height" formerly="fetch-last-height" output="uint32_t" category="ONLINE" network="true" description="Get the last block height. Requires a Libbitcoin server connection.">
     <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
-    <define name="BX_FETCH_HEIGHT_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-history" output="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a payment key. Requires a Libbitcoin server connection.">
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
     <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
-    <define name="BX_FETCH_HISTORY_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-public-key" formerly="get-pubkey" output="ec_public" category="ONLINE" stub="true" network="true" description="Get the EC public key of the address, if it exists on the blockchain. Requires a Libbitcoin server connection.">
@@ -426,14 +400,12 @@
     <option name="witness" description="Include witness as applicable." />
     <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash of the transaction to get. If not specified the transaction hash is read from STDIN." />
     <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
-    <define name="BX_FETCH_TX_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-tx-index" formerly="fetch-transaction-index" output="string" multipleX="true" category="ONLINE" network="true" description="Get the block height and index of a transaction. Requires a Libbitcoin server connection.">
     <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash of the transaction index to get. If not specified the transaction hash is read from STDIN." />
     <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <define name="BX_FETCH_TX_INDEX_UNCONFIRMED" value="The transaction is not confirmed." />
-    <define name="BX_FETCH_TX_INDEX_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-utxo" formerly="get-utxo" output="output" category="ONLINE" network="true" description="Get enough unspent transaction outputs from a payment address to pay a number of satoshi. Requires a Libbitcoin server connection.">
@@ -441,7 +413,6 @@
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
     <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
-    <define name="BX_FETCH_UTXO_FAILED" value="Server query failed: {}." />
     <define name="BX_FETCH_UTXO_INSUFFICIENT" value="The unspent outputs do not cover the requested satoshi." />
   </command>
 
@@ -635,20 +606,13 @@
   </command>
 
   <!-- Out of order. -->
-  <command symbol="put-tx" stub="true" formerly="send-tx-node" output="string" category="ONLINE" network="true" description="Broadcast a transaction to the Bitcoin network via a single Bitcoin network node.">
-    <option name="host" shortcut="t" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
-    <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
-    <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction to send. If not specified the transaction is read from STDIN."/>
-    <define name="BX_SEND_TX_NODE_OUTPUT" value="Sent transaction." />
-    <define name="BX_PUT_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  <command symbol="put-tx" formerly="send-tx-node" category="ONLINE" obsolete="true" description="Broadcast a transaction to the Bitcoin network via a single Bitcoin network node.">
+    <define name="BX_PUT_TX_OBSOLETE" value="This command is obsolete. Use send-tx instead." />
   </command>
 
   <!-- Out of order. -->
-  <command symbol="broadcast-tx" stub="true" formerly="sendtx-p2p" output="string" category="ONLINE" network="true" description="Broadcast a transaction to the Bitcoin network via the Bitcoin peer-to-peer network.">
-    <option name="nodes" type="size_t" default="2" description="The number of network nodes to send the transaction to, defaults to 2." />
-    <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction to send. If not specified the transaction is read from STDIN."/>
-    <define name="BX_SEND_TX_P2P_OUTPUT" value="Sent transaction." />
-    <define name="BX_BROADCAST_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  <command symbol="broadcast-tx" formerly="sendtx-p2p" category="ONLINE" obsolete="true" description="Broadcast a transaction to the Bitcoin network via the Bitcoin peer-to-peer network.">
+    <define name="BX_BROADCAST_TX_OBSOLETE" value="This command is obsolete. Use send-tx instead." />
   </command>
 
   <command symbol="settings" output="string" multipleX="true" category="META" description="Display the loaded configuration settings.">
@@ -684,18 +648,14 @@
     <define name="BX_STEALTH_SHARED_OUT_OF_RANGE" value="Product exceeds valid range." />
   </command>
 
-  <command symbol="subscribe-block" output="block" category="ONLINE" network="true" stub="true" description="Watch the network for all blocks. Requires a Libbitcoin server connection.">
+  <command symbol="subscribe-block" output="block" category="ONLINE" network="true" description="Watch the network for all blocks. Requires a Libbitcoin server connection.">
     <argument name="server-url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="duration" type="uint32_t" default="600" description="The duration of the subscription in seconds, defaults to 600." />
-    <define name="BX_SUBSCRIBE_BLOCK_FAILED" value="Failed to subscribe to transaction service: {}" />
-    <define name="BX_SUBSCRIBE_BLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="subscribe-tx" output="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for all transactions. Requires a Libbitcoin server connection.">
+  <command symbol="subscribe-tx" output="transaction" category="ONLINE" network="true" description="Watch the network for all transactions. Requires a Libbitcoin server connection.">
     <argument name="server-url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="duration" type="uint32_t" default="600" description="The duration of the subscription in seconds, defaults to 600." />
-    <define name="BX_SUBSCRIBE_TX_FAILED" value="Failed to subscribe to transaction service: {}" />
-    <define name="BX_SUBSCRIBE_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="token-new" output="ek_token" category="KEY_ENCRYPTION" description="Create an intermediate passphrase token for deferred encrypted key generation (BIP38).">
@@ -723,10 +683,8 @@
   </command>
 
   <!-- This was originally designed for PGP signing -->
-  <command symbol="tx-sign" formerly="signtx" output="transaction" multipleX="true" category="TRANSACTION" stub="true" description="Sign a set of transactions using a private key. Output is suitable for sending to Bitcoin network.">
-    <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The EC private key to be used for signing." />
-    <argument name="TRANSACTION" fileX="true" stdin="true" limit="-1" type="transaction" description="The set of Base16 transactions. If not specified the transactions are read from STDIN."/>
-    <define name="BX_TX_SIGN_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  <command symbol="tx-sign" formerly="signtx" category="TRANSACTION" obsolete="true" description="Sign a set of transactions using a private key. Output is suitable for sending to Bitcoin network.">
+    <define name="BX_TX_SIGN_OBSOLETE" value="This command is obsolete. Use combination of input-sign and input-set instead." />
   </command>
 
   <command symbol="uri-decode" output="uri" category="WALLET" description="Decompose a Bitcoin URI into its parts.">
@@ -762,10 +720,11 @@
     <define name="BX_WATCH_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="watch-tx" formerly="watchtx" output="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for a transaction by hash. Requires a Libbitcoin server connection.">
+  <command symbol="watch-tx" formerly="watchtx" output="transaction" category="ONLINE" network="true" description="Watch the network for a transaction by hash. Requires a Libbitcoin server connection.">
+    <option name="duration" type="uint32_t" default="600" description="The duration of the watch in seconds, defaults to 600." />
     <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash to watch. If not specified the hash is read from STDIN." />
-    <define name="BX_WATCH_TX_WAITING" value="Watching transaction: {}..." />
-    <define name="BX_WATCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_WATCH_TX_TIMEOUT" value="The transaction was not observed within the duration." />
   </command>
 
   <command symbol="wif-to-ec" output="ec_private" category="WALLET" description="Convert a WIF private key to an EC private key.">

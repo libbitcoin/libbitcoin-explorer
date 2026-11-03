@@ -19,6 +19,7 @@
 #ifndef BX_CLIENT_HPP
 #define BX_CLIENT_HPP
 
+#include <functional>
 #include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -26,13 +27,22 @@
 namespace libbitcoin {
 namespace explorer {
 
+class command;
+
 /// Synchronous client for the libbitcoin server native interface.
 class BCX_API client
 {
 public:
+    typedef std::function<bool(const system::json::value&)> notifier;
+
     /// Construct a client for the given service url.
     client(const system::config::url& url, uint8_t retries,
         uint16_t timeout_seconds) NOEXCEPT;
+
+    /// Construct a client for the command's server, from the url argument
+    /// when it specifies a port and otherwise from the url setting.
+    client(const command& command,
+        const system::config::url& argument) NOEXCEPT;
 
     /// Get the json response for a native interface path, such as
     /// "block/height/42". The version prefix and format are supplied here,
@@ -41,11 +51,26 @@ public:
     bool get(system::json::value& out, std::string& error,
         const std::string& path, const std::string& query="") NOEXCEPT;
 
+    /// Get as above, writing the failure message to the error stream.
+    bool fetch(system::json::value& out, std::ostream& error,
+        const std::string& path, const std::string& query="") NOEXCEPT;
+
+    /// Subscribe to a native interface path, such as "block/subscribe",
+    /// passing each json notification to the handler until it returns
+    /// false or the duration elapses, writing any failure to error.
+    bool subscribe(std::ostream& error, const std::string& path,
+        uint32_t seconds, const notifier& handler) NOEXCEPT;
+
 private:
     const system::config::url url_;
     const uint8_t retries_;
     const uint16_t timeout_seconds_;
 };
+
+/// The native interface path of a block, by hash unless the hash is null
+/// and otherwise by height, such as "block/height/42".
+BCX_API std::string block_path(const system::hash_digest& hash,
+    uint32_t height) NOEXCEPT;
 
 } // namespace explorer
 } // namespace libbitcoin

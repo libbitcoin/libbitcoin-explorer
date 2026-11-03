@@ -52,7 +52,7 @@ BC_AUTO_TEST_CASE(ek_address__invoke__example_3_piped_commands__okay)
     BX_REQUIRE_OUTPUT("1DS3aqzg5w8bMsyzyutxcrhKoLZGjPnC13\n");
 }
 
-BC_AUTO_TEST_CASE(ek_address__invoke__example_4_invalid_seed__failure_error)
+BC_AUTO_TEST_CASE(ek_address__invoke__example_4_invalid_entropy__failure_error)
 {
     BX_DECLARE_COMMAND(ek_address);
     command.set_entropy_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });

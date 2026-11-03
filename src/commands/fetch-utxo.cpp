@@ -19,11 +19,12 @@
 
 #include <bitcoin/explorer/commands/fetch-utxo.hpp>
 
-#include <format>
 #include <algorithm>
+#include <format>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/client.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
@@ -91,30 +92,20 @@ console_result fetch_utxo::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& argument = get_server_url_argument();
-    const auto& url = is_zero(argument.port()) ?
-        get_server_url_setting() : argument;
     const selection algorithm = get_algorithm_option();
     const auto satoshi = get_satoshi_argument();
     const hash_digest& hash = get_hash_argument();
     const auto path = "address/" + encode_hash(hash);
-
-    client server(url, get_server_connect_retries_setting(),
-        get_server_connect_timeout_seconds_setting());
+    client server(*this, get_server_url_argument());
 
     json::value response{};
-    std::string message{};
-
-    if (!server.get(response, message, path))
-    {
-        error << std::format(BX_FETCH_UTXO_FAILED, message) << std::endl;
+    if (!server.fetch(response, error, path))
         return console_result::failure;
-    }
 
     const auto unspent = response.if_array();
     if (!unspent)
     {
-        error << std::format(BX_FETCH_UTXO_FAILED, "unexpected response")
+        error << std::format(BX_SERVER_QUERY_FAILED, "unexpected response")
             << std::endl;
         return console_result::failure;
     }

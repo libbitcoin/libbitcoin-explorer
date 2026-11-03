@@ -99,4 +99,61 @@ BC_AUTO_TEST_CASE(client__get__eof_delimited_response__true_expected)
     BC_REQUIRE_EQUAL(json::value_to<uint32_t>(out), 42u);
 }
 
+BC_AUTO_TEST_CASE(client__construct__command_argument_with_port__argument_server)
+{
+    const http_server server{ network::http::status::ok, "42" };
+    commands::fetch_height command;
+    command.set_server_connect_timeout_seconds_setting(10);
+    command.set_server_url_setting({ "http://127.0.0.1:65002" });
+    client instance{ command, { server.url() } };
+    json::value out{};
+    std::string error{};
+    BC_REQUIRE(instance.get(out, error, "top"));
+    BC_REQUIRE_EQUAL(json::value_to<uint32_t>(out), 42u);
+}
+
+BC_AUTO_TEST_CASE(client__construct__command_argument_without_port__setting_server)
+{
+    const http_server server{ network::http::status::ok, "42" };
+    commands::fetch_height command;
+    command.set_server_connect_timeout_seconds_setting(10);
+    command.set_server_url_setting({ server.url() });
+    client instance{ command, {} };
+    json::value out{};
+    std::string error{};
+    BC_REQUIRE(instance.get(out, error, "top"));
+    BC_REQUIRE_EQUAL(json::value_to<uint32_t>(out), 42u);
+}
+
+BC_AUTO_TEST_CASE(client__fetch__served_value__true_no_error)
+{
+    const http_server server{ network::http::status::ok, "42" };
+    client instance{ { server.url() }, 0, 10 };
+    json::value out{};
+    std::stringstream error{};
+    BC_REQUIRE(instance.fetch(out, error, "top"));
+    BC_REQUIRE(error.str().empty());
+    BC_REQUIRE_EQUAL(json::value_to<uint32_t>(out), 42u);
+}
+
+BC_AUTO_TEST_CASE(client__fetch__served_not_found__false_error)
+{
+    const http_server server{ network::http::status::not_found, "" };
+    client instance{ { server.url() }, 0, 10 };
+    json::value out{};
+    std::stringstream error{};
+    BC_REQUIRE(!instance.fetch(out, error, "top"));
+    BC_REQUIRE_EQUAL(error.str(), "Server query failed: 404 Not Found.\n");
+}
+
+BC_AUTO_TEST_CASE(client__block_path__null_hash__height_path)
+{
+    BC_REQUIRE_EQUAL(block_path(null_hash, 42), "block/height/42");
+}
+
+BC_AUTO_TEST_CASE(client__block_path__hash__hash_path)
+{
+    BC_REQUIRE_EQUAL(block_path(one_hash, 42), "block/hash/" + encode_hash(one_hash));
+}
+
 BC_AUTO_TEST_SUITE_END()

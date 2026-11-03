@@ -19,7 +19,6 @@
 
 #include <bitcoin/explorer/commands/fetch-filter.hpp>
 
-#include <format>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/client.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -35,29 +34,15 @@ console_result fetch_filter::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& argument = get_server_url_argument();
-    const auto& url = is_zero(argument.port()) ?
-        get_server_url_setting() : argument;
     const hash_digest& hash = get_hash_option();
     const auto height = get_height_option();
     const auto type = get_type_option();
-
-    const auto block = hash == null_hash ?
-        "block/height/" + serialize(height) :
-        "block/hash/" + encode_hash(hash);
-    const auto path = block + "/filter/" + serialize(type);
-
-    client server(url, get_server_connect_retries_setting(),
-        get_server_connect_timeout_seconds_setting());
+    const auto path = block_path(hash, height) + "/filter/" + serialize(type);
+    client server(*this, get_server_url_argument());
 
     json::value response{};
-    std::string message{};
-
-    if (!server.get(response, message, path))
-    {
-        error << std::format(BX_FETCH_FILTER_FAILED, message) << std::endl;
+    if (!server.fetch(response, error, path))
         return console_result::failure;
-    }
 
     write_stream(output, response);
     return console_result::okay;

@@ -30,7 +30,7 @@ using namespace bc::system;
 
 console_result get_filters::invoke(std::ostream&, std::ostream& error)
 {
-    error << BX_GET_FILTERS_NOT_IMPLEMENTED << std::endl;
+    error << BX_GET_FILTERS_OBSOLETE << std::endl;
     return console_result::failure;
 }
 

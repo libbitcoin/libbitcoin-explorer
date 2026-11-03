@@ -18,17 +18,33 @@
  */
 
 #include "command.hpp"
+#include "../fixture/http_server.hpp"
 
 BX_USING_NAMESPACES()
 
-BC_AUTO_TEST_SUITE(stub)
+BC_AUTO_TEST_SUITE(online)
 BC_AUTO_TEST_SUITE(subscribe_tx__invoke)
 
-BC_AUTO_TEST_CASE(subscribe_tx__invoke__always__failure_error)
+BC_AUTO_TEST_CASE(subscribe_tx__invoke__empty_then_tx_then_close__okay_output)
 {
     BX_DECLARE_COMMAND(subscribe_tx);
+    const http_server server{ http_server::websocket, { "", "\"0000000000000000000000000000000000000000000000000000000000000001\"" }, true };
+    command.set_server_connect_timeout_seconds_setting(10);
+    command.set_server_url_argument({ server.url() });
+    command.set_duration_option(10);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("\"0000000000000000000000000000000000000000000000000000000000000001\"\n");
+}
+
+BC_AUTO_TEST_CASE(subscribe_tx__invoke__invalid_json__failure_error)
+{
+    BX_DECLARE_COMMAND(subscribe_tx);
+    const http_server server{ http_server::websocket, { "baadf00d" }, true };
+    command.set_server_connect_timeout_seconds_setting(10);
+    command.set_server_url_argument({ server.url() });
+    command.set_duration_option(10);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_SUBSCRIBE_TX_NOT_IMPLEMENTED "\n");
+    BC_REQUIRE(!error.str().empty());
 }
 
 BC_AUTO_TEST_SUITE_END()

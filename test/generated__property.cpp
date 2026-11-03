@@ -206,19 +206,6 @@ BC_AUTO_TEST_CASE(generated__property__bitcoin256__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_base16_argument()), serial(base16_argument));
 }
 
-BC_AUTO_TEST_CASE(generated__property__broadcast_tx__round_trips)
-{
-    broadcast_tx command;
-
-    const system::config::transaction transaction_argument{ "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000" };
-    command.set_transaction_argument(transaction_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_transaction_argument()), serial(transaction_argument));
-
-    const size_t nodes_option{ 42 };
-    command.set_nodes_option(nodes_option);
-    BC_REQUIRE_EQUAL(serial(command.get_nodes_option()), serial(nodes_option));
-}
-
 BC_AUTO_TEST_CASE(generated__property__btc_to_satoshi__round_trips)
 {
     btc_to_satoshi command;
@@ -226,6 +213,15 @@ BC_AUTO_TEST_CASE(generated__property__btc_to_satoshi__round_trips)
     const explorer::config::btc btc_argument{ "42.42" };
     command.set_btc_argument(btc_argument);
     BC_REQUIRE_EQUAL(serial(command.get_btc_argument()), serial(btc_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__cert_new__round_trips)
+{
+    cert_new command;
+
+    const system::config::base16 entropy_argument{ "baadf00d" };
+    command.set_entropy_argument(entropy_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_entropy_argument()), serial(entropy_argument));
 }
 
 BC_AUTO_TEST_CASE(generated__property__cert_public__round_trips)
@@ -779,65 +775,6 @@ BC_AUTO_TEST_CASE(generated__property__fetch_utxo__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_algorithm_option()), serial(algorithm_option));
 }
 
-BC_AUTO_TEST_CASE(generated__property__get_filter_checkpoint__round_trips)
-{
-    get_filter_checkpoint command;
-
-    const system::config::hash256 hash_argument{ "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f" };
-    command.set_hash_argument(hash_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_hash_argument()), serial(hash_argument));
-
-    const std::string host_option{ "string" };
-    command.set_host_option(host_option);
-    BC_REQUIRE_EQUAL(serial(command.get_host_option()), serial(host_option));
-
-    const uint16_t port_option{ 42 };
-    command.set_port_option(port_option);
-    BC_REQUIRE_EQUAL(serial(command.get_port_option()), serial(port_option));
-}
-
-BC_AUTO_TEST_CASE(generated__property__get_filter_headers__round_trips)
-{
-    get_filter_headers command;
-
-    const uint32_t height_argument{ 42 };
-    command.set_height_argument(height_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_height_argument()), serial(height_argument));
-
-    const system::config::hash256 hash_argument{ "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f" };
-    command.set_hash_argument(hash_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_hash_argument()), serial(hash_argument));
-
-    const std::string host_option{ "string" };
-    command.set_host_option(host_option);
-    BC_REQUIRE_EQUAL(serial(command.get_host_option()), serial(host_option));
-
-    const uint16_t port_option{ 42 };
-    command.set_port_option(port_option);
-    BC_REQUIRE_EQUAL(serial(command.get_port_option()), serial(port_option));
-}
-
-BC_AUTO_TEST_CASE(generated__property__get_filters__round_trips)
-{
-    get_filters command;
-
-    const uint32_t height_argument{ 42 };
-    command.set_height_argument(height_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_height_argument()), serial(height_argument));
-
-    const system::config::hash256 hash_argument{ "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f" };
-    command.set_hash_argument(hash_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_hash_argument()), serial(hash_argument));
-
-    const std::string host_option{ "string" };
-    command.set_host_option(host_option);
-    BC_REQUIRE_EQUAL(serial(command.get_host_option()), serial(host_option));
-
-    const uint16_t port_option{ 42 };
-    command.set_port_option(port_option);
-    BC_REQUIRE_EQUAL(serial(command.get_port_option()), serial(port_option));
-}
-
 BC_AUTO_TEST_CASE(generated__property__hd_new__round_trips)
 {
     hd_new command;
@@ -1122,23 +1059,6 @@ BC_AUTO_TEST_CASE(generated__property__mnemonic_to_seed__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_passphrase_option()), serial(passphrase_option));
 }
 
-BC_AUTO_TEST_CASE(generated__property__put_tx__round_trips)
-{
-    put_tx command;
-
-    const system::config::transaction transaction_argument{ "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000" };
-    command.set_transaction_argument(transaction_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_transaction_argument()), serial(transaction_argument));
-
-    const std::string host_option{ "string" };
-    command.set_host_option(host_option);
-    BC_REQUIRE_EQUAL(serial(command.get_host_option()), serial(host_option));
-
-    const uint16_t port_option{ 42 };
-    command.set_port_option(port_option);
-    BC_REQUIRE_EQUAL(serial(command.get_port_option()), serial(port_option));
-}
-
 BC_AUTO_TEST_CASE(generated__property__qrcode__round_trips)
 {
     qrcode command;
@@ -1395,19 +1315,6 @@ BC_AUTO_TEST_CASE(generated__property__tx_encode__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_outputs_option()), serial(outputs_option));
 }
 
-BC_AUTO_TEST_CASE(generated__property__tx_sign__round_trips)
-{
-    tx_sign command;
-
-    const explorer::config::ec_private ec_private_key_argument{ "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475" };
-    command.set_ec_private_key_argument(ec_private_key_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_ec_private_key_argument()), serial(ec_private_key_argument));
-
-    const std::vector<system::config::transaction> transactions_argument{ { "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000" } };
-    command.set_transactions_argument(transactions_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_transactions_argument()), serial(transactions_argument));
-}
-
 BC_AUTO_TEST_CASE(generated__property__uri_decode__round_trips)
 {
     uri_decode command;
@@ -1471,6 +1378,14 @@ BC_AUTO_TEST_CASE(generated__property__watch_tx__round_trips)
     const system::config::hash256 hash_argument{ "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f" };
     command.set_hash_argument(hash_argument);
     BC_REQUIRE_EQUAL(serial(command.get_hash_argument()), serial(hash_argument));
+
+    const system::config::url server_url_argument{ "http://127.0.0.1:1" };
+    command.set_server_url_argument(server_url_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_server_url_argument()), serial(server_url_argument));
+
+    const uint32_t duration_option{ 42 };
+    command.set_duration_option(duration_option);
+    BC_REQUIRE_EQUAL(serial(command.get_duration_option()), serial(duration_option));
 }
 
 BC_AUTO_TEST_CASE(generated__property__wif_to_ec__round_trips)

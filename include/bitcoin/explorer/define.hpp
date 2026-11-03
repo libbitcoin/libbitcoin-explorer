@@ -67,7 +67,7 @@ typedef bc::system::chain::input tx_input_type;
 typedef bc::system::chain::output tx_output_type;
 
 /// The minimum safe length of a seed in bytes (128 bits).
-constexpr size_t minimum_seed_size = 16;
+constexpr size_t minimum_entropy_size = 16;
 
 /// Console result codes, positive values are domain-specific.
 enum console_result : int

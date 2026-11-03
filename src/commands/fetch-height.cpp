@@ -19,7 +19,6 @@
 
 #include <bitcoin/explorer/commands/fetch-height.hpp>
 
-#include <format>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/client.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -32,22 +31,11 @@ using namespace bc::system;
 
 console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 {
-    // Bound parameters.
-    const auto& argument = get_server_url_argument();
-    const auto& url = is_zero(argument.port()) ?
-        get_server_url_setting() : argument;
-
-    client server(url, get_server_connect_retries_setting(),
-        get_server_connect_timeout_seconds_setting());
+    client server(*this, get_server_url_argument());
 
     json::value response{};
-    std::string message{};
-
-    if (!server.get(response, message, "top"))
-    {
-        error << std::format(BX_FETCH_HEIGHT_FAILED, message) << std::endl;
+    if (!server.fetch(response, error, "top"))
         return console_result::failure;
-    }
 
     output << json::value_to<uint32_t>(response) << std::endl;
     return console_result::okay;

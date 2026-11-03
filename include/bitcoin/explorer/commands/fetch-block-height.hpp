@@ -49,8 +49,6 @@ namespace commands {
  */
 #define BX_FETCH_BLOCK_HEIGHT_MISSING \
     "The server response contained no height."
-#define BX_FETCH_BLOCK_HEIGHT_FAILED \
-    "Server query failed: {}."
 
 /**
  * Class to implement the fetch-block-height command.

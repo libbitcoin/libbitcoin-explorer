@@ -23,7 +23,6 @@ _bx()
         bech32-encode
         bitcoin160
         bitcoin256
-        broadcast-tx
         btc-to-satoshi
         cert-new
         cert-public
@@ -65,9 +64,6 @@ _bx()
         fetch-tx
         fetch-tx-index
         fetch-utxo
-        get-filter-checkpoint
-        get-filter-headers
-        get-filters
         hd-new
         hd-private
         hd-public
@@ -84,7 +80,6 @@ _bx()
         mnemonic-decode
         mnemonic-encode
         mnemonic-to-seed
-        put-tx
         qrcode
         ripemd160
         satoshi-to-btc
@@ -106,7 +101,6 @@ _bx()
         token-new
         tx-decode
         tx-encode
-        tx-sign
         uri-decode
         uri-encode
         validate-tx
@@ -136,9 +130,6 @@ _bx()
             ;;
         bech32-encode)
             options="--version -v"
-            ;;
-        broadcast-tx)
-            options="--nodes -n"
             ;;
         checked-encode)
             options="--version -v"
@@ -197,15 +188,6 @@ _bx()
         fetch-utxo)
             options="--algorithm -a"
             ;;
-        get-filter-checkpoint)
-            options="--host -t --port -p"
-            ;;
-        get-filter-headers)
-            options="--host -t --port -p"
-            ;;
-        get-filters)
-            options="--host -t --port -p"
-            ;;
         hd-new)
             options="--version -v"
             ;;
@@ -239,9 +221,6 @@ _bx()
         mnemonic-to-seed)
             options="--language -l --passphrase -p"
             ;;
-        put-tx)
-            options="--host -t --port -p"
-            ;;
         qrcode)
             options="--margin -m --pixels -p --scheme -s --version -v"
             ;;
@@ -270,6 +249,9 @@ _bx()
             options="--amount -a --label -l --message -m --request -r"
             ;;
         watch-key)
+            options="--duration -d"
+            ;;
+        watch-tx)
             options="--duration -d"
             ;;
     esac

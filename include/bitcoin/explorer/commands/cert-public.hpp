@@ -49,8 +49,6 @@ namespace commands {
  */
 #define BX_CERT_PUBLIC_INVALID \
     "The private key is not valid."
-#define BX_CERT_PUBLIC_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
 
 /**
  * Class to implement the cert-public command.

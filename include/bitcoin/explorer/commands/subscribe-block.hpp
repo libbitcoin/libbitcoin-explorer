@@ -45,14 +45,6 @@ namespace explorer {
 namespace commands {
 
 /**
- * Various localizable strings.
- */
-#define BX_SUBSCRIBE_BLOCK_FAILED \
-    "Failed to subscribe to transaction service: {}"
-#define BX_SUBSCRIBE_BLOCK_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
-
-/**
  * Class to implement the subscribe-block command.
  */
 class BCX_API subscribe_block
