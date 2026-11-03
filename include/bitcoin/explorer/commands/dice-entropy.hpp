@@ -98,7 +98,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Convert a sequence of dice rolls to Base16 entropy. Each roll is one character, the face value 0 to 15 as a hexadecimal digit, so the rolls of a sixteen-sided die are their own Base16 encoding.";
+        return "Convert a sequence of dice rolls to Base16 entropy. Each roll is one character, the face value 0 to 15 as a hexadecimal digit, so the rolls of a sixteen-sided die are their own Base16 encoding. Subtract one from each roll of a die with faces numbered from one, writing a six-sided roll of 1 to 6 as 0 to 5.";
     }
 
     /**
