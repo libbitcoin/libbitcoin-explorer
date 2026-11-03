@@ -52,6 +52,7 @@ public:
     {
     }
 
+    LCOV_EXCL_START("Overridden by every generated command.")
     /**
      * The symbolic (not localizable) command name, lower case.
      * @return  Example: "fetch-transaction"
@@ -79,6 +80,7 @@ public:
         return "not-implemented";
     }
 
+    LCOV_EXCL_STOP()
     /**
      * Declare whether the command has been obsoleted.
      * @return  True if the command is obsolete
@@ -106,6 +108,7 @@ public:
         return false;
     }
 
+    LCOV_EXCL_START("Overridden by every generated command.")
     /**
      * Invoke the command.
      * @param[out]  output  The input stream for the command execution.
@@ -128,6 +131,7 @@ public:
         return argument_metadata_;
     }
 
+    LCOV_EXCL_STOP()
     /**
      * Load environment variable definitions.
      * @param[out] definitions  The defined program argument definitions.
@@ -144,6 +148,7 @@ public:
         );
     }
 
+    LCOV_EXCL_START("Overridden by every generated command.")
     /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input      The input stream for loading the parameters.
@@ -163,6 +168,7 @@ public:
         return option_metadata_;
     }
 
+    LCOV_EXCL_STOP()
     /**
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
@@ -188,6 +194,7 @@ public:
 .endfor
     }
 
+    LCOV_EXCL_START("Not called.")
     /**
      * Load streamed value as parameter fallback.
      * @param[in]  input      The input stream for loading the parameter.
@@ -197,6 +204,9 @@ public:
     {
     }
 
+    LCOV_EXCL_STOP()
+
+    LCOV_EXCL_START("Overridden by every generated command.")
     /**
      * Set variable defaults from configuration variable values.
      * @param[in]  variables  The loaded variables.
@@ -205,6 +215,7 @@ public:
     {
     }
 
+    LCOV_EXCL_STOP()
     /**
      * Write the help for this command to the specified stream.
      * @param[out] output  The output stream.

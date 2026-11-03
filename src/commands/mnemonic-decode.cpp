@@ -31,6 +31,7 @@ using namespace bc::system::wallet;
 ////<define name="BX_MNEMONIC_DECODE_INVALID_WORD_COUNT" value="The word count is not 12, 15, 18, 21, or 24." />
 ////<define name="BX_MNEMONIC_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
 
+LCOV_EXCL_START("Not implemented.")
 console_result mnemonic_decode::invoke(std::ostream&,
     std::ostream&)
 {
@@ -55,6 +56,7 @@ console_result mnemonic_decode::invoke(std::ostream&,
 
     return console_result::failure;
 }
+LCOV_EXCL_STOP()
 
 } //namespace commands
 } //namespace explorer

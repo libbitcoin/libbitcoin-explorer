@@ -94,8 +94,10 @@ std::ostream& operator<<(std::ostream& output, const electrum& argument)
         case electrum::type::two_factor_authentication_witness:
             text = prefix_two_factor_authentication_witness;
             break;
+        LCOV_EXCL_START("Unreachable with a valid enumeration value.")
         default:
             throw ostream_exception("electrum");
+        LCOV_EXCL_STOP()
     };
 
     output << text;

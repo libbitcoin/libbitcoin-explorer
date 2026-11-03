@@ -30,12 +30,14 @@ using namespace bc::system;
 
 ////<define name="BX_MNEMONIC_ENCODE_INVALID_ENTROPY_SIZE" value="The entropy size is not 16, 20, 24, 28, or 32 bytes." />
 
+LCOV_EXCL_START("Not implemented.")
 console_result mnemonic_encode::invoke(std::ostream&,
     std::ostream&)
 {
     ////error << BX_MNEMONIC_ENCODE_OBSOLETE << std::endl;
     return console_result::failure;
 }
+LCOV_EXCL_STOP()
 
 } //namespace commands
 } //namespace explorer

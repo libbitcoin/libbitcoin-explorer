@@ -32,6 +32,7 @@ using namespace bc::system::wallet;
 ////<define name="BX_MNEMONIC_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12, 15, 18, 21, or 24." />
 ////<define name="BX_MNEMONIC_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
 
+LCOV_EXCL_START("Not implemented.")
 console_result mnemonic_to_seed::invoke(std::ostream&,
     std::ostream&)
 {
@@ -68,6 +69,7 @@ console_result mnemonic_to_seed::invoke(std::ostream&,
 
     return console_result::failure;
 }
+LCOV_EXCL_STOP()
 
 } //namespace commands
 } //namespace explorer
