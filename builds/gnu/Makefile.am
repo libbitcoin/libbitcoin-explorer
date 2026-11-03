@@ -529,8 +529,10 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/wrap-encode.cpp \
     ${srcdir}/../../test/config/address.cpp \
     ${srcdir}/../../test/config/algorithm.cpp \
+    ${srcdir}/../../test/config/byte.cpp \
     ${srcdir}/../../test/config/ec_private.cpp \
     ${srcdir}/../../test/config/electrum.cpp \
+    ${srcdir}/../../test/config/hd_key.cpp \
     ${srcdir}/../../test/config/sighash.cpp
 
 TESTS = test_runner.sh

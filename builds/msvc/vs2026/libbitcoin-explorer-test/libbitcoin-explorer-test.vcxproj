@@ -212,8 +212,10 @@
     <ClCompile Include="..\..\..\..\test\commands\wrap-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\config\address.cpp" />
     <ClCompile Include="..\..\..\..\test\config\algorithm.cpp" />
+    <ClCompile Include="..\..\..\..\test\config\byte.cpp" />
     <ClCompile Include="..\..\..\..\test\config\ec_private.cpp" />
     <ClCompile Include="..\..\..\..\test\config\electrum.cpp" />
+    <ClCompile Include="..\..\..\..\test\config\hd_key.cpp" />
     <ClCompile Include="..\..\..\..\test\config\sighash.cpp" />
     <ClCompile Include="..\..\..\..\test\display.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
