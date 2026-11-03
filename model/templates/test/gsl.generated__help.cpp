@@ -27,11 +27,16 @@ BC_AUTO_TEST_SUITE(generated__help)
 
 BC_AUTO_TEST_CASE(generated__help__$(symbol:c)__okay_output)
 {
-    std::stringstream input, output, error;
+    $(symbol:c) command;
+    std::string message;
+    std::stringstream input, output;
     const char* argv[]{ "$(symbol)", "--help" };
-    BC_REQUIRE_EQUAL(dispatch_command(2, argv, input, output, error), console_result::okay);
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
     BC_REQUIRE(!output.str().empty());
-    BC_REQUIRE(error.str().empty());
 }
 .endfor
 
