@@ -18,24 +18,34 @@
  */
 #include "http_server.hpp"
 
+#include <string>
 #include <bitcoin/explorer.hpp>
 
 namespace io = bc::network::io;
 namespace http = bc::network::http;
+using code = bc::network::code;
+using authority = bc::system::config::authority;
 
-http_server::http_server(http::status status, const std::string& body) NOEXCEPT
-  : acceptor_(context_.get_executor(),
-        bc::system::config::authority{ BX_TEST_HTTP_AUTHORITY }.to_endpoint()),
-    status_(status), body_(body), thread_([this]() NOEXCEPT { serve(); })
+static io::endpoint test_endpoint() NOEXCEPT
 {
+    return authority{ BX_TEST_HTTP_AUTHORITY }.to_endpoint();
+}
+
+http_server::http_server(http::status status,
+    const std::string& body) NOEXCEPT
+  : status_(status), body_(body),
+    acceptor_(pool_.service().get_executor(), test_endpoint()),
+    peer_(pool_.service().get_executor())
+{
+    accept();
 }
 
 http_server::~http_server() NOEXCEPT
 {
     acceptor_.close();
-
-    if (thread_.joinable())
-        thread_.join();
+    peer_.close();
+    pool_.stop();
+    pool_.join();
 }
 
 std::string http_server::url() const NOEXCEPT
@@ -43,31 +53,36 @@ std::string http_server::url() const NOEXCEPT
     return "http://" BX_TEST_HTTP_AUTHORITY;
 }
 
-// Accepts until the acceptor is closed, so a retried request is served.
-void http_server::serve() NOEXCEPT
+void http_server::accept() NOEXCEPT
 {
-    for (;;)
+    acceptor_.async_accept(peer_, [this](const code& ec) NOEXCEPT
     {
-        io::socket peer{ context_.get_executor() };
-        bc::network::code ec{};
-        acceptor_.accept(peer, ec);
-        if (ec)
-            return;
+        handle_accept(ec);
+    });
+}
 
-        http::flat_buffer buffer{};
-        http::message<true, http::string_body> request{};
-        http::read(peer, buffer, request, ec);
+// The request and response are synchronous on the single pool thread, so
+// the exchange completes before the next accept is armed.
+void http_server::handle_accept(const code& ec) NOEXCEPT
+{
+    if (ec)
+        return;
 
-        if (!ec)
-        {
-            http::message<false, http::string_body> response{ status_,
-                request.version() };
-            response.set(http::field::content_type, "application/json");
-            response.body() = body_;
-            response.prepare_payload();
-            http::write(peer, response, ec);
-        }
+    code result{};
+    http::flat_buffer buffer{};
+    http::message<true, http::string_body> request{};
+    http::read(peer_, buffer, request, result);
 
-        peer.close();
+    if (!result)
+    {
+        const auto version = request.version();
+        http::message<false, http::string_body> response{ status_, version };
+        response.set(http::field::content_type, "application/json");
+        response.body() = body_;
+        response.prepare_payload();
+        http::write(peer_, response, result);
     }
+
+    peer_.close();
+    accept();
 }

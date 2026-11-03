@@ -20,33 +20,35 @@
 #define BX_TEST_FIXTURE_HTTP_SERVER_HPP
 
 #include <string>
-#include <thread>
 #include <bitcoin/explorer.hpp>
 
 #define BX_TEST_HTTP_AUTHORITY "127.0.0.1:65001"
 
-/// A loopback http server that answers every request with one canned
-/// response until it is closed, so that the client and the commands that
-/// use it can be exercised without a node.
+// The acceptor runs on the fixture pool and answers each request with one
+// canned response, re-arming so that a retry is served. The client under
+// test drives its own context on the test thread, so the pool is stopped
+// and joined before teardown and no completion outlives the case.
 class http_server
 {
 public:
     DELETE_COPY_MOVE(http_server);
 
-    http_server(bc::network::http::status status, const std::string& body) NOEXCEPT;
+    http_server(bc::network::http::status status,
+        const std::string& body) NOEXCEPT;
     ~http_server() NOEXCEPT;
 
     /// The url of this server.
     std::string url() const NOEXCEPT;
 
 private:
-    void serve() NOEXCEPT;
+    void accept() NOEXCEPT;
+    void handle_accept(const bc::network::code& ec) NOEXCEPT;
 
-    bc::network::io::context context_{};
-    bc::network::io::acceptor acceptor_;
     const bc::network::http::status status_;
     const std::string body_;
-    std::thread thread_;
+    bc::network::threadpool pool_{ 1 };
+    bc::network::io::acceptor acceptor_;
+    bc::network::io::socket peer_;
 };
 
 #endif
