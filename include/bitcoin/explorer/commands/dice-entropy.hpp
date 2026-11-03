@@ -51,6 +51,8 @@ namespace commands {
     "The number of sides is not between 2 and 16."
 #define BX_DICE_ROLLS_INVALID \
     "The dice roll input is invalid."
+#define BX_DICE_ROLLS_REJECTED \
+    "The rolls would bias the entropy, roll again."
 
 /**
  * Class to implement the dice-entropy command.
@@ -96,7 +98,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Convert a sequence of dice rolls to Base16 entropy. Each roll is one character, with faces 1 to 9 as the digits 1 to 9 and faces 10 to 16 as the letters a to g.";
+        return "Convert a sequence of dice rolls to Base16 entropy. Each roll is one character, the face value 0 to 15 as a hexadecimal digit, so the rolls of a sixteen-sided die are their own Base16 encoding.";
     }
 
     /**
@@ -148,7 +150,7 @@ public:
         (
             "rolls",
             value<std::string>(&argument_.rolls),
-            "The sequence of dice rolls, one character per roll. The count must be exactly that required for 128 or 256 bits of entropy, which for a six-sided die is 50 or 100 rolls."
+            "The sequence of dice rolls, one character per roll. The entropy is the whole bytes the rolls provide. A sequence that would bias the entropy is rejected and must be rolled again. If not specified the rolls are read from STDIN."
         );
 
         return options;

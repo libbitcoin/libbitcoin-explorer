@@ -177,11 +177,12 @@
     <argument name="PAYLOAD" stdin="true" type="base16" description="The Base16 data to encode. If not specified the value is read from STDIN." />
   </command>
 
-  <command symbol="dice-entropy" output="base16" category="WALLET" description="Convert a sequence of dice rolls to Base16 entropy. Each roll is one character, with faces 1 to 9 as the digits 1 to 9 and faces 10 to 16 as the letters a to g.">
+  <command symbol="dice-entropy" output="base16" category="WALLET" description="Convert a sequence of dice rolls to Base16 entropy. Each roll is one character, the face value 0 to 15 as a hexadecimal digit, so the rolls of a sixteen-sided die are their own Base16 encoding.">
     <option name="sides" type="uint8_t" default="6" description="The number of sides on the die, 2 to 16, defaults to 6." />
-    <argument name="rolls" type="string" stdin="true" description="The sequence of dice rolls, one character per roll. The count must be exactly that required for 128 or 256 bits of entropy, which for a six-sided die is 50 or 100 rolls." />
+    <argument name="rolls" type="string" stdin="true" description="The sequence of dice rolls, one character per roll. The entropy is the whole bytes the rolls provide. A sequence that would bias the entropy is rejected and must be rolled again. If not specified the rolls are read from STDIN." />
     <define name="BX_DICE_SIDES_INVALID" value="The number of sides is not between 2 and 16." />
     <define name="BX_DICE_ROLLS_INVALID" value="The dice roll input is invalid." />
+    <define name="BX_DICE_ROLLS_REJECTED" value="The rolls would bias the entropy, roll again." />
   </command>
 
   <command symbol="ec-add" output="ec_public" category="MATH" description="Calculate the EC function POINT + (SECRET * curve-generator-point).">

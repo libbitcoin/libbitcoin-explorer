@@ -30,57 +30,36 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::config;
 
-// Face values 1 to 16, so a roll of 1 contributes zero.
-static constexpr std::string_view faces{ "123456789abcdefg" };
+// Face values 0 to 15, written as hexadecimal digits.
+static constexpr std::string_view faces{ "0123456789abcdef" };
 static constexpr uint8_t minimum_sides = 2;
 static constexpr uint8_t maximum_sides = 16;
+static constexpr size_t maximum_bits = 1024;
 
-// The number of rolls required for at least the given bits of entropy.
-static size_t rolls_for(size_t bits, uint8_t sides) NOEXCEPT
-{
-    const uint512_t range = uint512_t{ one } << bits;
-    size_t count{};
+using number = uintx_t<maximum_bits>;
 
-    for (uint512_t power{ one }; power < range; power *= sides)
-        ++count;
-
-    return count;
-}
-
-static data_chunk dice_to_entropy(const std::string& rolls,
+// The value of the rolls and the size of their range, at least one byte.
+static bool to_number(number& value, number& total, const std::string& rolls,
     uint8_t sides) NOEXCEPT
 {
-    const auto count = rolls.size();
-    size_t bits{};
-
-    if (count == rolls_for(128, sides))
-        bits = 128;
-    else if (count == rolls_for(256, sides))
-        bits = 256;
-    else
-        return {};
+    if (rolls.size() * bit_width(sub1(sides)) >= maximum_bits)
+        return false;
 
     const auto digits = faces.substr(0, sides);
-    uint512_t value{};
+    value = zero;
+    total = one;
 
     for (const auto roll: rolls)
     {
         const auto digit = digits.find(roll);
         if (digit == std::string_view::npos)
-            return {};
+            return false;
 
         value = value * sides + digit;
+        total *= sides;
     }
 
-    // Reject the incomplete range to avoid modulo bias.
-    const uint512_t range = uint512_t{ one } << bits;
-    const auto limit = (power<uint512_t>(sides, count) / range) * range;
-    if (value >= limit)
-        return {};
-
-    // Big-endian output.
-    const uint512_t number = value % range;
-    return to_big_data(data_chunk(bits / byte_bits), number);
+    return floored_log2(total) >= byte_bits;
 }
 
 console_result dice_entropy::invoke(std::ostream& output,
@@ -96,14 +75,27 @@ console_result dice_entropy::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    const auto entropy = dice_to_entropy(rolls, sides);
-    if (entropy.empty())
+    number value{};
+    number total{};
+    if (!to_number(value, total, rolls, sides))
     {
         error << BX_DICE_ROLLS_INVALID << std::endl;
         return console_result::failure;
     }
 
-    output << base16(entropy) << std::endl;
+    // The entropy is the whole bytes of the range, rejecting the incomplete
+    // top multiple of the byte range to avoid modulo bias.
+    const auto size = floored_log2(total) / byte_bits;
+    const auto range = number{ one } << to_bits(size);
+    if (value >= (total / range) * range)
+    {
+        error << BX_DICE_ROLLS_REJECTED << std::endl;
+        return console_result::failure;
+    }
+
+    // Big-endian output.
+    output << base16(to_big_data(data_chunk(size), value % range))
+        << std::endl;
     return console_result::okay;
 }
 
