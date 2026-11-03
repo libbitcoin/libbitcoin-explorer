@@ -377,6 +377,20 @@ BC_AUTO_TEST_CASE(generated__help__dice_entropy__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
+BC_AUTO_TEST_CASE(generated__help__dice_rolls__okay_output)
+{
+    dice_rolls command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "dice-rolls", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
 BC_AUTO_TEST_CASE(generated__help__ec_add__okay_output)
 {
     ec_add command;

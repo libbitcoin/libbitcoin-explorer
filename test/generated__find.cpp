@@ -152,6 +152,11 @@ BC_AUTO_TEST_CASE(generated__find__dice_entropy__returns_object)
     BC_REQUIRE(find("dice-entropy") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__dice_rolls__returns_object)
+{
+    BC_REQUIRE(find("dice-rolls") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__ec_add__returns_object)
 {
     BC_REQUIRE(find("ec-add") != nullptr);

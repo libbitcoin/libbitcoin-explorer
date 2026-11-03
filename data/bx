@@ -29,6 +29,7 @@ _bx()
         checked-decode
         checked-encode
         dice-entropy
+        dice-rolls
         ec-add
         ec-add-secrets
         ec-decompress
@@ -136,6 +137,9 @@ _bx()
             ;;
         dice-entropy)
             options="--sides -s"
+            ;;
+        dice-rolls)
+            options="--sides -s --bits -b"
             ;;
         ec-to-address)
             options="--version -v"

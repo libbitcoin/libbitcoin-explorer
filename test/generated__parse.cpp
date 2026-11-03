@@ -456,6 +456,24 @@ BC_AUTO_TEST_CASE(generated__parse__dice_entropy__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__dice_rolls__okay)
+{
+    dice_rolls command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "dice-rolls",
+        "--sides", "42",
+        "--bits", "42",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 5, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__ec_add__okay)
 {
     ec_add command;

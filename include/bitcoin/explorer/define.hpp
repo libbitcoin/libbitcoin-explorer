@@ -66,8 +66,13 @@ typedef bc::system::chain::transaction tx_type;
 typedef bc::system::chain::input tx_input_type;
 typedef bc::system::chain::output tx_output_type;
 
-/// The minimum safe length of a seed in bytes (128 bits).
+/// The minimum safe length of entropy in bytes (128 bits).
 constexpr size_t minimum_entropy_size = 16;
+
+/// The range of dice sides and the maximum bytes of dice entropy.
+constexpr uint8_t minimum_dice_sides = 2;
+constexpr uint8_t maximum_dice_sides = 16;
+constexpr size_t maximum_dice_bytes = 64;
 
 /// Console result codes, positive values are domain-specific.
 enum console_result : int

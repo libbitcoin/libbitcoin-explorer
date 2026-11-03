@@ -179,10 +179,18 @@
 
   <command symbol="dice-entropy" output="base16" category="WALLET" description="Convert a sequence of dice rolls to Base16 entropy. Each roll is one character, the face value 0 to 15 as a hexadecimal digit, so the rolls of a sixteen-sided die are their own Base16 encoding. Subtract one from each roll of a die with faces numbered from one, writing a six-sided roll of 1 to 6 as 0 to 5.">
     <option name="sides" type="uint8_t" default="6" description="The number of sides on the die, 2 to 16, defaults to 6." />
-    <argument name="rolls" type="string" stdin="true" description="The sequence of dice rolls, one character per roll. The entropy is the whole bytes the rolls provide. A sequence that would bias the entropy is rejected and must be rolled again. If not specified the rolls are read from STDIN." />
-    <define name="BX_DICE_SIDES_INVALID" value="The number of sides is not between 2 and 16." />
-    <define name="BX_DICE_ROLLS_INVALID" value="The dice roll input is invalid." />
-    <define name="BX_DICE_ROLLS_REJECTED" value="The rolls would bias the entropy, roll again." />
+    <argument name="rolls" type="string" stdin="true" description="The sequence of dice rolls, one character per roll. The number of rolls must be that given by dice-rolls for the sides and entropy size. A sequence that would bias the entropy is rejected and must be rolled again. If not specified the rolls are read from STDIN." />
+    <define name="BX_DICE_ENTROPY_SIDES_INVALID" value="The number of sides is not between 2 and 16." />
+    <define name="BX_DICE_ENTROPY_INVALID" value="The dice roll input is invalid." />
+    <define name="BX_DICE_ENTROPY_COUNT" value="The number of rolls is not that given by dice-rolls." />
+    <define name="BX_DICE_ENTROPY_REJECTED" value="The rolls would bias the entropy, roll again." />
+  </command>
+
+  <command symbol="dice-rolls" output="uint32_t" category="WALLET" description="Get the number of dice rolls that dice-entropy requires for an entropy size, the count least likely to be rejected and rolled again.">
+    <option name="sides" type="uint8_t" default="6" description="The number of sides on the die, 2 to 16, defaults to 6." />
+    <option name="bits" type="uint16_t" default="128" description="The entropy size in bits, a multiple of 8 from 8 to 512, defaults to 128." />
+    <define name="BX_DICE_ROLLS_SIDES_INVALID" value="The number of sides is not between 2 and 16." />
+    <define name="BX_DICE_ROLLS_BITS_INVALID" value="The entropy size is not a multiple of 8 from 8 to 512." />
   </command>
 
   <command symbol="ec-add" output="ec_public" category="MATH" description="Calculate the EC function POINT + (SECRET * curve-generator-point).">

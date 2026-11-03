@@ -47,11 +47,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_DICE_SIDES_INVALID \
+#define BX_DICE_ENTROPY_SIDES_INVALID \
     "The number of sides is not between 2 and 16."
-#define BX_DICE_ROLLS_INVALID \
+#define BX_DICE_ENTROPY_INVALID \
     "The dice roll input is invalid."
-#define BX_DICE_ROLLS_REJECTED \
+#define BX_DICE_ENTROPY_COUNT \
+    "The number of rolls is not that given by dice-rolls."
+#define BX_DICE_ENTROPY_REJECTED \
     "The rolls would bias the entropy, roll again."
 
 /**
@@ -150,7 +152,7 @@ public:
         (
             "rolls",
             value<std::string>(&argument_.rolls),
-            "The sequence of dice rolls, one character per roll. The entropy is the whole bytes the rolls provide. A sequence that would bias the entropy is rejected and must be rolled again. If not specified the rolls are read from STDIN."
+            "The sequence of dice rolls, one character per roll. The number of rolls must be that given by dice-rolls for the sides and entropy size. A sequence that would bias the entropy is rejected and must be rolled again. If not specified the rolls are read from STDIN."
         );
 
         return options;

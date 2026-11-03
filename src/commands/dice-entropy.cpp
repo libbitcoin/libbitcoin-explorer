@@ -22,6 +22,7 @@
 #include <string_view>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -32,20 +33,18 @@ using namespace bc::system::config;
 
 // Face values 0 to 15, written as hexadecimal digits.
 static constexpr std::string_view faces{ "0123456789abcdef" };
-static constexpr uint8_t minimum_sides = 2;
-static constexpr uint8_t maximum_sides = 16;
 static constexpr size_t maximum_bits = 1024;
 
 using number = uintx_t<maximum_bits>;
 
-// The value of the rolls and the size of their range, at least one byte.
+// The value of the rolls and the size of their range.
 static bool to_number(number& value, number& total, const std::string& rolls,
     uint8_t sides) NOEXCEPT
 {
     if (rolls.size() * bit_width(sub1(sides)) >= maximum_bits)
         return false;
 
-    const auto digits = faces.substr(0, sides);
+    const auto digits = faces.substr(zero, sides);
     value = zero;
     total = one;
 
@@ -59,7 +58,7 @@ static bool to_number(number& value, number& total, const std::string& rolls,
         total *= sides;
     }
 
-    return !is_zero(to_floored_bytes(floored_log2(total)));
+    return true;
 }
 
 console_result dice_entropy::invoke(std::ostream& output,
@@ -69,9 +68,9 @@ console_result dice_entropy::invoke(std::ostream& output,
     const auto sides = get_sides_option();
     const auto& rolls = get_rolls_argument();
 
-    if (is_limited(sides, minimum_sides, maximum_sides))
+    if (is_limited(sides, minimum_dice_sides, maximum_dice_sides))
     {
-        error << BX_DICE_SIDES_INVALID << std::endl;
+        error << BX_DICE_ENTROPY_SIDES_INVALID << std::endl;
         return console_result::failure;
     }
 
@@ -79,17 +78,24 @@ console_result dice_entropy::invoke(std::ostream& output,
     number total{};
     if (!to_number(value, total, rolls, sides))
     {
-        error << BX_DICE_ROLLS_INVALID << std::endl;
+        error << BX_DICE_ENTROPY_INVALID << std::endl;
         return console_result::failure;
     }
 
-    // The entropy is the whole bytes of the range, rejecting the incomplete
-    // top multiple of the byte range to avoid modulo bias.
+    // The entropy is the whole bytes of the range of the rolls.
     const auto size = to_floored_bytes(floored_log2(total));
+    if (is_zero(size) ||
+        rolls.size() != roll_count(sides, size))
+    {
+        error << BX_DICE_ENTROPY_COUNT << std::endl;
+        return console_result::failure;
+    }
+
+    // Reject the incomplete top multiple of the range to avoid modulo bias.
     const auto range = power2<number>(to_bits(size));
     if (value >= floored_divide(total, range) * range)
     {
-        error << BX_DICE_ROLLS_REJECTED << std::endl;
+        error << BX_DICE_ENTROPY_REJECTED << std::endl;
         return console_result::failure;
     }
 

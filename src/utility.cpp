@@ -30,5 +30,44 @@ std::ostream& write_stream(std::ostream& output,
     return output;
 }
 
+size_t roll_count(uint8_t sides, size_t bytes) NOEXCEPT
+{
+    using number = uintx_t<1024>;
+
+    if (is_limited(sides, minimum_dice_sides, maximum_dice_sides) ||
+        is_limited(bytes, one, maximum_dice_bytes))
+        return zero;
+
+    const auto range = power2<number>(to_bits(bytes));
+    const auto limit = power2<number>(to_bits(add1(bytes)));
+    number total{ one };
+    size_t rolls{};
+
+    while (total < range)
+    {
+        total *= sides;
+        ++rolls;
+    }
+
+    // Maximize the accepted fraction of the rolls, k * range / total, where k
+    // is the number of whole ranges in the total.
+    size_t count{};
+    number best{};
+    number best_total{ one };
+
+    for (; total < limit; total *= sides, ++rolls)
+    {
+        const auto whole = floored_divide(total, range);
+        if (whole * best_total > best * total)
+        {
+            count = rolls;
+            best = whole;
+            best_total = total;
+        }
+    }
+
+    return count;
+}
+
 } // namespace explorer
 } // namespace libbitcoin
