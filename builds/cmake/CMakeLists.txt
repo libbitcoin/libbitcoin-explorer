@@ -421,6 +421,12 @@ if ( with-console )
   file( CONFIGURE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/bitcoin-explorer.cpp" CONTENT "" )
   add_executable( bitcoin-explorer "${CMAKE_CURRENT_BINARY_DIR}/bitcoin-explorer.cpp" )
 
+  if ( WIN32 )
+    file( GLOB bitcoin_explorer_RESOURCES CONFIGURE_DEPENDS
+      "${CMAKE_CURRENT_SOURCE_DIR}/../../builds/msvc/*.rc" )
+    target_sources( bitcoin-explorer PRIVATE ${bitcoin_explorer_RESOURCES} )
+  endif()
+
   target_link_libraries( bitcoin-explorer
     PRIVATE
       $<LINK_LIBRARY:WHOLE_ARCHIVE,bitcoin-explorer-objects>
