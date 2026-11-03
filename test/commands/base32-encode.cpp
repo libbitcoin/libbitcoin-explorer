@@ -24,5 +24,14 @@ BX_USING_NAMESPACES()
 BC_AUTO_TEST_SUITE(offline)
 BC_AUTO_TEST_SUITE(base32_encode__invoke)
 
+BC_AUTO_TEST_CASE(base32_encode__invoke__rfc4648__okay_output)
+{
+    BX_DECLARE_COMMAND(base32_encode);
+    command.set_data_argument({ "abc" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("MFRGG===\n");
+}
+
+
 BC_AUTO_TEST_SUITE_END()
 BC_AUTO_TEST_SUITE_END()

@@ -401,6 +401,7 @@ test_libbitcoin_explorer_test_LDADD = \
     ${src_libbitcoin_explorer_la_LIBADD}
 
 test_libbitcoin_explorer_test_SOURCES = \
+    ${srcdir}/../../test/display.cpp \
     ${srcdir}/../../test/generated__broadcast.cpp \
     ${srcdir}/../../test/generated__find.cpp \
     ${srcdir}/../../test/generated__formerly.cpp \
@@ -457,8 +458,12 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/electrum-new.cpp \
     ${srcdir}/../../test/commands/electrum-to-seed.cpp \
     ${srcdir}/../../test/commands/fetch-balance.cpp \
+    ${srcdir}/../../test/commands/fetch-block-hashes.cpp \
     ${srcdir}/../../test/commands/fetch-block-height.cpp \
     ${srcdir}/../../test/commands/fetch-block.cpp \
+    ${srcdir}/../../test/commands/fetch-filter-checkpoint.cpp \
+    ${srcdir}/../../test/commands/fetch-filter-headers.cpp \
+    ${srcdir}/../../test/commands/fetch-filter.cpp \
     ${srcdir}/../../test/commands/fetch-header.cpp \
     ${srcdir}/../../test/commands/fetch-height.cpp \
     ${srcdir}/../../test/commands/fetch-history.cpp \
@@ -514,6 +519,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/uri-decode.cpp \
     ${srcdir}/../../test/commands/uri-encode.cpp \
     ${srcdir}/../../test/commands/validate-tx.cpp \
+    ${srcdir}/../../test/commands/version.cpp \
     ${srcdir}/../../test/commands/watch-key.cpp \
     ${srcdir}/../../test/commands/watch-tx.cpp \
     ${srcdir}/../../test/commands/wif-to-ec.cpp \
@@ -522,7 +528,10 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/wrap-decode.cpp \
     ${srcdir}/../../test/commands/wrap-encode.cpp \
     ${srcdir}/../../test/config/address.cpp \
-    ${srcdir}/../../test/config/ec_private.cpp
+    ${srcdir}/../../test/config/algorithm.cpp \
+    ${srcdir}/../../test/config/ec_private.cpp \
+    ${srcdir}/../../test/config/electrum.cpp \
+    ${srcdir}/../../test/config/sighash.cpp
 
 TESTS = test_runner.sh
 
