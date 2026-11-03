@@ -50,6 +50,7 @@
 #include <bitcoin/explorer/commands/checked-decode.hpp>
 #include <bitcoin/explorer/commands/checked-encode.hpp>
 #include <bitcoin/explorer/commands/dice-entropy.hpp>
+#include <bitcoin/explorer/commands/dice-rolls.hpp>
 #include <bitcoin/explorer/commands/ec-add-secrets.hpp>
 #include <bitcoin/explorer/commands/ec-add.hpp>
 #include <bitcoin/explorer/commands/ec-decompress.hpp>

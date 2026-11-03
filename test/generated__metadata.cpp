@@ -228,6 +228,14 @@ BC_AUTO_TEST_CASE(generated__metadata__dice_entropy__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__dice_rolls__returns_expected_values)
+{
+    dice_rolls command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__ec_add__returns_expected_values)
 {
     ec_add command;

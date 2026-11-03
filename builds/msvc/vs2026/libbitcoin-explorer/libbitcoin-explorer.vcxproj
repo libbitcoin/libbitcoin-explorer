@@ -139,6 +139,7 @@
     <ClCompile Include="..\..\..\..\src\commands\checked-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\checked-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\dice-entropy.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\dice-rolls.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-decompress.cpp" />
@@ -280,6 +281,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\checked-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\checked-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\dice-entropy.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\dice-rolls.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-add-secrets.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-add.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-decompress.hpp" />

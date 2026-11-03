@@ -152,6 +152,11 @@ BC_AUTO_TEST_CASE(generated__symbol__dice_entropy__returns_expected_value)
     BC_REQUIRE_EQUAL(dice_entropy::symbol(), "dice-entropy");
 }
 
+BC_AUTO_TEST_CASE(generated__symbol__dice_rolls__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(dice_rolls::symbol(), "dice-rolls");
+}
+
 BC_AUTO_TEST_CASE(generated__symbol__ec_add__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(ec_add::symbol(), "ec-add");

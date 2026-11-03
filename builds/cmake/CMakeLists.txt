@@ -63,6 +63,7 @@ project( libbitcoin-explorer
   DESCRIPTION "Bitcoin Command Line Tool"
   LANGUAGES C CXX )
 
+set( CMAKE_CXX_SCAN_FOR_MODULES OFF )
 
 set( repository_root_dir "${CMAKE_CURRENT_SOURCE_DIR}/../.." )
 
@@ -429,10 +430,10 @@ if ( with-console )
       PRIVATE
         $<TARGET_PROPERTY:bitcoin-explorer-objects,INCLUDE_DIRECTORIES>
     )
-    target_compile_options( bitcoin-explorer
-      PRIVATE
-        $<$<COMPILE_LANGUAGE:RC>:-c65001>
-    )
+
+    if ( MSVC )
+      target_link_options( bitcoin-explorer PRIVATE /MANIFEST:NO )
+    endif()
   endif()
 
   target_link_libraries( bitcoin-explorer

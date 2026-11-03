@@ -68,6 +68,15 @@ void write_file(std::ostream& output, const std::string& path,
 BCX_API std::ostream& write_stream(std::ostream& output,
     const system::json::value& value);
 
+/**
+ * The number of rolls of a die for the given bytes of entropy, the count
+ * least likely to be rejected for bias, preferring fewer rolls.
+ * @param[in]  sides  The number of sides on the die.
+ * @param[in]  bytes  The number of bytes of entropy.
+ * @return            The number of rolls, zero if sides or bytes is invalid.
+ */
+BCX_API size_t roll_count(uint8_t sides, size_t bytes) NOEXCEPT;
+
 } // namespace explorer
 } // namespace libbitcoin
 

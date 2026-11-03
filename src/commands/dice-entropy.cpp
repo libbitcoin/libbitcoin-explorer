@@ -22,6 +22,7 @@
 #include <string_view>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -30,57 +31,34 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::config;
 
-// Face values 1 to 16, so a roll of 1 contributes zero.
-static constexpr std::string_view faces{ "123456789abcdefg" };
-static constexpr uint8_t minimum_sides = 2;
-static constexpr uint8_t maximum_sides = 16;
+// Face values 0 to 15, written as hexadecimal digits.
+static constexpr std::string_view faces{ "0123456789abcdef" };
+static constexpr size_t maximum_bits = 1024;
 
-// The number of rolls required for at least the given bits of entropy.
-static size_t rolls_for(size_t bits, uint8_t sides) NOEXCEPT
-{
-    const uint512_t range = uint512_t{ one } << bits;
-    size_t count{};
+using number = uintx_t<maximum_bits>;
 
-    for (uint512_t power{ one }; power < range; power *= sides)
-        ++count;
-
-    return count;
-}
-
-static data_chunk dice_to_entropy(const std::string& rolls,
+// The value of the rolls and the size of their range.
+static bool to_number(number& value, number& total, const std::string& rolls,
     uint8_t sides) NOEXCEPT
 {
-    const auto count = rolls.size();
-    size_t bits{};
+    if (rolls.size() * bit_width(sub1(sides)) >= maximum_bits)
+        return false;
 
-    if (count == rolls_for(128, sides))
-        bits = 128;
-    else if (count == rolls_for(256, sides))
-        bits = 256;
-    else
-        return {};
-
-    const auto digits = faces.substr(0, sides);
-    uint512_t value{};
+    const auto digits = faces.substr(zero, sides);
+    value = zero;
+    total = one;
 
     for (const auto roll: rolls)
     {
         const auto digit = digits.find(roll);
         if (digit == std::string_view::npos)
-            return {};
+            return false;
 
         value = value * sides + digit;
+        total *= sides;
     }
 
-    // Reject the incomplete range to avoid modulo bias.
-    const uint512_t range = uint512_t{ one } << bits;
-    const auto limit = (power<uint512_t>(sides, count) / range) * range;
-    if (value >= limit)
-        return {};
-
-    // Big-endian output.
-    const uint512_t number = value % range;
-    return to_big_data(data_chunk(bits / byte_bits), number);
+    return true;
 }
 
 console_result dice_entropy::invoke(std::ostream& output,
@@ -90,20 +68,40 @@ console_result dice_entropy::invoke(std::ostream& output,
     const auto sides = get_sides_option();
     const auto& rolls = get_rolls_argument();
 
-    if (is_limited(sides, minimum_sides, maximum_sides))
+    if (is_limited(sides, minimum_dice_sides, maximum_dice_sides))
     {
-        error << BX_DICE_SIDES_INVALID << std::endl;
+        error << BX_DICE_ENTROPY_SIDES_INVALID << std::endl;
         return console_result::failure;
     }
 
-    const auto entropy = dice_to_entropy(rolls, sides);
-    if (entropy.empty())
+    number value{};
+    number total{};
+    if (!to_number(value, total, rolls, sides))
     {
-        error << BX_DICE_ROLLS_INVALID << std::endl;
+        error << BX_DICE_ENTROPY_INVALID << std::endl;
         return console_result::failure;
     }
 
-    output << base16(entropy) << std::endl;
+    // The entropy is the whole bytes of the range of the rolls.
+    const auto size = to_floored_bytes(floored_log2(total));
+    if (is_zero(size) ||
+        rolls.size() != roll_count(sides, size))
+    {
+        error << BX_DICE_ENTROPY_COUNT << std::endl;
+        return console_result::failure;
+    }
+
+    // Reject the incomplete top multiple of the range to avoid modulo bias.
+    const auto range = power2<number>(to_bits(size));
+    if (value >= floored_divide(total, range) * range)
+    {
+        error << BX_DICE_ENTROPY_REJECTED << std::endl;
+        return console_result::failure;
+    }
+
+    // Big-endian output.
+    const auto entropy = floored_modulo(value, range);
+    output << base16(to_big_data(data_chunk(size), entropy)) << std::endl;
     return console_result::okay;
 }
 

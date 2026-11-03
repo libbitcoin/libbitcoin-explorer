@@ -39,7 +39,7 @@ static void put_path(object& out, const std::string& path,
         return;
     }
 
-    auto& section = out[path.substr(0, point)];
+    auto& section = out[path.substr(zero, point)];
 
     if (!section.is_object())
         section.emplace_object();

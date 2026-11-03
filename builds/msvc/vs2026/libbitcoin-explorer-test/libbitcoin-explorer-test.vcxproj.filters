@@ -99,6 +99,9 @@
     <ClCompile Include="..\..\..\..\test\commands\dice-entropy.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\dice-rolls.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\ec-add-secrets.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

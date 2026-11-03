@@ -268,6 +268,19 @@ BC_AUTO_TEST_CASE(generated__property__dice_entropy__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_sides_option()), serial(sides_option));
 }
 
+BC_AUTO_TEST_CASE(generated__property__dice_rolls__round_trips)
+{
+    dice_rolls command;
+
+    const uint8_t sides_option{ 42 };
+    command.set_sides_option(sides_option);
+    BC_REQUIRE_EQUAL(serial(command.get_sides_option()), serial(sides_option));
+
+    const uint16_t bits_option{ 42 };
+    command.set_bits_option(bits_option);
+    BC_REQUIRE_EQUAL(serial(command.get_bits_option()), serial(bits_option));
+}
+
 BC_AUTO_TEST_CASE(generated__property__ec_add__round_trips)
 {
     ec_add command;
