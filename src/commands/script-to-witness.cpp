@@ -26,7 +26,7 @@ using namespace bc::system;
 using namespace bc::system::wallet;
 
 console_result script_to_witness::invoke(std::ostream& output,
-    std::ostream&)
+    std::ostream& error)
 {
     // Bound parameters.
     const auto& prefix = get_prefix_argument();
@@ -35,7 +35,7 @@ console_result script_to_witness::invoke(std::ostream& output,
     if (witness_address::parse_prefix(prefix) !=
         witness_address::parse_result::valid)
     {
-        output << BX_SCRIPT_TO_WITNESS_INVALID_PREFIX << std::endl;
+        error << BX_SCRIPT_TO_WITNESS_INVALID_PREFIX << std::endl;
         return console_result::failure;
     }
 

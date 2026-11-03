@@ -49,7 +49,7 @@ namespace commands {
  */
 #define BX_HD_TO_EC_INVALID_KEY \
     "The key is invalid."
-#define HD_TO_EC_VERSION_MISMATCH \
+#define BX_HD_TO_EC_VERSION_MISMATCH \
     "The version options are inconsistent."
 
 /**

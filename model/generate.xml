@@ -495,7 +495,7 @@
     <option name="public_version" type="uint32_t" configuration="wallet.hd_public_version" description="The expected version for an HD public key, defaults to 76067358." />
     <argument name="HD_KEY" stdin="true" type="hd_key" description="The HD public or private key to convert. If not specified the key is read from STDIN." />
     <define name="BX_HD_TO_EC_INVALID_KEY" value="The key is invalid." />
-    <define name="HD_TO_EC_VERSION_MISMATCH" value="The version options are inconsistent." />
+    <define name="BX_HD_TO_EC_VERSION_MISMATCH" value="The version options are inconsistent." />
   </command>
 
   <command symbol="hd-to-public" output="hd_public" category="WALLET" description="Derive the HD (BIP32) public key of a HD private key.">
