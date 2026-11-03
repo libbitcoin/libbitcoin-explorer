@@ -58,5 +58,19 @@ BC_AUTO_TEST_CASE(sighash__constructor__unknown_token__throws_istream_exception)
     BC_REQUIRE_THROW(sighash("baadf00d"), istream_exception);
 }
 
+BC_AUTO_TEST_CASE(sighash__constructor__value__round_trips)
+{
+    std::stringstream text;
+    text << sighash(sighash::type::hash_none);
+    BC_REQUIRE_EQUAL(text.str(), "none");
+}
+
+BC_AUTO_TEST_CASE(sighash__cast__value__expected)
+{
+    const sighash::type& value = sighash("none");
+    BC_REQUIRE(value == sighash::type::hash_none);
+}
+
+
 BC_AUTO_TEST_SUITE_END()
 BC_AUTO_TEST_SUITE_END()

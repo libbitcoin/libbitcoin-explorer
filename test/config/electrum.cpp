@@ -65,5 +65,19 @@ BC_AUTO_TEST_CASE(electrum__constructor__unknown_token__throws_istream_exception
     BC_REQUIRE_THROW(electrum("baadf00d"), istream_exception);
 }
 
+BC_AUTO_TEST_CASE(electrum__constructor__value__round_trips)
+{
+    std::stringstream text;
+    text << electrum(electrum::type::witness);
+    BC_REQUIRE_EQUAL(text.str(), "witness");
+}
+
+BC_AUTO_TEST_CASE(electrum__cast__value__expected)
+{
+    const electrum::type& value = electrum("witness");
+    BC_REQUIRE(value == electrum::type::witness);
+}
+
+
 BC_AUTO_TEST_SUITE_END()
 BC_AUTO_TEST_SUITE_END()

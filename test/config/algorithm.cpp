@@ -51,5 +51,19 @@ BC_AUTO_TEST_CASE(algorithm__constructor__unknown_token__throws_istream_exceptio
     BC_REQUIRE_THROW(algorithm("baadf00d"), istream_exception);
 }
 
+BC_AUTO_TEST_CASE(algorithm__constructor__value__round_trips)
+{
+    std::stringstream text;
+    text << algorithm(algorithm::type::individual);
+    BC_REQUIRE_EQUAL(text.str(), "individual");
+}
+
+BC_AUTO_TEST_CASE(algorithm__cast__value__expected)
+{
+    const algorithm::type& value = algorithm("individual");
+    BC_REQUIRE(value == algorithm::type::individual);
+}
+
+
 BC_AUTO_TEST_SUITE_END()
 BC_AUTO_TEST_SUITE_END()
