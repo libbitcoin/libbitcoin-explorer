@@ -18,7 +18,6 @@
  */
 
 #include <bitcoin/explorer/commands/mnemonic-encode.hpp>
-
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -27,17 +26,33 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
+using namespace bc::system::wallet;
 
-////<define name="BX_MNEMONIC_ENCODE_INVALID_ENTROPY_SIZE" value="The entropy size is not 16, 20, 24, 28, or 32 bytes." />
-
-LCOV_EXCL_START("Not implemented.")
-console_result mnemonic_encode::invoke(std::ostream&,
-    std::ostream&)
+console_result mnemonic_encode::invoke(std::ostream& output,
+    std::ostream& error)
 {
-    ////error << BX_MNEMONIC_ENCODE_OBSOLETE << std::endl;
-    return console_result::failure;
+    // Bound parameters.
+    const system::language lingo = get_language_option();
+    const data_chunk& entropy = get_entropy_argument();
+
+    if (!mnemonic::is_valid_entropy_size(entropy.size()))
+    {
+        error << BX_MNEMONIC_ENCODE_INVALID_ENTROPY_SIZE << std::endl;
+        return console_result::failure;
+    }
+
+    // An unspecified language defaults to English.
+    const auto identifier = lingo == language::none ? language::en : lingo;
+    const mnemonic instance(entropy, identifier);
+    if (!instance)
+    {
+        error << BX_MNEMONIC_ENCODE_INVALID_ENTROPY_SIZE << std::endl;
+        return console_result::failure;
+    }
+
+    output << instance.sentence() << std::endl;
+    return console_result::okay;
 }
-LCOV_EXCL_STOP()
 
 } //namespace commands
 } //namespace explorer

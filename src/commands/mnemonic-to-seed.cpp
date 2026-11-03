@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <bitcoin/explorer/commands/mnemonic-to-seed.hpp>
-
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -26,50 +25,32 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
-using namespace bc::system::config;
 using namespace bc::system::wallet;
 
-////<define name="BX_MNEMONIC_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12, 15, 18, 21, or 24." />
-////<define name="BX_MNEMONIC_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
-
-LCOV_EXCL_START("Not implemented.")
-console_result mnemonic_to_seed::invoke(std::ostream&,
-    std::ostream&)
+console_result mnemonic_to_seed::invoke(std::ostream& output,
+    std::ostream& error)
 {
-////    // Bound parameters.
-////    const dictionary_list& language = get_language_option();
-////    const auto& passphrase = get_passphrase_option();
-////    const auto& words = get_words_argument();
-////
-////    const auto word_count = words.size();
-////
-////    if ((word_count % wallet::mnemonic_word_multiple) != 0)
-////    {
-////        error << BX_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE << std::endl;
-////        return console_result::failure;
-////    }
-////
-////    const auto valid = validate_mnemonic(words, language);
-////
-////    if (!valid && language.size() == 1)
-////    {
-////        // This is fatal because a dictionary was specified explicitly.
-////        error << BX_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE << std::endl;
-////        return console_result::failure;
-////    }
-////
-////    if (!valid && language.size() > 1)
-////        error << BX_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES << std::endl;
-////
-////    // Any word set divisible by 3 works regardless of language validation.
-////    const auto seed = decode_mnemonic(words, passphrase);
-////
-////    output << base16(seed) << std::endl;
-////    return console_result::okay;
+    // Bound parameters.
+    const system::language lingo = get_language_option();
+    const auto& passphrase = get_passphrase_option();
+    const auto& words = get_words_argument();
 
-    return console_result::failure;
+    if (!mnemonic::is_valid_word_count(words.size()))
+    {
+        error << BX_MNEMONIC_TO_SEED_INVALID_WORD_COUNT << std::endl;
+        return console_result::failure;
+    }
+
+    const mnemonic instance(words, lingo);
+    if (!instance)
+    {
+        error << BX_MNEMONIC_TO_SEED_INVALID_WORDS << std::endl;
+        return console_result::failure;
+    }
+
+    output << encode_base16(instance.to_seed(passphrase)) << std::endl;
+    return console_result::okay;
 }
-LCOV_EXCL_STOP()
 
 } //namespace commands
 } //namespace explorer

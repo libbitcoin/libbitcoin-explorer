@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <bitcoin/explorer/commands/electrum-to-seed.hpp>
-
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -26,31 +25,41 @@ namespace explorer {
 namespace commands {
 
 using namespace bc::system;
-using namespace bc::system::config;
 using namespace bc::system::wallet;
 
-////<define name="BX_ELECTRUM_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12 to 46." />
-////<define name="BX_ELECTRUM_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
-
-LCOV_EXCL_START("Not implemented.")
-console_result electrum_to_seed::invoke(std::ostream&,
-    std::ostream&)
+// Only the prefixes that the prefix option accepts derive a seed.
+static bool is_seedable(electrum::seed_prefix prefix) NOEXCEPT
 {
-////    // Bound parameters.
-////    const auto& passphrase = get_passphrase_option();
-////    const auto& words = get_words_argument();
-////
-////    if (passphrase.empty())
-////        output << base16(electrum::decode_mnemonic(words)) << std::endl;
-////    else
-////        output << base16(electrum::decode_mnemonic(words, passphrase))
-////            << std::endl;
-////
-////    return console_result::okay;
-
-    return console_result::failure;
+    return prefix == electrum::seed_prefix::standard ||
+        prefix == electrum::seed_prefix::witness ||
+        prefix == electrum::seed_prefix::two_factor_authentication ||
+        prefix == electrum::seed_prefix::two_factor_authentication_witness;
 }
-LCOV_EXCL_STOP()
+
+console_result electrum_to_seed::invoke(std::ostream& output,
+    std::ostream& error)
+{
+    // Bound parameters.
+    const system::language lingo = get_language_option();
+    const auto& passphrase = get_passphrase_option();
+    const auto& words = get_words_argument();
+
+    if (!electrum::is_valid_word_count(words.size()))
+    {
+        error << BX_ELECTRUM_TO_SEED_INVALID_WORD_COUNT << std::endl;
+        return console_result::failure;
+    }
+
+    const electrum instance(words, lingo);
+    if (!instance || !is_seedable(instance.prefix()))
+    {
+        error << BX_ELECTRUM_TO_SEED_INVALID_WORDS << std::endl;
+        return console_result::failure;
+    }
+
+    output << encode_base16(instance.to_seed(passphrase)) << std::endl;
+    return console_result::okay;
+}
 
 } //namespace commands
 } //namespace explorer
