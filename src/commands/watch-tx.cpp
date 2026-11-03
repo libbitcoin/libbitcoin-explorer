@@ -20,7 +20,9 @@
 #include <bitcoin/explorer/commands/watch-tx.hpp>
 
 #include <bitcoin/system.hpp>
+#include <bitcoin/explorer/client.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -28,10 +30,37 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result watch_tx::invoke(std::ostream&, std::ostream& error)
+console_result watch_tx::invoke(std::ostream& output, std::ostream& error)
 {
-    error << BX_WATCH_TX_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    // Bound parameters.
+    const auto duration = get_duration_option();
+    const hash_digest& hash = get_hash_argument();
+    const auto expected = encode_hash(hash);
+    client server(*this, get_server_url_argument());
+
+    auto observed = false;
+    const auto notify = [&](const json::value& value) NOEXCEPT
+    {
+        const auto text = value.if_string();
+        observed = text && (std::string_view(*text) == expected);
+        return !observed;
+    };
+
+    if (!server.subscribe(error, "tx/subscribe", duration, notify))
+        return console_result::failure;
+
+    if (!observed)
+    {
+        error << BX_WATCH_TX_TIMEOUT << std::endl;
+        return console_result::failure;
+    }
+
+    json::value response{};
+    if (!server.fetch(response, error, "tx/" + expected))
+        return console_result::failure;
+
+    write_stream(output, response);
+    return console_result::okay;
 }
 
 } //namespace commands

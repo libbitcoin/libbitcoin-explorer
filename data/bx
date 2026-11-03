@@ -251,6 +251,9 @@ _bx()
         watch-key)
             options="--duration -d"
             ;;
+        watch-tx)
+            options="--duration -d"
+            ;;
     esac
 
     # Only options are completed; other words fall back to the default.

@@ -2006,11 +2006,13 @@ BC_AUTO_TEST_CASE(generated__parse__watch_tx__okay)
     const char* argv[]
     {
         "watch-tx",
+        "--duration", "42",
         "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+        "http://127.0.0.1:1",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.parse(message, input, 5, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }

@@ -60,6 +60,7 @@
     <string name="BX_COMMANDS_HOME_PAGE" value="Bitcoin Explorer home page:" />
     <string name="BX_CONNECTION_FAILURE" value="Could not connect to server: {}" />
     <string name="BX_SERVER_QUERY_FAILED" value="Server query failed: {}." />
+    <string name="BX_SERVER_SUBSCRIBE_FAILED" value="Server subscription failed: {}." />
     <string name="BX_DEPRECATED_COMMAND" value="The '{}' command has been replaced by '{}'."/>
     <string name="BX_INVALID_COMMAND" value="'{}' is not a bx command. Enter 'bx help' for a list of commands." />
     <string name="BX_INVALID_PARAMETER" value="Error: {}" />
@@ -647,18 +648,14 @@
     <define name="BX_STEALTH_SHARED_OUT_OF_RANGE" value="Product exceeds valid range." />
   </command>
 
-  <command symbol="subscribe-block" output="block" category="ONLINE" network="true" stub="true" description="Watch the network for all blocks. Requires a Libbitcoin server connection.">
+  <command symbol="subscribe-block" output="block" category="ONLINE" network="true" description="Watch the network for all blocks. Requires a Libbitcoin server connection.">
     <argument name="server-url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="duration" type="uint32_t" default="600" description="The duration of the subscription in seconds, defaults to 600." />
-    <define name="BX_SUBSCRIBE_BLOCK_FAILED" value="Failed to subscribe to transaction service: {}" />
-    <define name="BX_SUBSCRIBE_BLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="subscribe-tx" output="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for all transactions. Requires a Libbitcoin server connection.">
+  <command symbol="subscribe-tx" output="transaction" category="ONLINE" network="true" description="Watch the network for all transactions. Requires a Libbitcoin server connection.">
     <argument name="server-url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="duration" type="uint32_t" default="600" description="The duration of the subscription in seconds, defaults to 600." />
-    <define name="BX_SUBSCRIBE_TX_FAILED" value="Failed to subscribe to transaction service: {}" />
-    <define name="BX_SUBSCRIBE_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="token-new" output="ek_token" category="KEY_ENCRYPTION" description="Create an intermediate passphrase token for deferred encrypted key generation (BIP38).">
@@ -723,10 +720,11 @@
     <define name="BX_WATCH_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="watch-tx" formerly="watchtx" output="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for a transaction by hash. Requires a Libbitcoin server connection.">
+  <command symbol="watch-tx" formerly="watchtx" output="transaction" category="ONLINE" network="true" description="Watch the network for a transaction by hash. Requires a Libbitcoin server connection.">
+    <option name="duration" type="uint32_t" default="600" description="The duration of the watch in seconds, defaults to 600." />
     <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash to watch. If not specified the hash is read from STDIN." />
-    <define name="BX_WATCH_TX_WAITING" value="Watching transaction: {}..." />
-    <define name="BX_WATCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_WATCH_TX_TIMEOUT" value="The transaction was not observed within the duration." />
   </command>
 
   <command symbol="wif-to-ec" output="ec_private" category="WALLET" description="Convert a WIF private key to an EC private key.">

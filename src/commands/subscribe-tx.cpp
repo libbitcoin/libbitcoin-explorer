@@ -20,7 +20,9 @@
 #include <bitcoin/explorer/commands/subscribe-tx.hpp>
 
 #include <bitcoin/system.hpp>
+#include <bitcoin/explorer/client.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -28,10 +30,23 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result subscribe_tx::invoke(std::ostream&, std::ostream& error)
+console_result subscribe_tx::invoke(std::ostream& output,
+    std::ostream& error)
 {
-    error << BX_SUBSCRIBE_TX_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    // Bound parameters.
+    const auto duration = get_duration_option();
+    client server(*this, get_server_url_argument());
+
+    const auto notify = [&output](const json::value& hash) NOEXCEPT
+    {
+        write_stream(output, hash);
+        return true;
+    };
+
+    if (!server.subscribe(error, "tx/subscribe", duration, notify))
+        return console_result::failure;
+
+    return console_result::okay;
 }
 
 } //namespace commands

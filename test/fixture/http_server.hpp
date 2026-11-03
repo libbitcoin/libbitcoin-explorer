@@ -29,10 +29,13 @@
 // canned response, re-arming so that a retry is served. The client under
 // test drives its own context on the test thread, so the pool is stopped
 // and joined before teardown and no completion outlives the case.
+struct websocket_t {};
+
 class http_server
 {
 public:
     DELETE_COPY_MOVE(http_server);
+    static constexpr websocket_t websocket{};
 
     /// A well-formed response of the given status and body.
     http_server(bc::network::http::status status,
@@ -40,6 +43,11 @@ public:
 
     /// The given bytes, one write per part, with no added headers.
     explicit http_server(const std::vector<std::string>& parts) NOEXCEPT;
+
+    /// Accept an upgrade, send each message as a text frame and, if closing,
+    /// a close frame. Other requests get an empty json response.
+    http_server(websocket_t, const std::vector<std::string>& messages,
+        bool close) NOEXCEPT;
 
     ~http_server() NOEXCEPT;
 
@@ -50,10 +58,15 @@ private:
     void accept() NOEXCEPT;
     void handle_accept(const bc::network::code& ec) NOEXCEPT;
     void respond(bc::network::code& ec, unsigned version) NOEXCEPT;
+    void respond_websocket(bc::network::code& ec,
+        const bc::network::http::request_header& request) NOEXCEPT;
 
     const bc::network::http::status status_;
     const std::string body_;
     const std::vector<std::string> parts_;
+    const std::vector<std::string> messages_;
+    const bool websocket_;
+    const bool close_;
     bc::network::threadpool pool_{ 1 };
     bc::network::io::acceptor acceptor_;
     bc::network::io::socket peer_;

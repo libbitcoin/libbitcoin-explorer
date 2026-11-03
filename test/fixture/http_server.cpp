@@ -18,12 +18,14 @@
  */
 #include "http_server.hpp"
 
+#include <array>
 #include <string>
 #include <vector>
 #include <bitcoin/explorer.hpp>
 
 namespace io = bc::network::io;
 namespace http = bc::network::http;
+namespace ws = bc::network::ws;
 using code = bc::network::code;
 using authority = bc::system::config::authority;
 
@@ -34,7 +36,8 @@ static io::endpoint test_endpoint() NOEXCEPT
 
 http_server::http_server(http::status status,
     const std::string& body) NOEXCEPT
-  : status_(status), body_(body), parts_{},
+  : status_(status), body_(body), parts_{}, messages_{}, websocket_(false),
+    close_(false),
     acceptor_(pool_.service().get_executor(), test_endpoint()),
     peer_(pool_.service().get_executor())
 {
@@ -42,7 +45,18 @@ http_server::http_server(http::status status,
 }
 
 http_server::http_server(const std::vector<std::string>& parts) NOEXCEPT
-  : status_(http::status::ok), body_{}, parts_(parts),
+  : status_(http::status::ok), body_{}, parts_(parts), messages_{},
+    websocket_(false), close_(false),
+    acceptor_(pool_.service().get_executor(), test_endpoint()),
+    peer_(pool_.service().get_executor())
+{
+    accept();
+}
+
+http_server::http_server(websocket_t, const std::vector<std::string>& messages,
+    bool close) NOEXCEPT
+  : status_(http::status::ok), body_("{}"), parts_{}, messages_(messages),
+    websocket_(true), close_(close),
     acceptor_(pool_.service().get_executor(), test_endpoint()),
     peer_(pool_.service().get_executor())
 {
@@ -70,6 +84,24 @@ void http_server::accept() NOEXCEPT
     });
 }
 
+static void write_all(io::socket& peer, const std::string& data,
+    code& ec) NOEXCEPT
+{
+    auto buffer = io::buffer(data);
+
+    while (!ec && bc::is_nonzero(buffer.size()))
+        buffer += peer.write_some(buffer, ec);
+}
+
+// A server frame is unmasked, with a one byte length (messages are short).
+static void write_frame(io::socket& peer, uint8_t opcode,
+    const std::string& payload, code& ec) NOEXCEPT
+{
+    const auto length = static_cast<char>(payload.size());
+    const std::string header{ static_cast<char>(opcode), length };
+    write_all(peer, header + payload, ec);
+}
+
 // Raw parts are written one part per write, so a response that arrives in
 // pieces (or without a content length) can be presented to the client.
 void http_server::respond(code& ec, unsigned version) NOEXCEPT
@@ -85,12 +117,29 @@ void http_server::respond(code& ec, unsigned version) NOEXCEPT
     }
 
     for (const auto& part: parts_)
-    {
-        auto buffer = io::buffer(part);
+        write_all(peer_, part, ec);
+}
 
-        while (!ec && bc::is_nonzero(buffer.size()))
-            buffer += peer_.write_some(buffer, ec);
-    }
+// After the messages the peer's frames are drained until it closes, or
+// until its deadline closes the socket.
+void http_server::respond_websocket(code& ec,
+    const http::request_header& request) NOEXCEPT
+{
+    ws::response response{};
+    ec = ws::accept(response, request);
+    if (ec)
+        return;
+
+    http::write(peer_, response, ec);
+    for (const auto& message: messages_)
+        write_frame(peer_, 0x81, message, ec);
+
+    if (close_)
+        write_frame(peer_, 0x88, std::string{ '\x03', '\xe8' }, ec);
+
+    std::array<uint8_t, 64> scratch{};
+    while (!ec)
+        peer_.read_some(io::buffer(scratch), ec);
 }
 
 // The request and response are synchronous on the single pool thread, so
@@ -104,9 +153,16 @@ void http_server::handle_accept(const code& ec) NOEXCEPT
     http::flat_buffer buffer{};
     http::message<true, http::string_body> request{};
     http::read(peer_, buffer, request, result);
+    if (result == bc::network::error::upgrade)
+        result.clear();
 
     if (!result)
-        respond(result, request.version());
+    {
+        if (websocket_ && request.count(http::field::upgrade) > 0u)
+            respond_websocket(result, request.base());
+        else
+            respond(result, request.version());
+    }
 
     peer_.close();
     accept();

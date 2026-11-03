@@ -18,17 +18,35 @@
  */
 
 #include "command.hpp"
+#include "../fixture/http_server.hpp"
 
 BX_USING_NAMESPACES()
 
-BC_AUTO_TEST_SUITE(stub)
+BC_AUTO_TEST_SUITE(online)
 BC_AUTO_TEST_SUITE(watch_tx__invoke)
 
-BC_AUTO_TEST_CASE(watch_tx__invoke__invoke__always__failure_error)
+BC_AUTO_TEST_CASE(watch_tx__invoke__observed__okay_output)
 {
     BX_DECLARE_COMMAND(watch_tx);
+    const http_server server{ http_server::websocket, { "", "\"0000000000000000000000000000000000000000000000000000000000000002\"", "\"0000000000000000000000000000000000000000000000000000000000000001\"" }, true };
+    command.set_server_connect_timeout_seconds_setting(10);
+    command.set_server_url_argument({ server.url() });
+    command.set_duration_option(10);
+    command.set_hash_argument({ "0000000000000000000000000000000000000000000000000000000000000001" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("{}\n");
+}
+
+BC_AUTO_TEST_CASE(watch_tx__invoke__not_observed__failure_error)
+{
+    BX_DECLARE_COMMAND(watch_tx);
+    const http_server server{ http_server::websocket, { "\"0000000000000000000000000000000000000000000000000000000000000002\"" }, true };
+    command.set_server_connect_timeout_seconds_setting(10);
+    command.set_server_url_argument({ server.url() });
+    command.set_duration_option(1);
+    command.set_hash_argument({ "0000000000000000000000000000000000000000000000000000000000000001" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_WATCH_TX_NOT_IMPLEMENTED "\n");
+    BX_REQUIRE_ERROR(BX_WATCH_TX_TIMEOUT "\n");
 }
 
 BC_AUTO_TEST_SUITE_END()

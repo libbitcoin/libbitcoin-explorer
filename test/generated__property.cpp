@@ -1378,6 +1378,14 @@ BC_AUTO_TEST_CASE(generated__property__watch_tx__round_trips)
     const system::config::hash256 hash_argument{ "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f" };
     command.set_hash_argument(hash_argument);
     BC_REQUIRE_EQUAL(serial(command.get_hash_argument()), serial(hash_argument));
+
+    const system::config::url server_url_argument{ "http://127.0.0.1:1" };
+    command.set_server_url_argument(server_url_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_server_url_argument()), serial(server_url_argument));
+
+    const uint32_t duration_option{ 42 };
+    command.set_duration_option(duration_option);
+    BC_REQUIRE_EQUAL(serial(command.get_duration_option()), serial(duration_option));
 }
 
 BC_AUTO_TEST_CASE(generated__property__wif_to_ec__round_trips)

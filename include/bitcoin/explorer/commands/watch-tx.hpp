@@ -47,10 +47,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_WATCH_TX_WAITING \
-    "Watching transaction: {}..."
-#define BX_WATCH_TX_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_WATCH_TX_TIMEOUT \
+    "The transaction was not observed within the duration."
 
 /**
  * Class to implement the watch-tx command.
@@ -115,7 +113,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HASH", 1);
+            .add("HASH", 1)
+            .add("server-url", 1);
     }
 
     /**
@@ -149,9 +148,19 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "duration,d",
+            value<uint32_t>(&option_.duration)->default_value(600),
+            "The duration of the watch in seconds, defaults to 600."
+        )
+        (
             "HASH",
             value<system::config::hash256>(&argument_.hash),
             "The Base16 transaction hash to watch. If not specified the hash is read from STDIN."
+        )
+        (
+            "server-url",
+            value<system::config::url>(&argument_.server_url),
+            "The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."
         );
 
         return options;
@@ -193,6 +202,40 @@ public:
         argument_.hash = value;
     }
 
+    /**
+     * Get the value of the server-url argument.
+     */
+    virtual system::config::url& get_server_url_argument()
+    {
+        return argument_.server_url;
+    }
+
+    /**
+     * Set the value of the server-url argument.
+     */
+    virtual void set_server_url_argument(
+        const system::config::url& value)
+    {
+        argument_.server_url = value;
+    }
+
+    /**
+     * Get the value of the duration option.
+     */
+    virtual uint32_t& get_duration_option()
+    {
+        return option_.duration;
+    }
+
+    /**
+     * Set the value of the duration option.
+     */
+    virtual void set_duration_option(
+        const uint32_t& value)
+    {
+        option_.duration = value;
+    }
+
 private:
 
     /**
@@ -203,11 +246,13 @@ private:
     struct argument
     {
         argument()
-          : hash()
+          : hash(),
+            server_url()
         {
         }
 
         system::config::hash256 hash;
+        system::config::url server_url;
     } argument_;
 
     /**
@@ -218,9 +263,11 @@ private:
     struct option
     {
         option()
+          : duration()
         {
         }
 
+        uint32_t duration;
     } option_;
 };
 

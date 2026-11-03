@@ -19,6 +19,7 @@
 #ifndef BX_CLIENT_HPP
 #define BX_CLIENT_HPP
 
+#include <functional>
 #include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -32,6 +33,8 @@ class command;
 class BCX_API client
 {
 public:
+    typedef std::function<bool(const system::json::value&)> notifier;
+
     /// Construct a client for the given service url.
     client(const system::config::url& url, uint8_t retries,
         uint16_t timeout_seconds) NOEXCEPT;
@@ -51,6 +54,12 @@ public:
     /// Get as above, writing the failure message to the error stream.
     bool fetch(system::json::value& out, std::ostream& error,
         const std::string& path, const std::string& query="") NOEXCEPT;
+
+    /// Subscribe to a native interface path, such as "block/subscribe",
+    /// passing each json notification to the handler until it returns
+    /// false or the duration elapses, writing any failure to error.
+    bool subscribe(std::ostream& error, const std::string& path,
+        uint32_t seconds, const notifier& handler) NOEXCEPT;
 
 private:
     const system::config::url url_;

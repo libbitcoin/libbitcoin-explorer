@@ -176,6 +176,8 @@ namespace explorer {
     "VALUE"
 #define BX_SERVER_QUERY_FAILED \
     "Server query failed: {}."
+#define BX_SERVER_SUBSCRIBE_FAILED \
+    "Server subscription failed: {}."
 #define BX_VERSION_MESSAGE \
     "Version: {}"
 
