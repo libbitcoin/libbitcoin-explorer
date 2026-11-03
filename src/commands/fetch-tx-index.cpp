@@ -19,7 +19,6 @@
 
 #include <bitcoin/explorer/commands/fetch-tx-index.hpp>
 
-#include <format>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/client.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -35,23 +34,13 @@ console_result fetch_tx_index::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& argument = get_server_url_argument();
-    const auto& url = is_zero(argument.port()) ?
-        get_server_url_setting() : argument;
     const hash_digest& hash = get_hash_argument();
-
-    client server(url, get_server_connect_retries_setting(),
-        get_server_connect_timeout_seconds_setting());
+    const auto path = "tx/" + encode_hash(hash) + "/details";
+    client server(*this, get_server_url_argument());
 
     json::value response{};
-    std::string message{};
-
-    if (!server.get(response, message,
-        "tx/" + encode_hash(hash) + "/details"))
-    {
-        error << std::format(BX_FETCH_TX_INDEX_FAILED, message) << std::endl;
+    if (!server.fetch(response, error, path))
         return console_result::failure;
-    }
 
     const auto details = response.if_object();
     if (!details || !details->contains("confirmed"))

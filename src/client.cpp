@@ -1,21 +1,19 @@
 #include <bitcoin/explorer/client.hpp>
 
 #include <chrono>
+#include <format>
 #include <memory>
 #include <string>
 #include <bitcoin/network.hpp>
 #include <bitcoin/system.hpp>
+#include <bitcoin/explorer/command.hpp>
+#include <bitcoin/explorer/generated.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 
 namespace io = network::io;
 namespace http = network::http;
-using request_t = http::message<true, http::empty_body>;
-using request_t = http::message<true, http::empty_body>;
-using request_t = http::message<true, http::empty_body>;
-using request_t = http::message<true, http::empty_body>;
-using request_t = http::message<true, http::empty_body>;
 using request_t = http::message<true, http::empty_body>;
 
 constexpr auto user_agent = "libbitcoin-explorer";
@@ -26,6 +24,21 @@ client::client(const system::config::url& url, uint8_t retries,
     uint16_t timeout_seconds) NOEXCEPT
   : url_(url.to_local()), retries_(retries),
     timeout_seconds_(timeout_seconds)
+{
+}
+
+static system::config::url server_url(const command& command,
+    const system::config::url& argument) NOEXCEPT
+{
+    return is_zero(argument.port()) ?
+        command.get_server_url_setting() : argument;
+}
+
+client::client(const command& command,
+    const system::config::url& argument) NOEXCEPT
+  : client(server_url(command, argument),
+    command.get_server_connect_retries_setting(),
+    command.get_server_connect_timeout_seconds_setting())
 {
 }
 
@@ -209,7 +222,7 @@ private:
 };
 
 // Returns false and populates error on any failure.
-static bool fetch(std::string& out, std::string& error,
+static bool request(std::string& out, std::string& error,
     const system::config::url& url, uint16_t timeout_seconds,
     const std::string& target) NOEXCEPT
 {
@@ -248,7 +261,7 @@ bool client::get(system::json::value& out, std::string& error,
 
     std::string body{};
     for (uint8_t attempt{}; attempt <= retries_; ++attempt)
-        if (fetch(body, error, url_, timeout_seconds_, target))
+        if (request(body, error, url_, timeout_seconds_, target))
             break;
         else if (attempt == retries_)
             return false;
@@ -262,6 +275,25 @@ bool client::get(system::json::value& out, std::string& error,
     }
 
     return true;
+}
+
+bool client::fetch(system::json::value& out, std::ostream& error,
+    const std::string& path, const std::string& query) NOEXCEPT
+{
+    std::string message{};
+    if (get(out, message, path, query))
+        return true;
+
+    error << std::format(BX_SERVER_QUERY_FAILED, message) << std::endl;
+    return false;
+}
+
+std::string block_path(const system::hash_digest& hash,
+    uint32_t height) NOEXCEPT
+{
+    return hash == system::null_hash ?
+        "block/height/" + system::serialize(height) :
+        "block/hash/" + system::encode_hash(hash);
 }
 
 } // namespace explorer

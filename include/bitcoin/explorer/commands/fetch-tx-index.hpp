@@ -49,8 +49,6 @@ namespace commands {
  */
 #define BX_FETCH_TX_INDEX_UNCONFIRMED \
     "The transaction is not confirmed."
-#define BX_FETCH_TX_INDEX_FAILED \
-    "Server query failed: {}."
 
 /**
  * Class to implement the fetch-tx-index command.

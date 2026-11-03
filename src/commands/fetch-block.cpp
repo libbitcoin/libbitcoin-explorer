@@ -19,7 +19,6 @@
 
 #include <bitcoin/explorer/commands/fetch-block.hpp>
 
-#include <format>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/client.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -34,27 +33,14 @@ using namespace bc::system;
 console_result fetch_block::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& argument = get_server_url_argument();
-    const auto& url = is_zero(argument.port()) ?
-        get_server_url_setting() : argument;
     const hash_digest& hash = get_hash_option();
     const auto height = get_height_option();
-
-    const auto path = hash == null_hash ?
-        "block/height/" + serialize(height) :
-        "block/hash/" + encode_hash(hash);
-
-    client server(url, get_server_connect_retries_setting(),
-        get_server_connect_timeout_seconds_setting());
+    const auto path = block_path(hash, height);
+    client server(*this, get_server_url_argument());
 
     json::value response{};
-    std::string message{};
-
-    if (!server.get(response, message, path))
-    {
-        error << std::format(BX_FETCH_BLOCK_FAILED, message) << std::endl;
+    if (!server.fetch(response, error, path))
         return console_result::failure;
-    }
 
     write_stream(output, response);
     return console_result::okay;

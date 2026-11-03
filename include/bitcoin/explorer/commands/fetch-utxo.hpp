@@ -47,8 +47,6 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FETCH_UTXO_FAILED \
-    "Server query failed: {}."
 #define BX_FETCH_UTXO_INSUFFICIENT \
     "The unspent outputs do not cover the requested satoshi."
 
