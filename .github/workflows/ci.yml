@@ -57,7 +57,7 @@ jobs:
             echo "run_id   : ${{ github.run_id }}"
             echo "ref      : ${{ github.ref }}"
             echo "base_ref : ${{ github.base_ref }}"
-            echo "head_ref : ${{ github.head_ref }}"
+            echo "head_ref : $GITHUB_HEAD_REF"
 
 
   gnu:
@@ -181,10 +181,10 @@ jobs:
         id: get-branch
         shell: bash
         run: |
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "branch=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+          if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
+            echo "branch=$GITHUB_HEAD_REF" >> $GITHUB_OUTPUT
           else
-            echo "branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+            echo "branch=$GITHUB_REF_NAME" >> $GITHUB_OUTPUT
           fi
 
       - name: Checkout repository [libbitcoin-system]
@@ -402,10 +402,10 @@ jobs:
         id: get-branch
         shell: bash
         run: |
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "branch=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+          if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
+            echo "branch=$GITHUB_HEAD_REF" >> $GITHUB_OUTPUT
           else
-            echo "branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+            echo "branch=$GITHUB_REF_NAME" >> $GITHUB_OUTPUT
           fi
 
       - name: Checkout repository [libbitcoin-system]
@@ -615,10 +615,10 @@ jobs:
         id: get-branch
         shell: bash
         run: |
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "branch=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+          if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
+            echo "branch=$GITHUB_HEAD_REF" >> $GITHUB_OUTPUT
           else
-            echo "branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+            echo "branch=$GITHUB_REF_NAME" >> $GITHUB_OUTPUT
           fi
 
       - name: Checkout repository [libbitcoin-system]
@@ -828,10 +828,10 @@ jobs:
         id: get-branch
         shell: bash
         run: |
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "branch=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+          if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
+            echo "branch=$GITHUB_HEAD_REF" >> $GITHUB_OUTPUT
           else
-            echo "branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+            echo "branch=$GITHUB_REF_NAME" >> $GITHUB_OUTPUT
           fi
 
       - name: Set msbuild path

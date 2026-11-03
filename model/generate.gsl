@@ -35,6 +35,7 @@ gsl from "templates/data/gsl.bx"
 gsl from "templates/test/gsl.generated__broadcast.cpp"
 gsl from "templates/test/gsl.generated__find.cpp"
 gsl from "templates/test/gsl.generated__formerly.cpp"
+gsl from "templates/test/gsl.generated__help.cpp"
 gsl from "templates/test/gsl.generated__symbol.cpp"
 
 ###############################################################################
