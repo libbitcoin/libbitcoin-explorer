@@ -34,11 +34,6 @@ sighash::sighash()
 {
 }
 
-sighash::sighash(const sighash& other)
-  : value_(other.value_)
-{
-}
-
 sighash::sighash(const std::string& token)
 {
     std::stringstream(token) >> *this;

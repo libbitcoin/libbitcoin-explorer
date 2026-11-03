@@ -33,8 +33,9 @@ class BCX_API sighash
 public:
     typedef system::chain::coverage type;
 
+    DEFAULT_COPY_MOVE(sighash);
+
     sighash();
-    sighash(const sighash& other);
     sighash(const std::string& token);
     sighash(const type& value);
 

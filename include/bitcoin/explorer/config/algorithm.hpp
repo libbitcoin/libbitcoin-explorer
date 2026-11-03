@@ -33,8 +33,9 @@ class BCX_API algorithm
 public:
     typedef system::wallet::points_value::selection type;
 
+    DEFAULT_COPY_MOVE(algorithm);
+
     algorithm();
-    algorithm(const algorithm& other);
     algorithm(const std::string& token);
     algorithm(const type& value);
 

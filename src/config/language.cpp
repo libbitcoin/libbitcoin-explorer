@@ -31,11 +31,6 @@ language::language()
 {
 }
 
-language::language(const language& other)
-  : value_(other.value_)
-{
-}
-
 language::language(const std::string& token)
 {
     std::stringstream(token) >> *this;

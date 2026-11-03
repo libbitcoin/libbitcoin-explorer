@@ -31,11 +31,6 @@ ec_private::ec_private()
 {
 }
 
-ec_private::ec_private(const ec_private& other)
-  : ec_private(other.value_)
-{
-}
-
 ec_private::ec_private(const std::string& token)
 {
     std::stringstream(token) >> *this;

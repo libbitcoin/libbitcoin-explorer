@@ -32,8 +32,9 @@ class BCX_API btc
 public:
     typedef uint64_t type;
 
+    DEFAULT_COPY_MOVE(btc);
+
     btc();
-    btc(const btc& other);
     btc(const std::string& token);
     btc(const type& value);
 

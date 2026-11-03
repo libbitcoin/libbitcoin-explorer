@@ -31,11 +31,6 @@ endorsement::endorsement()
 {
 }
 
-endorsement::endorsement(const endorsement& other)
-  : endorsement(other.value_)
-{
-}
-
 endorsement::endorsement(const std::string& token)
 {
     std::stringstream(token) >> *this;

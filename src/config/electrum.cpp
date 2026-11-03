@@ -37,11 +37,6 @@ electrum::electrum()
 {
 }
 
-electrum::electrum(const electrum& other)
-  : value_(other.value_)
-{
-}
-
 electrum::electrum(const std::string& token)
 {
     std::stringstream(token) >> *this;

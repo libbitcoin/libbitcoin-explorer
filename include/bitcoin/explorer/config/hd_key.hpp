@@ -33,8 +33,9 @@ class BCX_API hd_key
 public:
     typedef system::wallet::hd_key type;
 
+    DEFAULT_COPY_MOVE(hd_key);
+
     hd_key();
-    hd_key(const hd_key& other);
     hd_key(const std::string& token);
     hd_key(const type& value);
 

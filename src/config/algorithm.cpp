@@ -34,11 +34,6 @@ algorithm::algorithm()
 {
 }
 
-algorithm::algorithm(const algorithm& other)
-  : value_(other.value_)
-{
-}
-
 algorithm::algorithm(const std::string& token)
 {
     std::stringstream(token) >> *this;

@@ -36,11 +36,6 @@ witness::witness()
 {
 }
 
-witness::witness(const witness& other)
-  : value_(other.value_)
-{
-}
-
 witness::witness(const std::string& token)
 {
     std::stringstream(token) >> *this;
