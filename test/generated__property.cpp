@@ -770,6 +770,10 @@ BC_AUTO_TEST_CASE(generated__property__fetch_utxo__round_trips)
     command.set_hash_argument(hash_argument);
     BC_REQUIRE_EQUAL(serial(command.get_hash_argument()), serial(hash_argument));
 
+    const system::config::url server_url_argument{ "http://127.0.0.1:1" };
+    command.set_server_url_argument(server_url_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_server_url_argument()), serial(server_url_argument));
+
     const explorer::config::algorithm algorithm_option{ "greedy" };
     command.set_algorithm_option(algorithm_option);
     BC_REQUIRE_EQUAL(serial(command.get_algorithm_option()), serial(algorithm_option));

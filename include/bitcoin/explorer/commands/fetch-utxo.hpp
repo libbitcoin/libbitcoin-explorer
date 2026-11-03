@@ -47,10 +47,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FETCH_UTXO_INVALID_ARGUMENTS \
-    "A valid payments search key must be provided."
-#define BX_FETCH_UTXO_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_FETCH_UTXO_FAILED \
+    "Server query failed: {}."
+#define BX_FETCH_UTXO_INSUFFICIENT \
+    "The unspent outputs do not cover the requested satoshi."
 
 /**
  * Class to implement the fetch-utxo command.
@@ -116,7 +116,8 @@ public:
     {
         return get_argument_metadata()
             .add("SATOSHI", 1)
-            .add("hash", 1);
+            .add("hash", 1)
+            .add("server-url", 1);
     }
 
     /**
@@ -163,6 +164,11 @@ public:
             "hash",
             value<system::config::hash256>(&argument_.hash),
             "The Base16 payments search key. If not specified the key is read from STDIN."
+        )
+        (
+            "server-url",
+            value<system::config::url>(&argument_.server_url),
+            "The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."
         );
 
         return options;
@@ -222,6 +228,23 @@ public:
     }
 
     /**
+     * Get the value of the server-url argument.
+     */
+    virtual system::config::url& get_server_url_argument()
+    {
+        return argument_.server_url;
+    }
+
+    /**
+     * Set the value of the server-url argument.
+     */
+    virtual void set_server_url_argument(
+        const system::config::url& value)
+    {
+        argument_.server_url = value;
+    }
+
+    /**
      * Get the value of the algorithm option.
      */
     virtual explorer::config::algorithm& get_algorithm_option()
@@ -249,12 +272,14 @@ private:
     {
         argument()
           : satoshi(),
-            hash()
+            hash(),
+            server_url()
         {
         }
 
         uint64_t satoshi;
         system::config::hash256 hash;
+        system::config::url server_url;
     } argument_;
 
     /**

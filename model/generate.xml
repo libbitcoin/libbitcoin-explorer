@@ -436,12 +436,13 @@
     <define name="BX_FETCH_TX_INDEX_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-utxo" stub="true" formerly="get-utxo" output="output" multipleX="true" category="ONLINE" network="true" description="Get enough unspent transaction outputs from a payment address to pay a number of satoshi. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-utxo" formerly="get-utxo" output="output" category="ONLINE" network="true" description="Get enough unspent transaction outputs from a payment address to pay a number of satoshi. Requires a Libbitcoin server connection.">
     <option name="algorithm" type="algorithm" description="The algorithm for unspent output selection. Options are 'greedy' and 'individual', defaults to 'greedy'." />
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
-    <define name="BX_FETCH_UTXO_INVALID_ARGUMENTS" value="A valid payments search key must be provided." />
-    <define name="BX_FETCH_UTXO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_FETCH_UTXO_FAILED" value="Server query failed: {}." />
+    <define name="BX_FETCH_UTXO_INSUFFICIENT" value="The unspent outputs do not cover the requested satoshi." />
   </command>
 
   <command symbol="match-neutrino-address" output="bool" category="MATH" description="Determine whether the provided client filter probabilistically matches the provided payment address.">
