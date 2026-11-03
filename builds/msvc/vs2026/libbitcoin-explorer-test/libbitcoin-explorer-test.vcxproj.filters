@@ -369,6 +369,12 @@
     <ClCompile Include="..\..\..\..\test\generated__help.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\generated__metadata.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\generated__parse.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\generated__property.cpp">
       <Filter>src</Filter>
     </ClCompile>

@@ -211,6 +211,8 @@
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__formerly.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__help.cpp" />
+    <ClCompile Include="..\..\..\..\test\generated__metadata.cpp" />
+    <ClCompile Include="..\..\..\..\test\generated__parse.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__property.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
     <ClCompile Include="..\..\..\..\test\main.cpp" />
