@@ -59,7 +59,7 @@ static bool to_number(number& value, number& total, const std::string& rolls,
         total *= sides;
     }
 
-    return floored_log2(total) >= byte_bits;
+    return !is_zero(to_floored_bytes(floored_log2(total)));
 }
 
 console_result dice_entropy::invoke(std::ostream& output,
@@ -85,17 +85,17 @@ console_result dice_entropy::invoke(std::ostream& output,
 
     // The entropy is the whole bytes of the range, rejecting the incomplete
     // top multiple of the byte range to avoid modulo bias.
-    const auto size = floored_log2(total) / byte_bits;
-    const auto range = number{ one } << to_bits(size);
-    if (value >= (total / range) * range)
+    const auto size = to_floored_bytes(floored_log2(total));
+    const auto range = power2<number>(to_bits(size));
+    if (value >= floored_divide(total, range) * range)
     {
         error << BX_DICE_ROLLS_REJECTED << std::endl;
         return console_result::failure;
     }
 
     // Big-endian output.
-    output << base16(to_big_data(data_chunk(size), value % range))
-        << std::endl;
+    const auto entropy = floored_modulo(value, range);
+    output << base16(to_big_data(data_chunk(size), entropy)) << std::endl;
     return console_result::okay;
 }
 
