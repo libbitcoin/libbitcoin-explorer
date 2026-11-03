@@ -43,15 +43,23 @@ console_result input_validate::invoke(std::ostream& output,
         return console_result::failure;
     }
 
+    if (endorse.empty())
+    {
+        output << BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT << std::endl;
+        return console_result::invalid;
+    }
+
     data_chunk point;
     ec_signature signature;
+    const data_slice der{ endorse.begin(), std::prev(endorse.end()) };
+    const auto sighash = endorse.back();
+    constexpr auto version = chain::script_version::unversioned;
+    constexpr auto flags = chain::flags::all_rules;
 
-    if (endorse.empty() || !public_key.to_data(point) ||
-        !ecdsa::decode_signature(signature, { endorse.begin(), endorse.end() - 1 },
-            strict) ||
-        !tx.check_signature(signature, point, contract, index, 0,
-            endorse.back(), chain::script_version::unversioned,
-            chain::flags::all_rules))
+    if (!public_key.to_data(point) ||
+        !ecdsa::decode_signature(signature, der, strict) ||
+        !tx.check_signature(signature, point, contract, index, 0, sighash,
+            version, flags))
     {
         // We do not return a failure here, as this is a validity test.
         output << BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT << std::endl;

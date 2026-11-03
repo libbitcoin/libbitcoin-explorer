@@ -28,7 +28,8 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result fetch_filter_checkpoint::invoke(std::ostream&, std::ostream& error)
+console_result fetch_filter_checkpoint::invoke(std::ostream&,
+    std::ostream& error)
 {
     error << BX_FETCH_FILTER_CHECKPOINT_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

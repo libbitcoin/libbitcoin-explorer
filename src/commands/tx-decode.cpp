@@ -32,7 +32,8 @@ using namespace bc::system;
 
 console_result tx_decode::invoke(std::ostream& output, std::ostream&)
 {
-    write_stream(output, value_from(chain::transaction{ get_transaction_argument() }));
+    const chain::transaction tx{ get_transaction_argument() };
+    write_stream(output, value_from(tx));
     return console_result::okay;
 }
 
