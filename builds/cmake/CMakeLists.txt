@@ -429,10 +429,10 @@ if ( with-console )
       PRIVATE
         $<TARGET_PROPERTY:bitcoin-explorer-objects,INCLUDE_DIRECTORIES>
     )
-    target_compile_options( bitcoin-explorer
-      PRIVATE
-        $<$<COMPILE_LANGUAGE:RC>:-c65001>
-    )
+
+    if ( MSVC )
+      target_link_options( bitcoin-explorer PRIVATE /MANIFEST:NO )
+    endif()
   endif()
 
   target_link_libraries( bitcoin-explorer
