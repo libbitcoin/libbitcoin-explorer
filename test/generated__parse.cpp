@@ -447,11 +447,12 @@ BC_AUTO_TEST_CASE(generated__parse__dice_entropy__okay)
     const char* argv[]
     {
         "dice-entropy",
+        "--sides", "42",
         "string",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.parse(message, input, 4, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }

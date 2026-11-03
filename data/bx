@@ -143,6 +143,9 @@ _bx()
         checked-encode)
             options="--version -v"
             ;;
+        dice-entropy)
+            options="--sides -s"
+            ;;
         ec-to-address)
             options="--version -v"
             ;;

@@ -266,6 +266,10 @@ BC_AUTO_TEST_CASE(generated__property__dice_entropy__round_trips)
     const std::string rolls_argument{ "string" };
     command.set_rolls_argument(rolls_argument);
     BC_REQUIRE_EQUAL(serial(command.get_rolls_argument()), serial(rolls_argument));
+
+    const uint8_t sides_option{ 42 };
+    command.set_sides_option(sides_option);
+    BC_REQUIRE_EQUAL(serial(command.get_sides_option()), serial(sides_option));
 }
 
 BC_AUTO_TEST_CASE(generated__property__ec_add__round_trips)
