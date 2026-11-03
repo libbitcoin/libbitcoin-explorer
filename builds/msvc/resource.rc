@@ -17,7 +17,6 @@
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(65001)
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -71,7 +70,7 @@ BEGIN
             VALUE "FileDescription", "bx"
             VALUE "FileVersion", "4.0.0.0"
             VALUE "InternalName", "explorer"
-            VALUE "LegalCopyright", "© libbitcoin developers (Affero GPL)"
+            VALUE "LegalCopyright", L"\x00A9 libbitcoin developers (Affero GPL)"
             VALUE "OriginalFilename", "bx.exe"
             VALUE "ProductName", "libbitcoin-explorer"
             VALUE "ProductVersion", "4.0.0.0"
