@@ -425,6 +425,14 @@ if ( with-console )
     file( GLOB bitcoin_explorer_RESOURCES CONFIGURE_DEPENDS
       "${CMAKE_CURRENT_SOURCE_DIR}/../../builds/msvc/*.rc" )
     target_sources( bitcoin-explorer PRIVATE ${bitcoin_explorer_RESOURCES} )
+    target_include_directories( bitcoin-explorer
+      PRIVATE
+        $<TARGET_PROPERTY:bitcoin-explorer-objects,INCLUDE_DIRECTORIES>
+    )
+    target_compile_options( bitcoin-explorer
+      PRIVATE
+        $<$<COMPILE_LANGUAGE:RC>:-c65001>
+    )
   endif()
 
   target_link_libraries( bitcoin-explorer
