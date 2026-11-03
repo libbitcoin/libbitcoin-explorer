@@ -57,9 +57,9 @@ BC_AUTO_TEST_CASE(dispatch__dispatch_command__formerly_named__failure_names_supe
     BC_REQUIRE_NE(error.str().find("ec-to-public"), std::string::npos);
 }
 
-// A dispatched command swaps the process stdio streams under MSVC, which
+// A dispatched command swaps the process stdio streams on Windows, which
 // breaks the test runner, so these run only where that code is absent.
-#if !defined(HAVE_MSC)
+#if !defined(HAVE_WINDOWS)
 
 BC_AUTO_TEST_CASE(dispatch__dispatch_command__found_command__okay_output)
 {
