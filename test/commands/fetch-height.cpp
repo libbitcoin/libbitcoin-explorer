@@ -18,6 +18,7 @@
  */
 
 #include "command.hpp"
+#include "../fixture/http_server.hpp"
 
 BX_USING_NAMESPACES()
 
@@ -31,6 +32,43 @@ BC_AUTO_TEST_CASE(fetch_height__invoke__unreachable__failure_error)
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BC_REQUIRE(!error.str().empty());
 }
+
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+
+BC_AUTO_TEST_SUITE(online)
+BC_AUTO_TEST_SUITE(fetch_height__invoke)
+
+BC_AUTO_TEST_CASE(fetch_height__invoke__served_top__okay_output)
+{
+    const http_server server{ network::http::status::ok, "42" };
+    BX_DECLARE_COMMAND(fetch_height);
+    command.set_server_connect_timeout_seconds_setting(10);
+    command.set_server_url_argument({ server.url() });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("42\n");
+}
+
+BC_AUTO_TEST_CASE(fetch_height__invoke__served_not_found__failure_error)
+{
+    const http_server server{ network::http::status::not_found, "" };
+    BX_DECLARE_COMMAND(fetch_height);
+    command.set_server_connect_timeout_seconds_setting(10);
+    command.set_server_url_argument({ server.url() });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BC_REQUIRE(!error.str().empty());
+}
+
+BC_AUTO_TEST_CASE(fetch_height__invoke__served_invalid_json__failure_error)
+{
+    const http_server server{ network::http::status::ok, "baadf00d" };
+    BX_DECLARE_COMMAND(fetch_height);
+    command.set_server_connect_timeout_seconds_setting(10);
+    command.set_server_url_argument({ server.url() });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BC_REQUIRE(!error.str().empty());
+}
+
 
 BC_AUTO_TEST_SUITE_END()
 BC_AUTO_TEST_SUITE_END()

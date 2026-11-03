@@ -533,7 +533,8 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/config/ec_private.cpp \
     ${srcdir}/../../test/config/electrum.cpp \
     ${srcdir}/../../test/config/hd_key.cpp \
-    ${srcdir}/../../test/config/sighash.cpp
+    ${srcdir}/../../test/config/sighash.cpp \
+    ${srcdir}/../../test/fixture/http_server.cpp
 
 TESTS = test_runner.sh
 

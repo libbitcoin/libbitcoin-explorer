@@ -16,6 +16,9 @@
     <Filter Include="src\config">
       <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000002}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\fixture">
+      <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000003}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\test\commands\address-decode.cpp">
@@ -390,6 +393,9 @@
     <ClCompile Include="..\..\..\..\test\display.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\fixture\http_server.cpp">
+      <Filter>src\fixture</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -421,6 +427,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\commands\command.hpp">
       <Filter>src\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\test\fixture\http_server.hpp">
+      <Filter>src\fixture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

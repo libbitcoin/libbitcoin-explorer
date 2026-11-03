@@ -218,6 +218,7 @@
     <ClCompile Include="..\..\..\..\test\config\hd_key.cpp" />
     <ClCompile Include="..\..\..\..\test\config\sighash.cpp" />
     <ClCompile Include="..\..\..\..\test\display.cpp" />
+    <ClCompile Include="..\..\..\..\test\fixture\http_server.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__formerly.cpp" />
@@ -230,6 +231,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\commands\command.hpp" />
+    <ClInclude Include="..\..\..\..\test\fixture\http_server.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
