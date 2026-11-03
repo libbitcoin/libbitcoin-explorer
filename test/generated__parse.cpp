@@ -849,11 +849,12 @@ BC_AUTO_TEST_CASE(generated__parse__fetch_balance__okay)
     const char* argv[]
     {
         "fetch-balance",
+        "http://127.0.0.1:1",
         "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.parse(message, input, 3, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -887,10 +888,11 @@ BC_AUTO_TEST_CASE(generated__parse__fetch_block_hashes__okay)
         "fetch-block-hashes",
         "--hash", "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
         "--height", "42",
+        "http://127.0.0.1:1",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 5, argv));
+    BC_REQUIRE(metadata.parse(message, input, 6, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -923,10 +925,12 @@ BC_AUTO_TEST_CASE(generated__parse__fetch_filter__okay)
         "fetch-filter",
         "--hash", "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
         "--height", "42",
+        "--type", "42",
+        "http://127.0.0.1:1",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 5, argv));
+    BC_REQUIRE(metadata.parse(message, input, 8, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1011,11 +1015,12 @@ BC_AUTO_TEST_CASE(generated__parse__fetch_history__okay)
     const char* argv[]
     {
         "fetch-history",
+        "http://127.0.0.1:1",
         "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.parse(message, input, 3, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }

@@ -47,10 +47,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FETCH_HISTORY_INVALID_ARGUMENTS \
-    "A valid payments search key must be provided."
-#define BX_FETCH_HISTORY_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_FETCH_HISTORY_FAILED \
+    "Server query failed: {}."
 
 /**
  * Class to implement the fetch-history command.
@@ -107,6 +105,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
+            .add("server-url", 1)
             .add("hash", 1);
     }
 
@@ -141,6 +140,11 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "server-url",
+            value<system::config::url>(&argument_.server_url),
+            "The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."
+        )
+        (
             "hash",
             value<system::config::hash256>(&argument_.hash),
             "The Base16 payments search key. If not specified the key is read from STDIN."
@@ -169,6 +173,23 @@ public:
     /* Properties */
 
     /**
+     * Get the value of the server-url argument.
+     */
+    virtual system::config::url& get_server_url_argument()
+    {
+        return argument_.server_url;
+    }
+
+    /**
+     * Set the value of the server-url argument.
+     */
+    virtual void set_server_url_argument(
+        const system::config::url& value)
+    {
+        argument_.server_url = value;
+    }
+
+    /**
      * Get the value of the hash argument.
      */
     virtual system::config::hash256& get_hash_argument()
@@ -195,10 +216,12 @@ private:
     struct argument
     {
         argument()
-          : hash()
+          : server_url(),
+            hash()
         {
         }
 
+        system::config::url server_url;
         system::config::hash256 hash;
     } argument_;
 

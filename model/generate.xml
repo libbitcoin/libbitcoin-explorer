@@ -312,10 +312,10 @@
     <define name="BX_ELECTRUM_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
   </command>
 
-  <command symbol="fetch-balance" stub="true" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
-    <define name="BX_FETCH_BALANCE_INVALID_ARGUMENTS" value="A valid payments search key must be provided." />
-    <define name="BX_FETCH_BALANCE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_FETCH_BALANCE_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-block" category="ONLINE" output="block" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
@@ -325,19 +325,19 @@
     <define name="BX_FETCH_BLOCK_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-block-hashes" stub="true" category="ONLINE" output="hash_list" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-block-hashes" category="ONLINE" output="hash_list" network="true" description="Get the transaction hashes of the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
-    <define name="BX_FETCH_BLOCK_HASHES_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_FETCH_BLOCK_HASHES_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-filter" stub="true" category="ONLINE" output="compact_filter" network="true" description="Retrieve compact filters from a Libbitcoin server.">
-    <!--<argument name="filter_type" shortcut="r" type="uint16_t" description="The compact filter type." />-->
+  <command symbol="fetch-filter" category="ONLINE" output="compact_filter" network="true" description="Get the compact filter of the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
-    <define name="BX_BIP157_UNSUPPORTED" value="The peer does not indicate support for BIP157." />
-    <!--<define name="BX_INVALID_FILTER_TYPE" value="The provided filter type exceeds encodable limits." />-->
-    <define name="BX_FETCH_FILTER_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <option name="type" shortcut="f" type="uint8_t" default="0" description="The compact filter type, defaults to 0." />
+    <define name="BX_FETCH_FILTER_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-filter-checkpoint" stub="true" category="ONLINE" output="compact_filter_checkpoint" network="true" description="Retrieve compact filter checkpoint from a Libbitcoin server.">
@@ -409,10 +409,10 @@
     <define name="BX_FETCH_HEIGHT_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-history" stub="true" output="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a payment key. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-history" output="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a payment key. Requires a Libbitcoin server connection.">
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
-    <define name="BX_FETCH_HISTORY_INVALID_ARGUMENTS" value="A valid payments search key must be provided." />
-    <define name="BX_FETCH_HISTORY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_FETCH_HISTORY_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-public-key" formerly="get-pubkey" output="ec_public" category="ONLINE" stub="true" network="true" description="Get the EC public key of the address, if it exists on the blockchain. Requires a Libbitcoin server connection.">

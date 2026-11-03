@@ -573,6 +573,10 @@ BC_AUTO_TEST_CASE(generated__property__fetch_balance__round_trips)
 {
     fetch_balance command;
 
+    const system::config::url server_url_argument{ "http://127.0.0.1:1" };
+    command.set_server_url_argument(server_url_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_server_url_argument()), serial(server_url_argument));
+
     const system::config::hash256 hash_argument{ "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f" };
     command.set_hash_argument(hash_argument);
     BC_REQUIRE_EQUAL(serial(command.get_hash_argument()), serial(hash_argument));
@@ -598,6 +602,10 @@ BC_AUTO_TEST_CASE(generated__property__fetch_block__round_trips)
 BC_AUTO_TEST_CASE(generated__property__fetch_block_hashes__round_trips)
 {
     fetch_block_hashes command;
+
+    const system::config::url server_url_argument{ "http://127.0.0.1:1" };
+    command.set_server_url_argument(server_url_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_server_url_argument()), serial(server_url_argument));
 
     const system::config::hash256 hash_option{ "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f" };
     command.set_hash_option(hash_option);
@@ -625,6 +633,10 @@ BC_AUTO_TEST_CASE(generated__property__fetch_filter__round_trips)
 {
     fetch_filter command;
 
+    const system::config::url server_url_argument{ "http://127.0.0.1:1" };
+    command.set_server_url_argument(server_url_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_server_url_argument()), serial(server_url_argument));
+
     const system::config::hash256 hash_option{ "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f" };
     command.set_hash_option(hash_option);
     BC_REQUIRE_EQUAL(serial(command.get_hash_option()), serial(hash_option));
@@ -632,6 +644,10 @@ BC_AUTO_TEST_CASE(generated__property__fetch_filter__round_trips)
     const uint32_t height_option{ 42 };
     command.set_height_option(height_option);
     BC_REQUIRE_EQUAL(serial(command.get_height_option()), serial(height_option));
+
+    const uint8_t type_option{ 42 };
+    command.set_type_option(type_option);
+    BC_REQUIRE_EQUAL(serial(command.get_type_option()), serial(type_option));
 }
 
 BC_AUTO_TEST_CASE(generated__property__fetch_filter_checkpoint__round_trips)
@@ -689,6 +705,10 @@ BC_AUTO_TEST_CASE(generated__property__fetch_height__round_trips)
 BC_AUTO_TEST_CASE(generated__property__fetch_history__round_trips)
 {
     fetch_history command;
+
+    const system::config::url server_url_argument{ "http://127.0.0.1:1" };
+    command.set_server_url_argument(server_url_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_server_url_argument()), serial(server_url_argument));
 
     const system::config::hash256 hash_argument{ "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f" };
     command.set_hash_argument(hash_argument);
