@@ -344,12 +344,10 @@ BC_AUTO_TEST_CASE(generated__parse__broadcast_tx__okay)
     const char* argv[]
     {
         "broadcast-tx",
-        "--nodes", "42",
-        "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 4, argv));
+    BC_REQUIRE(metadata.parse(message, input, 1, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -379,10 +377,11 @@ BC_AUTO_TEST_CASE(generated__parse__cert_new__okay)
     const char* argv[]
     {
         "cert-new",
+        "baadf00d",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1108,13 +1107,10 @@ BC_AUTO_TEST_CASE(generated__parse__get_filter_checkpoint__okay)
     const char* argv[]
     {
         "get-filter-checkpoint",
-        "--host", "string",
-        "--port", "42",
-        "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 6, argv));
+    BC_REQUIRE(metadata.parse(message, input, 1, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1127,14 +1123,10 @@ BC_AUTO_TEST_CASE(generated__parse__get_filter_headers__okay)
     const char* argv[]
     {
         "get-filter-headers",
-        "--host", "string",
-        "--port", "42",
-        "42",
-        "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 7, argv));
+    BC_REQUIRE(metadata.parse(message, input, 1, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1147,14 +1139,10 @@ BC_AUTO_TEST_CASE(generated__parse__get_filters__okay)
     const char* argv[]
     {
         "get-filters",
-        "--host", "string",
-        "--port", "42",
-        "42",
-        "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 7, argv));
+    BC_REQUIRE(metadata.parse(message, input, 1, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1506,13 +1494,10 @@ BC_AUTO_TEST_CASE(generated__parse__put_tx__okay)
     const char* argv[]
     {
         "put-tx",
-        "--host", "string",
-        "--port", "42",
-        "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 6, argv));
+    BC_REQUIRE(metadata.parse(message, input, 1, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1916,12 +1901,10 @@ BC_AUTO_TEST_CASE(generated__parse__tx_sign__okay)
     const char* argv[]
     {
         "tx-sign",
-        "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475",
-        "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 3, argv));
+    BC_REQUIRE(metadata.parse(message, input, 1, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }

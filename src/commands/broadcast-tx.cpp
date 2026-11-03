@@ -30,7 +30,7 @@ using namespace bc::system;
 
 console_result broadcast_tx::invoke(std::ostream&, std::ostream& error)
 {
-    error << BX_BROADCAST_TX_NOT_IMPLEMENTED << std::endl;
+    error << BX_BROADCAST_TX_OBSOLETE << std::endl;
     return console_result::failure;
 }
 

@@ -146,7 +146,7 @@ public:
         (
             "prefix,p",
             value<explorer::config::electrum>(&option_.prefix),
-            "The electrum seed type. Options are 'standard', 'witness', and '2fa', and '2faw', defaults to 'standard'."
+            "The Electrum mnemonic type. Options are 'standard', 'witness', '2fa' and '2faw', defaults to 'standard'."
         )
         (
             "ENTROPY",

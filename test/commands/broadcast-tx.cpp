@@ -21,14 +21,14 @@
 
 BX_USING_NAMESPACES()
 
-BC_AUTO_TEST_SUITE(stub)
+BC_AUTO_TEST_SUITE(obsolete)
 BC_AUTO_TEST_SUITE(broadcast_tx__invoke)
 
 BC_AUTO_TEST_CASE(broadcast_tx__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(broadcast_tx);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_BROADCAST_TX_NOT_IMPLEMENTED "\n");
+    BX_REQUIRE_ERROR(BX_BROADCAST_TX_OBSOLETE "\n");
 }
 
 BC_AUTO_TEST_SUITE_END()

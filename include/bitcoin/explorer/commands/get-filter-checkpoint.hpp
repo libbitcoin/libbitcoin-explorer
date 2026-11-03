@@ -47,10 +47,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_BIP157_UNSUPPORTED \
-    "The peer does not indicate support for BIP157."
-#define BX_GET_FILTER_CHECKPOINT_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_GET_FILTER_CHECKPOINT_OBSOLETE \
+    "This command is obsolete. Use fetch-filter-checkpoint instead."
 
 /**
  * Class to implement the get-filter-checkpoint command.
@@ -100,14 +98,22 @@ public:
     }
 
     /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    virtual bool obsolete()
+    {
+        return true;
+    }
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("hash", 1);
+        return get_argument_metadata();
     }
 
     /**
@@ -115,10 +121,9 @@ public:
      * @param[in]  input      The input stream for loading the parameters.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input,
-        po::variables_map& variables)
+    virtual void load_fallbacks(std::istream&,
+        po::variables_map&)
     {
-        load_input(get_hash_argument(), "hash", variables, input);
     }
 
     /**
@@ -139,21 +144,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<system::config::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "host,t",
-            value<std::string>(&option_.host)->default_value("localhost"),
-            "The IP address or DNS name of the node. Defaults to localhost."
-        )
-        (
-            "port,p",
-            value<uint16_t>(&option_.port)->default_value(8333),
-            "The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet."
-        )
-        (
-            "hash",
-            value<system::config::hash256>(&argument_.hash),
-            "The Base16 block hash. If not specified the hash is read from STDIN."
         );
 
         return options;
@@ -178,57 +168,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the hash argument.
-     */
-    virtual system::config::hash256& get_hash_argument()
-    {
-        return argument_.hash;
-    }
-
-    /**
-     * Set the value of the hash argument.
-     */
-    virtual void set_hash_argument(
-        const system::config::hash256& value)
-    {
-        argument_.hash = value;
-    }
-
-    /**
-     * Get the value of the host option.
-     */
-    virtual std::string& get_host_option()
-    {
-        return option_.host;
-    }
-
-    /**
-     * Set the value of the host option.
-     */
-    virtual void set_host_option(
-        const std::string& value)
-    {
-        option_.host = value;
-    }
-
-    /**
-     * Get the value of the port option.
-     */
-    virtual uint16_t& get_port_option()
-    {
-        return option_.port;
-    }
-
-    /**
-     * Set the value of the port option.
-     */
-    virtual void set_port_option(
-        const uint16_t& value)
-    {
-        option_.port = value;
-    }
-
 private:
 
     /**
@@ -239,11 +178,9 @@ private:
     struct argument
     {
         argument()
-          : hash()
         {
         }
 
-        system::config::hash256 hash;
     } argument_;
 
     /**
@@ -254,13 +191,9 @@ private:
     struct option
     {
         option()
-          : host(),
-            port()
         {
         }
 
-        std::string host;
-        uint16_t port;
     } option_;
 };
 

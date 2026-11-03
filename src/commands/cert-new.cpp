@@ -19,6 +19,8 @@
 
 #include <bitcoin/explorer/commands/cert-new.hpp>
 
+#include <algorithm>
+#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -28,10 +30,39 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result cert_new::invoke(std::ostream&, std::ostream& error)
+// A Base85 key encoding containing a hash sign cannot be used in a config file.
+static bool encode(std::string& out, const x25519::key& key) NOEXCEPT
 {
-    error << BX_CERT_NEW_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    return encode_base85(out, key) && !contains(out, '#');
+}
+
+console_result cert_new::invoke(std::ostream& output, std::ostream& error)
+{
+    // Bound parameters.
+    const data_chunk& entropy = get_entropy_argument();
+
+    if (entropy.size() < x25519::key_size)
+    {
+        error << BX_CERT_NEW_SHORT_ENTROPY << std::endl;
+        return console_result::failure;
+    }
+
+    x25519::key secret{};
+    x25519::key point{};
+    std::copy_n(entropy.begin(), x25519::key_size, secret.begin());
+
+    std::string private_key{};
+    std::string public_key{};
+    if (!x25519::multiply(point, secret) ||
+        !encode(private_key, secret) ||
+        !encode(public_key, point))
+    {
+        error << BX_CERT_NEW_INVALID_KEY << std::endl;
+        return console_result::failure;
+    }
+
+    output << private_key << std::endl;
+    return console_result::okay;
 }
 
 } //namespace commands

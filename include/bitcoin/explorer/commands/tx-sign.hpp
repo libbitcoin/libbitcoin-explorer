@@ -47,8 +47,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_TX_SIGN_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_TX_SIGN_OBSOLETE \
+    "This command is obsolete. Use combination of input-sign and input-set instead."
 
 /**
  * Class to implement the tx-sign command.
@@ -106,15 +106,22 @@ public:
     }
 
     /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    virtual bool obsolete()
+    {
+        return true;
+    }
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("EC_PRIVATE_KEY", 1)
-            .add("TRANSACTION", -1);
+        return get_argument_metadata();
     }
 
     /**
@@ -122,10 +129,9 @@ public:
      * @param[in]  input      The input stream for loading the parameters.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input,
-        po::variables_map& variables)
+    virtual void load_fallbacks(std::istream&,
+        po::variables_map&)
     {
-        load_input(get_transactions_argument(), "TRANSACTION", variables, input);
     }
 
     /**
@@ -146,16 +152,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<system::config::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "EC_PRIVATE_KEY",
-            value<explorer::config::ec_private>(&argument_.ec_private_key)->required(),
-            "The EC private key to be used for signing."
-        )
-        (
-            "TRANSACTION",
-            value<std::vector<system::config::transaction>>(&argument_.transactions),
-            "The set of Base16 transactions. If not specified the transactions are read from STDIN."
         );
 
         return options;
@@ -180,40 +176,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the EC_PRIVATE_KEY argument.
-     */
-    virtual explorer::config::ec_private& get_ec_private_key_argument()
-    {
-        return argument_.ec_private_key;
-    }
-
-    /**
-     * Set the value of the EC_PRIVATE_KEY argument.
-     */
-    virtual void set_ec_private_key_argument(
-        const explorer::config::ec_private& value)
-    {
-        argument_.ec_private_key = value;
-    }
-
-    /**
-     * Get the value of the TRANSACTION arguments.
-     */
-    virtual std::vector<system::config::transaction>& get_transactions_argument()
-    {
-        return argument_.transactions;
-    }
-
-    /**
-     * Set the value of the TRANSACTION arguments.
-     */
-    virtual void set_transactions_argument(
-        const std::vector<system::config::transaction>& value)
-    {
-        argument_.transactions = value;
-    }
-
 private:
 
     /**
@@ -224,13 +186,9 @@ private:
     struct argument
     {
         argument()
-          : ec_private_key(),
-            transactions()
         {
         }
 
-        explorer::config::ec_private ec_private_key;
-        std::vector<system::config::transaction> transactions;
     } argument_;
 
     /**

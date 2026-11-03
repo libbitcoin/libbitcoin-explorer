@@ -47,10 +47,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_CERT_NEW_FAILURE \
-    "The key generation failed."
-#define BX_CERT_NEW_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_CERT_NEW_SHORT_ENTROPY \
+    "The entropy is less than 256 bits long."
+#define BX_CERT_NEW_INVALID_KEY \
+    "The entropy produced an invalid key."
 
 /**
  * Class to implement the cert-new command.
@@ -96,7 +96,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a Base85 Curve ZMQ private key for use with a Libbitcoin server. WARNING: entropy is obtained from the underlying platform.";
+        return "Create a Base85 Curve ZMQ private key for use with a Libbitcoin server from entropy.";
     }
 
     /**
@@ -106,7 +106,8 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("ENTROPY", 1);
     }
 
     /**
@@ -114,9 +115,10 @@ public:
      * @param[in]  input      The input stream for loading the parameters.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void load_fallbacks(std::istream&,
-        po::variables_map&)
+    virtual void load_fallbacks(std::istream& input,
+        po::variables_map& variables)
     {
+        load_input(get_entropy_argument(), "ENTROPY", variables, input);
     }
 
     /**
@@ -137,6 +139,11 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<system::config::path>(),
             "The path to the configuration settings file."
+        )
+        (
+            "ENTROPY",
+            value<system::config::base16>(&argument_.entropy),
+            "The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN."
         );
 
         return options;
@@ -161,6 +168,23 @@ public:
 
     /* Properties */
 
+    /**
+     * Get the value of the ENTROPY argument.
+     */
+    virtual system::config::base16& get_entropy_argument()
+    {
+        return argument_.entropy;
+    }
+
+    /**
+     * Set the value of the ENTROPY argument.
+     */
+    virtual void set_entropy_argument(
+        const system::config::base16& value)
+    {
+        argument_.entropy = value;
+    }
+
 private:
 
     /**
@@ -171,9 +195,11 @@ private:
     struct argument
     {
         argument()
+          : entropy()
         {
         }
 
+        system::config::base16 entropy;
     } argument_;
 
     /**

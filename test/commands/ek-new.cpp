@@ -32,7 +32,7 @@ BC_AUTO_TEST_CASE(ek_new__invoke__lot_sequence_token__okay)
     BX_REQUIRE_OUTPUT("6PoJB3hjqER7KJDeo69pfX3ttV5DPaQPEf4pZEwhNYjTjqMdvif5qfE34S\n");
 }
 
-BC_AUTO_TEST_CASE(ek_new__invoke__192_bit_seed__okay)
+BC_AUTO_TEST_CASE(ek_new__invoke__192_bit_entropy__okay)
 {
     BX_DECLARE_COMMAND(ek_new);
     command.set_token_argument({ "passphraseryQXuRZZQ3Jw5rAT7m6MzxkGSSRmysq3Ayj9vuEHEnbVPJSmRQ2xYFKDKjGYrq" });
@@ -41,7 +41,7 @@ BC_AUTO_TEST_CASE(ek_new__invoke__192_bit_seed__okay)
     BX_REQUIRE_OUTPUT("6PnUht3dP5Jdcp1B7NGqkEoBw5Ja2wWEeQMDRHqLNrBG4Rqo59eVfMd98B\n");
 }
 
-BC_AUTO_TEST_CASE(ek_new__invoke__128_bit_seed__failure_error)
+BC_AUTO_TEST_CASE(ek_new__invoke__128_bit_entropy__failure_error)
 {
     BX_DECLARE_COMMAND(ek_new);
     command.set_token_argument({ "passphraseryQXuRZZQ3Jw5rAT7m6MzxkGSSRmysq3Ayj9vuEHEnbVPJSmRQ2xYFKDKjGYrq" });

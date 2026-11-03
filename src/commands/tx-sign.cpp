@@ -31,13 +31,7 @@ using namespace bc::system;
 
 console_result tx_sign::invoke(std::ostream&, std::ostream& error)
 {
-    // Bound parameters.
-    //const auto& transactions = get_transactions_argument();
-
-    //for (const tx_type& tx: transactions)
-    //    /* sign */;
-
-    error << BX_TX_SIGN_NOT_IMPLEMENTED << std::endl;
+    error << BX_TX_SIGN_OBSOLETE << std::endl;
     return console_result::failure;
 }
 

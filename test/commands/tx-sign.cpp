@@ -20,14 +20,14 @@
 
 BX_USING_NAMESPACES()
 
-BC_AUTO_TEST_SUITE(stub)
+BC_AUTO_TEST_SUITE(obsolete)
 BC_AUTO_TEST_SUITE(tx_sign__invoke)
 
 BC_AUTO_TEST_CASE(tx_sign__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(tx_sign);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_TX_SIGN_NOT_IMPLEMENTED "\n");
+    BX_REQUIRE_ERROR(BX_TX_SIGN_OBSOLETE "\n");
 }
 
 BC_AUTO_TEST_SUITE_END()
