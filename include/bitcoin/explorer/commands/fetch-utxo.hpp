@@ -47,7 +47,7 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FETCH_BALANCE_INVALID_ARGUMENTS \
+#define BX_FETCH_UTXO_INVALID_ARGUMENTS \
     "A valid payments search key must be provided."
 #define BX_FETCH_UTXO_NOT_IMPLEMENTED \
     "This command is not yet implemented."
