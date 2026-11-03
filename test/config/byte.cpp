@@ -34,7 +34,7 @@ BC_AUTO_TEST_CASE(byte__stream_out__token__round_trips)
 
 BC_AUTO_TEST_CASE(byte__stream_out__value__round_trips)
 {
-    const explorer::config::byte::type& value = explorer::config::byte("255");
+    const explorer::config::byte::type value = explorer::config::byte("255");
     std::stringstream text;
     text << explorer::config::byte(value);
     BC_REQUIRE_EQUAL(text.str(), "255");

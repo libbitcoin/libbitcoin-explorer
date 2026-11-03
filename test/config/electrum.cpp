@@ -74,7 +74,7 @@ BC_AUTO_TEST_CASE(electrum__constructor__value__round_trips)
 
 BC_AUTO_TEST_CASE(electrum__cast__value__expected)
 {
-    const electrum::type& value = electrum("witness");
+    const electrum::type value = electrum("witness");
     BC_REQUIRE(value == electrum::type::witness);
 }
 

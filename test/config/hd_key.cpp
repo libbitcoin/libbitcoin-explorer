@@ -36,7 +36,7 @@ BC_AUTO_TEST_CASE(hd_key__stream_out__token__round_trips)
 
 BC_AUTO_TEST_CASE(hd_key__stream_out__value__round_trips)
 {
-    const hd_key::type& value = hd_key(HD_KEY_MAINNET);
+    const hd_key::type value = hd_key(HD_KEY_MAINNET);
     std::stringstream text;
     text << hd_key(value);
     BC_REQUIRE_EQUAL(text.str(), HD_KEY_MAINNET);

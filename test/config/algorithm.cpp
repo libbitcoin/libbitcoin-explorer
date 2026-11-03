@@ -60,7 +60,7 @@ BC_AUTO_TEST_CASE(algorithm__constructor__value__round_trips)
 
 BC_AUTO_TEST_CASE(algorithm__cast__value__expected)
 {
-    const algorithm::type& value = algorithm("individual");
+    const algorithm::type value = algorithm("individual");
     BC_REQUIRE(value == algorithm::type::individual);
 }
 

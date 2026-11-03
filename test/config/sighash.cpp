@@ -67,7 +67,7 @@ BC_AUTO_TEST_CASE(sighash__constructor__value__round_trips)
 
 BC_AUTO_TEST_CASE(sighash__cast__value__expected)
 {
-    const sighash::type& value = sighash("none");
+    const sighash::type value = sighash("none");
     BC_REQUIRE(value == sighash::type::hash_none);
 }
 
