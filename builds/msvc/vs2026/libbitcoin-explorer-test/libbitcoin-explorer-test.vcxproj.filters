@@ -363,6 +363,9 @@
     <ClCompile Include="..\..\..\..\test\generated__formerly.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\generated__help.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp">
       <Filter>src</Filter>
     </ClCompile>

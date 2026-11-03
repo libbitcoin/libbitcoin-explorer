@@ -209,6 +209,7 @@
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__formerly.cpp" />
+    <ClCompile Include="..\..\..\..\test\generated__help.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
     <ClCompile Include="..\..\..\..\test\main.cpp" />
   </ItemGroup>
