@@ -63,6 +63,7 @@ project( libbitcoin-explorer
   DESCRIPTION "Bitcoin Command Line Tool"
   LANGUAGES C CXX )
 
+set( CMAKE_CXX_SCAN_FOR_MODULES OFF )
 
 set( repository_root_dir "${CMAKE_CURRENT_SOURCE_DIR}/../.." )
 
