@@ -30,7 +30,8 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result match_neutrino_address::invoke(std::ostream& output, std::ostream&)
+console_result match_neutrino_address::invoke(std::ostream& output,
+    std::ostream&)
 {
     // Bound parameters.
     const neutrino::block_filter filter

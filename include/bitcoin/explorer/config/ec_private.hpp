@@ -31,8 +31,9 @@ class BCX_API ec_private
 public:
     typedef system::ec_secret type;
 
+    DEFAULT_COPY_MOVE(ec_private);
+
     ec_private();
-    ec_private(const ec_private& other);
     ec_private(const std::string& token);
     ec_private(const type& value);
 

@@ -31,11 +31,6 @@ byte::byte()
 {
 }
 
-byte::byte(const byte& other)
-  : byte(other.value_)
-{
-}
-
 byte::byte(const std::string& token)
 {
     std::stringstream(token) >> *this;

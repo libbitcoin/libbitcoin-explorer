@@ -24,37 +24,34 @@ BX_USING_NAMESPACES()
 BC_AUTO_TEST_SUITE(offline)
 BC_AUTO_TEST_SUITE(script_to_witness__invoke)
 
-using namespace bc::system::wallet;
+// The witness program is the sha256 of the serialized output script.
+#define SCRIPT_TO_WITNESS_SCRIPT "dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig"
 
-////#define PUBLIC_KEY1 "0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798"
-////#define PUBLIC_KEY2 "038262a6c6cec93c2d3ecd6c6072efea86d02ff8e3328bbd0242b20af3425990ac"
-////
-////struct test_vector
-////{
-////    std::string public_key;
-////    std::string prefix;
-////    std::string output;
-////};
-////
-////const std::vector<test_vector> test_vectors =
-////{
-////    { PUBLIC_KEY1, "bc", "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4\n" },
-////    { PUBLIC_KEY1, "tb", "tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx\n" },
-////    { PUBLIC_KEY2, "bc", "bc1qr47dd36u96r0fjle36hdygdnp0v6pwfg2lppam\n" },
-////    { PUBLIC_KEY2, "tb", "tb1qr47dd36u96r0fjle36hdygdnp0v6pwfgqe6jxg\n" }
-////};
-////
-////BC_AUTO_TEST_CASE(ec_to_witness__invoke__test_list__valid_expected)
-////{
-////    for (const auto& test: test_vectors)
-////    {
-////        BX_DECLARE_COMMAND(ec_to_witness);
-////        command.set_ec_public_key_argument({ test.public_key });
-////        command.set_prefix_argument({ test.prefix });
-////        BX_REQUIRE_OKAY(command.invoke(output, error));
-////        BX_REQUIRE_OUTPUT(test.output);
-////    }
-////}
+BC_AUTO_TEST_CASE(script_to_witness__invoke__mainnet__okay_output)
+{
+    BX_DECLARE_COMMAND(script_to_witness);
+    command.set_prefix_argument({ "bc" });
+    command.set_script_argument({ SCRIPT_TO_WITNESS_SCRIPT });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("bc1q3039wrwehsr9av7suufjcnnmue8umptqhey6dntmwthrfyrs7xzqmsl4ur\n");
+}
+
+BC_AUTO_TEST_CASE(script_to_witness__invoke__testnet__okay_output)
+{
+    BX_DECLARE_COMMAND(script_to_witness);
+    command.set_prefix_argument({ "tb" });
+    command.set_script_argument({ SCRIPT_TO_WITNESS_SCRIPT });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("tb1q3039wrwehsr9av7suufjcnnmue8umptqhey6dntmwthrfyrs7xzqvcf6xv\n");
+}
+
+BC_AUTO_TEST_CASE(script_to_witness__invoke__default_prefix__failure_error)
+{
+    BX_DECLARE_COMMAND(script_to_witness);
+    command.set_script_argument({ SCRIPT_TO_WITNESS_SCRIPT });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_SCRIPT_TO_WITNESS_INVALID_PREFIX "\n");
+}
 
 BC_AUTO_TEST_SUITE_END()
 BC_AUTO_TEST_SUITE_END()

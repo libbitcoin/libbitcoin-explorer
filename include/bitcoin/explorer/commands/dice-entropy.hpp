@@ -47,6 +47,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
+#define BX_DICE_SIDES_INVALID \
+    "The number of sides is not between 2 and 16."
 #define BX_DICE_ROLLS_INVALID \
     "The dice roll input is invalid."
 
@@ -94,7 +96,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Convert a sequence of dice rolls to Base16 data.";
+        return "Convert a sequence of dice rolls to Base16 entropy. Each roll is one character, with faces 1 to 9 as the digits 1 to 9 and faces 10 to 16 as the letters a to g.";
     }
 
     /**
@@ -139,9 +141,14 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "sides,s",
+            value<uint8_t>(&option_.sides)->default_value(6),
+            "The number of sides on the die, 2 to 16, defaults to 6."
+        )
+        (
             "rolls",
             value<std::string>(&argument_.rolls),
-            "The sequence of dice rolls formatted as a string. Must contain either 50 or 100 rolls for entropy hex (e.g. matching ec-new, or 12 or 24 words using mnemonic-new, respectively)."
+            "The sequence of dice rolls, one character per roll. The count must be exactly that required for 128 or 256 bits of entropy, which for a six-sided die is 50 or 100 rolls."
         );
 
         return options;
@@ -183,6 +190,23 @@ public:
         argument_.rolls = value;
     }
 
+    /**
+     * Get the value of the sides option.
+     */
+    virtual uint8_t& get_sides_option()
+    {
+        return option_.sides;
+    }
+
+    /**
+     * Set the value of the sides option.
+     */
+    virtual void set_sides_option(
+        const uint8_t& value)
+    {
+        option_.sides = value;
+    }
+
 private:
 
     /**
@@ -208,9 +232,11 @@ private:
     struct option
     {
         option()
+          : sides()
         {
         }
 
+        uint8_t sides;
     } option_;
 };
 

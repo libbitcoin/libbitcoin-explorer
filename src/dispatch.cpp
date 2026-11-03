@@ -35,7 +35,7 @@ using namespace bc::system::options;
 static std::istream& get_command_input([[maybe_unused]] command& command,
     std::istream& input)
 {
-#ifdef _MSC_VER
+#if defined(HAVE_WINDOWS)
     if (command.requires_raw_input())
     {
         set_binary_stdin();
@@ -52,7 +52,7 @@ static std::istream& get_command_input([[maybe_unused]] command& command,
 static std::ostream& get_command_output([[maybe_unused]] command& command,
     std::ostream& output)
 {
-#ifdef _MSC_VER
+#if defined(HAVE_WINDOWS)
     if (command.requires_raw_output())
     {
         set_binary_stdout();

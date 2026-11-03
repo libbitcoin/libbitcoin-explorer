@@ -33,8 +33,9 @@ class BCX_API witness
 public:
     typedef system::wallet::witness_address::program_type type;
 
+    DEFAULT_COPY_MOVE(witness);
+
     witness();
-    witness(const witness& other);
     witness(const std::string& token);
     witness(const type& value);
 

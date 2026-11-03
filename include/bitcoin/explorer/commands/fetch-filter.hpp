@@ -47,10 +47,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_BIP157_UNSUPPORTED \
-    "The peer does not indicate support for BIP157."
-#define BX_FETCH_FILTER_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_FETCH_FILTER_FAILED \
+    "Server query failed: {}."
 
 /**
  * Class to implement the fetch-filter command.
@@ -96,7 +94,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Retrieve compact filters from a Libbitcoin server.";
+        return "Get the compact filter of the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.";
     }
 
     /**
@@ -106,7 +104,8 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("server-url", 1);
     }
 
     /**
@@ -147,6 +146,16 @@ public:
             "height,t",
             value<uint32_t>(&option_.height),
             "The block height."
+        )
+        (
+            "type,f",
+            value<uint8_t>(&option_.type)->default_value(0),
+            "The compact filter type, defaults to 0."
+        )
+        (
+            "server-url",
+            value<system::config::url>(&argument_.server_url),
+            "The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."
         );
 
         return options;
@@ -170,6 +179,23 @@ public:
         std::ostream& cerr);
 
     /* Properties */
+
+    /**
+     * Get the value of the server-url argument.
+     */
+    virtual system::config::url& get_server_url_argument()
+    {
+        return argument_.server_url;
+    }
+
+    /**
+     * Set the value of the server-url argument.
+     */
+    virtual void set_server_url_argument(
+        const system::config::url& value)
+    {
+        argument_.server_url = value;
+    }
 
     /**
      * Get the value of the hash option.
@@ -205,6 +231,23 @@ public:
         option_.height = value;
     }
 
+    /**
+     * Get the value of the type option.
+     */
+    virtual uint8_t& get_type_option()
+    {
+        return option_.type;
+    }
+
+    /**
+     * Set the value of the type option.
+     */
+    virtual void set_type_option(
+        const uint8_t& value)
+    {
+        option_.type = value;
+    }
+
 private:
 
     /**
@@ -215,9 +258,11 @@ private:
     struct argument
     {
         argument()
+          : server_url()
         {
         }
 
+        system::config::url server_url;
     } argument_;
 
     /**
@@ -229,12 +274,14 @@ private:
     {
         option()
           : hash(),
-            height()
+            height(),
+            type()
         {
         }
 
         system::config::hash256 hash;
         uint32_t height;
+        uint8_t type;
     } option_;
 };
 

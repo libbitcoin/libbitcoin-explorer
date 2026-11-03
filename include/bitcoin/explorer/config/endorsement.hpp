@@ -33,8 +33,9 @@ class BCX_API endorsement
 public:
     typedef system::data_chunk type;
 
+    DEFAULT_COPY_MOVE(endorsement);
+
     endorsement();
-    endorsement(const endorsement& other);
     endorsement(const std::string& token);
     endorsement(const type& value);
 

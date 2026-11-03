@@ -32,8 +32,9 @@ class BCX_API byte
 public:
     typedef uint8_t type;
 
+    DEFAULT_COPY_MOVE(byte);
+
     byte();
-    byte(const byte& other);
     byte(const std::string& token);
     byte(const type& value);
 

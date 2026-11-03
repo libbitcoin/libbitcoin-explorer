@@ -33,8 +33,9 @@ class BCX_API language
 public:
     typedef system::language type;
 
+    DEFAULT_COPY_MOVE(language);
+
     language();
-    language(const language& other);
     language(const std::string& token);
     language(const type& value);
 

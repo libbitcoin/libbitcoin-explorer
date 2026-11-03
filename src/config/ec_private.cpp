@@ -31,11 +31,6 @@ ec_private::ec_private()
 {
 }
 
-ec_private::ec_private(const ec_private& other)
-  : ec_private(other.value_)
-{
-}
-
 ec_private::ec_private(const std::string& token)
 {
     std::stringstream(token) >> *this;
@@ -57,7 +52,7 @@ std::istream& operator>>(std::istream& input, ec_private& argument)
     input >> text;
 
     ec_private::type out;
-    if (!system::decode_base16(out, text))
+    if (!system::decode_base16(out, text) || !system::verify_secret(out))
         throw istream_exception(text);
 
     argument.value_ = out;

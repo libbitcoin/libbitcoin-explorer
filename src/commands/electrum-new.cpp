@@ -29,49 +29,31 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-////<define name="BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE" value="The entropy size is not 17 to 64 bytes." />
-////<define name="BX_ELECTRUM_NEW_INVALID_VERSION1_LANGUAGE" value="Version1 langauges are limited to 'en' and 'pt'." />
-
-console_result electrum_new::invoke(std::ostream&, std::ostream&)
+console_result electrum_new::invoke(std::ostream& output,
+    std::ostream& error)
 {
-    ////// Bound parameters.
-    ////const language lingo = get_language_option();
-    ////const electrum::seed_prefix prefix = get_prefix_option();
-    ////const data_chunk& entropy = get_entropy_argument();
+    // Bound parameters.
+    const system::language lingo = get_language_option();
+    const electrum::seed_prefix prefix = get_prefix_option();
+    const data_chunk& entropy = get_entropy_argument();
 
-    ////if (!electrum::is_valid_entropy_size(entropy.size()))
-    ////{
-    ////    error << BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE << std::endl;
-    ////    return console_result::failure;
-    ////}
+    if (!electrum::is_valid_entropy_size(entropy.size()))
+    {
+        error << BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE << std::endl;
+        return console_result::failure;
+    }
 
-    ////// Langauge is ensured for v2 but not v1.
-    ////if (prefix == electrum::seed_prefix::old)
-    ////{
-    ////    if (!electrum_v1::is_valid_dictionary(lingo))
-    ////    {
-    ////        error << BX_ELECTRUM_NEW_INVALID_VERSION1_LANGUAGE << std::endl;
-    ////        return console_result::failure;
-    ////    }
+    // An unspecified language defaults to English.
+    const auto identifier = lingo == language::none ? language::en : lingo;
+    const electrum instance(entropy, prefix, identifier, max_uint32);
+    if (!instance)
+    {
+        error << BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE << std::endl;
+        return console_result::failure;
+    }
 
-    ////    const auto seed = electrum_v1(entropy);
-    ////}
-
-    ////else if (!electrum::is_valid_dictionary(lingo))
-    ////{
-    ////    error << BX_ELECTRUM_NEW_INVALID_VERSION1_LANGUAGE << std::endl;
-    ////    return console_result::failure;
-    ////}
-
-    ////// If 'any' default to first ('en'), otherwise the one specified.
-    ////const auto dictionary = language.front();
-
-    ////auto mnemonic = electrum::create_mnemonic(seed, *dictionary, prefix);
-
-    ////output << join(mnemonic) << std::endl;
-    ////return console_result::okay;
-
-    return console_result::failure;
+    output << instance.sentence() << std::endl;
+    return console_result::okay;
 }
 
 } //namespace commands

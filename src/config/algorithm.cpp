@@ -34,11 +34,6 @@ algorithm::algorithm()
 {
 }
 
-algorithm::algorithm(const algorithm& other)
-  : value_(other.value_)
-{
-}
-
 algorithm::algorithm(const std::string& token)
 {
     std::stringstream(token) >> *this;
@@ -80,8 +75,10 @@ std::ostream& operator<<(std::ostream& output, const algorithm& argument)
         case algorithm::type::individual:
             text = algorithm_individual;
             break;
+        LCOV_EXCL_START("Unreachable with a valid enumeration value.")
         default:
             throw ostream_exception("algorithm");
+        LCOV_EXCL_STOP()
     };
 
     output << text;

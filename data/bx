@@ -143,6 +143,9 @@ _bx()
         checked-encode)
             options="--version -v"
             ;;
+        dice-entropy)
+            options="--sides -s"
+            ;;
         ec-to-address)
             options="--version -v"
             ;;
@@ -180,7 +183,7 @@ _bx()
             options="--hash -s --height -t"
             ;;
         fetch-filter)
-            options="--hash -s --height -t"
+            options="--hash -s --height -t --type -f"
             ;;
         fetch-filter-headers)
             options="--stop_hash -s --stop_height -t"

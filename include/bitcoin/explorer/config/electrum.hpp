@@ -33,8 +33,9 @@ class BCX_API electrum
 public:
     typedef system::wallet::electrum::seed_prefix type;
 
+    DEFAULT_COPY_MOVE(electrum);
+
     electrum();
-    electrum(const electrum& other);
     electrum(const std::string& token);
     electrum(const type& value);
 

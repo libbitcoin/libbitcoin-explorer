@@ -28,15 +28,17 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result ec_to_public::invoke(std::ostream& output, std::ostream&)
+console_result ec_to_public::invoke(std::ostream& output, std::ostream& error)
 {
     const auto& secret = get_ec_private_key_argument();
     const auto& uncompressed = get_uncompressed_option();
 
     ec_compressed point;
-
-    // It is not possible for the validated secret to fail conversion.
-    /* bool */ secret_to_public(point, secret);
+    if (!secret_to_public(point, secret))
+    {
+        error << BX_EC_TO_PUBLIC_OUT_OF_RANGE << std::endl;
+        return console_result::failure;
+    }
 
     // Serialize to the original compression state.
     output << ec_public(point, !uncompressed) << std::endl;

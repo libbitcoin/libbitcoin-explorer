@@ -31,11 +31,6 @@ btc::btc()
 {
 }
 
-btc::btc(const btc& other)
-  : value_(other.value_)
-{
-}
-
 btc::btc(const std::string& token)
 {
     std::stringstream(token) >> *this;

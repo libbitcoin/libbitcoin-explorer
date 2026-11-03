@@ -33,8 +33,9 @@ class BCX_API bytes
 public:
     typedef system::data_chunk type;
 
+    DEFAULT_COPY_MOVE(bytes);
+
     bytes();
-    bytes(const bytes& other);
     bytes(const std::string& token);
     bytes(const type& value);
 

@@ -66,5 +66,16 @@ BC_AUTO_TEST_CASE(hd_to_ec__invoke__testnet_public_key__okay_output)
     BX_REQUIRE_OUTPUT("029220af53b11605932e6101c962bdc752a234c6b0c2f0c398844e47b75503a692\n");
 }
 
+BC_AUTO_TEST_CASE(hd_to_ec__invoke__version_mismatch__failure_error)
+{
+    BX_DECLARE_COMMAND(hd_to_ec);
+    command.set_hd_key_argument({ "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi" });
+    command.set_secret_version_option(42);
+    command.set_public_version_option(42);
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_HD_TO_EC_VERSION_MISMATCH "\n");
+}
+
+
 BC_AUTO_TEST_SUITE_END()
 BC_AUTO_TEST_SUITE_END()

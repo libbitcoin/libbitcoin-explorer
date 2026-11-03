@@ -34,11 +34,6 @@ sighash::sighash()
 {
 }
 
-sighash::sighash(const sighash& other)
-  : value_(other.value_)
-{
-}
-
 sighash::sighash(const std::string& token)
 {
     std::stringstream(token) >> *this;
@@ -86,8 +81,10 @@ std::ostream& operator<<(std::ostream& output, const sighash& argument)
         case sighash::type::hash_single:
             text = sighash_single;
             break;
+        LCOV_EXCL_START("Unreachable with a valid enumeration value.")
         default:
             throw ostream_exception("sighash");
+        LCOV_EXCL_STOP()
     }
 
     output << text;

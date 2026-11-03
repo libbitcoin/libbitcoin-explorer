@@ -45,6 +45,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_EC_TO_PUBLIC_OUT_OF_RANGE \
+    "Secret exceeds valid range."
+
+/**
  * Class to implement the ec-to-public command.
  */
 class BCX_API ec_to_public

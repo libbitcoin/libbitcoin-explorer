@@ -11,6 +11,12 @@ namespace explorer {
 
 namespace io = network::io;
 namespace http = network::http;
+using request_t = http::message<true, http::empty_body>;
+using request_t = http::message<true, http::empty_body>;
+using request_t = http::message<true, http::empty_body>;
+using request_t = http::message<true, http::empty_body>;
+using request_t = http::message<true, http::empty_body>;
+using request_t = http::message<true, http::empty_body>;
 
 constexpr auto user_agent = "libbitcoin-explorer";
 constexpr auto version_prefix = "/v1/";
@@ -36,8 +42,7 @@ public:
       : resolver_(service), socket_(service), timer_(service), host_(host),
         port_(port), timeout_(timeout)
     {
-        http::message<true, http::empty_body> request{ http::verb::get,
-            target, http::version_1_1 };
+        request_t request{ http::verb::get, target, http::version_1_1 };
 
         request.set(http::field::host, host);
         request.set(http::field::user_agent, user_agent);
@@ -80,15 +85,16 @@ private:
     void arm() NOEXCEPT
     {
         timer_.expires_after(timeout_);
-        timer_.async_wait([self = shared_from_this()](const network::code& ec) NOEXCEPT
-        {
-            if (ec)
-                return;
+        timer_.async_wait(
+            [self = shared_from_this()](const network::code& ec) NOEXCEPT
+            {
+                if (ec)
+                    return;
 
-            self->timed_out_ = true;
-            self->resolver_.cancel();
-            self->socket_.close();
-        });
+                self->timed_out_ = true;
+                self->resolver_.cancel();
+                self->socket_.close();
+            });
     }
 
     bool fail(const network::code& ec) NOEXCEPT
@@ -96,13 +102,15 @@ private:
         if (!ec)
             return false;
 
-        ec_ = timed_out_ ? network::code{ network::error::channel_timeout } : ec;
+        ec_ = timed_out_ ?
+            network::code{ network::error::channel_timeout } : ec;
         timer_.cancel();
         socket_.close();
         return true;
     }
 
-    void handle_resolve(const network::code& ec, const io::endpoints& range) NOEXCEPT
+    void handle_resolve(const network::code& ec,
+        const io::endpoints& range) NOEXCEPT
     {
         if (fail(ec))
             return;
@@ -123,7 +131,8 @@ private:
 
         arm();
         io::async_write(socket_, io::buffer(std::as_const(request_)),
-            [self = shared_from_this()](const network::code& ec, size_t) NOEXCEPT
+            [self = shared_from_this()](const network::code& ec,
+                size_t) NOEXCEPT
             {
                 self->handle_write(ec);
             });
@@ -141,7 +150,8 @@ private:
     {
         arm();
         socket_.async_read_some(buffer_.prepare(http::transfer_size),
-            [self = shared_from_this()](const network::code& ec, size_t size) NOEXCEPT
+            [self = shared_from_this()](const network::code& ec,
+                size_t size) NOEXCEPT
             {
                 self->handle_read(ec, size);
             });
@@ -166,7 +176,9 @@ private:
         }
 
         // The connection closes after the response (connection: close).
-        if (!parse && !parser_.is_done() && ec == network::error::peer_disconnect)
+        if (!parse &&
+            !parser_.is_done() &&
+            ec == network::error::peer_disconnect)
             parser_.put_eof(parse);
 
         if (parser_.is_done())

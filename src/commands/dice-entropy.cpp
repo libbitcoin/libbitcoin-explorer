@@ -18,7 +18,8 @@
  */
 #include <bitcoin/explorer/commands/dice-entropy.hpp>
 
-#include <unordered_map>
+#include <string>
+#include <string_view>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -29,38 +30,51 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::config;
 
-static constexpr char min_die_char = '1';
-static constexpr char max_die_char = '6';
-static constexpr auto max_die_value = 6;
+// Face values 1 to 16, so a roll of 1 contributes zero.
+static constexpr std::string_view faces{ "123456789abcdefg" };
+static constexpr uint8_t minimum_sides = 2;
+static constexpr uint8_t maximum_sides = 16;
 
-// Acceptable configuration settings: dice rolls, entropy bits.
-const std::unordered_map<size_t, size_t> configurations
+// The number of rolls required for at least the given bits of entropy.
+static size_t rolls_for(size_t bits, uint8_t sides) NOEXCEPT
 {
-    {  50, 128 },
-    { 100, 256 }
-};
+    const uint512_t range = uint512_t{ one } << bits;
+    size_t count{};
 
-data_chunk dice_to_entropy(const std::string& rolls)
+    for (uint512_t power{ one }; power < range; power *= sides)
+        ++count;
+
+    return count;
+}
+
+static data_chunk dice_to_entropy(const std::string& rolls,
+    uint8_t sides) NOEXCEPT
 {
-    const auto config = configurations.find(rolls.size());
-    if (config == configurations.end())
+    const auto count = rolls.size();
+    size_t bits{};
+
+    if (count == rolls_for(128, sides))
+        bits = 128;
+    else if (count == rolls_for(256, sides))
+        bits = 256;
+    else
         return {};
 
-    for (auto roll: rolls)
-        if (is_limited(roll, min_die_char, max_die_char))
+    const auto digits = faces.substr(0, sides);
+    uint512_t value{};
+
+    for (const auto roll: rolls)
+    {
+        const auto digit = digits.find(roll);
+        if (digit == std::string_view::npos)
             return {};
 
-    // 6^100 < 2^259, so the largest configuration fits 512 bits.
-    uint512_t value{};
-    for (auto roll: rolls)
-        value = value * max_die_value + (roll - min_die_char);
+        value = value * sides + digit;
+    }
 
-    // Reject incomplete range to avoid modulo bias.
-    const auto bits = config->second;
-    const auto count = config->first;
+    // Reject the incomplete range to avoid modulo bias.
     const uint512_t range = uint512_t{ one } << bits;
-    const auto limit = (power<uint512_t>(to_unsigned(max_die_value), count) /
-        range) * range;
+    const auto limit = (power<uint512_t>(sides, count) / range) * range;
     if (value >= limit)
         return {};
 
@@ -69,13 +83,20 @@ data_chunk dice_to_entropy(const std::string& rolls)
     return to_big_data(data_chunk(bits / byte_bits), number);
 }
 
-console_result dice_entropy::invoke(std::ostream& output, std::ostream& error)
+console_result dice_entropy::invoke(std::ostream& output,
+    std::ostream& error)
 {
     // Bound parameters.
+    const auto sides = get_sides_option();
     const auto& rolls = get_rolls_argument();
 
-    const auto entropy = dice_to_entropy(rolls);
+    if (is_limited(sides, minimum_sides, maximum_sides))
+    {
+        error << BX_DICE_SIDES_INVALID << std::endl;
+        return console_result::failure;
+    }
 
+    const auto entropy = dice_to_entropy(rolls, sides);
     if (entropy.empty())
     {
         error << BX_DICE_ROLLS_INVALID << std::endl;

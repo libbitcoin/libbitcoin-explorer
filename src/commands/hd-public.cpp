@@ -40,7 +40,7 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
     const auto key_version = key.version();
     if (key_version != private_version && key_version != public_version)
     {
-        output << BX_HD_PUBLIC_VERSION_MISMATCH << std::endl;
+        error << BX_HD_PUBLIC_VERSION_MISMATCH << std::endl;
         return console_result::failure;
     }
 
@@ -85,7 +85,7 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
         }
     }
 
-    output << BX_HD_PUBLIC_INVALID_DERIVED_KEY << std::endl;
+    error << BX_HD_PUBLIC_INVALID_DERIVED_KEY << std::endl;
     return console_result::failure;
 }
 

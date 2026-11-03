@@ -28,7 +28,7 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result hd_private::invoke(std::ostream& output, std::ostream&)
+console_result hd_private::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto hard = get_hard_option();
@@ -39,7 +39,7 @@ console_result hd_private::invoke(std::ostream& output, std::ostream&)
 
     if (key.version() != secret_version)
     {
-        output << BX_HD_PRIVATE_VERSION_MISMATCH << std::endl;
+        error << BX_HD_PRIVATE_VERSION_MISMATCH << std::endl;
         return console_result::failure;
     }
 
@@ -54,7 +54,7 @@ console_result hd_private::invoke(std::ostream& output, std::ostream&)
 
     if (!child_private_key)
     {
-        output << BX_HD_PRIVATE_INVALID_DERIVED_KEY << std::endl;
+        error << BX_HD_PRIVATE_INVALID_DERIVED_KEY << std::endl;
         return console_result::failure;
     }
 

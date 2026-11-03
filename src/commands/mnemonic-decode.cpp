@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <bitcoin/explorer/commands/mnemonic-decode.hpp>
-
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -28,32 +27,28 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-////<define name="BX_MNEMONIC_DECODE_INVALID_WORD_COUNT" value="The word count is not 12, 15, 18, 21, or 24." />
-////<define name="BX_MNEMONIC_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
-
-console_result mnemonic_decode::invoke(std::ostream&,
-    std::ostream&)
+console_result mnemonic_decode::invoke(std::ostream& output,
+    std::ostream& error)
 {
-    ////// Bound parameters.
-    ////const dictionary_list& language = get_language_option();
-    ////const data_chunk& entropy = get_seed_argument();
+    // Bound parameters.
+    const system::language lingo = get_language_option();
+    const auto& words = get_words_argument();
 
-    ////const auto entropy_size = entropy.size();
+    if (!mnemonic::is_valid_word_count(words.size()))
+    {
+        error << BX_MNEMONIC_DECODE_INVALID_WORD_COUNT << std::endl;
+        return console_result::failure;
+    }
 
-    ////if ((entropy_size % wallet::mnemonic_seed_multiple) != 0)
-    ////{
-    ////    error << BX_MNEMONIC_NEW_INVALID_SEED << std::endl;
-    ////    return console_result::failure;
-    ////}
+    const mnemonic instance(words, lingo);
+    if (!instance)
+    {
+        error << BX_MNEMONIC_DECODE_INVALID_WORDS << std::endl;
+        return console_result::failure;
+    }
 
-    ////// If 'any' default to first ('en'), otherwise the one specified.
-    ////const auto dictionary = language.front();
-    ////const auto words = create_mnemonic(entropy, *dictionary);
-
-    ////output << join(words) << std::endl;
-    ////return console_result::okay;
-
-    return console_result::failure;
+    output << encode_base16(instance.entropy()) << std::endl;
+    return console_result::okay;
 }
 
 } //namespace commands

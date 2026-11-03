@@ -25,7 +25,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result ec_to_witness::invoke(std::ostream& output, std::ostream&)
+console_result ec_to_witness::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& point = get_ec_public_key_argument();
@@ -34,7 +34,7 @@ console_result ec_to_witness::invoke(std::ostream& output, std::ostream&)
     if (witness_address::parse_prefix(prefix) !=
         witness_address::parse_result::valid)
     {
-        output << BX_EC_TO_WITNESS_INVALID_PREFIX << std::endl;
+        error << BX_EC_TO_WITNESS_INVALID_PREFIX << std::endl;
         return console_result::failure;
     }
 

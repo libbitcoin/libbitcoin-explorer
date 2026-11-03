@@ -31,8 +31,9 @@ class BCX_API wrapper
 public:
     typedef system::data_chunk type;
 
+    DEFAULT_COPY_MOVE(wrapper);
+
     wrapper();
-    wrapper(const wrapper& other);
     wrapper(const std::string& token);
     wrapper(const type& value);
 

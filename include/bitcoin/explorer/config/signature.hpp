@@ -33,8 +33,9 @@ class BCX_API signature
 public:
     typedef system::wallet::message_signature type;
 
+    DEFAULT_COPY_MOVE(signature);
+
     signature();
-    signature(const signature& other);
     signature(const std::string& token);
     signature(const type& value);
 

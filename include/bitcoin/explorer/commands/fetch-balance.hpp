@@ -47,10 +47,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FETCH_BALANCE_INVALID_ARGUMENTS \
-    "A valid payments search key must be provided."
-#define BX_FETCH_BALANCE_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_FETCH_BALANCE_FAILED \
+    "Server query failed: {}."
 
 /**
  * Class to implement the fetch-balance command.
@@ -107,7 +105,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("hash", 1);
+            .add("hash", 1)
+            .add("server-url", 1);
     }
 
     /**
@@ -144,6 +143,11 @@ public:
             "hash",
             value<system::config::hash256>(&argument_.hash),
             "The Base16 payments search key. If not specified the key is read from STDIN."
+        )
+        (
+            "server-url",
+            value<system::config::url>(&argument_.server_url),
+            "The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."
         );
 
         return options;
@@ -185,6 +189,23 @@ public:
         argument_.hash = value;
     }
 
+    /**
+     * Get the value of the server-url argument.
+     */
+    virtual system::config::url& get_server_url_argument()
+    {
+        return argument_.server_url;
+    }
+
+    /**
+     * Set the value of the server-url argument.
+     */
+    virtual void set_server_url_argument(
+        const system::config::url& value)
+    {
+        argument_.server_url = value;
+    }
+
 private:
 
     /**
@@ -195,11 +216,13 @@ private:
     struct argument
     {
         argument()
-          : hash()
+          : hash(),
+            server_url()
         {
         }
 
         system::config::hash256 hash;
+        system::config::url server_url;
     } argument_;
 
     /**

@@ -47,8 +47,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FETCH_BLOCK_HASHES_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_FETCH_BLOCK_HASHES_FAILED \
+    "Server query failed: {}."
 
 /**
  * Class to implement the fetch-block-hashes command.
@@ -94,7 +94,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.";
+        return "Get the transaction hashes of the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.";
     }
 
     /**
@@ -104,7 +104,8 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("server-url", 1);
     }
 
     /**
@@ -145,6 +146,11 @@ public:
             "height,t",
             value<uint32_t>(&option_.height),
             "The block height."
+        )
+        (
+            "server-url",
+            value<system::config::url>(&argument_.server_url),
+            "The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."
         );
 
         return options;
@@ -168,6 +174,23 @@ public:
         std::ostream& cerr);
 
     /* Properties */
+
+    /**
+     * Get the value of the server-url argument.
+     */
+    virtual system::config::url& get_server_url_argument()
+    {
+        return argument_.server_url;
+    }
+
+    /**
+     * Set the value of the server-url argument.
+     */
+    virtual void set_server_url_argument(
+        const system::config::url& value)
+    {
+        argument_.server_url = value;
+    }
 
     /**
      * Get the value of the hash option.
@@ -213,9 +236,11 @@ private:
     struct argument
     {
         argument()
+          : server_url()
         {
         }
 
+        system::config::url server_url;
     } argument_;
 
     /**

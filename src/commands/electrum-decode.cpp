@@ -29,43 +29,28 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-////<define name="BX_ELECTRUM_DECODE_INVALID_WORD_COUNT" value="The word count is not 12 to 46." />
-////<define name="BX_ELECTRUM_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
-
-console_result electrum_decode::invoke(std::ostream&, std::ostream&)
+console_result electrum_decode::invoke(std::ostream& output,
+    std::ostream& error)
 {
-////    // Requires a seed of at least 17 bytes (136 bits).
-////    static const size_t minimum_electrum_words = 12;
-////
-////    // Bound parameters.
-////    const auto language = get_language_option();
-////    const data_chunk& seed = get_seed_argument();
-////    const auto prefix = get_prefix_option();
-////
-////    // trunc(log2(2048)) = 11
-////    const auto word_bits = static_cast<size_t>(std::log2(dictionary_size));
-////
-////    // 17 * 8 = 136
-////    const auto seed_bits = seed.size() * byte_bits;
-////
-////    // 136 / 11 = 12
-////    const auto words = seed_bits / word_bits;
-////
-////    if (words < minimum_electrum_words)
-////    {
-////        error << BX_ELECTRUM_NEW_INVALID_SEED << std::endl;
-////        return console_result::failure;
-////    }
-////
-////    // If 'any' default to first ('en'), otherwise the one specified.
-////    const auto dictionary = language.front();
-////
-////    auto mnemonic = electrum::create_mnemonic(seed, *dictionary, prefix);
-////
-////    output << join(mnemonic) << std::endl;
-////    return console_result::okay;
+    // Bound parameters.
+    const system::language lingo = get_language_option();
+    const auto& words = get_words_argument();
 
-    return console_result::failure;
+    if (!electrum::is_valid_word_count(words.size()))
+    {
+        error << BX_ELECTRUM_DECODE_INVALID_WORD_COUNT << std::endl;
+        return console_result::failure;
+    }
+
+    const electrum instance(words, lingo);
+    if (!instance)
+    {
+        error << BX_ELECTRUM_DECODE_INVALID_WORDS << std::endl;
+        return console_result::failure;
+    }
+
+    output << encode_base16(instance.entropy()) << std::endl;
+    return console_result::okay;
 }
 
 } //namespace commands

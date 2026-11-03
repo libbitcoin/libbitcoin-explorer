@@ -29,7 +29,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::config;
 
-console_result hd_to_ec::invoke(std::ostream& output, std::ostream&)
+console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& key = get_hd_key_argument();
@@ -39,7 +39,7 @@ console_result hd_to_ec::invoke(std::ostream& output, std::ostream&)
     const auto key_version = key.version();
     if (key_version != private_version && key_version != public_version)
     {
-        output << HD_TO_EC_VERSION_MISMATCH << std::endl;
+        error << BX_HD_TO_EC_VERSION_MISMATCH << std::endl;
         return console_result::failure;
     }
 
@@ -67,7 +67,7 @@ console_result hd_to_ec::invoke(std::ostream& output, std::ostream&)
         }
     }
 
-    output << BX_HD_TO_EC_INVALID_KEY << std::endl;
+    error << BX_HD_TO_EC_INVALID_KEY << std::endl;
     return console_result::failure;
 }
 

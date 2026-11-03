@@ -31,11 +31,6 @@ hd_key::hd_key()
 {
 }
 
-hd_key::hd_key(const hd_key& other)
-  : value_(other.value_)
-{
-}
-
 hd_key::hd_key(const std::string& token)
 {
     std::stringstream(token) >> *this;

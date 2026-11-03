@@ -28,7 +28,8 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::config;
 
-console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& error)
+console_result ec_multiply_secrets::invoke(std::ostream& output,
+    std::ostream& error)
 {
     // Bound parameters.
     const auto& secrets = get_secrets_argument();
@@ -41,7 +42,9 @@ console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& e
 
     ec_secret product(secrets.front());
 
-    for (auto secret = std::next(secrets.begin()); secret != secrets.end(); ++secret)
+    const auto end = secrets.end();
+
+    for (auto secret = std::next(secrets.begin()); secret != end; ++secret)
     {
         // Elliptic curve function (INTEGER * INTEGER) % curve-order.
         if (!system::ec_multiply(product, *secret))

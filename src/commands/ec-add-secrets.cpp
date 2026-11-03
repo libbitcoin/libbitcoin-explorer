@@ -41,16 +41,16 @@ console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& error)
     // The test cases are providing base16 but WIF is expected.
     // ec_private reads/writes WIF but ec_public reads/writes base16.
     // This should probably be rationalized at some point.
-    // This would also simplify out serialization, vs. encode_based16(ec_secret).
-    
-    // TODO: create a wallet::wif class and use this for wif serialialization
-    // and deserialization. Create a constructor to take this in ec_private and
-    // then change string in/out in ec_private handle base16, for consistency with
-    // ec_public, and to provide a way to convert secrets using classes. Provide
-    // an ec_private cast override for the wif class. Model this wif after hd_public
-    // and private. Could provide wif construction for hd and ek classes, but this
-    // isn't necessary, since wif will cast to ec_secret, which they shold already
-    // accept.
+    // This would also simplify out serialization, vs. encode_base16(ec_secret).
+
+    // TODO: create a wallet::wif class and use this for wif serialization and
+    // deserialization. Create a constructor to take this in ec_private and
+    // then change string in/out in ec_private to handle base16, for
+    // consistency with ec_public, and to provide a way to convert secrets
+    // using classes. Provide an ec_private cast override for the wif class.
+    // Model this wif after hd_public and private. Could provide wif
+    // construction for hd and ek classes, but this is not necessary, since
+    // wif will cast to ec_secret, which they should already accept.
 
     // TODO: the test cases don't use >>, so they can introduce invalid objects.
     // So all objects need to be tested for validity in bx invoke handlers,
@@ -61,7 +61,9 @@ console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& error)
 
     ec_secret sum(secrets.front());
 
-    for (auto secret = std::next(secrets.begin()); secret != secrets.end(); ++secret)
+    const auto end = secrets.end();
+
+    for (auto secret = std::next(secrets.begin()); secret != end; ++secret)
     {
         // Elliptic curve function (INTEGER + INTEGER) % curve-order.
         if (!system::ec_add(sum, *secret))

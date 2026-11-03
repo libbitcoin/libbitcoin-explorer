@@ -33,8 +33,9 @@ class BCX_API address
 public:
     typedef std::string type;
 
+    DEFAULT_COPY_MOVE(address);
+
     address();
-    address(const address& other);
     address(const std::string& token);
 
     operator const type&() const;

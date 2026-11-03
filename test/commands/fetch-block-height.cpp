@@ -18,6 +18,7 @@
  */
 
 #include "command.hpp"
+#include "../fixture/http_server.hpp"
 
 BX_USING_NAMESPACES()
 
@@ -30,6 +31,34 @@ BC_AUTO_TEST_CASE(fetch_block_height__invoke__unreachable__failure_error)
     command.set_server_url_setting({ "http://127.0.0.1:1" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BC_REQUIRE(!error.str().empty());
+}
+
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()
+
+BC_AUTO_TEST_SUITE(online)
+BC_AUTO_TEST_SUITE(fetch_block_height__invoke)
+
+BC_AUTO_TEST_CASE(fetch_block_height__invoke__served_height__okay_output)
+{
+    const http_server server{ network::http::status::ok, "{\"height\":42}" };
+    BX_DECLARE_COMMAND(fetch_block_height);
+    command.set_server_connect_timeout_seconds_setting(10);
+    command.set_server_url_argument({ server.url() });
+    command.set_hash_argument({ BX_GENESIS_BLOCK_HASH });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("42\n");
+}
+
+BC_AUTO_TEST_CASE(fetch_block_height__invoke__served_without_height__failure_error)
+{
+    const http_server server{ network::http::status::ok, "{}" };
+    BX_DECLARE_COMMAND(fetch_block_height);
+    command.set_server_connect_timeout_seconds_setting(10);
+    command.set_server_url_argument({ server.url() });
+    command.set_hash_argument({ BX_GENESIS_BLOCK_HASH });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_FETCH_BLOCK_HEIGHT_MISSING "\n");
 }
 
 BC_AUTO_TEST_SUITE_END()

@@ -31,11 +31,6 @@ address::address()
 {
 }
 
-address::address(const address& other)
-  : value_(other.value_)
-{
-}
-
 address::address(const std::string& token)
 {
     std::stringstream(token) >> *this;

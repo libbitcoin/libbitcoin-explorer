@@ -175,9 +175,11 @@
     <argument name="PAYLOAD" stdin="true" type="base16" description="The Base16 data to encode. If not specified the value is read from STDIN." />
   </command>
 
-  <command symbol="dice-entropy" output="base16" category="WALLET" description="Convert a sequence of dice rolls to Base16 data.">
+  <command symbol="dice-entropy" output="base16" category="WALLET" description="Convert a sequence of dice rolls to Base16 entropy. Each roll is one character, with faces 1 to 9 as the digits 1 to 9 and faces 10 to 16 as the letters a to g.">
+    <option name="sides" type="uint8_t" default="6" description="The number of sides on the die, 2 to 16, defaults to 6." />
+    <argument name="rolls" type="string" stdin="true" description="The sequence of dice rolls, one character per roll. The count must be exactly that required for 128 or 256 bits of entropy, which for a six-sided die is 50 or 100 rolls." />
+    <define name="BX_DICE_SIDES_INVALID" value="The number of sides is not between 2 and 16." />
     <define name="BX_DICE_ROLLS_INVALID" value="The dice roll input is invalid." />
-    <argument name="rolls" type="string" stdin="true" description="The sequence of dice rolls formatted as a string. Must contain either 50 or 100 rolls for entropy hex (e.g. matching ec-new, or 12 or 24 words using mnemonic-new, respectively)." />
   </command>
 
   <command symbol="ec-add" output="ec_public" category="MATH" description="Calculate the EC function POINT + (SECRET * curve-generator-point).">
@@ -227,6 +229,7 @@
   <command symbol="ec-to-public" formerly="pubkey" output="ec_public" category="WALLET" description="Derive the EC public key of an EC private key. Defaults to the compressed public key format.">
     <option name="uncompressed" description="Derive using the uncompressed public key format." />
     <argument name="EC_PRIVATE_KEY" stdin="true" type="ec_private" description="The Base16 EC private key. If not specified the key is read from STDIN."/>
+    <define name="BX_EC_TO_PUBLIC_OUT_OF_RANGE" value="Secret exceeds valid range." />
   </command>
 
   <command symbol="ec-to-wif" output="wif" category="WALLET" description="Convert an EC private key to a WIF private key. The result associates with the compressed public key format by default.">
@@ -311,10 +314,10 @@
     <define name="BX_ELECTRUM_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
   </command>
 
-  <command symbol="fetch-balance" stub="true" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
-    <define name="BX_FETCH_BALANCE_INVALID_ARGUMENTS" value="A valid payments search key must be provided." />
-    <define name="BX_FETCH_BALANCE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_FETCH_BALANCE_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-block" category="ONLINE" output="block" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
@@ -324,19 +327,19 @@
     <define name="BX_FETCH_BLOCK_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-block-hashes" stub="true" category="ONLINE" output="hash_list" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-block-hashes" category="ONLINE" output="hash_list" network="true" description="Get the transaction hashes of the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
-    <define name="BX_FETCH_BLOCK_HASHES_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_FETCH_BLOCK_HASHES_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-filter" stub="true" category="ONLINE" output="compact_filter" network="true" description="Retrieve compact filters from a Libbitcoin server.">
-    <!--<argument name="filter_type" shortcut="r" type="uint16_t" description="The compact filter type." />-->
+  <command symbol="fetch-filter" category="ONLINE" output="compact_filter" network="true" description="Get the compact filter of the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
-    <define name="BX_BIP157_UNSUPPORTED" value="The peer does not indicate support for BIP157." />
-    <!--<define name="BX_INVALID_FILTER_TYPE" value="The provided filter type exceeds encodable limits." />-->
-    <define name="BX_FETCH_FILTER_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <option name="type" shortcut="f" type="uint8_t" default="0" description="The compact filter type, defaults to 0." />
+    <define name="BX_FETCH_FILTER_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-filter-checkpoint" stub="true" category="ONLINE" output="compact_filter_checkpoint" network="true" description="Retrieve compact filter checkpoint from a Libbitcoin server.">
@@ -408,10 +411,10 @@
     <define name="BX_FETCH_HEIGHT_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-history" stub="true" output="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a payment key. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-history" output="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a payment key. Requires a Libbitcoin server connection.">
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
-    <define name="BX_FETCH_HISTORY_INVALID_ARGUMENTS" value="A valid payments search key must be provided." />
-    <define name="BX_FETCH_HISTORY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_FETCH_HISTORY_FAILED" value="Server query failed: {}." />
   </command>
 
   <command symbol="fetch-public-key" formerly="get-pubkey" output="ec_public" category="ONLINE" stub="true" network="true" description="Get the EC public key of the address, if it exists on the blockchain. Requires a Libbitcoin server connection.">
@@ -433,12 +436,13 @@
     <define name="BX_FETCH_TX_INDEX_FAILED" value="Server query failed: {}." />
   </command>
 
-  <command symbol="fetch-utxo" stub="true" formerly="get-utxo" output="output" multipleX="true" category="ONLINE" network="true" description="Get enough unspent transaction outputs from a payment address to pay a number of satoshi. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-utxo" formerly="get-utxo" output="output" category="ONLINE" network="true" description="Get enough unspent transaction outputs from a payment address to pay a number of satoshi. Requires a Libbitcoin server connection.">
     <option name="algorithm" type="algorithm" description="The algorithm for unspent output selection. Options are 'greedy' and 'individual', defaults to 'greedy'." />
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
-    <define name="BX_FETCH_BALANCE_INVALID_ARGUMENTS" value="A valid payments search key must be provided." />
-    <define name="BX_FETCH_UTXO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <define name="BX_FETCH_UTXO_FAILED" value="Server query failed: {}." />
+    <define name="BX_FETCH_UTXO_INSUFFICIENT" value="The unspent outputs do not cover the requested satoshi." />
   </command>
 
   <command symbol="match-neutrino-address" output="bool" category="MATH" description="Determine whether the provided client filter probabilistically matches the provided payment address.">
@@ -494,7 +498,7 @@
     <option name="public_version" type="uint32_t" configuration="wallet.hd_public_version" description="The expected version for an HD public key, defaults to 76067358." />
     <argument name="HD_KEY" stdin="true" type="hd_key" description="The HD public or private key to convert. If not specified the key is read from STDIN." />
     <define name="BX_HD_TO_EC_INVALID_KEY" value="The key is invalid." />
-    <define name="HD_TO_EC_VERSION_MISMATCH" value="The version options are inconsistent." />
+    <define name="BX_HD_TO_EC_VERSION_MISMATCH" value="The version options are inconsistent." />
   </command>
 
   <command symbol="hd-to-public" output="hd_public" category="WALLET" description="Derive the HD (BIP32) public key of a HD private key.">

@@ -31,11 +31,6 @@ signature::signature()
 {
 }
 
-signature::signature(const signature& other)
-  : signature(other.value_)
-{
-}
-
 signature::signature(const std::string& token)
 {
     std::stringstream(token) >> *this;
