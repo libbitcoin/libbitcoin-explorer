@@ -26,10 +26,13 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
+constexpr auto prefix_old = "old";
+constexpr auto prefix_bip39 = "bip39";
 constexpr auto prefix_standard = "standard";
 constexpr auto prefix_witness = "witness";
 constexpr auto prefix_two_factor_authentication = "2fa";
 constexpr auto prefix_two_factor_authentication_witness = "2faw";
+constexpr auto prefix_none = "none";
 
 
 electrum::electrum()
@@ -57,7 +60,11 @@ std::istream& operator>>(std::istream& input, electrum& argument)
     std::string text;
     input >> text;
 
-    if (text == prefix_standard)
+    if (text == prefix_old)
+        argument.value_ = electrum::type::old;
+    else if (text == prefix_bip39)
+        argument.value_ = electrum::type::bip39;
+    else if (text == prefix_standard)
         argument.value_ = electrum::type::standard;
     else if (text == prefix_witness)
         argument.value_ = electrum::type::witness;
@@ -65,6 +72,8 @@ std::istream& operator>>(std::istream& input, electrum& argument)
         argument.value_ = electrum::type::two_factor_authentication;
     else if (text == prefix_two_factor_authentication_witness)
         argument.value_ = electrum::type::two_factor_authentication_witness;
+    else if (text == prefix_none)
+        argument.value_ = electrum::type::none;
     else
         throw istream_exception(text);
 
@@ -77,6 +86,12 @@ std::ostream& operator<<(std::ostream& output, const electrum& argument)
 
     switch (argument.value_)
     {
+        case electrum::type::old:
+            text = prefix_old;
+            break;
+        case electrum::type::bip39:
+            text = prefix_bip39;
+            break;
         case electrum::type::standard:
             text = prefix_standard;
             break;
@@ -88,6 +103,9 @@ std::ostream& operator<<(std::ostream& output, const electrum& argument)
             break;
         case electrum::type::two_factor_authentication_witness:
             text = prefix_two_factor_authentication_witness;
+            break;
+        case electrum::type::none:
+            text = prefix_none;
             break;
         LCOV_EXCL_START("Unreachable with a valid enumeration value.")
         default:

@@ -19,6 +19,7 @@
 #ifndef BX_UTILITY_HPP
 #define BX_UTILITY_HPP
 
+#include <bitcoin/explorer/config/share.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -34,6 +35,17 @@ namespace explorer {
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
     po::variables_map& variables, std::istream& input);
+
+/**
+ * If the shares are not yet loaded, load from stdin as fallback, one per line.
+ * @param[out] parameter  The shares to load.
+ * @param[in]  name       The parameter name.
+ * @param[in]  variables  The loaded variables.
+ * @param[in]  input      The input stream for loading the parameter.
+ */
+BCX_API void load_input(std::vector<config::share>& parameter,
+    const std::string& name, po::variables_map& variables,
+    std::istream& input);
 
 /**
  * Load file contents as parameter fallback. Obtain the path from the parameter
@@ -76,6 +88,13 @@ BCX_API std::ostream& write_stream(std::ostream& output,
  * @return            The number of rolls, zero if sides or bytes is invalid.
  */
 BCX_API size_t roll_count(uint8_t sides, size_t bytes) NOEXCEPT;
+
+/**
+ * Determine if an Electrum prefix is that of an Electrum seed.
+ * @param[in]  prefix  The Electrum prefix.
+ * @return             True if standard, witness, 2fa or 2faw.
+ */
+BCX_API bool is_seedable(system::wallet::electrum::seed_prefix prefix) NOEXCEPT;
 
 } // namespace explorer
 } // namespace libbitcoin

@@ -840,6 +840,23 @@ BC_AUTO_TEST_CASE(generated__parse__electrum_new__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__electrum_to_prefix__okay)
+{
+    electrum_to_prefix command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "electrum-to-prefix",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__electrum_to_seed__okay)
 {
     electrum_to_seed command;
@@ -855,6 +872,60 @@ BC_AUTO_TEST_CASE(generated__parse__electrum_to_seed__okay)
 
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 6, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__electrum_v1_decode__okay)
+{
+    electrum_v1_decode command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "electrum-v1-decode",
+        "--language", "en",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 4, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__electrum_v1_encode__okay)
+{
+    electrum_v1_encode command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "electrum-v1-encode",
+        "--language", "en",
+        "baadf00d",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 4, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__electrum_v1_to_seed__okay)
+{
+    electrum_v1_to_seed command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "electrum-v1-to-seed",
+        "--language", "en",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 4, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1760,6 +1831,65 @@ BC_AUTO_TEST_CASE(generated__parse__sha512__okay)
 
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__slip39_combine__okay)
+{
+    slip39_combine command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "slip39-combine",
+        "--passphrase", "string",
+        "duckling enlarge academic academic agency result length solution fridge kidney coal piece deal husband erode duke ajar critical decision keyboard",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 4, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__slip39_decode__okay)
+{
+    slip39_decode command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "slip39-decode",
+        "duckling enlarge academic academic agency result length solution fridge kidney coal piece deal husband erode duke ajar critical decision keyboard",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__slip39_split__okay)
+{
+    slip39_split command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "slip39-split",
+        "--exponent", "42",
+        "--group", "2/3",
+        "--identifier", "42",
+        "--passphrase", "string",
+        "--secret", "baadf00d",
+        "--threshold", "42",
+        "--unextendable",
+        "baadf00d",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 15, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }

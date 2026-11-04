@@ -257,9 +257,29 @@ BC_AUTO_TEST_CASE(generated__find__electrum_new__returns_object)
     BC_REQUIRE(find("electrum-new") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__electrum_to_prefix__returns_object)
+{
+    BC_REQUIRE(find("electrum-to-prefix") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__electrum_to_seed__returns_object)
 {
     BC_REQUIRE(find("electrum-to-seed") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__electrum_v1_decode__returns_object)
+{
+    BC_REQUIRE(find("electrum-v1-decode") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__electrum_v1_encode__returns_object)
+{
+    BC_REQUIRE(find("electrum-v1-encode") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__electrum_v1_to_seed__returns_object)
+{
+    BC_REQUIRE(find("electrum-v1-to-seed") != nullptr);
 }
 
 BC_AUTO_TEST_CASE(generated__find__fetch_balance__returns_object)
@@ -510,6 +530,21 @@ BC_AUTO_TEST_CASE(generated__find__sha256__returns_object)
 BC_AUTO_TEST_CASE(generated__find__sha512__returns_object)
 {
     BC_REQUIRE(find("sha512") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__slip39_combine__returns_object)
+{
+    BC_REQUIRE(find("slip39-combine") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__slip39_decode__returns_object)
+{
+    BC_REQUIRE(find("slip39-decode") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__slip39_split__returns_object)
+{
+    BC_REQUIRE(find("slip39-split") != nullptr);
 }
 
 BC_AUTO_TEST_CASE(generated__find__stealth_public__returns_object)

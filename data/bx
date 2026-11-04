@@ -50,7 +50,11 @@ _bx()
         ek-to-ec
         electrum-decode
         electrum-new
+        electrum-to-prefix
         electrum-to-seed
+        electrum-v1-decode
+        electrum-v1-encode
+        electrum-v1-to-seed
         fetch-balance
         fetch-block
         fetch-block-hashes
@@ -94,6 +98,9 @@ _bx()
         sha160
         sha256
         sha512
+        slip39-combine
+        slip39-decode
+        slip39-split
         stealth-public
         stealth-secret
         stealth-shared
@@ -171,6 +178,15 @@ _bx()
         electrum-to-seed)
             options="--language -l --passphrase -p"
             ;;
+        electrum-v1-decode)
+            options="--language -l"
+            ;;
+        electrum-v1-encode)
+            options="--language -l"
+            ;;
+        electrum-v1-to-seed)
+            options="--language -l"
+            ;;
         fetch-block)
             options="--hash -s --height -t"
             ;;
@@ -236,6 +252,12 @@ _bx()
             ;;
         script-to-key)
             options="--version -v"
+            ;;
+        slip39-combine)
+            options="--passphrase -p"
+            ;;
+        slip39-split)
+            options="--exponent -e --group -g --identifier -i --passphrase -p --secret -s --threshold -t --unextendable -u"
             ;;
         subscribe-block)
             options="--duration -d"

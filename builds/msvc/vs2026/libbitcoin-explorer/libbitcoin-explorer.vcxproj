@@ -160,7 +160,11 @@
     <ClCompile Include="..\..\..\..\src\commands\ek-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\electrum-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\electrum-new.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\electrum-to-prefix.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\electrum-to-seed.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\electrum-v1-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\electrum-v1-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\electrum-v1-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-balance.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block-hashes.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block-height.cpp" />
@@ -211,6 +215,9 @@
     <ClCompile Include="..\..\..\..\src\commands\sha160.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sha256.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sha512.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\slip39-combine.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\slip39-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\slip39-split.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-secret.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-shared.cpp" />
@@ -239,8 +246,10 @@
     <ClCompile Include="..\..\..\..\src\config\ec_private.cpp" />
     <ClCompile Include="..\..\..\..\src\config\electrum.cpp" />
     <ClCompile Include="..\..\..\..\src\config\endorsement.cpp" />
+    <ClCompile Include="..\..\..\..\src\config\group.cpp" />
     <ClCompile Include="..\..\..\..\src\config\hd_key.cpp" />
     <ClCompile Include="..\..\..\..\src\config\language.cpp" />
+    <ClCompile Include="..\..\..\..\src\config\share.cpp" />
     <ClCompile Include="..\..\..\..\src\config\sighash.cpp" />
     <ClCompile Include="..\..\..\..\src\config\signature.cpp" />
     <ClCompile Include="..\..\..\..\src\config\witness.cpp" />
@@ -302,7 +311,11 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-to-ec.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-new.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-to-prefix.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-to-seed.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-v1-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-v1-encode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-v1-to-seed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-balance.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-hashes.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-height.hpp" />
@@ -353,6 +366,9 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha160.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha256.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha512.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\slip39-combine.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\slip39-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\slip39-split.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-secret.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-shared.hpp" />
@@ -381,8 +397,10 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\ec_private.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\electrum.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\endorsement.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\group.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\hd_key.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\language.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\share.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\sighash.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\signature.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\witness.hpp" />

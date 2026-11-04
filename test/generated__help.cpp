@@ -671,12 +671,68 @@ BC_AUTO_TEST_CASE(generated__help__electrum_new__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
+BC_AUTO_TEST_CASE(generated__help__electrum_to_prefix__okay_output)
+{
+    electrum_to_prefix command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "electrum-to-prefix", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
 BC_AUTO_TEST_CASE(generated__help__electrum_to_seed__okay_output)
 {
     electrum_to_seed command;
     std::string message;
     std::stringstream input, output;
     const char* argv[]{ "electrum-to-seed", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__electrum_v1_decode__okay_output)
+{
+    electrum_v1_decode command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "electrum-v1-decode", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__electrum_v1_encode__okay_output)
+{
+    electrum_v1_encode command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "electrum-v1-encode", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__electrum_v1_to_seed__okay_output)
+{
+    electrum_v1_to_seed command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "electrum-v1-to-seed", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());
@@ -1377,6 +1433,48 @@ BC_AUTO_TEST_CASE(generated__help__sha512__okay_output)
     std::string message;
     std::stringstream input, output;
     const char* argv[]{ "sha512", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__slip39_combine__okay_output)
+{
+    slip39_combine command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "slip39-combine", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__slip39_decode__okay_output)
+{
+    slip39_decode command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "slip39-decode", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__slip39_split__okay_output)
+{
+    slip39_split command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "slip39-split", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());

@@ -21,6 +21,7 @@
 #include <cmath>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -46,6 +47,12 @@ console_result electrum_decode::invoke(std::ostream& output,
     if (!instance)
     {
         error << BX_ELECTRUM_DECODE_INVALID_WORDS << std::endl;
+        return console_result::failure;
+    }
+
+    if (!is_seedable(instance.prefix()))
+    {
+        error << BX_ELECTRUM_DECODE_INVALID_PREFIX << std::endl;
         return console_result::failure;
     }
 

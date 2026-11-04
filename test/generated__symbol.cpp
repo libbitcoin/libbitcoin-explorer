@@ -257,9 +257,29 @@ BC_AUTO_TEST_CASE(generated__symbol__electrum_new__returns_expected_value)
     BC_REQUIRE_EQUAL(electrum_new::symbol(), "electrum-new");
 }
 
+BC_AUTO_TEST_CASE(generated__symbol__electrum_to_prefix__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(electrum_to_prefix::symbol(), "electrum-to-prefix");
+}
+
 BC_AUTO_TEST_CASE(generated__symbol__electrum_to_seed__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(electrum_to_seed::symbol(), "electrum-to-seed");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__electrum_v1_decode__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(electrum_v1_decode::symbol(), "electrum-v1-decode");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__electrum_v1_encode__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(electrum_v1_encode::symbol(), "electrum-v1-encode");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__electrum_v1_to_seed__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(electrum_v1_to_seed::symbol(), "electrum-v1-to-seed");
 }
 
 BC_AUTO_TEST_CASE(generated__symbol__fetch_balance__returns_expected_value)
@@ -510,6 +530,21 @@ BC_AUTO_TEST_CASE(generated__symbol__sha256__returns_expected_value)
 BC_AUTO_TEST_CASE(generated__symbol__sha512__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(sha512::symbol(), "sha512");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__slip39_combine__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(slip39_combine::symbol(), "slip39-combine");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__slip39_decode__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(slip39_decode::symbol(), "slip39-decode");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__slip39_split__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(slip39_split::symbol(), "slip39-split");
 }
 
 BC_AUTO_TEST_CASE(generated__symbol__stealth_public__returns_expected_value)

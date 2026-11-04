@@ -64,5 +64,29 @@ BC_AUTO_TEST_CASE(electrum_decode__invoke__12_non_dictionary_words__failure_erro
     BX_REQUIRE_ERROR(BX_ELECTRUM_DECODE_INVALID_WORDS "\n");
 }
 
+BC_AUTO_TEST_CASE(electrum_decode__invoke__old__failure_error)
+{
+    BX_DECLARE_COMMAND(electrum_decode);
+    command.set_words_argument({ "hurry", "idiot", "prefer", "sunset", "mention", "mist", "jaw", "inhale", "impossible", "kingdom", "rare", "squeeze" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_ELECTRUM_DECODE_INVALID_PREFIX "\n");
+}
+
+BC_AUTO_TEST_CASE(electrum_decode__invoke__bip39__failure_error)
+{
+    BX_DECLARE_COMMAND(electrum_decode);
+    command.set_words_argument({ "abandon", "abandon", "abandon", "abandon", "abandon", "abandon", "abandon", "abandon", "abandon", "abandon", "abandon", "about" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_ELECTRUM_DECODE_INVALID_PREFIX "\n");
+}
+
+BC_AUTO_TEST_CASE(electrum_decode__invoke__unprefixed__failure_error)
+{
+    BX_DECLARE_COMMAND(electrum_decode);
+    command.set_words_argument({ "giggle", "crush", "argue", "inflict", "wear", "defy", "combine", "evolve", "tiger", "spatial", "crumble", "crush" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_ELECTRUM_DECODE_INVALID_PREFIX "\n");
+}
+
 BC_AUTO_TEST_SUITE_END()
 BC_AUTO_TEST_SUITE_END()

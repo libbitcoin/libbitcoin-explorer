@@ -308,21 +308,50 @@
     <option name="prefix" type="electrum" description="The Electrum mnemonic type. Options are 'standard', 'witness', '2fa' and '2faw', defaults to 'standard'." />
     <argument name="ENTROPY" stdin="true" type="base16" description="The 17 to 64 bytes of Base16 entropy from which the mnemonic is derived. If not specified the entropy is read from STDIN." />
     <define name="BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE" value="The entropy size is not 17 to 64 bytes." />
+    <define name="BX_ELECTRUM_NEW_INVALID_PREFIX" value="The prefix is not 'standard', 'witness', '2fa' or '2faw'." />
   </command>
 
   <command symbol="electrum-decode" output="base16" category="WALLET" description="Convert an Electrum mnemonic to its numeric entropy. Entropy round-trips with the electrum-new command.">
     <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant', and 'any', defaults to 'any'." />
-    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_ELECTRUM_DECODE_INVALID_WORD_COUNT" value="The word count is not 12 to 46." />
     <define name="BX_ELECTRUM_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
+    <define name="BX_ELECTRUM_DECODE_INVALID_PREFIX" value="The mnemonic type is not 'standard', 'witness', '2fa' or '2faw'." />
   </command>
 
   <command symbol="electrum-to-seed" output="base16" category="WALLET" description="Convert an Electrum dictionary-based mnemonic to a wallet seed. Entropy cannot be derived from the seed. WARNING: mnemonic should be created from properly generated entropy.">
     <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant', and 'any', defaults to 'any'." />
     <option name="passphrase" type="string" description="An optional passphrase for the seed." />
-    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_ELECTRUM_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12 to 46." />
     <define name="BX_ELECTRUM_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
+    <define name="BX_ELECTRUM_TO_SEED_INVALID_PREFIX" value="The mnemonic type is not 'standard', 'witness', '2fa' or '2faw'." />
+  </command>
+
+  <command symbol="electrum-to-prefix" output="string" category="WALLET" description="Identify the type of an Electrum mnemonic, 'standard', 'witness', '2fa' or '2faw'. Electrum words that also form an Electrum v1 or BIP39 mnemonic are 'old' or 'bip39', and any other words are 'none'.">
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of words that make up the mnemonic. If not specified the words are read from STDIN." />
+  </command>
+
+  <command symbol="electrum-v1-decode" output="base16" category="WALLET" description="Convert an Electrum v1 mnemonic to its numeric entropy. Entropy round-trips with the electrum-v1-encode command.">
+    <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'pt' and 'any', defaults to 'any'." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 or 24 words that make up the mnemonic. If not specified the words are read from STDIN." />
+    <define name="BX_ELECTRUM_V1_DECODE_INVALID_WORD_COUNT" value="The word count is not 12 or 24." />
+    <define name="BX_ELECTRUM_V1_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
+    <define name="BX_ELECTRUM_V1_DECODE_OVERFLOW" value="The mnemonic was not encoded from entropy, though electrum-v1-to-seed accepts it." />
+  </command>
+
+  <command symbol="electrum-v1-encode" output="string" multipleX="true" category="WALLET" description="Convert numeric entropy to its Electrum v1 mnemonic, the format of Electrum wallets prior to version 2. Entropy round-trips with the electrum-v1-decode command.">
+    <option name="language" type="language" description="The dictionary to generate the mnemonic from. Options are 'en' and 'pt', defaults to 'en'." />
+    <argument name="ENTROPY" stdin="true" type="base16" description="The 16 or 32 bytes of Base16 entropy from which the mnemonic is derived. If not specified the entropy is read from STDIN." />
+    <define name="BX_ELECTRUM_V1_ENCODE_INVALID_ENTROPY_SIZE" value="The entropy size is not 16 or 32 bytes." />
+    <define name="BX_ELECTRUM_V1_ENCODE_INVALID_LANGUAGE" value="The language is not 'en' or 'pt'." />
+  </command>
+
+  <command symbol="electrum-v1-to-seed" output="ec_private" category="WALLET" description="Convert an Electrum v1 mnemonic to its master private key, as Base16. The master public key is the EC public key of the master private key. Electrum accepts a mnemonic that was not encoded from entropy, and so does this command.">
+    <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'pt' and 'any', defaults to 'any'." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 or 24 words that make up the mnemonic. If not specified the words are read from STDIN." />
+    <define name="BX_ELECTRUM_V1_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12 or 24." />
+    <define name="BX_ELECTRUM_V1_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
   </command>
 
   <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
@@ -540,8 +569,8 @@
   </command>
 
   <command symbol="mnemonic-decode" output="base16" category="WALLET" description="Convert a BIP39 mnemonic to its numeric entropy.">
-    <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant'', 'none', and 'any', defaults to 'any'." />
-    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12, 15, 18, 21, or 24 words that that make up the mnemonic. If not specified the words are read from STDIN." />
+    <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant', 'none', and 'any', defaults to 'any'." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12, 15, 18, 21, or 24 words that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_MNEMONIC_DECODE_INVALID_WORD_COUNT" value="The word count is not 12, 15, 18, 21, or 24." />
     <define name="BX_MNEMONIC_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
   </command>
@@ -555,7 +584,7 @@
   <command symbol="mnemonic-to-seed" output="base16" category="WALLET" description="Convert a BIP39 dictionary-based mnemonic to a wallet seed. Entropy cannot be derived from the seed. WARNING: mnemonic should be created from properly generated entropy.">
     <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant', 'none', and 'any', defaults to 'any'." />
     <option name="passphrase" type="string" description="An optional passphrase for the seed." />
-    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12, 15, 18, 21, or 24 words that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_MNEMONIC_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12, 15, 18, 21, or 24." />
     <define name="BX_MNEMONIC_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
   </command>
@@ -637,6 +666,33 @@
 
   <command symbol="sha512" output="base16" category="HASH" description="Perform a SHA512 hash of Base16 data.">
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the value is read from STDIN."/>
+  </command>
+
+  <command symbol="slip39-combine" output="base16" category="WALLET" description="Recover a master secret from SLIP39 shares, as Base16. A threshold of shares from each of a threshold of groups is required.">
+    <option name="passphrase" type="string" description="The passphrase with which the master secret was split, if any." />
+    <argument name="SHARE" stdin="true" limit="-1" type="share" description="The set of SLIP39 shares. Each share is a mnemonic, so its words must be quoted. If not specified the shares are read from STDIN, one per line." />
+    <define name="BX_SLIP39_COMBINE_INVALID" value="The shares are inconsistent or insufficient, or the passphrase is not printable ASCII." />
+  </command>
+
+  <command symbol="slip39-decode" output="string" category="WALLET" description="Decode the metadata of a SLIP39 share, as JSON.">
+    <argument name="SHARE" stdin="true" type="share" description="The SLIP39 share. The share is a mnemonic, so its words must be quoted. If not specified the share is read from STDIN." />
+  </command>
+
+  <command symbol="slip39-split" output="string" category="WALLET" description="Split a master secret into groups of SLIP39 shares, one share per line, in group order.">
+    <option name="exponent" type="uint8_t" default="1" description="The exponent of the passphrase iteration count, 0 to 15, defaults to 1." />
+    <option name="group" type="group" multiple="true" required="true" description="A group of shares, as its threshold and count, such as 2/3. Specify once for each group." />
+    <option name="identifier" type="uint16_t" default="0" description="The random identifier of the share set, 0 to 32767, defaults to 0." />
+    <option name="passphrase" type="string" description="An optional passphrase of printable ASCII." />
+    <option name="secret" type="base16" required="true" description="The Base16 master secret, an even 16 to 64 bytes." />
+    <option name="threshold" type="uint8_t" default="1" description="The number of groups required to recover the master secret, defaults to 1." />
+    <option name="unextendable" description="Create a share set that cannot be extended." />
+    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the shares, of a size determined by the groups and secret. If not specified the entropy is read from STDIN." />
+    <define name="BX_SLIP39_SPLIT_INVALID_SECRET" value="The secret size is not an even 16 to 64 bytes." />
+    <define name="BX_SLIP39_SPLIT_INVALID_GROUPS" value="The groups or threshold are invalid." />
+    <define name="BX_SLIP39_SPLIT_INVALID_IDENTIFIER" value="The identifier is greater than 32767." />
+    <define name="BX_SLIP39_SPLIT_INVALID_EXPONENT" value="The exponent is greater than 15." />
+    <define name="BX_SLIP39_SPLIT_INVALID_PASSPHRASE" value="The passphrase is not printable ASCII." />
+    <define name="BX_SLIP39_SPLIT_INVALID_ENTROPY_SIZE" value="The entropy size in bytes must be" />
   </command>
 
   <command symbol="stealth-public" formerly="stealth-uncover" output="ec_public" category="STEALTH" description="Derive the stealth public key necessary to address and to identify a stealth payment.">

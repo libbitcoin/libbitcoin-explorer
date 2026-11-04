@@ -30,8 +30,10 @@
 #include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/group.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/share.hpp>
 #include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
@@ -143,12 +145,12 @@ public:
         (
             "language,l",
             value<explorer::config::language>(&option_.language),
-            "The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant'', 'none', and 'any', defaults to 'any'."
+            "The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant', 'none', and 'any', defaults to 'any'."
         )
         (
             "WORD",
             value<std::vector<std::string>>(&argument_.words),
-            "The set of 12, 15, 18, 21, or 24 words that that make up the mnemonic. If not specified the words are read from STDIN."
+            "The set of 12, 15, 18, 21, or 24 words that make up the mnemonic. If not specified the words are read from STDIN."
         );
 
         return options;

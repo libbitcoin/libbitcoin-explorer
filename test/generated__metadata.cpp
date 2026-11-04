@@ -396,9 +396,41 @@ BC_AUTO_TEST_CASE(generated__metadata__electrum_new__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__electrum_to_prefix__returns_expected_values)
+{
+    electrum_to_prefix command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__electrum_to_seed__returns_expected_values)
 {
     electrum_to_seed command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__electrum_v1_decode__returns_expected_values)
+{
+    electrum_v1_decode command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__electrum_v1_encode__returns_expected_values)
+{
+    electrum_v1_encode command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__electrum_v1_to_seed__returns_expected_values)
+{
+    electrum_v1_to_seed command;
     BC_REQUIRE_EQUAL(command.category(), "WALLET");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
@@ -800,6 +832,30 @@ BC_AUTO_TEST_CASE(generated__metadata__sha512__returns_expected_values)
 {
     sha512 command;
     BC_REQUIRE_EQUAL(command.category(), "HASH");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__slip39_combine__returns_expected_values)
+{
+    slip39_combine command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__slip39_decode__returns_expected_values)
+{
+    slip39_decode command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__slip39_split__returns_expected_values)
+{
+    slip39_split command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
 }

@@ -77,7 +77,11 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ek_to_ec>());
     func(make_shared<electrum_decode>());
     func(make_shared<electrum_new>());
+    func(make_shared<electrum_to_prefix>());
     func(make_shared<electrum_to_seed>());
+    func(make_shared<electrum_v1_decode>());
+    func(make_shared<electrum_v1_encode>());
+    func(make_shared<electrum_v1_to_seed>());
     func(make_shared<fetch_balance>());
     func(make_shared<fetch_block>());
     func(make_shared<fetch_block_hashes>());
@@ -128,6 +132,9 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
+    func(make_shared<slip39_combine>());
+    func(make_shared<slip39_decode>());
+    func(make_shared<slip39_split>());
     func(make_shared<stealth_public>());
     func(make_shared<stealth_secret>());
     func(make_shared<stealth_shared>());
@@ -244,8 +251,16 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<electrum_decode>();
     if (symbol == electrum_new::symbol())
         return make_shared<electrum_new>();
+    if (symbol == electrum_to_prefix::symbol())
+        return make_shared<electrum_to_prefix>();
     if (symbol == electrum_to_seed::symbol())
         return make_shared<electrum_to_seed>();
+    if (symbol == electrum_v1_decode::symbol())
+        return make_shared<electrum_v1_decode>();
+    if (symbol == electrum_v1_encode::symbol())
+        return make_shared<electrum_v1_encode>();
+    if (symbol == electrum_v1_to_seed::symbol())
+        return make_shared<electrum_v1_to_seed>();
     if (symbol == fetch_balance::symbol())
         return make_shared<fetch_balance>();
     if (symbol == fetch_block::symbol())
@@ -346,6 +361,12 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<sha256>();
     if (symbol == sha512::symbol())
         return make_shared<sha512>();
+    if (symbol == slip39_combine::symbol())
+        return make_shared<slip39_combine>();
+    if (symbol == slip39_decode::symbol())
+        return make_shared<slip39_decode>();
+    if (symbol == slip39_split::symbol())
+        return make_shared<slip39_split>();
     if (symbol == stealth_public::symbol())
         return make_shared<stealth_public>();
     if (symbol == stealth_secret::symbol())

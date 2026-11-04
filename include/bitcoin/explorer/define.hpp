@@ -74,6 +74,10 @@ constexpr uint8_t minimum_dice_sides = 2;
 constexpr uint8_t maximum_dice_sides = 16;
 constexpr size_t maximum_dice_bytes = 64;
 
+/// The maximum SLIP39 share set identifier and iteration exponent.
+constexpr uint16_t maximum_slip39_identifier = 32767;
+constexpr uint8_t maximum_slip39_exponent = 15;
+
 /// Console result codes, positive values are domain-specific.
 enum console_result : int
 {

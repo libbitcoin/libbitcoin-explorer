@@ -30,8 +30,10 @@
 #include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/group.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/share.hpp>
 #include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>
@@ -51,6 +53,8 @@ namespace commands {
     "The word count is not 12 to 46."
 #define BX_ELECTRUM_DECODE_INVALID_WORDS \
     "The mnemonic is not from the specified dictionary."
+#define BX_ELECTRUM_DECODE_INVALID_PREFIX \
+    "The mnemonic type is not 'standard', 'witness', '2fa' or '2faw'."
 
 /**
  * Class to implement the electrum-decode command.
@@ -148,7 +152,7 @@ public:
         (
             "WORD",
             value<std::vector<std::string>>(&argument_.words),
-            "The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN."
+            "The set of 12 to 46 words that make up the mnemonic. If not specified the words are read from STDIN."
         );
 
         return options;
