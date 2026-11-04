@@ -153,7 +153,7 @@ public:
         (
             "WORD",
             value<std::vector<std::string>>(&argument_.words),
-            "The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN."
+            "The set of 12, 15, 18, 21, or 24 words that make up the mnemonic. If not specified the words are read from STDIN."
         );
 
         return options;

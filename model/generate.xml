@@ -313,7 +313,7 @@
 
   <command symbol="electrum-decode" output="base16" category="WALLET" description="Convert an Electrum mnemonic to its numeric entropy. Entropy round-trips with the electrum-new command.">
     <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant', and 'any', defaults to 'any'." />
-    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_ELECTRUM_DECODE_INVALID_WORD_COUNT" value="The word count is not 12 to 46." />
     <define name="BX_ELECTRUM_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
     <define name="BX_ELECTRUM_DECODE_INVALID_PREFIX" value="The mnemonic type is not 'standard', 'witness', '2fa' or '2faw'." />
@@ -322,7 +322,7 @@
   <command symbol="electrum-to-seed" output="base16" category="WALLET" description="Convert an Electrum dictionary-based mnemonic to a wallet seed. Entropy cannot be derived from the seed. WARNING: mnemonic should be created from properly generated entropy.">
     <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant', and 'any', defaults to 'any'." />
     <option name="passphrase" type="string" description="An optional passphrase for the seed." />
-    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_ELECTRUM_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12 to 46." />
     <define name="BX_ELECTRUM_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
     <define name="BX_ELECTRUM_TO_SEED_INVALID_PREFIX" value="The mnemonic type is not 'standard', 'witness', '2fa' or '2faw'." />
@@ -569,8 +569,8 @@
   </command>
 
   <command symbol="mnemonic-decode" output="base16" category="WALLET" description="Convert a BIP39 mnemonic to its numeric entropy.">
-    <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant'', 'none', and 'any', defaults to 'any'." />
-    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12, 15, 18, 21, or 24 words that that make up the mnemonic. If not specified the words are read from STDIN." />
+    <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant', 'none', and 'any', defaults to 'any'." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12, 15, 18, 21, or 24 words that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_MNEMONIC_DECODE_INVALID_WORD_COUNT" value="The word count is not 12, 15, 18, 21, or 24." />
     <define name="BX_MNEMONIC_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
   </command>
@@ -584,7 +584,7 @@
   <command symbol="mnemonic-to-seed" output="base16" category="WALLET" description="Convert a BIP39 dictionary-based mnemonic to a wallet seed. Entropy cannot be derived from the seed. WARNING: mnemonic should be created from properly generated entropy.">
     <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'es', 'it', 'fr', 'cs', 'pt', 'ja', 'ko', 'zh_Hans', 'zh_Hant', 'none', and 'any', defaults to 'any'." />
     <option name="passphrase" type="string" description="An optional passphrase for the seed." />
-    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12, 15, 18, 21, or 24 words that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_MNEMONIC_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12, 15, 18, 21, or 24." />
     <define name="BX_MNEMONIC_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
   </command>
