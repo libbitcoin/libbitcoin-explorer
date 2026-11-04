@@ -257,7 +257,7 @@ _bx()
             options="--passphrase -p"
             ;;
         slip39-split)
-            options="--exponent -e --extendable -x --group -g --identifier -i --passphrase -p --secret -s --threshold -t"
+            options="--exponent -e --group -g --identifier -i --passphrase -p --secret -s --threshold -t --unextendable -u"
             ;;
         subscribe-block)
             options="--duration -d"

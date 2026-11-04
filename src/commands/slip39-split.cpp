@@ -36,7 +36,7 @@ console_result slip39_split::invoke(std::ostream& output, std::ostream& error)
     const auto threshold = get_threshold_option();
     const auto identifier = get_identifier_option();
     const auto exponent = get_exponent_option();
-    const auto extendable = get_extendable_option();
+    const auto extendable = !get_unextendable_option();
     const auto& passphrase = get_passphrase_option();
     const data_chunk& entropy = get_entropy_argument();
 

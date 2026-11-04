@@ -156,11 +156,6 @@ public:
             "The exponent of the passphrase iteration count, 0 to 15, defaults to 1."
         )
         (
-            "extendable,x",
-            value<bool>(&option_.extendable)->zero_tokens(),
-            "Create an extendable share set."
-        )
-        (
             "group,g",
             value<std::vector<explorer::config::group>>(&option_.groups)->required(),
             "A group of shares, as its threshold and count, such as 2/3. Specify once for each group."
@@ -184,6 +179,11 @@ public:
             "threshold,t",
             value<uint8_t>(&option_.threshold)->default_value(1),
             "The number of groups required to recover the master secret, defaults to 1."
+        )
+        (
+            "unextendable,u",
+            value<bool>(&option_.unextendable)->zero_tokens(),
+            "Create a share set that cannot be extended."
         )
         (
             "ENTROPY",
@@ -245,23 +245,6 @@ public:
         const uint8_t& value)
     {
         option_.exponent = value;
-    }
-
-    /**
-     * Get the value of the extendable option.
-     */
-    virtual bool& get_extendable_option()
-    {
-        return option_.extendable;
-    }
-
-    /**
-     * Set the value of the extendable option.
-     */
-    virtual void set_extendable_option(
-        const bool& value)
-    {
-        option_.extendable = value;
     }
 
     /**
@@ -349,6 +332,23 @@ public:
         option_.threshold = value;
     }
 
+    /**
+     * Get the value of the unextendable option.
+     */
+    virtual bool& get_unextendable_option()
+    {
+        return option_.unextendable;
+    }
+
+    /**
+     * Set the value of the unextendable option.
+     */
+    virtual void set_unextendable_option(
+        const bool& value)
+    {
+        option_.unextendable = value;
+    }
+
 private:
 
     /**
@@ -375,22 +375,22 @@ private:
     {
         option()
           : exponent(),
-            extendable(),
             groups(),
             identifier(),
             passphrase(),
             secret(),
-            threshold()
+            threshold(),
+            unextendable()
         {
         }
 
         uint8_t exponent;
-        bool extendable;
         std::vector<explorer::config::group> groups;
         uint16_t identifier;
         std::string passphrase;
         system::config::base16 secret;
         uint8_t threshold;
+        bool unextendable;
     } option_;
 };
 

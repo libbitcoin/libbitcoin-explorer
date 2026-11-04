@@ -680,12 +680,12 @@
 
   <command symbol="slip39-split" output="string" category="WALLET" description="Split a master secret into groups of SLIP39 shares, one share per line, in group order.">
     <option name="exponent" type="uint8_t" default="1" description="The exponent of the passphrase iteration count, 0 to 15, defaults to 1." />
-    <option name="extendable" shortcut="x" description="Create an extendable share set." />
     <option name="group" type="group" multiple="true" required="true" description="A group of shares, as its threshold and count, such as 2/3. Specify once for each group." />
     <option name="identifier" type="uint16_t" default="0" description="The random identifier of the share set, 0 to 32767, defaults to 0." />
     <option name="passphrase" type="string" description="An optional passphrase of printable ASCII." />
     <option name="secret" type="base16" required="true" description="The Base16 master secret, an even 16 to 64 bytes." />
     <option name="threshold" type="uint8_t" default="1" description="The number of groups required to recover the master secret, defaults to 1." />
+    <option name="unextendable" description="Create a share set that cannot be extended." />
     <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the shares, of a size determined by the groups and secret. If not specified the entropy is read from STDIN." />
     <define name="BX_SLIP39_SPLIT_INVALID_SECRET" value="The secret size is not an even 16 to 64 bytes." />
     <define name="BX_SLIP39_SPLIT_INVALID_GROUPS" value="The groups or threshold are invalid." />

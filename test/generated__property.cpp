@@ -1294,10 +1294,6 @@ BC_AUTO_TEST_CASE(generated__property__slip39_split__round_trips)
     command.set_exponent_option(exponent_option);
     BC_REQUIRE_EQUAL(serial(command.get_exponent_option()), serial(exponent_option));
 
-    const bool extendable_option{ true };
-    command.set_extendable_option(extendable_option);
-    BC_REQUIRE_EQUAL(serial(command.get_extendable_option()), serial(extendable_option));
-
     const std::vector<explorer::config::group> groups_option{ { "2/3" } };
     command.set_groups_option(groups_option);
     BC_REQUIRE_EQUAL(serial(command.get_groups_option()), serial(groups_option));
@@ -1317,6 +1313,10 @@ BC_AUTO_TEST_CASE(generated__property__slip39_split__round_trips)
     const uint8_t threshold_option{ 42 };
     command.set_threshold_option(threshold_option);
     BC_REQUIRE_EQUAL(serial(command.get_threshold_option()), serial(threshold_option));
+
+    const bool unextendable_option{ true };
+    command.set_unextendable_option(unextendable_option);
+    BC_REQUIRE_EQUAL(serial(command.get_unextendable_option()), serial(unextendable_option));
 }
 
 BC_AUTO_TEST_CASE(generated__property__stealth_public__round_trips)

@@ -1879,12 +1879,12 @@ BC_AUTO_TEST_CASE(generated__parse__slip39_split__okay)
     {
         "slip39-split",
         "--exponent", "42",
-        "--extendable",
         "--group", "2/3",
         "--identifier", "42",
         "--passphrase", "string",
         "--secret", "baadf00d",
         "--threshold", "42",
+        "--unextendable",
         "baadf00d",
     };
 
