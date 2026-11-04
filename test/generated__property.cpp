@@ -582,6 +582,45 @@ BC_AUTO_TEST_CASE(generated__property__electrum_to_seed__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_passphrase_option()), serial(passphrase_option));
 }
 
+BC_AUTO_TEST_CASE(generated__property__electrum_v1_decode__round_trips)
+{
+    electrum_v1_decode command;
+
+    const std::vector<std::string> words_argument{ { "string" } };
+    command.set_words_argument(words_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_words_argument()), serial(words_argument));
+
+    const explorer::config::language language_option{ "en" };
+    command.set_language_option(language_option);
+    BC_REQUIRE_EQUAL(serial(command.get_language_option()), serial(language_option));
+}
+
+BC_AUTO_TEST_CASE(generated__property__electrum_v1_encode__round_trips)
+{
+    electrum_v1_encode command;
+
+    const system::config::base16 entropy_argument{ "baadf00d" };
+    command.set_entropy_argument(entropy_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_entropy_argument()), serial(entropy_argument));
+
+    const explorer::config::language language_option{ "en" };
+    command.set_language_option(language_option);
+    BC_REQUIRE_EQUAL(serial(command.get_language_option()), serial(language_option));
+}
+
+BC_AUTO_TEST_CASE(generated__property__electrum_v1_to_seed__round_trips)
+{
+    electrum_v1_to_seed command;
+
+    const std::vector<std::string> words_argument{ { "string" } };
+    command.set_words_argument(words_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_words_argument()), serial(words_argument));
+
+    const explorer::config::language language_option{ "en" };
+    command.set_language_option(language_option);
+    BC_REQUIRE_EQUAL(serial(command.get_language_option()), serial(language_option));
+}
+
 BC_AUTO_TEST_CASE(generated__property__fetch_balance__round_trips)
 {
     fetch_balance command;

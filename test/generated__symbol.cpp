@@ -262,6 +262,21 @@ BC_AUTO_TEST_CASE(generated__symbol__electrum_to_seed__returns_expected_value)
     BC_REQUIRE_EQUAL(electrum_to_seed::symbol(), "electrum-to-seed");
 }
 
+BC_AUTO_TEST_CASE(generated__symbol__electrum_v1_decode__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(electrum_v1_decode::symbol(), "electrum-v1-decode");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__electrum_v1_encode__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(electrum_v1_encode::symbol(), "electrum-v1-encode");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__electrum_v1_to_seed__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(electrum_v1_to_seed::symbol(), "electrum-v1-to-seed");
+}
+
 BC_AUTO_TEST_CASE(generated__symbol__fetch_balance__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(fetch_balance::symbol(), "fetch-balance");

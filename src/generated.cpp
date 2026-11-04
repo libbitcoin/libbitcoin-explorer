@@ -78,6 +78,9 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<electrum_decode>());
     func(make_shared<electrum_new>());
     func(make_shared<electrum_to_seed>());
+    func(make_shared<electrum_v1_decode>());
+    func(make_shared<electrum_v1_encode>());
+    func(make_shared<electrum_v1_to_seed>());
     func(make_shared<fetch_balance>());
     func(make_shared<fetch_block>());
     func(make_shared<fetch_block_hashes>());
@@ -246,6 +249,12 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<electrum_new>();
     if (symbol == electrum_to_seed::symbol())
         return make_shared<electrum_to_seed>();
+    if (symbol == electrum_v1_decode::symbol())
+        return make_shared<electrum_v1_decode>();
+    if (symbol == electrum_v1_encode::symbol())
+        return make_shared<electrum_v1_encode>();
+    if (symbol == electrum_v1_to_seed::symbol())
+        return make_shared<electrum_v1_to_seed>();
     if (symbol == fetch_balance::symbol())
         return make_shared<fetch_balance>();
     if (symbol == fetch_block::symbol())

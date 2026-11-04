@@ -109,6 +109,9 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/electrum-decode.cpp \
     ${srcdir}/../../src/commands/electrum-new.cpp \
     ${srcdir}/../../src/commands/electrum-to-seed.cpp \
+    ${srcdir}/../../src/commands/electrum-v1-decode.cpp \
+    ${srcdir}/../../src/commands/electrum-v1-encode.cpp \
+    ${srcdir}/../../src/commands/electrum-v1-to-seed.cpp \
     ${srcdir}/../../src/commands/fetch-balance.cpp \
     ${srcdir}/../../src/commands/fetch-block-hashes.cpp \
     ${srcdir}/../../src/commands/fetch-block-height.cpp \
@@ -283,6 +286,9 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/electrum-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/electrum-new.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/electrum-to-seed.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/electrum-v1-decode.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/electrum-v1-encode.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/electrum-v1-to-seed.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/fetch-balance.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/fetch-block-hashes.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/fetch-block-height.hpp \
@@ -465,6 +471,9 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/electrum-decode.cpp \
     ${srcdir}/../../test/commands/electrum-new.cpp \
     ${srcdir}/../../test/commands/electrum-to-seed.cpp \
+    ${srcdir}/../../test/commands/electrum-v1-decode.cpp \
+    ${srcdir}/../../test/commands/electrum-v1-encode.cpp \
+    ${srcdir}/../../test/commands/electrum-v1-to-seed.cpp \
     ${srcdir}/../../test/commands/fetch-balance.cpp \
     ${srcdir}/../../test/commands/fetch-block-hashes.cpp \
     ${srcdir}/../../test/commands/fetch-block-height.cpp \

@@ -43,7 +43,7 @@ BC_AUTO_TEST_CASE(generated__broadcast__always__visits_every_command)
     size_t count{};
     const auto accumulate = [&count](std::shared_ptr<command>) { ++count; };
     broadcast(accumulate);
-    BC_REQUIRE_EQUAL(count, 117u);
+    BC_REQUIRE_EQUAL(count, 120u);
 }
 
 BC_AUTO_TEST_SUITE_END()

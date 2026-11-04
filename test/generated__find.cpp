@@ -262,6 +262,21 @@ BC_AUTO_TEST_CASE(generated__find__electrum_to_seed__returns_object)
     BC_REQUIRE(find("electrum-to-seed") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__electrum_v1_decode__returns_object)
+{
+    BC_REQUIRE(find("electrum-v1-decode") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__electrum_v1_encode__returns_object)
+{
+    BC_REQUIRE(find("electrum-v1-encode") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__electrum_v1_to_seed__returns_object)
+{
+    BC_REQUIRE(find("electrum-v1-to-seed") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__fetch_balance__returns_object)
 {
     BC_REQUIRE(find("fetch-balance") != nullptr);

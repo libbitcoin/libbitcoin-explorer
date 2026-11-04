@@ -165,6 +165,15 @@
     <ClCompile Include="..\..\..\..\test\commands\electrum-to-seed.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\electrum-v1-decode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\electrum-v1-encode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\electrum-v1-to-seed.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

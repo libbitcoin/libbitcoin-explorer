@@ -51,6 +51,9 @@ _bx()
         electrum-decode
         electrum-new
         electrum-to-seed
+        electrum-v1-decode
+        electrum-v1-encode
+        electrum-v1-to-seed
         fetch-balance
         fetch-block
         fetch-block-hashes
@@ -170,6 +173,15 @@ _bx()
             ;;
         electrum-to-seed)
             options="--language -l --passphrase -p"
+            ;;
+        electrum-v1-decode)
+            options="--language -l"
+            ;;
+        electrum-v1-encode)
+            options="--language -l"
+            ;;
+        electrum-v1-to-seed)
+            options="--language -l"
             ;;
         fetch-block)
             options="--hash -s --height -t"

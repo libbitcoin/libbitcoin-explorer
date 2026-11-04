@@ -325,6 +325,28 @@
     <define name="BX_ELECTRUM_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
   </command>
 
+  <command symbol="electrum-v1-decode" output="base16" category="WALLET" description="Convert an Electrum v1 mnemonic to its numeric entropy. Entropy round-trips with the electrum-v1-encode command.">
+    <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'pt' and 'any', defaults to 'any'." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 or 24 words that make up the mnemonic. If not specified the words are read from STDIN." />
+    <define name="BX_ELECTRUM_V1_DECODE_INVALID_WORD_COUNT" value="The word count is not 12 or 24." />
+    <define name="BX_ELECTRUM_V1_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
+    <define name="BX_ELECTRUM_V1_DECODE_OVERFLOW" value="The mnemonic was not encoded from entropy, though electrum-v1-to-seed accepts it." />
+  </command>
+
+  <command symbol="electrum-v1-encode" output="string" multipleX="true" category="WALLET" description="Convert numeric entropy to its Electrum v1 mnemonic, the format of Electrum wallets prior to version 2. Entropy round-trips with the electrum-v1-decode command.">
+    <option name="language" type="language" description="The dictionary to generate the mnemonic from. Options are 'en' and 'pt', defaults to 'en'." />
+    <argument name="ENTROPY" stdin="true" type="base16" description="The 16 or 32 bytes of Base16 entropy from which the mnemonic is derived. If not specified the entropy is read from STDIN." />
+    <define name="BX_ELECTRUM_V1_ENCODE_INVALID_ENTROPY_SIZE" value="The entropy size is not 16 or 32 bytes." />
+    <define name="BX_ELECTRUM_V1_ENCODE_INVALID_LANGUAGE" value="The language is not 'en' or 'pt'." />
+  </command>
+
+  <command symbol="electrum-v1-to-seed" output="ec_private" category="WALLET" description="Convert an Electrum v1 mnemonic to its master private key, as Base16. The master public key is the EC public key of the master private key. Electrum accepts a mnemonic that was not encoded from entropy, and so does this command.">
+    <option name="language" type="language" description="The dictionary to validate the mnemonic against. Options are 'en', 'pt' and 'any', defaults to 'any'." />
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 or 24 words that make up the mnemonic. If not specified the words are read from STDIN." />
+    <define name="BX_ELECTRUM_V1_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12 or 24." />
+    <define name="BX_ELECTRUM_V1_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
+  </command>
+
   <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
     <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key. If not specified the key is read from STDIN."/>
     <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>

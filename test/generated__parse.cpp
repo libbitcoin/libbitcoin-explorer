@@ -859,6 +859,60 @@ BC_AUTO_TEST_CASE(generated__parse__electrum_to_seed__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__electrum_v1_decode__okay)
+{
+    electrum_v1_decode command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "electrum-v1-decode",
+        "--language", "en",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 4, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__electrum_v1_encode__okay)
+{
+    electrum_v1_encode command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "electrum-v1-encode",
+        "--language", "en",
+        "baadf00d",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 4, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__electrum_v1_to_seed__okay)
+{
+    electrum_v1_to_seed command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "electrum-v1-to-seed",
+        "--language", "en",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 4, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__fetch_balance__okay)
 {
     fetch_balance command;

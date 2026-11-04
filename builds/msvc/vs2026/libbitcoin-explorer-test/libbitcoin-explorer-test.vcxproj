@@ -142,6 +142,9 @@
     <ClCompile Include="..\..\..\..\test\commands\electrum-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-to-seed.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\electrum-v1-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\electrum-v1-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\electrum-v1-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-block-hashes.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-block-height.cpp" />

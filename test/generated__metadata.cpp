@@ -404,6 +404,30 @@ BC_AUTO_TEST_CASE(generated__metadata__electrum_to_seed__returns_expected_values
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__electrum_v1_decode__returns_expected_values)
+{
+    electrum_v1_decode command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__electrum_v1_encode__returns_expected_values)
+{
+    electrum_v1_encode command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__electrum_v1_to_seed__returns_expected_values)
+{
+    electrum_v1_to_seed command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__fetch_balance__returns_expected_values)
 {
     fetch_balance command;

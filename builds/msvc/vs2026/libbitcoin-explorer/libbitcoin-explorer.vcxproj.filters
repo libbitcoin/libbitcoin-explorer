@@ -180,6 +180,15 @@
     <ClCompile Include="..\..\..\..\src\commands\electrum-to-seed.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\electrum-v1-decode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\electrum-v1-encode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\electrum-v1-to-seed.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\fetch-balance.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -600,6 +609,15 @@
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-to-seed.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-v1-decode.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-v1-encode.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-v1-to-seed.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-balance.hpp">
