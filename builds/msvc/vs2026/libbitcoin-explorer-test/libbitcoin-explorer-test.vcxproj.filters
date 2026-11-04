@@ -162,6 +162,9 @@
     <ClCompile Include="..\..\..\..\test\commands\electrum-new.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\electrum-to-prefix.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\electrum-to-seed.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

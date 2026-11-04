@@ -472,6 +472,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/ek-to-ec.cpp \
     ${srcdir}/../../test/commands/electrum-decode.cpp \
     ${srcdir}/../../test/commands/electrum-new.cpp \
+    ${srcdir}/../../test/commands/electrum-to-prefix.cpp \
     ${srcdir}/../../test/commands/electrum-to-seed.cpp \
     ${srcdir}/../../test/commands/electrum-v1-decode.cpp \
     ${srcdir}/../../test/commands/electrum-v1-encode.cpp \

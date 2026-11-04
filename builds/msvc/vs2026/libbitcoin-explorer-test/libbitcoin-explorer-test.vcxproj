@@ -141,6 +141,7 @@
     <ClCompile Include="..\..\..\..\test\commands\ek-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-new.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\electrum-to-prefix.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-v1-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-v1-encode.cpp" />
