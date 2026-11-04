@@ -19,6 +19,7 @@
 #include <bitcoin/explorer/commands/electrum-to-seed.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -26,15 +27,6 @@ namespace commands {
 
 using namespace bc::system;
 using namespace bc::system::wallet;
-
-// Only the prefixes that the prefix option accepts derive a seed.
-static bool is_seedable(electrum::seed_prefix prefix) NOEXCEPT
-{
-    return prefix == electrum::seed_prefix::standard ||
-        prefix == electrum::seed_prefix::witness ||
-        prefix == electrum::seed_prefix::two_factor_authentication ||
-        prefix == electrum::seed_prefix::two_factor_authentication_witness;
-}
 
 console_result electrum_to_seed::invoke(std::ostream& output,
     std::ostream& error)
@@ -51,9 +43,15 @@ console_result electrum_to_seed::invoke(std::ostream& output,
     }
 
     const electrum instance(words, lingo);
-    if (!instance || !is_seedable(instance.prefix()))
+    if (!instance)
     {
         error << BX_ELECTRUM_TO_SEED_INVALID_WORDS << std::endl;
+        return console_result::failure;
+    }
+
+    if (!is_seedable(instance.prefix()))
+    {
+        error << BX_ELECTRUM_TO_SEED_INVALID_PREFIX << std::endl;
         return console_result::failure;
     }
 

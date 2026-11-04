@@ -21,6 +21,7 @@
 #include <cmath>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -40,6 +41,12 @@ console_result electrum_new::invoke(std::ostream& output,
     if (!electrum::is_valid_entropy_size(entropy.size()))
     {
         error << BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE << std::endl;
+        return console_result::failure;
+    }
+
+    if (!is_seedable(prefix))
+    {
+        error << BX_ELECTRUM_NEW_INVALID_PREFIX << std::endl;
         return console_result::failure;
     }
 

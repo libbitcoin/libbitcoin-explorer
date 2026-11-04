@@ -51,6 +51,8 @@ namespace commands {
     "The word count is not 12 to 46."
 #define BX_ELECTRUM_TO_SEED_INVALID_WORDS \
     "The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported."
+#define BX_ELECTRUM_TO_SEED_INVALID_PREFIX \
+    "The mnemonic type is not 'standard', 'witness', '2fa' or '2faw'."
 
 /**
  * Class to implement the electrum-to-seed command.

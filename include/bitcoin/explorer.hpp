@@ -71,6 +71,7 @@
 #include <bitcoin/explorer/commands/ek-to-ec.hpp>
 #include <bitcoin/explorer/commands/electrum-decode.hpp>
 #include <bitcoin/explorer/commands/electrum-new.hpp>
+#include <bitcoin/explorer/commands/electrum-to-prefix.hpp>
 #include <bitcoin/explorer/commands/electrum-to-seed.hpp>
 #include <bitcoin/explorer/commands/electrum-v1-decode.hpp>
 #include <bitcoin/explorer/commands/electrum-v1-encode.hpp>

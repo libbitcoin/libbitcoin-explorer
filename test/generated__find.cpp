@@ -257,6 +257,11 @@ BC_AUTO_TEST_CASE(generated__find__electrum_new__returns_object)
     BC_REQUIRE(find("electrum-new") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__electrum_to_prefix__returns_object)
+{
+    BC_REQUIRE(find("electrum-to-prefix") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__electrum_to_seed__returns_object)
 {
     BC_REQUIRE(find("electrum-to-seed") != nullptr);

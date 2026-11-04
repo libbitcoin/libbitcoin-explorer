@@ -671,6 +671,20 @@ BC_AUTO_TEST_CASE(generated__help__electrum_new__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
+BC_AUTO_TEST_CASE(generated__help__electrum_to_prefix__okay_output)
+{
+    electrum_to_prefix command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "electrum-to-prefix", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
 BC_AUTO_TEST_CASE(generated__help__electrum_to_seed__okay_output)
 {
     electrum_to_seed command;

@@ -77,6 +77,13 @@ BCX_API std::ostream& write_stream(std::ostream& output,
  */
 BCX_API size_t roll_count(uint8_t sides, size_t bytes) NOEXCEPT;
 
+/**
+ * Determine if an Electrum prefix is that of an Electrum seed.
+ * @param[in]  prefix  The Electrum prefix.
+ * @return             True if standard, witness, 2fa or 2faw.
+ */
+BCX_API bool is_seedable(system::wallet::electrum::seed_prefix prefix) NOEXCEPT;
+
 } // namespace explorer
 } // namespace libbitcoin
 

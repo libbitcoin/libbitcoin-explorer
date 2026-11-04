@@ -69,5 +69,14 @@ size_t roll_count(uint8_t sides, size_t bytes) NOEXCEPT
     return count;
 }
 
+bool is_seedable(system::wallet::electrum::seed_prefix prefix) NOEXCEPT
+{
+    using seed_prefix = system::wallet::electrum::seed_prefix;
+    return prefix == seed_prefix::standard ||
+        prefix == seed_prefix::witness ||
+        prefix == seed_prefix::two_factor_authentication ||
+        prefix == seed_prefix::two_factor_authentication_witness;
+}
+
 } // namespace explorer
 } // namespace libbitcoin

@@ -308,6 +308,7 @@
     <option name="prefix" type="electrum" description="The Electrum mnemonic type. Options are 'standard', 'witness', '2fa' and '2faw', defaults to 'standard'." />
     <argument name="ENTROPY" stdin="true" type="base16" description="The 17 to 64 bytes of Base16 entropy from which the mnemonic is derived. If not specified the entropy is read from STDIN." />
     <define name="BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE" value="The entropy size is not 17 to 64 bytes." />
+    <define name="BX_ELECTRUM_NEW_INVALID_PREFIX" value="The prefix is not 'standard', 'witness', '2fa' or '2faw'." />
   </command>
 
   <command symbol="electrum-decode" output="base16" category="WALLET" description="Convert an Electrum mnemonic to its numeric entropy. Entropy round-trips with the electrum-new command.">
@@ -315,6 +316,7 @@
     <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_ELECTRUM_DECODE_INVALID_WORD_COUNT" value="The word count is not 12 to 46." />
     <define name="BX_ELECTRUM_DECODE_INVALID_WORDS" value="The mnemonic is not from the specified dictionary." />
+    <define name="BX_ELECTRUM_DECODE_INVALID_PREFIX" value="The mnemonic type is not 'standard', 'witness', '2fa' or '2faw'." />
   </command>
 
   <command symbol="electrum-to-seed" output="base16" category="WALLET" description="Convert an Electrum dictionary-based mnemonic to a wallet seed. Entropy cannot be derived from the seed. WARNING: mnemonic should be created from properly generated entropy.">
@@ -323,6 +325,11 @@
     <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12 to 46 words that that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_ELECTRUM_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12 to 46." />
     <define name="BX_ELECTRUM_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
+    <define name="BX_ELECTRUM_TO_SEED_INVALID_PREFIX" value="The mnemonic type is not 'standard', 'witness', '2fa' or '2faw'." />
+  </command>
+
+  <command symbol="electrum-to-prefix" output="string" category="WALLET" description="Identify the type of an Electrum mnemonic, 'standard', 'witness', '2fa' or '2faw'. Electrum words that also form an Electrum v1 or BIP39 mnemonic are 'old' or 'bip39', and any other words are 'none'.">
+    <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of words that make up the mnemonic. If not specified the words are read from STDIN." />
   </command>
 
   <command symbol="electrum-v1-decode" output="base16" category="WALLET" description="Convert an Electrum v1 mnemonic to its numeric entropy. Entropy round-trips with the electrum-v1-encode command.">

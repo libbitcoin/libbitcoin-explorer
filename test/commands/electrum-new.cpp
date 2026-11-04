@@ -76,5 +76,14 @@ BC_AUTO_TEST_CASE(electrum_new__invoke__16_byte_entropy__failure_error)
     BX_REQUIRE_ERROR(BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE "\n");
 }
 
+BC_AUTO_TEST_CASE(electrum_new__invoke__old_prefix__failure_error)
+{
+    BX_DECLARE_COMMAND(electrum_new);
+    command.set_entropy_argument({ "61e6a02e39bf86734b7a71e1fa10d32f30" });
+    command.set_prefix_option({ "old" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_ELECTRUM_NEW_INVALID_PREFIX "\n");
+}
+
 BC_AUTO_TEST_SUITE_END()
 BC_AUTO_TEST_SUITE_END()

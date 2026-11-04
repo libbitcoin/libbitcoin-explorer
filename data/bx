@@ -50,6 +50,7 @@ _bx()
         ek-to-ec
         electrum-decode
         electrum-new
+        electrum-to-prefix
         electrum-to-seed
         electrum-v1-decode
         electrum-v1-encode

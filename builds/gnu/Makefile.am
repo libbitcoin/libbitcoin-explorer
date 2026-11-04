@@ -108,6 +108,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/ek-to-ec.cpp \
     ${srcdir}/../../src/commands/electrum-decode.cpp \
     ${srcdir}/../../src/commands/electrum-new.cpp \
+    ${srcdir}/../../src/commands/electrum-to-prefix.cpp \
     ${srcdir}/../../src/commands/electrum-to-seed.cpp \
     ${srcdir}/../../src/commands/electrum-v1-decode.cpp \
     ${srcdir}/../../src/commands/electrum-v1-encode.cpp \
@@ -285,6 +286,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/ek-to-ec.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/electrum-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/electrum-new.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/electrum-to-prefix.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/electrum-to-seed.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/electrum-v1-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/electrum-v1-encode.hpp \

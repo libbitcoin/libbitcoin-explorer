@@ -49,6 +49,8 @@ namespace commands {
  */
 #define BX_ELECTRUM_NEW_INVALID_ENTROPY_SIZE \
     "The entropy size is not 17 to 64 bytes."
+#define BX_ELECTRUM_NEW_INVALID_PREFIX \
+    "The prefix is not 'standard', 'witness', '2fa' or '2faw'."
 
 /**
  * Class to implement the electrum-new command.

@@ -396,6 +396,14 @@ BC_AUTO_TEST_CASE(generated__metadata__electrum_new__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__electrum_to_prefix__returns_expected_values)
+{
+    electrum_to_prefix command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__electrum_to_seed__returns_expected_values)
 {
     electrum_to_seed command;

@@ -60,6 +60,27 @@ BC_AUTO_TEST_CASE(electrum__stream_out__two_factor_authentication_witness__expec
     BC_REQUIRE_EQUAL(text.str(), "2faw");
 }
 
+BC_AUTO_TEST_CASE(electrum__stream_out__old__expected)
+{
+    std::stringstream text;
+    text << electrum("old");
+    BC_REQUIRE_EQUAL(text.str(), "old");
+}
+
+BC_AUTO_TEST_CASE(electrum__stream_out__bip39__expected)
+{
+    std::stringstream text;
+    text << electrum("bip39");
+    BC_REQUIRE_EQUAL(text.str(), "bip39");
+}
+
+BC_AUTO_TEST_CASE(electrum__stream_out__none__expected)
+{
+    std::stringstream text;
+    text << electrum("none");
+    BC_REQUIRE_EQUAL(text.str(), "none");
+}
+
 BC_AUTO_TEST_CASE(electrum__constructor__unknown_token__throws_istream_exception)
 {
     BC_REQUIRE_THROW(electrum("baadf00d"), istream_exception);

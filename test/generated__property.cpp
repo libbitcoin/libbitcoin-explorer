@@ -565,6 +565,15 @@ BC_AUTO_TEST_CASE(generated__property__electrum_new__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_prefix_option()), serial(prefix_option));
 }
 
+BC_AUTO_TEST_CASE(generated__property__electrum_to_prefix__round_trips)
+{
+    electrum_to_prefix command;
+
+    const std::vector<std::string> words_argument{ { "string" } };
+    command.set_words_argument(words_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_words_argument()), serial(words_argument));
+}
+
 BC_AUTO_TEST_CASE(generated__property__electrum_to_seed__round_trips)
 {
     electrum_to_seed command;

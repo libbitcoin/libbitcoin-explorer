@@ -257,6 +257,11 @@ BC_AUTO_TEST_CASE(generated__symbol__electrum_new__returns_expected_value)
     BC_REQUIRE_EQUAL(electrum_new::symbol(), "electrum-new");
 }
 
+BC_AUTO_TEST_CASE(generated__symbol__electrum_to_prefix__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(electrum_to_prefix::symbol(), "electrum-to-prefix");
+}
+
 BC_AUTO_TEST_CASE(generated__symbol__electrum_to_seed__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(electrum_to_seed::symbol(), "electrum-to-seed");

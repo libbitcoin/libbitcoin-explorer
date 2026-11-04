@@ -51,6 +51,8 @@ namespace commands {
     "The word count is not 12 to 46."
 #define BX_ELECTRUM_DECODE_INVALID_WORDS \
     "The mnemonic is not from the specified dictionary."
+#define BX_ELECTRUM_DECODE_INVALID_PREFIX \
+    "The mnemonic type is not 'standard', 'witness', '2fa' or '2faw'."
 
 /**
  * Class to implement the electrum-decode command.

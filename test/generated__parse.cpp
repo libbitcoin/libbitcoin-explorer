@@ -840,6 +840,23 @@ BC_AUTO_TEST_CASE(generated__parse__electrum_new__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__electrum_to_prefix__okay)
+{
+    electrum_to_prefix command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "electrum-to-prefix",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__electrum_to_seed__okay)
 {
     electrum_to_seed command;
