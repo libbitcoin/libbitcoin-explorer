@@ -30,6 +30,22 @@ std::ostream& write_stream(std::ostream& output,
     return output;
 }
 
+void load_input(std::vector<config::share>& parameter,
+    const std::string& name, po::variables_map& variables,
+    std::istream& input)
+{
+    if (variables.find(name) != variables.cend())
+        return;
+
+    std::string line;
+    while (std::getline(input, line))
+    {
+        const auto sentence = system::trim_copy(line);
+        if (!sentence.empty())
+            parameter.emplace_back(sentence);
+    }
+}
+
 size_t roll_count(uint8_t sides, size_t bytes) NOEXCEPT
 {
     using number = uintx_t<1024>;

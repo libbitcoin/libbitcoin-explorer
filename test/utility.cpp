@@ -38,4 +38,33 @@ BC_AUTO_TEST_CASE(utility__write_stream__string__quoted)
     BC_REQUIRE_EQUAL(text.str(), "\"baadf00d\"\n");
 }
 
+BC_AUTO_TEST_CASE(utility__load_input__shares__one_per_line)
+{
+    std::vector<explorer::config::share> shares;
+    po::variables_map variables;
+    std::stringstream input{ "shadow pistol academic always adequate wildlife fancy gross oasis cylinder mustang wrist rescue view short owner flip making coding armed\n\n  shadow pistol academic acid actress prayer class unknown daughter sweater depict flip twice unkind craft early superior advocate guest smoking  \n" };
+    load_input(shares, "SHARE", variables, input);
+    BC_REQUIRE_EQUAL(shares.size(), 2u);
+    BC_REQUIRE_EQUAL(static_cast<const wallet::slip39&>(shares.front()).member_index(), 2u);
+    BC_REQUIRE_EQUAL(static_cast<const wallet::slip39&>(shares.back()).member_index(), 0u);
+}
+
+BC_AUTO_TEST_CASE(utility__load_input__shares_loaded__unchanged)
+{
+    std::vector<explorer::config::share> shares;
+    po::variables_map variables;
+    variables.emplace("SHARE", po::variable_value{});
+    std::stringstream input{ "shadow pistol academic always adequate wildlife fancy gross oasis cylinder mustang wrist rescue view short owner flip making coding armed\n" };
+    load_input(shares, "SHARE", variables, input);
+    BC_REQUIRE(shares.empty());
+}
+
+BC_AUTO_TEST_CASE(utility__load_input__invalid_share__throws_istream_exception)
+{
+    std::vector<explorer::config::share> shares;
+    po::variables_map variables;
+    std::stringstream input{ "foo bar baz\n" };
+    BC_REQUIRE_THROW(load_input(shares, "SHARE", variables, input), istream_exception);
+}
+
 BC_AUTO_TEST_SUITE_END()

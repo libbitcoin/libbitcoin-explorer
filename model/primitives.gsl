@@ -35,6 +35,7 @@ function global.map_type(type)
     my.type_electrum = "electrum"
     my.type_endorsement = "endorsement"
     my.type_endpoint = "endpoint"
+    my.type_group = "group"
     my.type_url = "url"
     my.type_hash160 = "hash160"
     my.type_hash256 = "hash256"
@@ -50,6 +51,7 @@ function global.map_type(type)
     my.type_path = "path"
     my.type_sighash = "sighash"
     my.type_script = "script"
+    my.type_share = "share"
     my.type_signature = "signature"
     my.type_string = "string"
     my.type_transaction = "transaction"
@@ -79,6 +81,7 @@ function global.map_type(type)
     my.type_electrum_bx = "explorer::config::electrum"
     my.type_endorsement_bx = "explorer::config::endorsement"
     my.type_endpoint_bx = "system::config::endpoint"
+    my.type_group_bx = "explorer::config::group"
     my.type_url_bx = "system::config::url"
     my.type_hash160_bx = "system::config::hash160"
     my.type_hash256_bx = "system::config::hash256"
@@ -93,6 +96,7 @@ function global.map_type(type)
     my.type_payment_address_bx = "system::wallet::payment_address"
     my.type_point_bx = "system::config::point"
     my.type_script_bx = "system::config::script"
+    my.type_share_bx = "explorer::config::share"
     my.type_sighash_bx = "explorer::config::sighash"
     my.type_signature_bx = "explorer::config::signature"
     my.type_string_std = "std::string"
@@ -145,6 +149,8 @@ function global.map_type(type)
         return my.type_url_bx
     elsif my.type = my.type_endpoint
         return my.type_endpoint_bx
+    elsif my.type = my.type_group
+        return my.type_group_bx
     elsif my.type = my.type_hash160
         return my.type_hash160_bx
     elsif my.type = my.type_hash256
@@ -171,6 +177,8 @@ function global.map_type(type)
         return my.type_point_bx
     elsif my.type = my.type_script
         return my.type_script_bx
+    elsif my.type = my.type_share
+        return my.type_share_bx
     elsif my.type = my.type_sighash
         return my.type_sighash_bx
     elsif my.type = my.type_signature
@@ -270,10 +278,14 @@ function global.sample_value(type)
         return "standard"
     elsif (my.type = "explorer::config::endorsement")
         return "3044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c202201035fe810e283bcf394485c6a9dfd117ad9f684cdd83d36453718f5d0491b9dd01"
+    elsif (my.type = "explorer::config::group")
+        return "2/3"
     elsif (my.type = "explorer::config::hd_key")
         return "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi"
     elsif (my.type = "explorer::config::language")
         return "en"
+    elsif (my.type = "explorer::config::share")
+        return "duckling enlarge academic academic agency result length solution fridge kidney coal piece deal husband erode duke ajar critical decision keyboard"
     elsif (my.type = "explorer::config::sighash")
         return "all"
     elsif (my.type = "explorer::config::signature")
@@ -355,8 +367,10 @@ endfunction
 #include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/group.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/share.hpp>
 #include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>

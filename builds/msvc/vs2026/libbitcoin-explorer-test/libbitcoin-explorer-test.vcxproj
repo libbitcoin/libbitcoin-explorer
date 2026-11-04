@@ -196,6 +196,9 @@
     <ClCompile Include="..\..\..\..\test\commands\sha160.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\sha256.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\sha512.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\slip39-combine.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\slip39-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\slip39-split.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-secret.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-shared.cpp" />
@@ -221,7 +224,9 @@
     <ClCompile Include="..\..\..\..\test\config\byte.cpp" />
     <ClCompile Include="..\..\..\..\test\config\ec_private.cpp" />
     <ClCompile Include="..\..\..\..\test\config\electrum.cpp" />
+    <ClCompile Include="..\..\..\..\test\config\group.cpp" />
     <ClCompile Include="..\..\..\..\test\config\hd_key.cpp" />
+    <ClCompile Include="..\..\..\..\test\config\share.cpp" />
     <ClCompile Include="..\..\..\..\test\config\sighash.cpp" />
     <ClCompile Include="..\..\..\..\test\define.cpp" />
     <ClCompile Include="..\..\..\..\test\dispatch.cpp" />

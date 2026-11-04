@@ -1260,6 +1260,65 @@ BC_AUTO_TEST_CASE(generated__property__sha512__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_base16_argument()), serial(base16_argument));
 }
 
+BC_AUTO_TEST_CASE(generated__property__slip39_combine__round_trips)
+{
+    slip39_combine command;
+
+    const std::vector<explorer::config::share> shares_argument{ { "duckling enlarge academic academic agency result length solution fridge kidney coal piece deal husband erode duke ajar critical decision keyboard" } };
+    command.set_shares_argument(shares_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_shares_argument()), serial(shares_argument));
+
+    const std::string passphrase_option{ "string" };
+    command.set_passphrase_option(passphrase_option);
+    BC_REQUIRE_EQUAL(serial(command.get_passphrase_option()), serial(passphrase_option));
+}
+
+BC_AUTO_TEST_CASE(generated__property__slip39_decode__round_trips)
+{
+    slip39_decode command;
+
+    const explorer::config::share share_argument{ "duckling enlarge academic academic agency result length solution fridge kidney coal piece deal husband erode duke ajar critical decision keyboard" };
+    command.set_share_argument(share_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_share_argument()), serial(share_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__slip39_split__round_trips)
+{
+    slip39_split command;
+
+    const system::config::base16 entropy_argument{ "baadf00d" };
+    command.set_entropy_argument(entropy_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_entropy_argument()), serial(entropy_argument));
+
+    const uint8_t exponent_option{ 42 };
+    command.set_exponent_option(exponent_option);
+    BC_REQUIRE_EQUAL(serial(command.get_exponent_option()), serial(exponent_option));
+
+    const bool extendable_option{ true };
+    command.set_extendable_option(extendable_option);
+    BC_REQUIRE_EQUAL(serial(command.get_extendable_option()), serial(extendable_option));
+
+    const std::vector<explorer::config::group> groups_option{ { "2/3" } };
+    command.set_groups_option(groups_option);
+    BC_REQUIRE_EQUAL(serial(command.get_groups_option()), serial(groups_option));
+
+    const uint16_t identifier_option{ 42 };
+    command.set_identifier_option(identifier_option);
+    BC_REQUIRE_EQUAL(serial(command.get_identifier_option()), serial(identifier_option));
+
+    const std::string passphrase_option{ "string" };
+    command.set_passphrase_option(passphrase_option);
+    BC_REQUIRE_EQUAL(serial(command.get_passphrase_option()), serial(passphrase_option));
+
+    const system::config::base16 secret_option{ "baadf00d" };
+    command.set_secret_option(secret_option);
+    BC_REQUIRE_EQUAL(serial(command.get_secret_option()), serial(secret_option));
+
+    const uint8_t threshold_option{ 42 };
+    command.set_threshold_option(threshold_option);
+    BC_REQUIRE_EQUAL(serial(command.get_threshold_option()), serial(threshold_option));
+}
+
 BC_AUTO_TEST_CASE(generated__property__stealth_public__round_trips)
 {
     stealth_public command;

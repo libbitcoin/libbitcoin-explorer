@@ -19,6 +19,7 @@
 #ifndef BX_UTILITY_HPP
 #define BX_UTILITY_HPP
 
+#include <bitcoin/explorer/config/share.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -34,6 +35,17 @@ namespace explorer {
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
     po::variables_map& variables, std::istream& input);
+
+/**
+ * If the shares are not yet loaded, load from stdin as fallback, one per line.
+ * @param[out] parameter  The shares to load.
+ * @param[in]  name       The parameter name.
+ * @param[in]  variables  The loaded variables.
+ * @param[in]  input      The input stream for loading the parameter.
+ */
+BCX_API void load_input(std::vector<config::share>& parameter,
+    const std::string& name, po::variables_map& variables,
+    std::istream& input);
 
 /**
  * Load file contents as parameter fallback. Obtain the path from the parameter

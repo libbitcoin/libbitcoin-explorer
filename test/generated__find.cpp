@@ -532,6 +532,21 @@ BC_AUTO_TEST_CASE(generated__find__sha512__returns_object)
     BC_REQUIRE(find("sha512") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__slip39_combine__returns_object)
+{
+    BC_REQUIRE(find("slip39-combine") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__slip39_decode__returns_object)
+{
+    BC_REQUIRE(find("slip39-decode") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__slip39_split__returns_object)
+{
+    BC_REQUIRE(find("slip39-split") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__stealth_public__returns_object)
 {
     BC_REQUIRE(find("stealth-public") != nullptr);

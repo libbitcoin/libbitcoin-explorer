@@ -1835,6 +1835,65 @@ BC_AUTO_TEST_CASE(generated__parse__sha512__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__slip39_combine__okay)
+{
+    slip39_combine command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "slip39-combine",
+        "--passphrase", "string",
+        "duckling enlarge academic academic agency result length solution fridge kidney coal piece deal husband erode duke ajar critical decision keyboard",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 4, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__slip39_decode__okay)
+{
+    slip39_decode command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "slip39-decode",
+        "duckling enlarge academic academic agency result length solution fridge kidney coal piece deal husband erode duke ajar critical decision keyboard",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__slip39_split__okay)
+{
+    slip39_split command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "slip39-split",
+        "--exponent", "42",
+        "--extendable",
+        "--group", "2/3",
+        "--identifier", "42",
+        "--passphrase", "string",
+        "--secret", "baadf00d",
+        "--threshold", "42",
+        "baadf00d",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 15, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__stealth_public__okay)
 {
     stealth_public command;

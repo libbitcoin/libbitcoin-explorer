@@ -132,6 +132,9 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
+    func(make_shared<slip39_combine>());
+    func(make_shared<slip39_decode>());
+    func(make_shared<slip39_split>());
     func(make_shared<stealth_public>());
     func(make_shared<stealth_secret>());
     func(make_shared<stealth_shared>());
@@ -358,6 +361,12 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<sha256>();
     if (symbol == sha512::symbol())
         return make_shared<sha512>();
+    if (symbol == slip39_combine::symbol())
+        return make_shared<slip39_combine>();
+    if (symbol == slip39_decode::symbol())
+        return make_shared<slip39_decode>();
+    if (symbol == slip39_split::symbol())
+        return make_shared<slip39_split>();
     if (symbol == stealth_public::symbol())
         return make_shared<stealth_public>();
     if (symbol == stealth_secret::symbol())

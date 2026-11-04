@@ -126,6 +126,9 @@
 #include <bitcoin/explorer/commands/sha160.hpp>
 #include <bitcoin/explorer/commands/sha256.hpp>
 #include <bitcoin/explorer/commands/sha512.hpp>
+#include <bitcoin/explorer/commands/slip39-combine.hpp>
+#include <bitcoin/explorer/commands/slip39-decode.hpp>
+#include <bitcoin/explorer/commands/slip39-split.hpp>
 #include <bitcoin/explorer/commands/stealth-public.hpp>
 #include <bitcoin/explorer/commands/stealth-secret.hpp>
 #include <bitcoin/explorer/commands/stealth-shared.hpp>
@@ -154,8 +157,10 @@
 #include <bitcoin/explorer/config/ec_private.hpp>
 #include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/group.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
 #include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/share.hpp>
 #include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/witness.hpp>

@@ -163,6 +163,9 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/sha160.cpp \
     ${srcdir}/../../src/commands/sha256.cpp \
     ${srcdir}/../../src/commands/sha512.cpp \
+    ${srcdir}/../../src/commands/slip39-combine.cpp \
+    ${srcdir}/../../src/commands/slip39-decode.cpp \
+    ${srcdir}/../../src/commands/slip39-split.cpp \
     ${srcdir}/../../src/commands/stealth-public.cpp \
     ${srcdir}/../../src/commands/stealth-secret.cpp \
     ${srcdir}/../../src/commands/stealth-shared.cpp \
@@ -191,8 +194,10 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/config/ec_private.cpp \
     ${srcdir}/../../src/config/electrum.cpp \
     ${srcdir}/../../src/config/endorsement.cpp \
+    ${srcdir}/../../src/config/group.cpp \
     ${srcdir}/../../src/config/hd_key.cpp \
     ${srcdir}/../../src/config/language.cpp \
+    ${srcdir}/../../src/config/share.cpp \
     ${srcdir}/../../src/config/sighash.cpp \
     ${srcdir}/../../src/config/signature.cpp \
     ${srcdir}/../../src/config/witness.cpp
@@ -341,6 +346,9 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/sha160.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/sha256.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/sha512.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/slip39-combine.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/slip39-decode.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/slip39-split.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/stealth-public.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/stealth-secret.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/stealth-shared.hpp \
@@ -374,8 +382,10 @@ include_bitcoin_explorer_config_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/config/ec_private.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/electrum.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/endorsement.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/group.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/hd_key.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/language.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/config/share.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/sighash.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/signature.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/witness.hpp \
@@ -527,6 +537,9 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/sha160.cpp \
     ${srcdir}/../../test/commands/sha256.cpp \
     ${srcdir}/../../test/commands/sha512.cpp \
+    ${srcdir}/../../test/commands/slip39-combine.cpp \
+    ${srcdir}/../../test/commands/slip39-decode.cpp \
+    ${srcdir}/../../test/commands/slip39-split.cpp \
     ${srcdir}/../../test/commands/stealth-public.cpp \
     ${srcdir}/../../test/commands/stealth-secret.cpp \
     ${srcdir}/../../test/commands/stealth-shared.cpp \
@@ -552,7 +565,9 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/config/byte.cpp \
     ${srcdir}/../../test/config/ec_private.cpp \
     ${srcdir}/../../test/config/electrum.cpp \
+    ${srcdir}/../../test/config/group.cpp \
     ${srcdir}/../../test/config/hd_key.cpp \
+    ${srcdir}/../../test/config/share.cpp \
     ${srcdir}/../../test/config/sighash.cpp \
     ${srcdir}/../../test/fixture/http_server.cpp
 

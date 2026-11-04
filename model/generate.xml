@@ -668,6 +668,33 @@
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the value is read from STDIN."/>
   </command>
 
+  <command symbol="slip39-combine" output="base16" category="WALLET" description="Recover a master secret from SLIP39 shares, as Base16. A threshold of shares from each of a threshold of groups is required.">
+    <option name="passphrase" type="string" description="The passphrase with which the master secret was split, if any." />
+    <argument name="SHARE" stdin="true" limit="-1" type="share" description="The set of SLIP39 shares. Each share is a mnemonic, so its words must be quoted. If not specified the shares are read from STDIN, one per line." />
+    <define name="BX_SLIP39_COMBINE_INVALID" value="The shares are inconsistent or insufficient, or the passphrase is not printable ASCII." />
+  </command>
+
+  <command symbol="slip39-decode" output="string" category="WALLET" description="Decode the metadata of a SLIP39 share, as JSON.">
+    <argument name="SHARE" stdin="true" type="share" description="The SLIP39 share. The share is a mnemonic, so its words must be quoted. If not specified the share is read from STDIN." />
+  </command>
+
+  <command symbol="slip39-split" output="string" category="WALLET" description="Split a master secret into groups of SLIP39 shares, one share per line, in group order.">
+    <option name="exponent" type="uint8_t" default="1" description="The exponent of the passphrase iteration count, 0 to 15, defaults to 1." />
+    <option name="extendable" shortcut="x" description="Create an extendable share set." />
+    <option name="group" type="group" multiple="true" required="true" description="A group of shares, as its threshold and count, such as 2/3. Specify once for each group." />
+    <option name="identifier" type="uint16_t" default="0" description="The random identifier of the share set, 0 to 32767, defaults to 0." />
+    <option name="passphrase" type="string" description="An optional passphrase of printable ASCII." />
+    <option name="secret" type="base16" required="true" description="The Base16 master secret, an even 16 to 64 bytes." />
+    <option name="threshold" type="uint8_t" default="1" description="The number of groups required to recover the master secret, defaults to 1." />
+    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the shares, of a size determined by the groups and secret. If not specified the entropy is read from STDIN." />
+    <define name="BX_SLIP39_SPLIT_INVALID_SECRET" value="The secret size is not an even 16 to 64 bytes." />
+    <define name="BX_SLIP39_SPLIT_INVALID_GROUPS" value="The groups or threshold are invalid." />
+    <define name="BX_SLIP39_SPLIT_INVALID_IDENTIFIER" value="The identifier is greater than 32767." />
+    <define name="BX_SLIP39_SPLIT_INVALID_EXPONENT" value="The exponent is greater than 15." />
+    <define name="BX_SLIP39_SPLIT_INVALID_PASSPHRASE" value="The passphrase is not printable ASCII." />
+    <define name="BX_SLIP39_SPLIT_INVALID_ENTROPY_SIZE" value="The entropy size in bytes must be" />
+  </command>
+
   <command symbol="stealth-public" formerly="stealth-uncover" output="ec_public" category="STEALTH" description="Derive the stealth public key necessary to address and to identify a stealth payment.">
     <argument name="SPEND_PUBKEY" required="true" type="ec_public" description="The Base16 EC spend public key of a stealth address." />
     <argument name="SHARED_SECRET" stdin="true" type="ec_private" description="The Base16 EC shared secret corresponding to the SPEND_PUBKEY. If not specified the key is read from STDIN." />
