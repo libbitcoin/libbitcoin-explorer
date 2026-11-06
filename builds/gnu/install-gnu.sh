@@ -38,6 +38,8 @@
 #                                 Default: --without-valgrind
 # --<enable/disable>-cuda       Use cuda (gpu) batch signature verification (inert on macOS).
 #                                 Default: --enable-cuda
+# --<with/without>-verbose      Compile verbose logging.
+#                                 Default: --without-verbose
 # --build-libsecp256k1          Build bitcoin core libsecp256k1 libraries
 # --build-src-dir=<path>        Location for sources.
 #                                 Default: $(pwd)
@@ -955,6 +957,8 @@ help()
     msg "                                Default: --without-valgrind"
     msg "--<enable/disable>-cuda       Use cuda (gpu) batch signature verification (inert on macOS)."
     msg "                                Default: --enable-cuda"
+    msg "--<with/without>-verbose      Compile verbose logging."
+    msg "                                Default: --without-verbose"
     msg "--build-libsecp256k1          Build bitcoin core libsecp256k1 libraries"
     msg "--build-src-dir=<path>        Location for sources."
     msg "                                Default: $(pwd)"
