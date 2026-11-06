@@ -992,9 +992,17 @@ BC_AUTO_TEST_CASE(generated__property__input_sign__round_trips)
     command.set_index_option(index_option);
     BC_REQUIRE_EQUAL(serial(command.get_index_option()), serial(index_option));
 
+    const bool segwit_option{ true };
+    command.set_segwit_option(segwit_option);
+    BC_REQUIRE_EQUAL(serial(command.get_segwit_option()), serial(segwit_option));
+
     const explorer::config::sighash sign_type_option{ "all" };
     command.set_sign_type_option(sign_type_option);
     BC_REQUIRE_EQUAL(serial(command.get_sign_type_option()), serial(sign_type_option));
+
+    const uint64_t value_option{ 42 };
+    command.set_value_option(value_option);
+    BC_REQUIRE_EQUAL(serial(command.get_value_option()), serial(value_option));
 }
 
 BC_AUTO_TEST_CASE(generated__property__input_validate__round_trips)
@@ -1020,6 +1028,14 @@ BC_AUTO_TEST_CASE(generated__property__input_validate__round_trips)
     const uint32_t index_option{ 42 };
     command.set_index_option(index_option);
     BC_REQUIRE_EQUAL(serial(command.get_index_option()), serial(index_option));
+
+    const bool segwit_option{ true };
+    command.set_segwit_option(segwit_option);
+    BC_REQUIRE_EQUAL(serial(command.get_segwit_option()), serial(segwit_option));
+
+    const uint64_t value_option{ 42 };
+    command.set_value_option(value_option);
+    BC_REQUIRE_EQUAL(serial(command.get_value_option()), serial(value_option));
 }
 
 BC_AUTO_TEST_CASE(generated__property__match_neutrino_address__round_trips)

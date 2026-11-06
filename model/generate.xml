@@ -534,7 +534,9 @@
   <command symbol="input-sign" formerly="sign-input" output="endorsement" category="TRANSACTION" description="Create an endorsement for a transaction input.">
     <option name="anyone" description="Modify signature hashing so that other inputs are ignored." />
     <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to 0." />
+    <option name="segwit" shortcut="w" description="Sign a version 0 witness input (BIP143). The CONTRACT is then the script code, such as the pay-to-public-key-hash script of a P2WPKH key hash." />
     <option name="sign_type" type="sighash" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', and 'single', defaults to 'all'." />
+    <option name="value" type="uint64_t" description="The satoshi value of the previous output, which a version 0 witness endorsement commits to, defaults to 0." />
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The Base16 EC private key to sign with."/>
     <argument name="CONTRACT" required="true" type="script" description="The previous output script to use in signing. Multiple tokens must be quoted." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
@@ -551,6 +553,8 @@
 
   <command symbol="input-validate" formerly="validsig" output="string" category="TRANSACTION" description="Validate a transaction input endorsement.">
     <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to 0." />
+    <option name="segwit" shortcut="w" description="Validate a version 0 witness input (BIP143). The CONTRACT is then the script code, such as the pay-to-public-key-hash script of a P2WPKH key hash." />
+    <option name="value" type="uint64_t" description="The satoshi value of the previous output, which a version 0 witness endorsement commits to, defaults to 0." />
     <argument name="EC_PUBLIC_KEY" required="true" type="ec_public" description="The Base16 EC public key to verify against."/>
     <argument name="CONTRACT" required="true" type="script" description="The previous output script used in signing. Multiple tokens must be quoted." />
     <argument name="ENDORSEMENT" required="true" type="endorsement" description="The endorsement to validate."/>

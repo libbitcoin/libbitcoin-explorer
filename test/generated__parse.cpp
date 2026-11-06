@@ -1429,14 +1429,16 @@ BC_AUTO_TEST_CASE(generated__parse__input_sign__okay)
         "input-sign",
         "--anyone",
         "--index", "42",
+        "--segwit",
         "--sign_type", "all",
+        "--value", "42",
         "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475",
         "dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig",
         "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 9, argv));
+    BC_REQUIRE(metadata.parse(message, input, 12, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1450,6 +1452,8 @@ BC_AUTO_TEST_CASE(generated__parse__input_validate__okay)
     {
         "input-validate",
         "--index", "42",
+        "--segwit",
+        "--value", "42",
         "03ac9e60013853128b42a1324609bac2ccff6a0b4844b6301f1f552e15ee14c7a5",
         "dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig",
         "3044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c202201035fe810e283bcf394485c6a9dfd117ad9f684cdd83d36453718f5d0491b9dd01",
@@ -1457,7 +1461,7 @@ BC_AUTO_TEST_CASE(generated__parse__input_validate__okay)
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 7, argv));
+    BC_REQUIRE(metadata.parse(message, input, 10, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
