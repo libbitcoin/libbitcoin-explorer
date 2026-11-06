@@ -84,8 +84,6 @@
 #                                Default: ON
 # -Dwith-valgrind=<ON/OFF>     Use valgrind memcheck client requests.
 #                                Default: OFF
-# -Dwith-verbose=<ON/OFF>      Compile verbose logging.
-#                                Default: OFF
 #
 # All unrecognized options provided shall be passed as configuration
 # options for all dependencies.
@@ -1076,8 +1074,6 @@ help()
     msg "-Dwith-secp256k1=<ON/OFF>    Use native secp256k1 interface, otherwise external library."
     msg "                               Default: ON"
     msg "-Dwith-valgrind=<ON/OFF>     Use valgrind memcheck client requests."
-    msg "                               Default: OFF"
-    msg "-Dwith-verbose=<ON/OFF>      Compile verbose logging."
     msg "                               Default: OFF"
     msg ""
     msg "All unrecognized options provided shall be passed as configuration"

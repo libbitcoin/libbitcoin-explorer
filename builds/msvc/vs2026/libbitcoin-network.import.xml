@@ -14,16 +14,4 @@
       <EnumValue Name="ltcg" DisplayName="Static using link time compile generation (LTCG)" />
     </EnumProperty>
   </Rule>
-  <Rule Name="libbitcoin-network-options-uiextension" PageTemplate="tool" DisplayName="Bitcoin Network Options" SwitchPrefix="/" Order="1">
-    <Rule.Categories>
-      <Category Name="verbose" DisplayName="verbose" />
-    </Rule.Categories>
-    <Rule.DataSource>
-      <DataSource Persistence="ProjectFile" ItemType="" />
-    </Rule.DataSource>
-    <EnumProperty Name="Option-verbose" DisplayName="Compile Verbose Logging" Description="Compile verbose logging." Category="verbose">
-      <EnumValue Name="false" DisplayName="No" />
-      <EnumValue Name="true" DisplayName="Yes" />
-    </EnumProperty>
-  </Rule>
 </ProjectSchemaDefinitions>
