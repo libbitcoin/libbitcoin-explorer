@@ -36,8 +36,6 @@
 #                                Default: ON
 # -Dwith-valgrind=<ON/OFF>     Use valgrind memcheck client requests.
 #                                Default: OFF
-# -Denable-cuda=<ON/OFF>       Use cuda (gpu) batch signature verification (inert on macOS).
-#                                Default: ON
 # -Dwith-verbose=<ON/OFF>      Compile verbose logging.
 #                                Default: OFF
 # --build-libsecp256k1         Build bitcoin core libsecp256k1 libraries
@@ -960,8 +958,6 @@ help()
     msg "                               Default: ON"
     msg "-Dwith-valgrind=<ON/OFF>     Use valgrind memcheck client requests."
     msg "                               Default: OFF"
-    msg "-Denable-cuda=<ON/OFF>       Use cuda (gpu) batch signature verification (inert on macOS)."
-    msg "                               Default: ON"
     msg "-Dwith-verbose=<ON/OFF>      Compile verbose logging."
     msg "                               Default: OFF"
     msg "--build-libsecp256k1         Build bitcoin core libsecp256k1 libraries"
