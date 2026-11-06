@@ -90,6 +90,15 @@ BC_AUTO_TEST_CASE(generated__property__address_to_key__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_payment_address_argument()), serial(payment_address_argument));
 }
 
+BC_AUTO_TEST_CASE(generated__property__address_to_script__round_trips)
+{
+    address_to_script command;
+
+    const system::wallet::payment_address payment_address_argument{ "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" };
+    command.set_payment_address_argument(payment_address_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_payment_address_argument()), serial(payment_address_argument));
+}
+
 BC_AUTO_TEST_CASE(generated__property__base16_decode__round_trips)
 {
     base16_decode command;
@@ -1525,6 +1534,15 @@ BC_AUTO_TEST_CASE(generated__property__wif_to_public__round_trips)
 BC_AUTO_TEST_CASE(generated__property__witness_to_key__round_trips)
 {
     witness_to_key command;
+
+    const system::wallet::witness_address witness_address_argument{ "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4" };
+    command.set_witness_address_argument(witness_address_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_witness_address_argument()), serial(witness_address_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__witness_to_script__round_trips)
+{
+    witness_to_script command;
 
     const system::wallet::witness_address witness_address_argument{ "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4" };
     command.set_witness_address_argument(witness_address_argument);

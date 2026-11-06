@@ -98,6 +98,23 @@ BC_AUTO_TEST_CASE(generated__parse__address_to_key__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__address_to_script__okay)
+{
+    address_to_script command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "address-to-script",
+        "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__base16_decode__okay)
 {
     base16_decode command;
@@ -2206,6 +2223,23 @@ BC_AUTO_TEST_CASE(generated__parse__witness_to_key__okay)
     const char* argv[]
     {
         "witness-to-key",
+        "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__witness_to_script__okay)
+{
+    witness_to_script command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "witness-to-script",
         "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4",
     };
 

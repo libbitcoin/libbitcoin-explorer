@@ -90,6 +90,11 @@
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN." />
   </command>
 
+  <command symbol="address-to-script" output="string" category="WALLET" description="Derive the output script of a payment address, as plain text tokens.">
+    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN." />
+    <define name="BX_ADDRESS_TO_SCRIPT_INVALID_VERSION" value="The address version is not the configured pay-to-public-key-hash or pay-to-script-hash version." />
+  </command>
+
   <command symbol="base16-decode" output="bytes" category="ENCODING" description="Convert a Base16 value to binary data.">
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to decode as binary data. If not specified the value is read from STDIN." />
   </command>
@@ -800,6 +805,10 @@
   </command>
 
   <command symbol="witness-to-key" output="base16" category="WALLET" description="Derive the payments search key of a witness address.">
+    <argument name="WITNESS_ADDRESS" stdin="true" type="witness_address" description="The witness address. If not specified the address is read from STDIN." />
+  </command>
+
+  <command symbol="witness-to-script" output="string" category="WALLET" description="Derive the output script of a witness address, as plain text tokens.">
     <argument name="WITNESS_ADDRESS" stdin="true" type="witness_address" description="The witness address. If not specified the address is read from STDIN." />
   </command>
   

@@ -47,6 +47,11 @@ BC_AUTO_TEST_CASE(generated__symbol__address_to_key__returns_expected_value)
     BC_REQUIRE_EQUAL(address_to_key::symbol(), "address-to-key");
 }
 
+BC_AUTO_TEST_CASE(generated__symbol__address_to_script__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(address_to_script::symbol(), "address-to-script");
+}
+
 BC_AUTO_TEST_CASE(generated__symbol__base16_decode__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(base16_decode::symbol(), "base16-decode");
@@ -635,6 +640,11 @@ BC_AUTO_TEST_CASE(generated__symbol__wif_to_public__returns_expected_value)
 BC_AUTO_TEST_CASE(generated__symbol__witness_to_key__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(witness_to_key::symbol(), "witness-to-key");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__witness_to_script__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(witness_to_script::symbol(), "witness-to-script");
 }
 
 BC_AUTO_TEST_CASE(generated__symbol__wrap_decode__returns_expected_value)

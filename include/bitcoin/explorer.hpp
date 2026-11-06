@@ -29,6 +29,7 @@
 #include <bitcoin/explorer/commands/address-embed.hpp>
 #include <bitcoin/explorer/commands/address-encode.hpp>
 #include <bitcoin/explorer/commands/address-to-key.hpp>
+#include <bitcoin/explorer/commands/address-to-script.hpp>
 #include <bitcoin/explorer/commands/base16-decode.hpp>
 #include <bitcoin/explorer/commands/base16-encode.hpp>
 #include <bitcoin/explorer/commands/base32-decode.hpp>
@@ -147,6 +148,7 @@
 #include <bitcoin/explorer/commands/wif-to-ec.hpp>
 #include <bitcoin/explorer/commands/wif-to-public.hpp>
 #include <bitcoin/explorer/commands/witness-to-key.hpp>
+#include <bitcoin/explorer/commands/witness-to-script.hpp>
 #include <bitcoin/explorer/commands/wrap-decode.hpp>
 #include <bitcoin/explorer/commands/wrap-encode.hpp>
 #include <bitcoin/explorer/config/address.hpp>

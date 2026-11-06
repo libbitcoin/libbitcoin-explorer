@@ -99,6 +99,7 @@
     <ClCompile Include="..\..\..\..\test\commands\address-embed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\address-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\address-to-key.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\address-to-script.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base16-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base16-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base32-decode.cpp" />
@@ -217,6 +218,7 @@
     <ClCompile Include="..\..\..\..\test\commands\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wif-to-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\witness-to-key.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\witness-to-script.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wrap-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wrap-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\config\address.cpp" />
