@@ -201,8 +201,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/config/language.cpp \
     ${srcdir}/../../src/config/share.cpp \
     ${srcdir}/../../src/config/sighash.cpp \
-    ${srcdir}/../../src/config/signature.cpp \
-    ${srcdir}/../../src/config/witness.cpp
+    ${srcdir}/../../src/config/signature.cpp
 
 nodist_src_libbitcoin_explorer_la_SOURCES = \
     src/version.cpp
@@ -392,7 +391,6 @@ include_bitcoin_explorer_config_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/config/share.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/sighash.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/signature.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/witness.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/wrapper.hpp
 
 include_bitcoin_explorer_impldir = \

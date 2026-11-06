@@ -459,9 +459,6 @@
     <ClCompile Include="..\..\..\..\src\config\signature.cpp">
       <Filter>src\config</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\config\witness.cpp">
-      <Filter>src\config</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\define.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -912,9 +909,6 @@
       <Filter>include\bitcoin\explorer\config</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\signature.hpp">
-      <Filter>include\bitcoin\explorer\config</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\witness.hpp">
       <Filter>include\bitcoin\explorer\config</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\wrapper.hpp">
