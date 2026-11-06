@@ -23,7 +23,6 @@ REM --enable-sse41              Add SSE4.1 hardware instructions via compilation
 REM --enable-sha2               Check for ARM SHA1/SHA256 Extensions.
 REM --enable-sha3               Check for ARM SHA3 Extensions for SHA512.
 REM --enable-aes                Check for ARM AES and PMULL Extensions.
-REM --[with/without]-cuda       Use cuda (gpu) batch signature verification (inert on macOS).
 REM --build-config config       Build configuration.
 REM --build-platform platform   Build platform.
 REM --build-version version     Build MSVC version.
@@ -316,18 +315,6 @@ if "!libbitcoin_explorer_TAG!" == "" (
         ) else (
             set "libbitcoin-system_PARAMS=!libbitcoin-system_PARAMS! /p:Option-aes=true"
         )
-    ) else if "%~1" == "--with-cuda" (
-        if "!libbitcoin-system_PARAMS!" == "" (
-            set "libbitcoin-system_PARAMS=/p:Option-cuda=true"
-        ) else (
-            set "libbitcoin-system_PARAMS=!libbitcoin-system_PARAMS! /p:Option-cuda=true"
-        )
-    ) else if "%~1" == "--without-cuda" (
-        if "!libbitcoin-system_PARAMS!" == "" (
-            set "libbitcoin-system_PARAMS=/p:Option-cuda=false"
-        ) else (
-            set "libbitcoin-system_PARAMS=!libbitcoin-system_PARAMS! /p:Option-cuda=false"
-        )
     ) else if "%~1" == "--build-config" (
         set "BUILD_CONFIG=%~2"
         shift
@@ -590,7 +577,6 @@ if "!libbitcoin_explorer_TAG!" == "" (
     call :msg "--enable-sha2               Check for ARM SHA1/SHA256 Extensions."
     call :msg "--enable-sha3               Check for ARM SHA3 Extensions for SHA512."
     call :msg "--enable-aes                Check for ARM AES and PMULL Extensions."
-    call :msg "--[with/without]-cuda       Use cuda (gpu) batch signature verification (inert on macOS)."
     call :msg "--build-config config       Build configuration."
     call :msg "--build-platform platform   Build platform."
     call :msg "--build-version version     Build MSVC version."
