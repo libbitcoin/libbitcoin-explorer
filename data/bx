@@ -242,7 +242,7 @@ _bx()
             options="--language -l --passphrase -p"
             ;;
         qrcode)
-            options="--margin -m --pixels -p --scheme -s --version -v"
+            options="--margin -m --pixels -p --version -v"
             ;;
         script-decode)
             options="--flags -f"

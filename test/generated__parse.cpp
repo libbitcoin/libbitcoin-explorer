@@ -1601,13 +1601,12 @@ BC_AUTO_TEST_CASE(generated__parse__qrcode__okay)
         "qrcode",
         "--margin", "42",
         "--pixels", "42",
-        "--scheme", "string",
         "--version", "42",
-        "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+        "string",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 10, argv));
+    BC_REQUIRE(metadata.parse(message, input, 8, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }

@@ -1124,9 +1124,9 @@ BC_AUTO_TEST_CASE(generated__property__qrcode__round_trips)
 {
     qrcode command;
 
-    const system::wallet::payment_address payment_address_argument{ "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" };
-    command.set_payment_address_argument(payment_address_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_payment_address_argument()), serial(payment_address_argument));
+    const std::string text_argument{ "string" };
+    command.set_text_argument(text_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_text_argument()), serial(text_argument));
 
     const uint16_t margin_option{ 42 };
     command.set_margin_option(margin_option);
@@ -1135,10 +1135,6 @@ BC_AUTO_TEST_CASE(generated__property__qrcode__round_trips)
     const uint16_t pixels_option{ 42 };
     command.set_pixels_option(pixels_option);
     BC_REQUIRE_EQUAL(serial(command.get_pixels_option()), serial(pixels_option));
-
-    const std::string scheme_option{ "string" };
-    command.set_scheme_option(scheme_option);
-    BC_REQUIRE_EQUAL(serial(command.get_scheme_option()), serial(scheme_option));
 
     const uint8_t version_option{ 42 };
     command.set_version_option(version_option);

@@ -33,12 +33,8 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto margin_size = get_margin_option();
     const auto scale_factor = get_pixels_option();
-    const auto uri_scheme = get_scheme_option();
     const auto qrcode_version = get_version_option();
-    const auto& address = get_payment_address_argument();
-
-    const auto delimiter = uri_scheme.empty() ? "" : ":";
-    const auto value = uri_scheme + delimiter + address.encoded();
+    const auto value = trim_copy(get_text_argument());
 
     if (qrcode_version > qr_code::maximum_version)
     {
