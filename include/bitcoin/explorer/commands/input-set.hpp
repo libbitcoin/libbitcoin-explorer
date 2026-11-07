@@ -154,6 +154,11 @@ public:
             "The ordinal position of the input within the transaction, defaults to 0."
         )
         (
+            "witness,w",
+            value<system::config::witness>(&option_.witness),
+            "The witness to assign to the input, as bracketed Base16 data tokens. Multiple tokens must be quoted. If not specified the input witness is unchanged."
+        )
+        (
             "ENDORSEMENT_SCRIPT",
             value<system::config::script>(&argument_.endorsement_script)->required(),
             "The endorsement script to assign to the input. Multiple tokens must be quoted."
@@ -237,6 +242,23 @@ public:
         option_.index = value;
     }
 
+    /**
+     * Get the value of the witness option.
+     */
+    virtual system::config::witness& get_witness_option()
+    {
+        return option_.witness;
+    }
+
+    /**
+     * Set the value of the witness option.
+     */
+    virtual void set_witness_option(
+        const system::config::witness& value)
+    {
+        option_.witness = value;
+    }
+
 private:
 
     /**
@@ -264,11 +286,13 @@ private:
     struct option
     {
         option()
-          : index()
+          : index(),
+            witness()
         {
         }
 
         uint32_t index;
+        system::config::witness witness;
     } option_;
 };
 

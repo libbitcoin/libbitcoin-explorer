@@ -546,6 +546,7 @@
 
   <command symbol="input-set" formerly="set-input" output="transaction" category="TRANSACTION" description="Assign a script to an existing transaction input.">
     <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to 0." />
+    <option name="witness" type="witness" description="The witness to assign to the input, as bracketed Base16 data tokens. Multiple tokens must be quoted. If not specified the input witness is unchanged." />
     <argument name="ENDORSEMENT_SCRIPT" required="true" type="script" description="The endorsement script to assign to the input. Multiple tokens must be quoted." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
     <define name="BX_INPUT_SET_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />

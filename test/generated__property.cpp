@@ -966,6 +966,10 @@ BC_AUTO_TEST_CASE(generated__property__input_set__round_trips)
     const uint32_t index_option{ 42 };
     command.set_index_option(index_option);
     BC_REQUIRE_EQUAL(serial(command.get_index_option()), serial(index_option));
+
+    const system::config::witness witness_option{ "[baadf00d] [beefcafe]" };
+    command.set_witness_option(witness_option);
+    BC_REQUIRE_EQUAL(serial(command.get_witness_option()), serial(witness_option));
 }
 
 BC_AUTO_TEST_CASE(generated__property__input_sign__round_trips)

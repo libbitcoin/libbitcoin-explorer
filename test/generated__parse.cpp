@@ -1409,12 +1409,13 @@ BC_AUTO_TEST_CASE(generated__parse__input_set__okay)
     {
         "input-set",
         "--index", "42",
+        "--witness", "[baadf00d] [beefcafe]",
         "dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig",
         "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 5, argv));
+    BC_REQUIRE(metadata.parse(message, input, 7, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }

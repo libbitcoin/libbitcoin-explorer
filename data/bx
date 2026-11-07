@@ -226,7 +226,7 @@ _bx()
             options="--secret_version -s --version -v"
             ;;
         input-set)
-            options="--index -i"
+            options="--index -i --witness -w"
             ;;
         input-sign)
             options="--anyone -a --index -i --segwit -w --sign_type -s --value -v"
