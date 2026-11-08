@@ -183,8 +183,8 @@ public:
 .       is_last_setting = is_last_configuration & last()
 .       identifiers = section + "." + name
 .       variable = "setting_.$(section:lower,c).$(name:lower,c)"
-.       expression = value_semantic(!true(), !true(), type,\
-            is_xml_true(required), is_xml_true(multiple), variable, default)
+.       expression = setting_semantic(type, is_xml_true(required),\
+            is_xml_true(multiple), variable, default)
         (
             "$(identifiers)",
             $(expression),
@@ -248,6 +248,22 @@ public:
         return option_metadata_;
     }
 
+    /**
+     * Get the parsed variables.
+     */
+    virtual const po::variables_map& get_variables() const
+    {
+        return variables_;
+    }
+
+    /**
+     * Set the parsed variables.
+     */
+    virtual void set_variables(const po::variables_map& variables)
+    {
+        variables_ = variables;
+    }
+
 .for configuration
 .   for setting
 .       is_vector = is_xml_true(multiple)
@@ -294,6 +310,11 @@ private:
      * Command line option metadata.
      */
     options_metadata option_metadata_;
+
+    /**
+     * Parsed variables.
+     */
+    po::variables_map variables_;
 
     /**
      * Environment variable bound variables.

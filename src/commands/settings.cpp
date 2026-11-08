@@ -16,53 +16,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include <bitcoin/explorer/commands/settings.hpp>
 
-#include <map>
-#include <bitcoin/explorer/json.hpp>
-#include <bitcoin/explorer/utility.hpp>
+#include <bitcoin/system.hpp>
+#include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::explorer::config;
-using namespace bc::system;
-
 console_result commands::settings::invoke(std::ostream& output,
     std::ostream&)
 {
-    // TODO: look into serializer object quoting.
-    // TODO: load from metadata into settings list.
+    options_metadata definitions("settings");
+    load_settings(definitions);
 
-    // This must be updated for any settings metadata change.
-    settings_list list;
-
-    // [wallet]
-    list["wallet.wif_version"] =
-        serialize(get_wallet_wif_version_setting());
-    list["wallet.hd_public_version"] =
-        serialize(get_wallet_hd_public_version_setting());
-    list["wallet.hd_secret_version"] =
-        serialize(get_wallet_hd_secret_version_setting());
-    list["wallet.pay_to_public_key_hash_version"] =
-        serialize(get_wallet_pay_to_public_key_hash_version_setting());
-    list["wallet.pay_to_script_hash_version"] =
-        serialize(get_wallet_pay_to_script_hash_version_setting());
-    list["wallet.transaction_version"] =
-        serialize(get_wallet_transaction_version_setting());
-    list["wallet.rule_fork_flags"] =
-        serialize(get_wallet_rule_fork_flags_setting());
-
-    // [server]
-    list["server.url"] =
-        get_server_url_setting().to_uri();
-    list["server.connect_retries"] =
-        serialize(get_server_connect_retries_setting());
-    list["server.connect_timeout_seconds"] =
-        serialize(get_server_connect_timeout_seconds_setting());
-
-    write_stream(output, to_json(list));
+    system::options::printer print(definitions, get_variables(),
+        BX_PROGRAM_NAME, BX_SETTINGS_MESSAGE);
+    print.initialize();
+    print.settings(output);
     return console_result::okay;
 }
 

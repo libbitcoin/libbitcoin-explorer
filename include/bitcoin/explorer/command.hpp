@@ -196,62 +196,62 @@ public:
         definitions.add_options()
         (
             "wallet.witness_version",
-            value<explorer::config::byte>(&setting_.wallet.witness_version),
+            po::setting(&setting_.wallet.witness_version),
             "The witness version, defaults to 0."
         )
         (
             "wallet.witness_address_prefix",
-            value<std::string>(&setting_.wallet.witness_address_prefix)->default_value("bc"),
+            po::setting(&setting_.wallet.witness_address_prefix)->default_value("bc"),
             "The witness address prefix, defaults to 'bc'."
         )
         (
             "wallet.wif_version",
-            value<explorer::config::byte>(&setting_.wallet.wif_version)->default_value(128),
+            po::setting(&setting_.wallet.wif_version)->default_value(128),
             "The wallet import format (WIF) key version, defaults to 128."
         )
         (
             "wallet.hd_public_version",
-            value<uint32_t>(&setting_.wallet.hd_public_version)->default_value(76067358),
+            po::setting(&setting_.wallet.hd_public_version)->default_value(76067358),
             "The hierarchical deterministic (HD) public key version, defaults to 76067358."
         )
         (
             "wallet.hd_secret_version",
-            value<uint32_t>(&setting_.wallet.hd_secret_version)->default_value(76066276),
+            po::setting(&setting_.wallet.hd_secret_version)->default_value(76066276),
             "The hierarchical deterministic (HD) private key version, defaults to 76066276."
         )
         (
             "wallet.pay_to_public_key_hash_version",
-            value<explorer::config::byte>(&setting_.wallet.pay_to_public_key_hash_version)->default_value(0),
+            po::setting(&setting_.wallet.pay_to_public_key_hash_version)->default_value(0),
             "The pay-to-public-key-hash address version, defaults to 0."
         )
         (
             "wallet.pay_to_script_hash_version",
-            value<explorer::config::byte>(&setting_.wallet.pay_to_script_hash_version)->default_value(5),
+            po::setting(&setting_.wallet.pay_to_script_hash_version)->default_value(5),
             "The pay-to-script-hash address version, defaults to 5."
         )
         (
             "wallet.transaction_version",
-            value<uint32_t>(&setting_.wallet.transaction_version)->default_value(1),
+            po::setting(&setting_.wallet.transaction_version)->default_value(1),
             "The transaction version, defaults to 1."
         )
         (
             "wallet.rule_fork_flags",
-            value<uint32_t>(&setting_.wallet.rule_fork_flags)->default_value(4294967295),
+            po::setting(&setting_.wallet.rule_fork_flags)->default_value(4294967295),
             "The rule fork flags, defaults to all (4294967295)."
         )
         (
             "server.url",
-            value<system::config::url>(&setting_.server.url)->default_value({ "http://mainnet.libbitcoin.net:8181" }),
+            po::setting(&setting_.server.url)->default_value({ "http://mainnet.libbitcoin.net:8181" }),
             "The URL of the Libbitcoin server native interface."
         )
         (
             "server.connect_retries",
-            value<explorer::config::byte>(&setting_.server.connect_retries)->default_value(0),
+            po::setting(&setting_.server.connect_retries)->default_value(0),
             "The number of times to retry contacting a server, defaults to 0."
         )
         (
             "server.connect_timeout_seconds",
-            value<uint16_t>(&setting_.server.connect_timeout_seconds)->default_value(5),
+            po::setting(&setting_.server.connect_timeout_seconds)->default_value(5),
             "The time limit for connection establishment, defaults to 5."
         );
     }
@@ -308,6 +308,22 @@ public:
     virtual options_metadata& get_option_metadata()
     {
         return option_metadata_;
+    }
+
+    /**
+     * Get the parsed variables.
+     */
+    virtual const po::variables_map& get_variables() const
+    {
+        return variables_;
+    }
+
+    /**
+     * Set the parsed variables.
+     */
+    virtual void set_variables(const po::variables_map& variables)
+    {
+        variables_ = variables;
     }
 
     /**
@@ -523,6 +539,11 @@ private:
      * Command line option metadata.
      */
     options_metadata option_metadata_;
+
+    /**
+     * Parsed variables.
+     */
+    po::variables_map variables_;
 
     /**
      * Environment variable bound variables.

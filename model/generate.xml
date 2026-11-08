@@ -662,7 +662,8 @@
     <define name="BX_BROADCAST_TX_OBSOLETE" value="This command is obsolete. Use send-tx instead." />
   </command>
 
-  <command symbol="settings" output="string" multipleX="true" category="META" description="Display the loaded configuration settings.">
+  <command symbol="settings" output="string" category="META" description="Display all configuration settings.">
+    <define name="BX_SETTINGS_MESSAGE" value="These are the configuration settings that can be set." />
   </command>
 
   <command symbol="sha160" output="base16" category="HASH" description="Perform a SHA160 (also known as SHA-1) hash of Base16 data.">

@@ -96,6 +96,7 @@ bool parser::parse(std::string& out_error, std::istream& input,
 
             // Set the instance defaults from config values.
             instance_.set_defaults_from_config(variables_);
+            instance_.set_variables(variables_);
         }
         else
         {
