@@ -54,10 +54,18 @@ namespace commands {
     "Hardware configuration (x64)..."
 #define BX_HARDWARE_COMPILED \
     "platform:{:d} compiled:{:d}."
+#define BX_HARDWARE_ENABLED \
+    "platform:{:d} enabled:{:d}."
+#define BX_HARDWARE_INCOMPATIBLE \
+    "platform:{:d} compiled:{:d} (unsupported)."
 #define BX_HARDWARE_SHA_UNCOMPILED \
     "Available SHA hardware acceleration is not compiled into this build."
 #define BX_HARDWARE_AVX2_UNCOMPILED \
     "Available AVX2 hardware acceleration is not compiled into this build."
+#define BX_HARDWARE_GPU_UNCOMPILED \
+    "Available cuda hardware acceleration is not compiled into this build."
+#define BX_HARDWARE_UNSUPPORTED \
+    "A cuda device is present but unsupported by the compiled acceleration."
 
 /**
  * Class to implement the hardware command.

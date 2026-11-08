@@ -479,8 +479,12 @@
     <define name="BX_HARDWARE_HEADER_ARM64" value="Hardware configuration (arm64)..." />
     <define name="BX_HARDWARE_HEADER_X64" value="Hardware configuration (x64)..." />
     <define name="BX_HARDWARE_COMPILED" value="platform:{:d} compiled:{:d}." />
+    <define name="BX_HARDWARE_ENABLED" value="platform:{:d} enabled:{:d}." />
+    <define name="BX_HARDWARE_INCOMPATIBLE" value="platform:{:d} compiled:{:d} (unsupported)." />
     <define name="BX_HARDWARE_SHA_UNCOMPILED" value="Available SHA hardware acceleration is not compiled into this build." />
     <define name="BX_HARDWARE_AVX2_UNCOMPILED" value="Available AVX2 hardware acceleration is not compiled into this build." />
+    <define name="BX_HARDWARE_GPU_UNCOMPILED" value="Available cuda hardware acceleration is not compiled into this build." />
+    <define name="BX_HARDWARE_UNSUPPORTED" value="A cuda device is present but unsupported by the compiled acceleration." />
   </command>
 
   <command symbol="hd-new" formerly="hd-seed" output="hd_private" category="WALLET" description="Create a new HD (BIP32) private key from entropy.">

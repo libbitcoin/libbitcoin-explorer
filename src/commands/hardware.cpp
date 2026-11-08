@@ -38,9 +38,6 @@ console_result hardware::invoke(std::ostream& output, std::ostream&)
     output << std::format("sha2........ " BX_HARDWARE_COMPILED, try_neon_sha2(), have_neon_sha) << std::endl;
     output << std::format("sha3........ " BX_HARDWARE_COMPILED, try_neon_sha3(), have_neon_sha3) << std::endl;
     output << std::format("neon........ " BX_HARDWARE_COMPILED, try_neon(), have_neon) << std::endl;
-
-    if (try_neon_sha2() && !have_neon_sha)
-        output << BX_HARDWARE_SHA_UNCOMPILED << std::endl;
 #else
     output << BX_HARDWARE_HEADER_X64 << std::endl;
     output << std::format("aesni....... " BX_HARDWARE_COMPILED, try_aesni(), have_aesni) << std::endl;
@@ -52,13 +49,40 @@ console_result hardware::invoke(std::ostream& output, std::ostream&)
     output << std::format("avx512...... " BX_HARDWARE_COMPILED, try_avx512(), have_avx512) << std::endl;
     output << std::format("avxifma..... " BX_HARDWARE_COMPILED, try_avxifma(), have_avxifma) << std::endl;
     output << std::format("avx512ifma.. " BX_HARDWARE_COMPILED, try_avx512ifma(), have_avx512ifma) << std::endl;
+#endif
 
+    const auto cuda = cuda_device();
+    const auto compiled = batched::compiled();
+    const auto unsupported = cuda && compiled && !batched::accelerated();
+
+    if (unsupported)
+    {
+        output << std::format("cuda........ " BX_HARDWARE_INCOMPATIBLE, cuda, compiled) << std::endl;
+    }
+    else
+    {
+        output << std::format("cuda........ " BX_HARDWARE_COMPILED, cuda, compiled) << std::endl;
+
+        if (cuda)
+            output << std::format("cuda ecc.... " BX_HARDWARE_ENABLED, cuda_ecc(), cuda_ecc_enabled()) << std::endl;
+    }
+
+#if defined(HAVE_ARM)
+    if (try_neon_sha2() && !have_neon_sha)
+        output << BX_HARDWARE_SHA_UNCOMPILED << std::endl;
+#else
     if (try_shani() && !have_shani)
         output << BX_HARDWARE_SHA_UNCOMPILED << std::endl;
 
     if (try_avx2() && !have_avx2)
         output << BX_HARDWARE_AVX2_UNCOMPILED << std::endl;
 #endif
+
+    if (cuda && !compiled)
+        output << BX_HARDWARE_GPU_UNCOMPILED << std::endl;
+
+    if (unsupported)
+        output << BX_HARDWARE_UNSUPPORTED << std::endl;
 
     return console_result::okay;
 }
