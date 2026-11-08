@@ -31,6 +31,8 @@ console_result input_validate::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto index = get_index_option();
+    const auto segwit = get_segwit_option();
+    const auto value = get_value_option();
     const auto strict = false; //// get_strict_option();
     const tx_type& tx = get_transaction_argument();
     const auto& public_key = get_ec_public_key_argument();
@@ -53,13 +55,14 @@ console_result input_validate::invoke(std::ostream& output,
     ec_signature signature;
     const data_slice der{ endorse.begin(), std::prev(endorse.end()) };
     const auto sighash = endorse.back();
-    constexpr auto version = chain::script_version::unversioned;
+    const auto version = segwit ? chain::script_version::segwit :
+        chain::script_version::unversioned;
     constexpr auto flags = chain::flags::all_rules;
 
     if (!public_key.to_data(point) ||
         !ecdsa::decode_signature(signature, der, strict) ||
-        !tx.check_signature(signature, point, contract, index, 0, sighash,
-            version, flags))
+        !tx.check_signature(signature, point, contract, index, value,
+            sighash, version, flags))
     {
         // We do not return a failure here, as this is a validity test.
         output << BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT << std::endl;

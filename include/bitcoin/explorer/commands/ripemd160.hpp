@@ -36,7 +36,6 @@
 #include <bitcoin/explorer/config/share.hpp>
 #include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
-#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 

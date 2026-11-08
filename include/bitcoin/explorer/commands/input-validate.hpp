@@ -36,7 +36,6 @@
 #include <bitcoin/explorer/config/share.hpp>
 #include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
-#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -159,6 +158,16 @@ public:
             "index,i",
             value<uint32_t>(&option_.index),
             "The ordinal position of the input within the transaction, defaults to 0."
+        )
+        (
+            "segwit,w",
+            value<bool>(&option_.segwit)->zero_tokens(),
+            "Validate a version 0 witness input (BIP143). The CONTRACT is then the script code, such as the pay-to-public-key-hash script of a P2WPKH key hash."
+        )
+        (
+            "value,v",
+            value<uint64_t>(&option_.value),
+            "The satoshi value of the previous output, which a version 0 witness endorsement commits to, defaults to 0."
         )
         (
             "EC_PUBLIC_KEY",
@@ -288,6 +297,40 @@ public:
         option_.index = value;
     }
 
+    /**
+     * Get the value of the segwit option.
+     */
+    virtual bool& get_segwit_option()
+    {
+        return option_.segwit;
+    }
+
+    /**
+     * Set the value of the segwit option.
+     */
+    virtual void set_segwit_option(
+        const bool& value)
+    {
+        option_.segwit = value;
+    }
+
+    /**
+     * Get the value of the value option.
+     */
+    virtual uint64_t& get_value_option()
+    {
+        return option_.value;
+    }
+
+    /**
+     * Set the value of the value option.
+     */
+    virtual void set_value_option(
+        const uint64_t& value)
+    {
+        option_.value = value;
+    }
+
 private:
 
     /**
@@ -319,11 +362,15 @@ private:
     struct option
     {
         option()
-          : index()
+          : index(),
+            segwit(),
+            value()
         {
         }
 
         uint32_t index;
+        bool segwit;
+        uint64_t value;
     } option_;
 };
 

@@ -90,6 +90,15 @@ BC_AUTO_TEST_CASE(generated__property__address_to_key__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_payment_address_argument()), serial(payment_address_argument));
 }
 
+BC_AUTO_TEST_CASE(generated__property__address_to_script__round_trips)
+{
+    address_to_script command;
+
+    const system::wallet::payment_address payment_address_argument{ "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" };
+    command.set_payment_address_argument(payment_address_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_payment_address_argument()), serial(payment_address_argument));
+}
+
 BC_AUTO_TEST_CASE(generated__property__base16_decode__round_trips)
 {
     base16_decode command;
@@ -957,6 +966,10 @@ BC_AUTO_TEST_CASE(generated__property__input_set__round_trips)
     const uint32_t index_option{ 42 };
     command.set_index_option(index_option);
     BC_REQUIRE_EQUAL(serial(command.get_index_option()), serial(index_option));
+
+    const system::config::witness witness_option{ "[baadf00d] [beefcafe]" };
+    command.set_witness_option(witness_option);
+    BC_REQUIRE_EQUAL(serial(command.get_witness_option()), serial(witness_option));
 }
 
 BC_AUTO_TEST_CASE(generated__property__input_sign__round_trips)
@@ -983,9 +996,17 @@ BC_AUTO_TEST_CASE(generated__property__input_sign__round_trips)
     command.set_index_option(index_option);
     BC_REQUIRE_EQUAL(serial(command.get_index_option()), serial(index_option));
 
+    const bool segwit_option{ true };
+    command.set_segwit_option(segwit_option);
+    BC_REQUIRE_EQUAL(serial(command.get_segwit_option()), serial(segwit_option));
+
     const explorer::config::sighash sign_type_option{ "all" };
     command.set_sign_type_option(sign_type_option);
     BC_REQUIRE_EQUAL(serial(command.get_sign_type_option()), serial(sign_type_option));
+
+    const uint64_t value_option{ 42 };
+    command.set_value_option(value_option);
+    BC_REQUIRE_EQUAL(serial(command.get_value_option()), serial(value_option));
 }
 
 BC_AUTO_TEST_CASE(generated__property__input_validate__round_trips)
@@ -1011,6 +1032,14 @@ BC_AUTO_TEST_CASE(generated__property__input_validate__round_trips)
     const uint32_t index_option{ 42 };
     command.set_index_option(index_option);
     BC_REQUIRE_EQUAL(serial(command.get_index_option()), serial(index_option));
+
+    const bool segwit_option{ true };
+    command.set_segwit_option(segwit_option);
+    BC_REQUIRE_EQUAL(serial(command.get_segwit_option()), serial(segwit_option));
+
+    const uint64_t value_option{ 42 };
+    command.set_value_option(value_option);
+    BC_REQUIRE_EQUAL(serial(command.get_value_option()), serial(value_option));
 }
 
 BC_AUTO_TEST_CASE(generated__property__match_neutrino_address__round_trips)
@@ -1124,9 +1153,9 @@ BC_AUTO_TEST_CASE(generated__property__qrcode__round_trips)
 {
     qrcode command;
 
-    const system::wallet::payment_address payment_address_argument{ "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" };
-    command.set_payment_address_argument(payment_address_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_payment_address_argument()), serial(payment_address_argument));
+    const std::string text_argument{ "string" };
+    command.set_text_argument(text_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_text_argument()), serial(text_argument));
 
     const uint16_t margin_option{ 42 };
     command.set_margin_option(margin_option);
@@ -1135,10 +1164,6 @@ BC_AUTO_TEST_CASE(generated__property__qrcode__round_trips)
     const uint16_t pixels_option{ 42 };
     command.set_pixels_option(pixels_option);
     BC_REQUIRE_EQUAL(serial(command.get_pixels_option()), serial(pixels_option));
-
-    const std::string scheme_option{ "string" };
-    command.set_scheme_option(scheme_option);
-    BC_REQUIRE_EQUAL(serial(command.get_scheme_option()), serial(scheme_option));
 
     const uint8_t version_option{ 42 };
     command.set_version_option(version_option);
@@ -1529,6 +1554,15 @@ BC_AUTO_TEST_CASE(generated__property__wif_to_public__round_trips)
 BC_AUTO_TEST_CASE(generated__property__witness_to_key__round_trips)
 {
     witness_to_key command;
+
+    const system::wallet::witness_address witness_address_argument{ "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4" };
+    command.set_witness_address_argument(witness_address_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_witness_address_argument()), serial(witness_address_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__witness_to_script__round_trips)
+{
+    witness_to_script command;
 
     const system::wallet::witness_address witness_address_argument{ "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4" };
     command.set_witness_address_argument(witness_address_argument);

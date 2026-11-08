@@ -11,18 +11,6 @@
     <PropertyPageSchema Include="$(MSBuildThisFileDirectory)libbitcoin-network.import.xml" />
   </ItemGroup>
 
-  <!-- Options -->
-
-  <PropertyGroup>
-    <Option-verbose Condition="'$(Option-verbose)' == ''">false</Option-verbose>
-  </PropertyGroup>
-
-  <!-- Messages -->
-
-  <Target Name="NetworkOptionInfo" BeforeTargets="PrepareForBuild">
-    <Message Text="Option-verbose    : $(Option-verbose)" Importance="high"/>
-  </Target>
-
   <!-- Linkage -->
 
   <ItemDefinitionGroup>
@@ -30,7 +18,6 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libbitcoin-network\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libbitcoin-network\build\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Linkage-libbitcoin-network)' == 'static' Or '$(Linkage-libbitcoin-network)' == 'ltcg'">BCT_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Option-verbose)' == 'true'">WITH_LOGV;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies Condition="'$(Linkage-libbitcoin-network)' != ''">libbitcoin-network.lib;%(AdditionalDependencies)</AdditionalDependencies>

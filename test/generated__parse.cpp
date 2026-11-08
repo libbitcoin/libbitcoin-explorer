@@ -98,6 +98,23 @@ BC_AUTO_TEST_CASE(generated__parse__address_to_key__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__address_to_script__okay)
+{
+    address_to_script command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "address-to-script",
+        "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__base16_decode__okay)
 {
     base16_decode command;
@@ -1392,12 +1409,13 @@ BC_AUTO_TEST_CASE(generated__parse__input_set__okay)
     {
         "input-set",
         "--index", "42",
+        "--witness", "[baadf00d] [beefcafe]",
         "dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig",
         "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 5, argv));
+    BC_REQUIRE(metadata.parse(message, input, 7, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1412,14 +1430,16 @@ BC_AUTO_TEST_CASE(generated__parse__input_sign__okay)
         "input-sign",
         "--anyone",
         "--index", "42",
+        "--segwit",
         "--sign_type", "all",
+        "--value", "42",
         "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475",
         "dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig",
         "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 9, argv));
+    BC_REQUIRE(metadata.parse(message, input, 12, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1433,6 +1453,8 @@ BC_AUTO_TEST_CASE(generated__parse__input_validate__okay)
     {
         "input-validate",
         "--index", "42",
+        "--segwit",
+        "--value", "42",
         "03ac9e60013853128b42a1324609bac2ccff6a0b4844b6301f1f552e15ee14c7a5",
         "dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig",
         "3044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c202201035fe810e283bcf394485c6a9dfd117ad9f684cdd83d36453718f5d0491b9dd01",
@@ -1440,7 +1462,7 @@ BC_AUTO_TEST_CASE(generated__parse__input_validate__okay)
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 7, argv));
+    BC_REQUIRE(metadata.parse(message, input, 10, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1601,13 +1623,12 @@ BC_AUTO_TEST_CASE(generated__parse__qrcode__okay)
         "qrcode",
         "--margin", "42",
         "--pixels", "42",
-        "--scheme", "string",
         "--version", "42",
-        "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+        "string",
     };
 
     parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 10, argv));
+    BC_REQUIRE(metadata.parse(message, input, 8, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -2207,6 +2228,23 @@ BC_AUTO_TEST_CASE(generated__parse__witness_to_key__okay)
     const char* argv[]
     {
         "witness-to-key",
+        "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__witness_to_script__okay)
+{
+    witness_to_script command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "witness-to-script",
         "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4",
     };
 

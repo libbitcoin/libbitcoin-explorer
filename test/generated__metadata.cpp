@@ -60,6 +60,14 @@ BC_AUTO_TEST_CASE(generated__metadata__address_to_key__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__address_to_script__returns_expected_values)
+{
+    address_to_script command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__base16_decode__returns_expected_values)
 {
     base16_decode command;
@@ -999,6 +1007,14 @@ BC_AUTO_TEST_CASE(generated__metadata__wif_to_public__returns_expected_values)
 BC_AUTO_TEST_CASE(generated__metadata__witness_to_key__returns_expected_values)
 {
     witness_to_key command;
+    BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__witness_to_script__returns_expected_values)
+{
+    witness_to_script command;
     BC_REQUIRE_EQUAL(command.category(), "WALLET");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());

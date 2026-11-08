@@ -85,8 +85,6 @@
 #                                 Default: --with-secp256k1
 # --<with/without>-valgrind     Use valgrind memcheck client requests.
 #                                 Default: --without-valgrind
-# --<with/without>-verbose      Compile verbose logging.
-#                                 Default: --without-verbose
 #
 # All unrecognized options provided shall be passed as configuration
 # options for all dependencies.
@@ -1150,8 +1148,6 @@ help()
     msg "                                Default: --with-secp256k1"
     msg "--<with/without>-valgrind     Use valgrind memcheck client requests."
     msg "                                Default: --without-valgrind"
-    msg "--<with/without>-verbose      Compile verbose logging."
-    msg "                                Default: --without-verbose"
     msg ""
     msg "All unrecognized options provided shall be passed as configuration"
     msg "options for all dependencies."

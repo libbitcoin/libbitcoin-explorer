@@ -30,7 +30,7 @@ BC_AUTO_TEST_CASE(qrcode__invoke__pixels_0__failure_error)
 
     // This module size will create an empty image.
     command.set_pixels_option(0);
-    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    command.set_text_argument("12u8rC4Pxih4m59eApanRDodXcPxWiaKgg");
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_QRCODE_MINIMUM_SIZE "\n");
 }
@@ -41,18 +41,17 @@ BC_AUTO_TEST_CASE(qrcode__invoke__invalid_pixels__failure_error)
 
     // This module size will create an oversized image.
     command.set_pixels_option(max_uint16);
-    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    command.set_text_argument("12u8rC4Pxih4m59eApanRDodXcPxWiaKgg");
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_QRCODE_MAXIMUM_SIZE "\n");
 }
 
-BC_AUTO_TEST_CASE(qrcode__invoke__invalid_scheme__failure_error)
+BC_AUTO_TEST_CASE(qrcode__invoke__invalid_text__failure_error)
 {
     BX_DECLARE_COMMAND(qrcode);
 
-    // This scheme will create an oversized image.
-    command.set_scheme_option(std::string(max_uint16, 's'));
-    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    // This text will create an oversized image.
+    command.set_text_argument(std::string(max_uint16, 's'));
     command.set_pixels_option(8);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_QRCODE_MAXIMUM_SIZE "\n");
@@ -64,7 +63,7 @@ BC_AUTO_TEST_CASE(qrcode__invoke__invalid_margin__failure_error)
 
     // This margin size will create an oversized image.
     command.set_margin_option(max_uint16);
-    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    command.set_text_argument("12u8rC4Pxih4m59eApanRDodXcPxWiaKgg");
     command.set_pixels_option(8);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_QRCODE_MAXIMUM_SIZE "\n");
@@ -76,7 +75,7 @@ BC_AUTO_TEST_CASE(qrcode__invoke__invalid_version__failure_error)
 
     // Tha maximum version is 40, so this addition does not overflow.
     command.set_version_option(wallet::qr_code::maximum_version + 1u);
-    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    command.set_text_argument("12u8rC4Pxih4m59eApanRDodXcPxWiaKgg");
     command.set_pixels_option(8);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_QRCODE_MAXIMUM_VERSION "\n");
@@ -89,8 +88,7 @@ BC_AUTO_TEST_CASE(qrcode__invoke__non_default_values__success_expected_size)
     command.set_margin_option(4);
     command.set_pixels_option(4);
     command.set_version_option(4);
-    command.set_scheme_option("shitcoin");
-    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    command.set_text_argument("shitcoin:12u8rC4Pxih4m59eApanRDodXcPxWiaKgg");
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
     system::read::bytes::istream reader(output);
@@ -163,14 +161,29 @@ BC_AUTO_TEST_CASE(qrcode__invoke__minimal_size__success_expected)
     command.set_margin_option(0);
     command.set_pixels_option(1);
     command.set_version_option(0);
-    command.set_scheme_option("");
-    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
+    command.set_text_argument("12u8rC4Pxih4m59eApanRDodXcPxWiaKgg");
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
     system::read::bytes::istream reader(output);
 
     // Encode as base16 so that failure message is intelligible.
     BC_REQUIRE_EQUAL(encode_base16(reader.read_bytes()), encode_base16(expected));
+}
+
+BC_AUTO_TEST_CASE(qrcode__invoke__whitespace__trimmed)
+{
+    BX_DECLARE_COMMAND(qrcode);
+    command.set_margin_option(0);
+    command.set_pixels_option(1);
+    command.set_version_option(0);
+    command.set_text_argument("12u8rC4Pxih4m59eApanRDodXcPxWiaKgg");
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+
+    std::stringstream trimmed;
+    std::stringstream trimmed_error;
+    command.set_text_argument(" 12u8rC4Pxih4m59eApanRDodXcPxWiaKgg\n");
+    BX_REQUIRE_OKAY(command.invoke(trimmed, trimmed_error));
+    BC_REQUIRE_EQUAL(encode_base16(to_chunk(trimmed.str())), encode_base16(to_chunk(output.str())));
 }
 
 BC_AUTO_TEST_SUITE_END()

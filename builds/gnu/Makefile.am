@@ -66,6 +66,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/address-embed.cpp \
     ${srcdir}/../../src/commands/address-encode.cpp \
     ${srcdir}/../../src/commands/address-to-key.cpp \
+    ${srcdir}/../../src/commands/address-to-script.cpp \
     ${srcdir}/../../src/commands/base16-decode.cpp \
     ${srcdir}/../../src/commands/base16-encode.cpp \
     ${srcdir}/../../src/commands/base32-decode.cpp \
@@ -184,6 +185,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/wif-to-ec.cpp \
     ${srcdir}/../../src/commands/wif-to-public.cpp \
     ${srcdir}/../../src/commands/witness-to-key.cpp \
+    ${srcdir}/../../src/commands/witness-to-script.cpp \
     ${srcdir}/../../src/commands/wrap-decode.cpp \
     ${srcdir}/../../src/commands/wrap-encode.cpp \
     ${srcdir}/../../src/config/address.cpp \
@@ -199,8 +201,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/config/language.cpp \
     ${srcdir}/../../src/config/share.cpp \
     ${srcdir}/../../src/config/sighash.cpp \
-    ${srcdir}/../../src/config/signature.cpp \
-    ${srcdir}/../../src/config/witness.cpp
+    ${srcdir}/../../src/config/signature.cpp
 
 nodist_src_libbitcoin_explorer_la_SOURCES = \
     src/version.cpp
@@ -249,6 +250,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/address-embed.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/address-encode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/address-to-key.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/address-to-script.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/base16-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/base16-encode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/base32-decode.hpp \
@@ -367,6 +369,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/wif-to-ec.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/wif-to-public.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/witness-to-key.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/witness-to-script.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/wrap-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/wrap-encode.hpp
 
@@ -388,7 +391,6 @@ include_bitcoin_explorer_config_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/config/share.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/sighash.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/signature.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/config/witness.hpp \
     ${srcdir}/../../include/bitcoin/explorer/config/wrapper.hpp
 
 include_bitcoin_explorer_impldir = \
@@ -440,6 +442,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/address-embed.cpp \
     ${srcdir}/../../test/commands/address-encode.cpp \
     ${srcdir}/../../test/commands/address-to-key.cpp \
+    ${srcdir}/../../test/commands/address-to-script.cpp \
     ${srcdir}/../../test/commands/base16-decode.cpp \
     ${srcdir}/../../test/commands/base16-encode.cpp \
     ${srcdir}/../../test/commands/base32-decode.cpp \
@@ -558,6 +561,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/wif-to-ec.cpp \
     ${srcdir}/../../test/commands/wif-to-public.cpp \
     ${srcdir}/../../test/commands/witness-to-key.cpp \
+    ${srcdir}/../../test/commands/witness-to-script.cpp \
     ${srcdir}/../../test/commands/wrap-decode.cpp \
     ${srcdir}/../../test/commands/wrap-encode.cpp \
     ${srcdir}/../../test/config/address.cpp \

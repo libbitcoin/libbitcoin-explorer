@@ -35,6 +35,7 @@ console_result input_set::invoke(std::ostream& output, std::ostream& error)
     const auto index = get_index_option();
     const chain::transaction& tx = get_transaction_argument();
     const chain::script& endorsement = get_endorsement_script_argument();
+    const chain::witness& witness = get_witness_option();
 
     const auto& ins = *tx.inputs_ptr();
 
@@ -44,15 +45,31 @@ console_result input_set::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    const auto inputs = std::make_shared<chain::input_cptrs>();
+    const auto inputs = to_shared<chain::input_cptrs>();
     inputs->reserve(ins.size());
 
-    for (size_t input = 0; input < ins.size(); ++input)
-        inputs->push_back(input == index ?
-            std::make_shared<const chain::input>(ins[input]->point_ptr(),
-                std::make_shared<const chain::script>(endorsement),
-                ins[input]->witness_ptr(), ins[input]->sequence()) :
-            ins[input]);
+    for (size_t input{}; input < ins.size(); ++input)
+    {
+        if (input != index)
+        {
+            inputs->push_back(ins[input]);
+            continue;
+        }
+
+        const auto witness_cptr = witness.is_valid() ?
+            to_shared<chain::witness>(witness) : ins[input]->witness_ptr();
+
+        inputs->push_back
+        (
+            to_shared<chain::input>
+            (
+                ins[input]->point_ptr(),
+                to_shared<chain::script>(endorsement),
+                witness_cptr,
+                ins[input]->sequence()
+            )
+        );
+    }
 
     output << transaction(chain::transaction
     {

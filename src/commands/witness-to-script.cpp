@@ -16,41 +16,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_WITNESS_HPP
-#define BX_WITNESS_HPP
+#include <bitcoin/explorer/commands/witness-to-script.hpp>
 
-#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
-namespace config {
+namespace commands {
 
-// Enumeration mapper.
+using namespace bc::system;
+using namespace bc::system::config;
 
-class BCX_API witness
+console_result witness_to_script::invoke(std::ostream& output, std::ostream&)
 {
-public:
-    typedef system::wallet::witness_address::program_type type;
+    // Bound parameters.
+    const auto& address = get_witness_address_argument();
 
-    DEFAULT_COPY_MOVE(witness);
+    output << script(address.script()) << std::endl;
+    return console_result::okay;
+}
 
-    witness();
-    witness(const std::string& token);
-    witness(const type& value);
-
-    operator const type&() const;
-
-    friend std::istream& operator>>(std::istream& input, witness& argument);
-    friend std::ostream& operator<<(std::ostream& output, 
-        const witness& argument);
-
-private:
-    type value_;
-};
-
-} // namespace config
-} // namespace explorer
-} // namespace libbitcoin
-
-#endif
+} //namespace commands
+} //namespace explorer
+} //namespace libbitcoin

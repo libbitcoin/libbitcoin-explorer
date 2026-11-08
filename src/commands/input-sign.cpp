@@ -35,7 +35,9 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto anyone_can_pay = get_anyone_option();
     const auto index = get_index_option();
+    const auto segwit = get_segwit_option();
     const auto sign_type = get_sign_type_option();
+    const auto value = get_value_option();
     const tx_type& tx = get_transaction_argument();
     const ec_secret& private_key = get_ec_private_key_argument();
     const script& contract = get_contract_argument();
@@ -50,10 +52,13 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     if (anyone_can_pay)
         hash_type |= chain::coverage::anyone_can_pay;
 
+    const auto version = segwit ? chain::script_version::segwit :
+        chain::script_version::unversioned;
+
     endorsement endorse;
 
-    if (!tx.create_endorsement(endorse, private_key, contract, index, 0,
-        hash_type, chain::script_version::unversioned, chain::flags::all_rules))
+    if (!tx.create_endorsement(endorse, private_key, contract, index, value,
+        hash_type, version, chain::flags::all_rules))
     {
         error << BX_INPUT_SIGN_FAILED << std::endl;
         return console_result::failure;

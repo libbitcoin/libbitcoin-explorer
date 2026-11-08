@@ -90,6 +90,11 @@
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN." />
   </command>
 
+  <command symbol="address-to-script" output="string" category="WALLET" description="Derive the output script of a payment address, as plain text tokens.">
+    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN." />
+    <define name="BX_ADDRESS_TO_SCRIPT_INVALID_VERSION" value="The address version is not the configured pay-to-public-key-hash or pay-to-script-hash version." />
+  </command>
+
   <command symbol="base16-decode" output="bytes" category="ENCODING" description="Convert a Base16 value to binary data.">
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to decode as binary data. If not specified the value is read from STDIN." />
   </command>
@@ -529,7 +534,9 @@
   <command symbol="input-sign" formerly="sign-input" output="endorsement" category="TRANSACTION" description="Create an endorsement for a transaction input.">
     <option name="anyone" description="Modify signature hashing so that other inputs are ignored." />
     <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to 0." />
+    <option name="segwit" shortcut="w" description="Sign a version 0 witness input (BIP143). The CONTRACT is then the script code, such as the pay-to-public-key-hash script of a P2WPKH key hash." />
     <option name="sign_type" type="sighash" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', and 'single', defaults to 'all'." />
+    <option name="value" type="uint64_t" description="The satoshi value of the previous output, which a version 0 witness endorsement commits to, defaults to 0." />
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The Base16 EC private key to sign with."/>
     <argument name="CONTRACT" required="true" type="script" description="The previous output script to use in signing. Multiple tokens must be quoted." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
@@ -539,6 +546,7 @@
 
   <command symbol="input-set" formerly="set-input" output="transaction" category="TRANSACTION" description="Assign a script to an existing transaction input.">
     <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to 0." />
+    <option name="witness" type="witness" description="The witness to assign to the input, as bracketed Base16 data tokens. Multiple tokens must be quoted. If not specified the input witness is unchanged." />
     <argument name="ENDORSEMENT_SCRIPT" required="true" type="script" description="The endorsement script to assign to the input. Multiple tokens must be quoted." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
     <define name="BX_INPUT_SET_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
@@ -546,6 +554,8 @@
 
   <command symbol="input-validate" formerly="validsig" output="string" category="TRANSACTION" description="Validate a transaction input endorsement.">
     <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to 0." />
+    <option name="segwit" shortcut="w" description="Validate a version 0 witness input (BIP143). The CONTRACT is then the script code, such as the pay-to-public-key-hash script of a P2WPKH key hash." />
+    <option name="value" type="uint64_t" description="The satoshi value of the previous output, which a version 0 witness endorsement commits to, defaults to 0." />
     <argument name="EC_PUBLIC_KEY" required="true" type="ec_public" description="The Base16 EC public key to verify against."/>
     <argument name="CONTRACT" required="true" type="script" description="The previous output script used in signing. Multiple tokens must be quoted." />
     <argument name="ENDORSEMENT" required="true" type="endorsement" description="The endorsement to validate."/>
@@ -589,12 +599,11 @@
     <define name="BX_MNEMONIC_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
   </command>
 
-  <command symbol="qrcode" category="WALLET" output="bytes" description="Create a square QRCODE PNG file for a payment address.">
+  <command symbol="qrcode" category="WALLET" output="bytes" description="Create a square QRCODE PNG file for text, such as a Bitcoin URI, an address or a key.">
     <option name="margin" type="uint16_t" default="2" description="The pixel width of the QRCODE margin, defaults to 2." />
     <option name="pixels" type="uint16_t" default="8" description="The pixel width of the QRCODE modules, defaults to 8." />
-    <option name="scheme" type="string" default="bitcoin" description="The URI scheme of the QRCODE data, defaults to 'bitcoin'." />
     <option name="version" type="uint8_t" description="The version of the QRCODE, defaults to 0 which is the minimum size." />
-    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" required="true" description="The payment address. If not specified the address is read from STDIN."/>
+    <argument name="TEXT" stdin="true" type="string" description="The text to encode, trimmed of surrounding whitespace. If not specified the text is read from STDIN."/>
     <define name="BX_QRCODE_MINIMUM_SIZE" value="The pixel size of modules must be greater than 0. " />
     <define name="BX_QRCODE_MAXIMUM_SIZE" value="The image is too large for PNG encoding." />
     <define name="BX_QRCODE_MAXIMUM_VERSION" value="The version exceeds the maximum value of 40." />
@@ -801,6 +810,10 @@
   </command>
 
   <command symbol="witness-to-key" output="base16" category="WALLET" description="Derive the payments search key of a witness address.">
+    <argument name="WITNESS_ADDRESS" stdin="true" type="witness_address" description="The witness address. If not specified the address is read from STDIN." />
+  </command>
+
+  <command symbol="witness-to-script" output="string" category="WALLET" description="Derive the output script of a witness address, as plain text tokens.">
     <argument name="WITNESS_ADDRESS" stdin="true" type="witness_address" description="The witness address. If not specified the address is read from STDIN." />
   </command>
   

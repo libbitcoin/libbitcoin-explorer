@@ -83,6 +83,20 @@ BC_AUTO_TEST_CASE(generated__help__address_to_key__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
+BC_AUTO_TEST_CASE(generated__help__address_to_script__okay_output)
+{
+    address_to_script command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "address-to-script", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
 BC_AUTO_TEST_CASE(generated__help__base16_decode__okay_output)
 {
     base16_decode command;
@@ -1727,6 +1741,20 @@ BC_AUTO_TEST_CASE(generated__help__witness_to_key__okay_output)
     std::string message;
     std::stringstream input, output;
     const char* argv[]{ "witness-to-key", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__witness_to_script__okay_output)
+{
+    witness_to_script command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "witness-to-script", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());

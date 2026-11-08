@@ -47,6 +47,11 @@ BC_AUTO_TEST_CASE(generated__find__address_to_key__returns_object)
     BC_REQUIRE(find("address-to-key") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__address_to_script__returns_object)
+{
+    BC_REQUIRE(find("address-to-script") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__base16_decode__returns_object)
 {
     BC_REQUIRE(find("base16-decode") != nullptr);
@@ -635,6 +640,11 @@ BC_AUTO_TEST_CASE(generated__find__wif_to_public__returns_object)
 BC_AUTO_TEST_CASE(generated__find__witness_to_key__returns_object)
 {
     BC_REQUIRE(find("witness-to-key") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__witness_to_script__returns_object)
+{
+    BC_REQUIRE(find("witness-to-script") != nullptr);
 }
 
 BC_AUTO_TEST_CASE(generated__find__wrap_decode__returns_object)

@@ -103,7 +103,7 @@ function global.map_type(type)
     my.type_transaction_bx = "system::config::transaction"
     my.type_uri_bx = "system::wallet::bitcoin_uri"
     my.type_wif_bx = "system::wallet::ec_private"
-    my.type_witness_bx = "explorer::config::witness"
+    my.type_witness_bx = "system::config::witness"
     my.type_witness_address_bx = "system::wallet::witness_address"
     my.type_wrapper_bx = "explorer::config::wrapper"
 
@@ -312,6 +312,8 @@ function global.sample_value(type)
         return "dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig"
     elsif (my.type = "system::config::transaction")
         return "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000"
+    elsif (my.type = "system::config::witness")
+        return "[baadf00d] [beefcafe]"
     elsif (my.type = "system::config::url")
         return "http://127.0.0.1:1"
     elsif (my.type = "system::wallet::bitcoin_uri")
@@ -373,7 +375,6 @@ endfunction
 #include <bitcoin/explorer/config/share.hpp>
 #include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
-#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 .endmacro
 .

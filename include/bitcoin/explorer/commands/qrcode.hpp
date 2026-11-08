@@ -36,7 +36,6 @@
 #include <bitcoin/explorer/config/share.hpp>
 #include <bitcoin/explorer/config/sighash.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
-#include <bitcoin/explorer/config/witness.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -100,7 +99,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a square QRCODE PNG file for a payment address.";
+        return "Create a square QRCODE PNG file for text, such as a Bitcoin URI, an address or a key.";
     }
 
     /**
@@ -120,7 +119,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PAYMENT_ADDRESS", 1);
+            .add("TEXT", 1);
     }
 
     /**
@@ -131,7 +130,7 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        load_input(get_payment_address_argument(), "PAYMENT_ADDRESS", variables, input);
+        load_input(get_text_argument(), "TEXT", variables, input);
     }
 
     /**
@@ -164,19 +163,14 @@ public:
             "The pixel width of the QRCODE modules, defaults to 8."
         )
         (
-            "scheme,s",
-            value<std::string>(&option_.scheme)->default_value("bitcoin"),
-            "The URI scheme of the QRCODE data, defaults to 'bitcoin'."
-        )
-        (
             "version,v",
             value<uint8_t>(&option_.version),
             "The version of the QRCODE, defaults to 0 which is the minimum size."
         )
         (
-            "PAYMENT_ADDRESS",
-            value<system::wallet::payment_address>(&argument_.payment_address)->required(),
-            "The payment address. If not specified the address is read from STDIN."
+            "TEXT",
+            value<std::string>(&argument_.text),
+            "The text to encode, trimmed of surrounding whitespace. If not specified the text is read from STDIN."
         );
 
         return options;
@@ -202,20 +196,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PAYMENT_ADDRESS argument.
+     * Get the value of the TEXT argument.
      */
-    virtual system::wallet::payment_address& get_payment_address_argument()
+    virtual std::string& get_text_argument()
     {
-        return argument_.payment_address;
+        return argument_.text;
     }
 
     /**
-     * Set the value of the PAYMENT_ADDRESS argument.
+     * Set the value of the TEXT argument.
      */
-    virtual void set_payment_address_argument(
-        const system::wallet::payment_address& value)
+    virtual void set_text_argument(
+        const std::string& value)
     {
-        argument_.payment_address = value;
+        argument_.text = value;
     }
 
     /**
@@ -253,23 +247,6 @@ public:
     }
 
     /**
-     * Get the value of the scheme option.
-     */
-    virtual std::string& get_scheme_option()
-    {
-        return option_.scheme;
-    }
-
-    /**
-     * Set the value of the scheme option.
-     */
-    virtual void set_scheme_option(
-        const std::string& value)
-    {
-        option_.scheme = value;
-    }
-
-    /**
      * Get the value of the version option.
      */
     virtual uint8_t& get_version_option()
@@ -296,11 +273,11 @@ private:
     struct argument
     {
         argument()
-          : payment_address()
+          : text()
         {
         }
 
-        system::wallet::payment_address payment_address;
+        std::string text;
     } argument_;
 
     /**
@@ -313,14 +290,12 @@ private:
         option()
           : margin(),
             pixels(),
-            scheme(),
             version()
         {
         }
 
         uint16_t margin;
         uint16_t pixels;
-        std::string scheme;
         uint8_t version;
     } option_;
 };
