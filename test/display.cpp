@@ -31,11 +31,27 @@ BC_AUTO_TEST_CASE(display__command_names__always__lists_commands)
     BC_REQUIRE_NE(text.str().find("address-decode"), std::string::npos);
 }
 
-BC_AUTO_TEST_CASE(display__command_names__always__omits_obsolete)
+BC_AUTO_TEST_CASE(display__command_names__always__fits_standard_width)
 {
     std::stringstream text;
     display_command_names(text);
-    BC_REQUIRE_EQUAL(text.str().find("wrap-encode"), std::string::npos);
+    std::string line{};
+    while (std::getline(text, line))
+        BC_REQUIRE_LE(line.length(), 73u);
+}
+
+BC_AUTO_TEST_CASE(display__command_names__always__multiple_columns)
+{
+    std::stringstream text;
+    display_command_names(text);
+    size_t lines{};
+    std::string line{};
+    while (std::getline(text, line))
+        ++lines;
+
+    size_t count{};
+    broadcast([&count](std::shared_ptr<command>) { ++count; });
+    BC_REQUIRE_LT(lines, count);
 }
 
 BC_AUTO_TEST_CASE(display__connection_failure__always__names_endpoint)

@@ -217,38 +217,6 @@ BC_AUTO_TEST_CASE(generated__parse__base58_encode__okay)
     BC_REQUIRE(!metadata.help());
 }
 
-BC_AUTO_TEST_CASE(generated__parse__base58check_decode__okay)
-{
-    base58check_decode command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "base58check-decode",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
-BC_AUTO_TEST_CASE(generated__parse__base58check_encode__okay)
-{
-    base58check_encode command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "base58check-encode",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
 BC_AUTO_TEST_CASE(generated__parse__base64_decode__okay)
 {
     base64_decode command;
@@ -349,22 +317,6 @@ BC_AUTO_TEST_CASE(generated__parse__bitcoin256__okay)
 
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
-BC_AUTO_TEST_CASE(generated__parse__broadcast_tx__okay)
-{
-    broadcast_tx command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "broadcast-tx",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1205,54 +1157,6 @@ BC_AUTO_TEST_CASE(generated__parse__fetch_utxo__okay)
     BC_REQUIRE(!metadata.help());
 }
 
-BC_AUTO_TEST_CASE(generated__parse__get_filter_checkpoint__okay)
-{
-    get_filter_checkpoint command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "get-filter-checkpoint",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
-BC_AUTO_TEST_CASE(generated__parse__get_filter_headers__okay)
-{
-    get_filter_headers command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "get-filter-headers",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
-BC_AUTO_TEST_CASE(generated__parse__get_filters__okay)
-{
-    get_filters command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "get-filters",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
 BC_AUTO_TEST_CASE(generated__parse__hardware__okay)
 {
     hardware command;
@@ -1329,22 +1233,6 @@ BC_AUTO_TEST_CASE(generated__parse__hd_public__okay)
     BC_REQUIRE(!metadata.help());
 }
 
-BC_AUTO_TEST_CASE(generated__parse__hd_to_address__okay)
-{
-    hd_to_address command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "hd-to-address",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
 BC_AUTO_TEST_CASE(generated__parse__hd_to_ec__okay)
 {
     hd_to_ec command;
@@ -1379,22 +1267,6 @@ BC_AUTO_TEST_CASE(generated__parse__hd_to_public__okay)
 
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 6, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
-BC_AUTO_TEST_CASE(generated__parse__hd_to_wif__okay)
-{
-    hd_to_wif command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "hd-to-wif",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1613,22 +1485,6 @@ BC_AUTO_TEST_CASE(generated__parse__mnemonic_to_seed__okay)
     BC_REQUIRE(!metadata.help());
 }
 
-BC_AUTO_TEST_CASE(generated__parse__put_tx__okay)
-{
-    put_tx command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "put-tx",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
 BC_AUTO_TEST_CASE(generated__parse__qrcode__okay)
 {
     qrcode command;
@@ -1768,22 +1624,6 @@ BC_AUTO_TEST_CASE(generated__parse__script_to_witness__okay)
 
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 3, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
-BC_AUTO_TEST_CASE(generated__parse__seed__okay)
-{
-    seed command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "seed",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -2117,22 +1957,6 @@ BC_AUTO_TEST_CASE(generated__parse__tx_encode__okay)
     BC_REQUIRE(!metadata.help());
 }
 
-BC_AUTO_TEST_CASE(generated__parse__tx_sign__okay)
-{
-    tx_sign command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "tx-sign",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
 BC_AUTO_TEST_CASE(generated__parse__uri_decode__okay)
 {
     uri_decode command;
@@ -2341,38 +2165,6 @@ BC_AUTO_TEST_CASE(generated__parse__witness_to_script__okay)
 
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
-BC_AUTO_TEST_CASE(generated__parse__wrap_decode__okay)
-{
-    wrap_decode command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "wrap-decode",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
-BC_AUTO_TEST_CASE(generated__parse__wrap_encode__okay)
-{
-    wrap_encode command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "wrap-encode",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 1, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }

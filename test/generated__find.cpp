@@ -82,16 +82,6 @@ BC_AUTO_TEST_CASE(generated__find__base58_encode__returns_object)
     BC_REQUIRE(find("base58-encode") != nullptr);
 }
 
-BC_AUTO_TEST_CASE(generated__find__base58check_decode__returns_object)
-{
-    BC_REQUIRE(find("base58check-decode") != nullptr);
-}
-
-BC_AUTO_TEST_CASE(generated__find__base58check_encode__returns_object)
-{
-    BC_REQUIRE(find("base58check-encode") != nullptr);
-}
-
 BC_AUTO_TEST_CASE(generated__find__base64_decode__returns_object)
 {
     BC_REQUIRE(find("base64-decode") != nullptr);
@@ -120,11 +110,6 @@ BC_AUTO_TEST_CASE(generated__find__bitcoin160__returns_object)
 BC_AUTO_TEST_CASE(generated__find__bitcoin256__returns_object)
 {
     BC_REQUIRE(find("bitcoin256") != nullptr);
-}
-
-BC_AUTO_TEST_CASE(generated__find__broadcast_tx__returns_object)
-{
-    BC_REQUIRE(find("broadcast-tx") != nullptr);
 }
 
 BC_AUTO_TEST_CASE(generated__find__btc_to_satoshi__returns_object)
@@ -357,21 +342,6 @@ BC_AUTO_TEST_CASE(generated__find__fetch_utxo__returns_object)
     BC_REQUIRE(find("fetch-utxo") != nullptr);
 }
 
-BC_AUTO_TEST_CASE(generated__find__get_filter_checkpoint__returns_object)
-{
-    BC_REQUIRE(find("get-filter-checkpoint") != nullptr);
-}
-
-BC_AUTO_TEST_CASE(generated__find__get_filter_headers__returns_object)
-{
-    BC_REQUIRE(find("get-filter-headers") != nullptr);
-}
-
-BC_AUTO_TEST_CASE(generated__find__get_filters__returns_object)
-{
-    BC_REQUIRE(find("get-filters") != nullptr);
-}
-
 BC_AUTO_TEST_CASE(generated__find__hardware__returns_object)
 {
     BC_REQUIRE(find("hardware") != nullptr);
@@ -392,11 +362,6 @@ BC_AUTO_TEST_CASE(generated__find__hd_public__returns_object)
     BC_REQUIRE(find("hd-public") != nullptr);
 }
 
-BC_AUTO_TEST_CASE(generated__find__hd_to_address__returns_object)
-{
-    BC_REQUIRE(find("hd-to-address") != nullptr);
-}
-
 BC_AUTO_TEST_CASE(generated__find__hd_to_ec__returns_object)
 {
     BC_REQUIRE(find("hd-to-ec") != nullptr);
@@ -405,11 +370,6 @@ BC_AUTO_TEST_CASE(generated__find__hd_to_ec__returns_object)
 BC_AUTO_TEST_CASE(generated__find__hd_to_public__returns_object)
 {
     BC_REQUIRE(find("hd-to-public") != nullptr);
-}
-
-BC_AUTO_TEST_CASE(generated__find__hd_to_wif__returns_object)
-{
-    BC_REQUIRE(find("hd-to-wif") != nullptr);
 }
 
 BC_AUTO_TEST_CASE(generated__find__help__returns_object)
@@ -467,11 +427,6 @@ BC_AUTO_TEST_CASE(generated__find__mnemonic_to_seed__returns_object)
     BC_REQUIRE(find("mnemonic-to-seed") != nullptr);
 }
 
-BC_AUTO_TEST_CASE(generated__find__put_tx__returns_object)
-{
-    BC_REQUIRE(find("put-tx") != nullptr);
-}
-
 BC_AUTO_TEST_CASE(generated__find__qrcode__returns_object)
 {
     BC_REQUIRE(find("qrcode") != nullptr);
@@ -510,11 +465,6 @@ BC_AUTO_TEST_CASE(generated__find__script_to_key__returns_object)
 BC_AUTO_TEST_CASE(generated__find__script_to_witness__returns_object)
 {
     BC_REQUIRE(find("script-to-witness") != nullptr);
-}
-
-BC_AUTO_TEST_CASE(generated__find__seed__returns_object)
-{
-    BC_REQUIRE(find("seed") != nullptr);
 }
 
 BC_AUTO_TEST_CASE(generated__find__send_tx__returns_object)
@@ -607,11 +557,6 @@ BC_AUTO_TEST_CASE(generated__find__tx_encode__returns_object)
     BC_REQUIRE(find("tx-encode") != nullptr);
 }
 
-BC_AUTO_TEST_CASE(generated__find__tx_sign__returns_object)
-{
-    BC_REQUIRE(find("tx-sign") != nullptr);
-}
-
 BC_AUTO_TEST_CASE(generated__find__uri_decode__returns_object)
 {
     BC_REQUIRE(find("uri-decode") != nullptr);
@@ -670,16 +615,6 @@ BC_AUTO_TEST_CASE(generated__find__witness_to_key__returns_object)
 BC_AUTO_TEST_CASE(generated__find__witness_to_script__returns_object)
 {
     BC_REQUIRE(find("witness-to-script") != nullptr);
-}
-
-BC_AUTO_TEST_CASE(generated__find__wrap_decode__returns_object)
-{
-    BC_REQUIRE(find("wrap-decode") != nullptr);
-}
-
-BC_AUTO_TEST_CASE(generated__find__wrap_encode__returns_object)
-{
-    BC_REQUIRE(find("wrap-encode") != nullptr);
 }
 
 BC_AUTO_TEST_SUITE_END()
