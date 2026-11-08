@@ -82,16 +82,6 @@ BC_AUTO_TEST_CASE(generated__symbol__base58_encode__returns_expected_value)
     BC_REQUIRE_EQUAL(base58_encode::symbol(), "base58-encode");
 }
 
-BC_AUTO_TEST_CASE(generated__symbol__base58check_decode__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(base58check_decode::symbol(), "base58check-decode");
-}
-
-BC_AUTO_TEST_CASE(generated__symbol__base58check_encode__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(base58check_encode::symbol(), "base58check-encode");
-}
-
 BC_AUTO_TEST_CASE(generated__symbol__base64_decode__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(base64_decode::symbol(), "base64-decode");
@@ -120,11 +110,6 @@ BC_AUTO_TEST_CASE(generated__symbol__bitcoin160__returns_expected_value)
 BC_AUTO_TEST_CASE(generated__symbol__bitcoin256__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(bitcoin256::symbol(), "bitcoin256");
-}
-
-BC_AUTO_TEST_CASE(generated__symbol__broadcast_tx__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(broadcast_tx::symbol(), "broadcast-tx");
 }
 
 BC_AUTO_TEST_CASE(generated__symbol__btc_to_satoshi__returns_expected_value)
@@ -357,21 +342,6 @@ BC_AUTO_TEST_CASE(generated__symbol__fetch_utxo__returns_expected_value)
     BC_REQUIRE_EQUAL(fetch_utxo::symbol(), "fetch-utxo");
 }
 
-BC_AUTO_TEST_CASE(generated__symbol__get_filter_checkpoint__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(get_filter_checkpoint::symbol(), "get-filter-checkpoint");
-}
-
-BC_AUTO_TEST_CASE(generated__symbol__get_filter_headers__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(get_filter_headers::symbol(), "get-filter-headers");
-}
-
-BC_AUTO_TEST_CASE(generated__symbol__get_filters__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(get_filters::symbol(), "get-filters");
-}
-
 BC_AUTO_TEST_CASE(generated__symbol__hardware__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(hardware::symbol(), "hardware");
@@ -392,11 +362,6 @@ BC_AUTO_TEST_CASE(generated__symbol__hd_public__returns_expected_value)
     BC_REQUIRE_EQUAL(hd_public::symbol(), "hd-public");
 }
 
-BC_AUTO_TEST_CASE(generated__symbol__hd_to_address__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(hd_to_address::symbol(), "hd-to-address");
-}
-
 BC_AUTO_TEST_CASE(generated__symbol__hd_to_ec__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(hd_to_ec::symbol(), "hd-to-ec");
@@ -405,11 +370,6 @@ BC_AUTO_TEST_CASE(generated__symbol__hd_to_ec__returns_expected_value)
 BC_AUTO_TEST_CASE(generated__symbol__hd_to_public__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(hd_to_public::symbol(), "hd-to-public");
-}
-
-BC_AUTO_TEST_CASE(generated__symbol__hd_to_wif__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(hd_to_wif::symbol(), "hd-to-wif");
 }
 
 BC_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
@@ -467,11 +427,6 @@ BC_AUTO_TEST_CASE(generated__symbol__mnemonic_to_seed__returns_expected_value)
     BC_REQUIRE_EQUAL(mnemonic_to_seed::symbol(), "mnemonic-to-seed");
 }
 
-BC_AUTO_TEST_CASE(generated__symbol__put_tx__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(put_tx::symbol(), "put-tx");
-}
-
 BC_AUTO_TEST_CASE(generated__symbol__qrcode__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(qrcode::symbol(), "qrcode");
@@ -510,11 +465,6 @@ BC_AUTO_TEST_CASE(generated__symbol__script_to_key__returns_expected_value)
 BC_AUTO_TEST_CASE(generated__symbol__script_to_witness__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(script_to_witness::symbol(), "script-to-witness");
-}
-
-BC_AUTO_TEST_CASE(generated__symbol__seed__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(seed::symbol(), "seed");
 }
 
 BC_AUTO_TEST_CASE(generated__symbol__send_tx__returns_expected_value)
@@ -607,11 +557,6 @@ BC_AUTO_TEST_CASE(generated__symbol__tx_encode__returns_expected_value)
     BC_REQUIRE_EQUAL(tx_encode::symbol(), "tx-encode");
 }
 
-BC_AUTO_TEST_CASE(generated__symbol__tx_sign__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(tx_sign::symbol(), "tx-sign");
-}
-
 BC_AUTO_TEST_CASE(generated__symbol__uri_decode__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(uri_decode::symbol(), "uri-decode");
@@ -670,16 +615,6 @@ BC_AUTO_TEST_CASE(generated__symbol__witness_to_key__returns_expected_value)
 BC_AUTO_TEST_CASE(generated__symbol__witness_to_script__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(witness_to_script::symbol(), "witness-to-script");
-}
-
-BC_AUTO_TEST_CASE(generated__symbol__wrap_decode__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(wrap_decode::symbol(), "wrap-decode");
-}
-
-BC_AUTO_TEST_CASE(generated__symbol__wrap_encode__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(wrap_encode::symbol(), "wrap-encode");
 }
 
 BC_AUTO_TEST_SUITE_END()

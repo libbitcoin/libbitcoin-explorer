@@ -106,15 +106,12 @@
     <ClCompile Include="..\..\..\..\test\commands\base32-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base58-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base58-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\base58check-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\base58check-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base64-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base64-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\bech32-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\bech32-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\bitcoin160.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\bitcoin256.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\broadcast-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\btc-to-satoshi.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\checked-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\checked-encode.cpp" />
@@ -161,17 +158,12 @@
     <ClCompile Include="..\..\..\..\test\commands\fetch-tx-index.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-utxo.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\get-filter-checkpoint.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\get-filter-headers.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\get-filters.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hardware.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-private.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-public.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\hd-to-address.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-to-public.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\hd-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\help.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-set.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-sign.cpp" />
@@ -183,7 +175,6 @@
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-to-seed.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\put-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\qrcode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ripemd160.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\satoshi-to-btc.cpp" />
@@ -192,7 +183,6 @@
     <ClCompile Include="..\..\..\..\test\commands\script-to-address.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\script-to-key.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\script-to-witness.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\seed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\send-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\settings.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\sha160.cpp" />
@@ -211,7 +201,6 @@
     <ClCompile Include="..\..\..\..\test\commands\token-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\tx-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\tx-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\tx-sign.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\uri-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\uri-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\validate-tx.cpp" />
@@ -224,8 +213,6 @@
     <ClCompile Include="..\..\..\..\test\commands\witness-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\witness-to-key.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\witness-to-script.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\wrap-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\wrap-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\config\address.cpp" />
     <ClCompile Include="..\..\..\..\test\config\algorithm.cpp" />
     <ClCompile Include="..\..\..\..\test\config\byte.cpp" />

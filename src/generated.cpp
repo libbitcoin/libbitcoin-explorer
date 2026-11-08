@@ -42,15 +42,12 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<base32_encode>());
     func(make_shared<base58_decode>());
     func(make_shared<base58_encode>());
-    func(make_shared<base58check_decode>());
-    func(make_shared<base58check_encode>());
     func(make_shared<base64_decode>());
     func(make_shared<base64_encode>());
     func(make_shared<bech32_decode>());
     func(make_shared<bech32_encode>());
     func(make_shared<bitcoin160>());
     func(make_shared<bitcoin256>());
-    func(make_shared<broadcast_tx>());
     func(make_shared<btc_to_satoshi>());
     func(make_shared<checked_decode>());
     func(make_shared<checked_encode>());
@@ -97,17 +94,12 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<fetch_tx>());
     func(make_shared<fetch_tx_index>());
     func(make_shared<fetch_utxo>());
-    func(make_shared<get_filter_checkpoint>());
-    func(make_shared<get_filter_headers>());
-    func(make_shared<get_filters>());
     func(make_shared<hardware>());
     func(make_shared<hd_new>());
     func(make_shared<hd_private>());
     func(make_shared<hd_public>());
-    func(make_shared<hd_to_address>());
     func(make_shared<hd_to_ec>());
     func(make_shared<hd_to_public>());
-    func(make_shared<hd_to_wif>());
     func(make_shared<help>());
     func(make_shared<input_set>());
     func(make_shared<input_sign>());
@@ -119,7 +111,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<mnemonic_decode>());
     func(make_shared<mnemonic_encode>());
     func(make_shared<mnemonic_to_seed>());
-    func(make_shared<put_tx>());
     func(make_shared<qrcode>());
     func(make_shared<ripemd160>());
     func(make_shared<satoshi_to_btc>());
@@ -128,7 +119,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<script_to_address>());
     func(make_shared<script_to_key>());
     func(make_shared<script_to_witness>());
-    func(make_shared<seed>());
     func(make_shared<send_tx>());
     func(make_shared<settings>());
     func(make_shared<sha160>());
@@ -147,7 +137,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<token_new>());
     func(make_shared<tx_decode>());
     func(make_shared<tx_encode>());
-    func(make_shared<tx_sign>());
     func(make_shared<uri_decode>());
     func(make_shared<uri_encode>());
     func(make_shared<validate_tx>());
@@ -160,8 +149,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<witness_encode>());
     func(make_shared<witness_to_key>());
     func(make_shared<witness_to_script>());
-    func(make_shared<wrap_decode>());
-    func(make_shared<wrap_encode>());
 }
 
 shared_ptr<command> find(const string& symbol)
@@ -188,10 +175,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<base58_decode>();
     if (symbol == base58_encode::symbol())
         return make_shared<base58_encode>();
-    if (symbol == base58check_decode::symbol())
-        return make_shared<base58check_decode>();
-    if (symbol == base58check_encode::symbol())
-        return make_shared<base58check_encode>();
     if (symbol == base64_decode::symbol())
         return make_shared<base64_decode>();
     if (symbol == base64_encode::symbol())
@@ -204,8 +187,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<bitcoin160>();
     if (symbol == bitcoin256::symbol())
         return make_shared<bitcoin256>();
-    if (symbol == broadcast_tx::symbol())
-        return make_shared<broadcast_tx>();
     if (symbol == btc_to_satoshi::symbol())
         return make_shared<btc_to_satoshi>();
     if (symbol == checked_decode::symbol())
@@ -298,12 +279,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_tx_index>();
     if (symbol == fetch_utxo::symbol())
         return make_shared<fetch_utxo>();
-    if (symbol == get_filter_checkpoint::symbol())
-        return make_shared<get_filter_checkpoint>();
-    if (symbol == get_filter_headers::symbol())
-        return make_shared<get_filter_headers>();
-    if (symbol == get_filters::symbol())
-        return make_shared<get_filters>();
     if (symbol == hardware::symbol())
         return make_shared<hardware>();
     if (symbol == hd_new::symbol())
@@ -312,14 +287,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<hd_private>();
     if (symbol == hd_public::symbol())
         return make_shared<hd_public>();
-    if (symbol == hd_to_address::symbol())
-        return make_shared<hd_to_address>();
     if (symbol == hd_to_ec::symbol())
         return make_shared<hd_to_ec>();
     if (symbol == hd_to_public::symbol())
         return make_shared<hd_to_public>();
-    if (symbol == hd_to_wif::symbol())
-        return make_shared<hd_to_wif>();
     if (symbol == help::symbol())
         return make_shared<help>();
     if (symbol == input_set::symbol())
@@ -342,8 +313,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<mnemonic_encode>();
     if (symbol == mnemonic_to_seed::symbol())
         return make_shared<mnemonic_to_seed>();
-    if (symbol == put_tx::symbol())
-        return make_shared<put_tx>();
     if (symbol == qrcode::symbol())
         return make_shared<qrcode>();
     if (symbol == ripemd160::symbol())
@@ -360,8 +329,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<script_to_key>();
     if (symbol == script_to_witness::symbol())
         return make_shared<script_to_witness>();
-    if (symbol == seed::symbol())
-        return make_shared<seed>();
     if (symbol == send_tx::symbol())
         return make_shared<send_tx>();
     if (symbol == settings::symbol())
@@ -398,8 +365,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<tx_decode>();
     if (symbol == tx_encode::symbol())
         return make_shared<tx_encode>();
-    if (symbol == tx_sign::symbol())
-        return make_shared<tx_sign>();
     if (symbol == uri_decode::symbol())
         return make_shared<uri_decode>();
     if (symbol == uri_encode::symbol())
@@ -424,10 +389,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<witness_to_key>();
     if (symbol == witness_to_script::symbol())
         return make_shared<witness_to_script>();
-    if (symbol == wrap_decode::symbol())
-        return make_shared<wrap_decode>();
-    if (symbol == wrap_encode::symbol())
-        return make_shared<wrap_encode>();
 
     return nullptr;
 }
@@ -440,8 +401,6 @@ std::string formerly(const string& former)
         return address_embed::symbol();
     if (former == address_encode::formerly())
         return address_encode::symbol();
-    if (former == broadcast_tx::formerly())
-        return broadcast_tx::symbol();
     if (former == btc_to_satoshi::formerly())
         return btc_to_satoshi::symbol();
     if (former == checked_decode::formerly())
@@ -482,8 +441,6 @@ std::string formerly(const string& former)
         return input_sign::symbol();
     if (former == input_validate::formerly())
         return input_validate::symbol();
-    if (former == put_tx::formerly())
-        return put_tx::symbol();
     if (former == ripemd160::formerly())
         return ripemd160::symbol();
     if (former == satoshi_to_btc::formerly())
@@ -500,8 +457,6 @@ std::string formerly(const string& former)
         return stealth_public::symbol();
     if (former == stealth_secret::formerly())
         return stealth_secret::symbol();
-    if (former == tx_sign::formerly())
-        return tx_sign::symbol();
     if (former == validate_tx::formerly())
         return validate_tx::symbol();
     if (former == watch_key::formerly())

@@ -116,22 +116,6 @@ BC_AUTO_TEST_CASE(generated__metadata__base58_encode__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
-BC_AUTO_TEST_CASE(generated__metadata__base58check_decode__returns_expected_values)
-{
-    base58check_decode command;
-    BC_REQUIRE_EQUAL(command.category(), "ENCODING");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
-BC_AUTO_TEST_CASE(generated__metadata__base58check_encode__returns_expected_values)
-{
-    base58check_encode command;
-    BC_REQUIRE_EQUAL(command.category(), "ENCODING");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
 BC_AUTO_TEST_CASE(generated__metadata__base64_decode__returns_expected_values)
 {
     base64_decode command;
@@ -176,14 +160,6 @@ BC_AUTO_TEST_CASE(generated__metadata__bitcoin256__returns_expected_values)
 {
     bitcoin256 command;
     BC_REQUIRE_EQUAL(command.category(), "HASH");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
-BC_AUTO_TEST_CASE(generated__metadata__broadcast_tx__returns_expected_values)
-{
-    broadcast_tx command;
-    BC_REQUIRE_EQUAL(command.category(), "ONLINE");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
 }
@@ -556,30 +532,6 @@ BC_AUTO_TEST_CASE(generated__metadata__fetch_utxo__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
-BC_AUTO_TEST_CASE(generated__metadata__get_filter_checkpoint__returns_expected_values)
-{
-    get_filter_checkpoint command;
-    BC_REQUIRE_EQUAL(command.category(), "ONLINE");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
-BC_AUTO_TEST_CASE(generated__metadata__get_filter_headers__returns_expected_values)
-{
-    get_filter_headers command;
-    BC_REQUIRE_EQUAL(command.category(), "ONLINE");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
-BC_AUTO_TEST_CASE(generated__metadata__get_filters__returns_expected_values)
-{
-    get_filters command;
-    BC_REQUIRE_EQUAL(command.category(), "ONLINE");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
 BC_AUTO_TEST_CASE(generated__metadata__hardware__returns_expected_values)
 {
     hardware command;
@@ -612,14 +564,6 @@ BC_AUTO_TEST_CASE(generated__metadata__hd_public__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
-BC_AUTO_TEST_CASE(generated__metadata__hd_to_address__returns_expected_values)
-{
-    hd_to_address command;
-    BC_REQUIRE_EQUAL(command.category(), "WALLET");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
 BC_AUTO_TEST_CASE(generated__metadata__hd_to_ec__returns_expected_values)
 {
     hd_to_ec command;
@@ -631,14 +575,6 @@ BC_AUTO_TEST_CASE(generated__metadata__hd_to_ec__returns_expected_values)
 BC_AUTO_TEST_CASE(generated__metadata__hd_to_public__returns_expected_values)
 {
     hd_to_public command;
-    BC_REQUIRE_EQUAL(command.category(), "WALLET");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
-BC_AUTO_TEST_CASE(generated__metadata__hd_to_wif__returns_expected_values)
-{
-    hd_to_wif command;
     BC_REQUIRE_EQUAL(command.category(), "WALLET");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
@@ -732,14 +668,6 @@ BC_AUTO_TEST_CASE(generated__metadata__mnemonic_to_seed__returns_expected_values
     BC_REQUIRE(!command.requires_raw_output());
 }
 
-BC_AUTO_TEST_CASE(generated__metadata__put_tx__returns_expected_values)
-{
-    put_tx command;
-    BC_REQUIRE_EQUAL(command.category(), "ONLINE");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
 BC_AUTO_TEST_CASE(generated__metadata__qrcode__returns_expected_values)
 {
     qrcode command;
@@ -799,14 +727,6 @@ BC_AUTO_TEST_CASE(generated__metadata__script_to_key__returns_expected_values)
 BC_AUTO_TEST_CASE(generated__metadata__script_to_witness__returns_expected_values)
 {
     script_to_witness command;
-    BC_REQUIRE_EQUAL(command.category(), "WALLET");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
-BC_AUTO_TEST_CASE(generated__metadata__seed__returns_expected_values)
-{
-    seed command;
     BC_REQUIRE_EQUAL(command.category(), "WALLET");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
@@ -956,14 +876,6 @@ BC_AUTO_TEST_CASE(generated__metadata__tx_encode__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
-BC_AUTO_TEST_CASE(generated__metadata__tx_sign__returns_expected_values)
-{
-    tx_sign command;
-    BC_REQUIRE_EQUAL(command.category(), "TRANSACTION");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
 BC_AUTO_TEST_CASE(generated__metadata__uri_decode__returns_expected_values)
 {
     uri_decode command;
@@ -1056,22 +968,6 @@ BC_AUTO_TEST_CASE(generated__metadata__witness_to_script__returns_expected_value
 {
     witness_to_script command;
     BC_REQUIRE_EQUAL(command.category(), "WALLET");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
-BC_AUTO_TEST_CASE(generated__metadata__wrap_decode__returns_expected_values)
-{
-    wrap_decode command;
-    BC_REQUIRE_EQUAL(command.category(), "ENCODING");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
-BC_AUTO_TEST_CASE(generated__metadata__wrap_encode__returns_expected_values)
-{
-    wrap_encode command;
-    BC_REQUIRE_EQUAL(command.category(), "ENCODING");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
 }

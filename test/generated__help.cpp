@@ -181,34 +181,6 @@ BC_AUTO_TEST_CASE(generated__help__base58_encode__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
-BC_AUTO_TEST_CASE(generated__help__base58check_decode__okay_output)
-{
-    base58check_decode command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "base58check-decode", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
-BC_AUTO_TEST_CASE(generated__help__base58check_encode__okay_output)
-{
-    base58check_encode command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "base58check-encode", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
 BC_AUTO_TEST_CASE(generated__help__base64_decode__okay_output)
 {
     base64_decode command;
@@ -285,20 +257,6 @@ BC_AUTO_TEST_CASE(generated__help__bitcoin256__okay_output)
     std::string message;
     std::stringstream input, output;
     const char* argv[]{ "bitcoin256", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
-BC_AUTO_TEST_CASE(generated__help__broadcast_tx__okay_output)
-{
-    broadcast_tx command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "broadcast-tx", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());
@@ -951,48 +909,6 @@ BC_AUTO_TEST_CASE(generated__help__fetch_utxo__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
-BC_AUTO_TEST_CASE(generated__help__get_filter_checkpoint__okay_output)
-{
-    get_filter_checkpoint command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "get-filter-checkpoint", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
-BC_AUTO_TEST_CASE(generated__help__get_filter_headers__okay_output)
-{
-    get_filter_headers command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "get-filter-headers", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
-BC_AUTO_TEST_CASE(generated__help__get_filters__okay_output)
-{
-    get_filters command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "get-filters", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
 BC_AUTO_TEST_CASE(generated__help__hardware__okay_output)
 {
     hardware command;
@@ -1049,20 +965,6 @@ BC_AUTO_TEST_CASE(generated__help__hd_public__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
-BC_AUTO_TEST_CASE(generated__help__hd_to_address__okay_output)
-{
-    hd_to_address command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "hd-to-address", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
 BC_AUTO_TEST_CASE(generated__help__hd_to_ec__okay_output)
 {
     hd_to_ec command;
@@ -1083,20 +985,6 @@ BC_AUTO_TEST_CASE(generated__help__hd_to_public__okay_output)
     std::string message;
     std::stringstream input, output;
     const char* argv[]{ "hd-to-public", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
-BC_AUTO_TEST_CASE(generated__help__hd_to_wif__okay_output)
-{
-    hd_to_wif command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "hd-to-wif", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());
@@ -1259,20 +1147,6 @@ BC_AUTO_TEST_CASE(generated__help__mnemonic_to_seed__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
-BC_AUTO_TEST_CASE(generated__help__put_tx__okay_output)
-{
-    put_tx command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "put-tx", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
 BC_AUTO_TEST_CASE(generated__help__qrcode__okay_output)
 {
     qrcode command;
@@ -1377,20 +1251,6 @@ BC_AUTO_TEST_CASE(generated__help__script_to_witness__okay_output)
     std::string message;
     std::stringstream input, output;
     const char* argv[]{ "script-to-witness", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
-BC_AUTO_TEST_CASE(generated__help__seed__okay_output)
-{
-    seed command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "seed", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());
@@ -1651,20 +1511,6 @@ BC_AUTO_TEST_CASE(generated__help__tx_encode__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
-BC_AUTO_TEST_CASE(generated__help__tx_sign__okay_output)
-{
-    tx_sign command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "tx-sign", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
 BC_AUTO_TEST_CASE(generated__help__uri_decode__okay_output)
 {
     uri_decode command;
@@ -1825,34 +1671,6 @@ BC_AUTO_TEST_CASE(generated__help__witness_to_script__okay_output)
     std::string message;
     std::stringstream input, output;
     const char* argv[]{ "witness-to-script", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
-BC_AUTO_TEST_CASE(generated__help__wrap_decode__okay_output)
-{
-    wrap_decode command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "wrap-decode", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
-BC_AUTO_TEST_CASE(generated__help__wrap_encode__okay_output)
-{
-    wrap_encode command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "wrap-encode", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());

@@ -42,11 +42,6 @@ BC_AUTO_TEST_CASE(generated__formerly__address_encode_was_encode_addr__returns_o
     BC_REQUIRE_EQUAL(formerly("encode-addr"), address_encode::symbol());
 }
 
-BC_AUTO_TEST_CASE(generated__formerly__broadcast_tx_was_sendtx_p2p__returns_object)
-{
-    BC_REQUIRE_EQUAL(formerly("sendtx-p2p"), broadcast_tx::symbol());
-}
-
 BC_AUTO_TEST_CASE(generated__formerly__btc_to_satoshi_was_satoshi__returns_object)
 {
     BC_REQUIRE_EQUAL(formerly("satoshi"), btc_to_satoshi::symbol());
@@ -147,11 +142,6 @@ BC_AUTO_TEST_CASE(generated__formerly__input_validate_was_validsig__returns_obje
     BC_REQUIRE_EQUAL(formerly("validsig"), input_validate::symbol());
 }
 
-BC_AUTO_TEST_CASE(generated__formerly__put_tx_was_send_tx_node__returns_object)
-{
-    BC_REQUIRE_EQUAL(formerly("send-tx-node"), put_tx::symbol());
-}
-
 BC_AUTO_TEST_CASE(generated__formerly__ripemd160_was_ripemd_hash__returns_object)
 {
     BC_REQUIRE_EQUAL(formerly("ripemd-hash"), ripemd160::symbol());
@@ -190,11 +180,6 @@ BC_AUTO_TEST_CASE(generated__formerly__stealth_public_was_stealth_uncover__retur
 BC_AUTO_TEST_CASE(generated__formerly__stealth_secret_was_stealth_uncover_secret__returns_object)
 {
     BC_REQUIRE_EQUAL(formerly("stealth-uncover-secret"), stealth_secret::symbol());
-}
-
-BC_AUTO_TEST_CASE(generated__formerly__tx_sign_was_signtx__returns_object)
-{
-    BC_REQUIRE_EQUAL(formerly("signtx"), tx_sign::symbol());
 }
 
 BC_AUTO_TEST_CASE(generated__formerly__validate_tx_was_validtx__returns_object)

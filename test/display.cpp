@@ -31,13 +31,6 @@ BC_AUTO_TEST_CASE(display__command_names__always__lists_commands)
     BC_REQUIRE_NE(text.str().find("address-decode"), std::string::npos);
 }
 
-BC_AUTO_TEST_CASE(display__command_names__always__omits_obsolete)
-{
-    std::stringstream text;
-    display_command_names(text);
-    BC_REQUIRE_EQUAL(text.str().find("wrap-encode"), std::string::npos);
-}
-
 BC_AUTO_TEST_CASE(display__connection_failure__always__names_endpoint)
 {
     std::stringstream text;
