@@ -107,6 +107,8 @@ _bx()
         stealth-shared
         subscribe-block
         subscribe-tx
+        tls-cert
+        tls-new
         token-new
         tx-decode
         tx-encode
@@ -266,6 +268,9 @@ _bx()
             ;;
         subscribe-tx)
             options="--duration -d"
+            ;;
+        tls-cert)
+            options="--name -n --host -h --ip -i --not_before -n --days -d"
             ;;
         token-new)
             options="--lot -l --sequence -s"

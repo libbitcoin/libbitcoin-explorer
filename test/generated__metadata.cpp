@@ -908,6 +908,22 @@ BC_AUTO_TEST_CASE(generated__metadata__subscribe_tx__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__tls_cert__returns_expected_values)
+{
+    tls_cert command;
+    BC_REQUIRE_EQUAL(command.category(), "MATH");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__tls_new__returns_expected_values)
+{
+    tls_new command;
+    BC_REQUIRE_EQUAL(command.category(), "MATH");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__token_new__returns_expected_values)
 {
     token_new command;

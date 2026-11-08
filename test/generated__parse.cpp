@@ -2005,6 +2005,45 @@ BC_AUTO_TEST_CASE(generated__parse__subscribe_tx__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__tls_cert__okay)
+{
+    tls_cert command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "tls-cert",
+        "--name", "string",
+        "--host", "string",
+        "--ip", "string",
+        "--not_before", "42",
+        "--days", "42",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 12, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__tls_new__okay)
+{
+    tls_new command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "tls-new",
+        "baadf00d",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__token_new__okay)
 {
     token_new command;

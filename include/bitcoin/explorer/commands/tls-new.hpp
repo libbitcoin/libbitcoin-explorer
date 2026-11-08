@@ -1,0 +1,224 @@
+/**
+ * Copyright (c) 2011-2023 libbitcoin developers (see AUTHORS)
+ *
+ * This file is part of libbitcoin.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#ifndef BX_TLS_NEW_HPP
+#define BX_TLS_NEW_HPP
+
+#include <bitcoin/system.hpp>
+#include <bitcoin/explorer/command.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/bytes.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/electrum.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/group.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/share.hpp>
+#include <bitcoin/explorer/config/sighash.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
+#include <bitcoin/explorer/utility.hpp>
+
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
+
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
+
+/**
+ * Various localizable strings.
+ */
+#define BX_TLS_NEW_SHORT_ENTROPY \
+    "The entropy is less than 256 bits long."
+#define BX_TLS_NEW_INVALID_KEY \
+    "The entropy produced an invalid key."
+
+/**
+ * Class to implement the tls-new command.
+ */
+class BCX_API tls_new
+  : public command
+{
+public:
+
+    /**
+     * The symbolic (not localizable) command name, lower case.
+     */
+    static const char* symbol()
+    {
+        return "tls-new";
+    }
+
+    /**
+     * Destructor.
+     */
+    virtual ~tls_new()
+    {
+    }
+
+    /**
+     * The member symbolic (not localizable) command name, lower case.
+     */
+    virtual const char* name()
+    {
+        return tls_new::symbol();
+    }
+
+    /**
+     * The localizable command category name, upper case.
+     */
+    virtual const char* category()
+    {
+        return "MATH";
+    }
+
+    /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Create a PEM P-256 TLS private key for use with a Libbitcoin server from entropy.";
+    }
+
+    /**
+     * Load program argument definitions.
+     * A value of -1 indicates that the number of instances is unlimited.
+     * @return  The loaded program argument definitions.
+     */
+    virtual arguments_metadata& load_arguments()
+    {
+        return get_argument_metadata()
+            .add("ENTROPY", 1);
+    }
+
+    /**
+     * Load parameter fallbacks from file or input as appropriate.
+     * @param[in]  input      The input stream for loading the parameters.
+     * @param[in]  variables  The loaded variables.
+     */
+    virtual void load_fallbacks(std::istream& input,
+        po::variables_map& variables)
+    {
+        load_input(get_entropy_argument(), "ENTROPY", variables, input);
+    }
+
+    /**
+     * Load program option definitions.
+     * @return  The loaded program option definitions.
+     */
+    virtual options_metadata& load_options()
+    {
+        using namespace po;
+        options_description& options = get_option_metadata();
+        options.add_options()
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->zero_tokens(),
+            "Get a description and instructions for this command."
+        )
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<system::config::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            "ENTROPY",
+            value<system::config::base16>(&argument_.entropy),
+            "The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN."
+        );
+
+        return options;
+    }
+
+    /**
+     * Set variable defaults from configuration variable values.
+     * @param[in]  variables  The loaded variables.
+     */
+    virtual void set_defaults_from_config(po::variables_map&)
+    {
+    }
+
+    /**
+     * Invoke the command.
+     * @param[out]  output  The input stream for the command execution.
+     * @param[out]  error   The input stream for the command execution.
+     * @return              The appropriate console return code { -1, 0, 1 }.
+     */
+    virtual console_result invoke(std::ostream& output,
+        std::ostream& cerr);
+
+    /* Properties */
+
+    /**
+     * Get the value of the ENTROPY argument.
+     */
+    virtual system::config::base16& get_entropy_argument()
+    {
+        return argument_.entropy;
+    }
+
+    /**
+     * Set the value of the ENTROPY argument.
+     */
+    virtual void set_entropy_argument(
+        const system::config::base16& value)
+    {
+        argument_.entropy = value;
+    }
+
+private:
+
+    /**
+     * Command line argument bound variables.
+     * Uses cross-compiler safe constructor-based zeroize.
+     * Zeroize for unit test consistency with program_options initialization.
+     */
+    struct argument
+    {
+        argument()
+          : entropy()
+        {
+        }
+
+        system::config::base16 entropy;
+    } argument_;
+
+    /**
+     * Command line option bound variables.
+     * Uses cross-compiler safe constructor-based zeroize.
+     * Zeroize for unit test consistency with program_options initialization.
+     */
+    struct option
+    {
+        option()
+        {
+        }
+
+    } option_;
+};
+
+} // namespace commands
+} // namespace explorer
+} // namespace libbitcoin
+
+#endif

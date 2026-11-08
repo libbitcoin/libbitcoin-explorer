@@ -577,6 +577,16 @@ BC_AUTO_TEST_CASE(generated__symbol__subscribe_tx__returns_expected_value)
     BC_REQUIRE_EQUAL(subscribe_tx::symbol(), "subscribe-tx");
 }
 
+BC_AUTO_TEST_CASE(generated__symbol__tls_cert__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(tls_cert::symbol(), "tls-cert");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__tls_new__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(tls_new::symbol(), "tls-new");
+}
+
 BC_AUTO_TEST_CASE(generated__symbol__token_new__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(token_new::symbol(), "token-new");

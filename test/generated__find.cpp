@@ -577,6 +577,16 @@ BC_AUTO_TEST_CASE(generated__find__subscribe_tx__returns_object)
     BC_REQUIRE(find("subscribe-tx") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__tls_cert__returns_object)
+{
+    BC_REQUIRE(find("tls-cert") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__tls_new__returns_object)
+{
+    BC_REQUIRE(find("tls-new") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__token_new__returns_object)
 {
     BC_REQUIRE(find("token-new") != nullptr);

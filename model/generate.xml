@@ -732,6 +732,25 @@
     <option name="duration" type="uint32_t" default="600" description="The duration of the subscription in seconds, defaults to 600." />
   </command>
 
+  <command symbol="tls-cert" output="string" category="MATH" description="Create a self-signed PEM TLS certificate for a P-256 private key, for use with a Libbitcoin server.">
+    <option name="name" type="string" description="The subject common name of the certificate." />
+    <option name="host" multiple="true" type="string" description="A DNS host name of the server. Specify once for each name." />
+    <option name="ip" multiple="true" type="string" description="An IPv4 or IPv6 address of the server. Specify once for each address." />
+    <option name="not_before" type="uint64_t" description="The start of the validity period in Unix seconds, defaults to the current time." />
+    <option name="days" type="uint32_t" default="365" description="The length of the validity period in days, defaults to 365." />
+    <argument name="PRIVATE_KEY" stdin="true" type="string" description="The PEM P-256 private key of the certificate. If not specified the key is read from STDIN." />
+    <define name="BX_TLS_CERT_INVALID_KEY" value="The private key is not a valid PEM P-256 private key." />
+    <define name="BX_TLS_CERT_INVALID_IP" value="An IP address is not valid." />
+    <define name="BX_TLS_CERT_UNNAMED" value="The certificate requires a common name, a host name or an IP address." />
+    <define name="BX_TLS_CERT_INVALID_VALIDITY" value="The validity period ends after the year 9999." />
+  </command>
+
+  <command symbol="tls-new" output="string" category="MATH" description="Create a PEM P-256 TLS private key for use with a Libbitcoin server from entropy.">
+    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN." />
+    <define name="BX_TLS_NEW_SHORT_ENTROPY" value="The entropy is less than 256 bits long." />
+    <define name="BX_TLS_NEW_INVALID_KEY" value="The entropy produced an invalid key." />
+  </command>
+
   <command symbol="token-new" output="ek_token" category="KEY_ENCRYPTION" description="Create an intermediate passphrase token for deferred encrypted key generation (BIP38).">
     <option name="lot" type="uint32_t" description="An arbitrary lot number, limited to 1048575." />
     <option name="sequence" type="uint32_t" description="An arbitrary sequence number, limited to 4095." />

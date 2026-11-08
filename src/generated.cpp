@@ -141,6 +141,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<stealth_shared>());
     func(make_shared<subscribe_block>());
     func(make_shared<subscribe_tx>());
+    func(make_shared<tls_cert>());
+    func(make_shared<tls_new>());
     func(make_shared<token_new>());
     func(make_shared<tx_decode>());
     func(make_shared<tx_encode>());
@@ -381,6 +383,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<subscribe_block>();
     if (symbol == subscribe_tx::symbol())
         return make_shared<subscribe_tx>();
+    if (symbol == tls_cert::symbol())
+        return make_shared<tls_cert>();
+    if (symbol == tls_new::symbol())
+        return make_shared<tls_new>();
     if (symbol == token_new::symbol())
         return make_shared<token_new>();
     if (symbol == tx_decode::symbol())

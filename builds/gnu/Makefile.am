@@ -172,6 +172,8 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/stealth-shared.cpp \
     ${srcdir}/../../src/commands/subscribe-block.cpp \
     ${srcdir}/../../src/commands/subscribe-tx.cpp \
+    ${srcdir}/../../src/commands/tls-cert.cpp \
+    ${srcdir}/../../src/commands/tls-new.cpp \
     ${srcdir}/../../src/commands/token-new.cpp \
     ${srcdir}/../../src/commands/tx-decode.cpp \
     ${srcdir}/../../src/commands/tx-encode.cpp \
@@ -356,6 +358,8 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/stealth-shared.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/subscribe-block.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/subscribe-tx.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/tls-cert.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/tls-new.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/token-new.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/tx-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/tx-encode.hpp \
@@ -548,6 +552,8 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/stealth-shared.cpp \
     ${srcdir}/../../test/commands/subscribe-block.cpp \
     ${srcdir}/../../test/commands/subscribe-tx.cpp \
+    ${srcdir}/../../test/commands/tls-cert.cpp \
+    ${srcdir}/../../test/commands/tls-new.cpp \
     ${srcdir}/../../test/commands/token-new.cpp \
     ${srcdir}/../../test/commands/tx-decode.cpp \
     ${srcdir}/../../test/commands/tx-encode.cpp \

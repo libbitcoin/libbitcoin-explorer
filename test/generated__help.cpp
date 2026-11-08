@@ -1567,6 +1567,34 @@ BC_AUTO_TEST_CASE(generated__help__subscribe_tx__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
+BC_AUTO_TEST_CASE(generated__help__tls_cert__okay_output)
+{
+    tls_cert command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "tls-cert", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__tls_new__okay_output)
+{
+    tls_new command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "tls-new", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
 BC_AUTO_TEST_CASE(generated__help__token_new__okay_output)
 {
     token_new command;
