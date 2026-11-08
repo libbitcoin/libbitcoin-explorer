@@ -1763,6 +1763,34 @@ BC_AUTO_TEST_CASE(generated__help__wif_to_public__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
+BC_AUTO_TEST_CASE(generated__help__witness_decode__okay_output)
+{
+    witness_decode command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "witness-decode", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__witness_encode__okay_output)
+{
+    witness_encode command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "witness-encode", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
 BC_AUTO_TEST_CASE(generated__help__witness_to_key__okay_output)
 {
     witness_to_key command;

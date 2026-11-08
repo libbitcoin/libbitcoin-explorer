@@ -647,6 +647,16 @@ BC_AUTO_TEST_CASE(generated__find__wif_to_public__returns_object)
     BC_REQUIRE(find("wif-to-public") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__witness_decode__returns_object)
+{
+    BC_REQUIRE(find("witness-decode") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__witness_encode__returns_object)
+{
+    BC_REQUIRE(find("witness-encode") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__witness_to_key__returns_object)
 {
     BC_REQUIRE(find("witness-to-key") != nullptr);

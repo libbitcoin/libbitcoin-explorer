@@ -396,6 +396,12 @@
     <ClCompile Include="..\..\..\..\test\commands\wif-to-public.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\witness-decode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\witness-encode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\witness-to-key.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

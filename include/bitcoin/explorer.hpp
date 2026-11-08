@@ -149,6 +149,8 @@
 #include <bitcoin/explorer/commands/watch-tx.hpp>
 #include <bitcoin/explorer/commands/wif-to-ec.hpp>
 #include <bitcoin/explorer/commands/wif-to-public.hpp>
+#include <bitcoin/explorer/commands/witness-decode.hpp>
+#include <bitcoin/explorer/commands/witness-encode.hpp>
 #include <bitcoin/explorer/commands/witness-to-key.hpp>
 #include <bitcoin/explorer/commands/witness-to-script.hpp>
 #include <bitcoin/explorer/commands/wrap-decode.hpp>

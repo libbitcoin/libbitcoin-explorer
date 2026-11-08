@@ -1020,6 +1020,22 @@ BC_AUTO_TEST_CASE(generated__metadata__wif_to_public__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__witness_decode__returns_expected_values)
+{
+    witness_decode command;
+    BC_REQUIRE_EQUAL(command.category(), "TRANSACTION");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__witness_encode__returns_expected_values)
+{
+    witness_encode command;
+    BC_REQUIRE_EQUAL(command.category(), "TRANSACTION");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__witness_to_key__returns_expected_values)
 {
     witness_to_key command;

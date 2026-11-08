@@ -647,6 +647,16 @@ BC_AUTO_TEST_CASE(generated__symbol__wif_to_public__returns_expected_value)
     BC_REQUIRE_EQUAL(wif_to_public::symbol(), "wif-to-public");
 }
 
+BC_AUTO_TEST_CASE(generated__symbol__witness_decode__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(witness_decode::symbol(), "witness-decode");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__witness_encode__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(witness_encode::symbol(), "witness-encode");
+}
+
 BC_AUTO_TEST_CASE(generated__symbol__witness_to_key__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(witness_to_key::symbol(), "witness-to-key");

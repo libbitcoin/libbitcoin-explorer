@@ -155,6 +155,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<watch_tx>());
     func(make_shared<wif_to_ec>());
     func(make_shared<wif_to_public>());
+    func(make_shared<witness_decode>());
+    func(make_shared<witness_encode>());
     func(make_shared<witness_to_key>());
     func(make_shared<witness_to_script>());
     func(make_shared<wrap_decode>());
@@ -411,6 +413,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<wif_to_ec>();
     if (symbol == wif_to_public::symbol())
         return make_shared<wif_to_public>();
+    if (symbol == witness_decode::symbol())
+        return make_shared<witness_decode>();
+    if (symbol == witness_encode::symbol())
+        return make_shared<witness_encode>();
     if (symbol == witness_to_key::symbol())
         return make_shared<witness_to_key>();
     if (symbol == witness_to_script::symbol())

@@ -1589,6 +1589,32 @@ BC_AUTO_TEST_CASE(generated__property__wif_to_public__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_wif_argument()), serial(wif_argument));
 }
 
+BC_AUTO_TEST_CASE(generated__property__witness_decode__round_trips)
+{
+    witness_decode command;
+
+    const system::config::base16 base16_argument{ "baadf00d" };
+    command.set_base16_argument(base16_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_base16_argument()), serial(base16_argument));
+
+    const bool prefix_option{ true };
+    command.set_prefix_option(prefix_option);
+    BC_REQUIRE_EQUAL(serial(command.get_prefix_option()), serial(prefix_option));
+}
+
+BC_AUTO_TEST_CASE(generated__property__witness_encode__round_trips)
+{
+    witness_encode command;
+
+    const system::config::witness witness_argument{ "[baadf00d] [beefcafe]" };
+    command.set_witness_argument(witness_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_witness_argument()), serial(witness_argument));
+
+    const bool prefix_option{ true };
+    command.set_prefix_option(prefix_option);
+    BC_REQUIRE_EQUAL(serial(command.get_prefix_option()), serial(prefix_option));
+}
+
 BC_AUTO_TEST_CASE(generated__property__witness_to_key__round_trips)
 {
     witness_to_key command;

@@ -828,6 +828,17 @@
     <argument name="WIF" stdin="true" type="wif" description="The WIF private key. If not specified the value is read from STDIN."/>
   </command>
 
+  <command symbol="witness-decode" output="string" category="TRANSACTION" description="Decode a witness to bracketed Base16 data tokens.">
+    <option name="prefix" description="Decode a witness that has an element count prefix." />
+    <argument name="BASE16" stdin="true" type="base16" description="The Base16 witness. If not specified the witness is read from STDIN."/>
+    <define name="BX_WITNESS_DECODE_INVALID" value="The witness is not valid." />
+  </command>
+
+  <command symbol="witness-encode" output="base16" category="TRANSACTION" description="Base16 encode a witness of bracketed Base16 data tokens.">
+    <option name="prefix" description="Encode the witness with an element count prefix." />
+    <argument name="WITNESS" stdin="true" type="witness" description="The witness as bracketed Base16 data tokens. Multiple tokens must be quoted. If not specified the tokens are read from STDIN."/>
+  </command>
+
   <command symbol="witness-to-key" output="base16" category="WALLET" description="Derive the payments search key of a witness address.">
     <argument name="WITNESS_ADDRESS" stdin="true" type="witness_address" description="The witness address. If not specified the address is read from STDIN." />
   </command>

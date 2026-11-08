@@ -186,6 +186,8 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/watch-tx.cpp \
     ${srcdir}/../../src/commands/wif-to-ec.cpp \
     ${srcdir}/../../src/commands/wif-to-public.cpp \
+    ${srcdir}/../../src/commands/witness-decode.cpp \
+    ${srcdir}/../../src/commands/witness-encode.cpp \
     ${srcdir}/../../src/commands/witness-to-key.cpp \
     ${srcdir}/../../src/commands/witness-to-script.cpp \
     ${srcdir}/../../src/commands/wrap-decode.cpp \
@@ -372,6 +374,8 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/watch-tx.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/wif-to-ec.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/wif-to-public.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/witness-decode.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/witness-encode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/witness-to-key.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/witness-to-script.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/wrap-decode.hpp \
@@ -566,6 +570,8 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/watch-tx.cpp \
     ${srcdir}/../../test/commands/wif-to-ec.cpp \
     ${srcdir}/../../test/commands/wif-to-public.cpp \
+    ${srcdir}/../../test/commands/witness-decode.cpp \
+    ${srcdir}/../../test/commands/witness-encode.cpp \
     ${srcdir}/../../test/commands/witness-to-key.cpp \
     ${srcdir}/../../test/commands/witness-to-script.cpp \
     ${srcdir}/../../test/commands/wrap-decode.cpp \

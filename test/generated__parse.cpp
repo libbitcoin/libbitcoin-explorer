@@ -2259,6 +2259,42 @@ BC_AUTO_TEST_CASE(generated__parse__wif_to_public__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__witness_decode__okay)
+{
+    witness_decode command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "witness-decode",
+        "--prefix",
+        "baadf00d",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 3, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__witness_encode__okay)
+{
+    witness_encode command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "witness-encode",
+        "--prefix",
+        "[baadf00d] [beefcafe]",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 3, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__witness_to_key__okay)
 {
     witness_to_key command;
