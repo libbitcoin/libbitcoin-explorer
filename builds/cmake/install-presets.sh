@@ -394,7 +394,7 @@ main()
     if [[ -z "${PARALLEL}" ]]; then
         if [[ ${OS} == Linux ]]; then
             PARALLEL=$(nproc)
-        elif [[ ${OS} == Darwin ]] || [[ ${OS} == OpenBSD ]]; then
+        elif [[ ${OS} == Darwin ]] || [[ ${OS} == *BSD ]]; then
             PARALLEL=$(sysctl -n hw.ncpu)
         elif [[ ${OS} == MINGW* ]] || [[ ${OS} == MSYS* ]]; then
             PARALLEL=${NUMBER_OF_PROCESSORS}
@@ -410,15 +410,13 @@ main()
 
     # state rationalization of standard build variables
 
-    if [[ ${OS} == OpenBSD ]]; then
+    if [[ ${OS} == *BSD ]]; then
         make() { gmake "$@"; }
     fi
 
     if [[ -z "${STDLIB}" ]]; then
         if [[ ${OS} == Darwin ]]; then
             STDLIB="c++"
-        elif [[ ${OS} == OpenBSD ]]; then
-            STDLIB="estdc++"
         else
             STDLIB="stdc++"
         fi
@@ -429,8 +427,6 @@ main()
     if [[ -z "${CC}" ]]; then
         if [[ ${OS} == Darwin ]]; then
             export CC="clang"
-        elif [[ ${OS} == OpenBSD ]]; then
-            export CC="egcc"
         fi
     else
         msg_verbose "CC using defined value '${CC}'"
@@ -439,8 +435,6 @@ main()
     if [[ -z "${CXX}" ]]; then
         if [[ ${OS} == Darwin ]]; then
             export CXX="clang++"
-        elif [[ ${OS} == OpenBSD ]]; then
-            export CXX="eg++"
         fi
     else
         msg_verbose "CXX using defined value '${CXX}'"
@@ -571,7 +565,7 @@ main()
         fi
     fi
 
-    if [[ ${OS} == Linux && ${CC} == clang* ]] || [[ ${OS} == OpenBSD ]]; then
+    if [[ ${OS} == Linux && ${CC} == clang* ]]; then
         export LDLIBS="-l${STDLIB} ${LDLIBS}"
         msg_verbose "LDLIBS has been manipulated to encode STDLIB linkage."
     fi
