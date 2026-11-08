@@ -100,6 +100,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<get_filter_checkpoint>());
     func(make_shared<get_filter_headers>());
     func(make_shared<get_filters>());
+    func(make_shared<hardware>());
     func(make_shared<hd_new>());
     func(make_shared<hd_private>());
     func(make_shared<hd_public>());
@@ -303,6 +304,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<get_filter_headers>();
     if (symbol == get_filters::symbol())
         return make_shared<get_filters>();
+    if (symbol == hardware::symbol())
+        return make_shared<hardware>();
     if (symbol == hd_new::symbol())
         return make_shared<hd_new>();
     if (symbol == hd_private::symbol())

@@ -372,6 +372,11 @@ BC_AUTO_TEST_CASE(generated__find__get_filters__returns_object)
     BC_REQUIRE(find("get-filters") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__hardware__returns_object)
+{
+    BC_REQUIRE(find("hardware") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__hd_new__returns_object)
 {
     BC_REQUIRE(find("hd-new") != nullptr);

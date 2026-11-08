@@ -94,6 +94,7 @@
 #include <bitcoin/explorer/commands/get-filter-checkpoint.hpp>
 #include <bitcoin/explorer/commands/get-filter-headers.hpp>
 #include <bitcoin/explorer/commands/get-filters.hpp>
+#include <bitcoin/explorer/commands/hardware.hpp>
 #include <bitcoin/explorer/commands/hd-new.hpp>
 #include <bitcoin/explorer/commands/hd-private.hpp>
 #include <bitcoin/explorer/commands/hd-public.hpp>

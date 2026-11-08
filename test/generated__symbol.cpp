@@ -372,6 +372,11 @@ BC_AUTO_TEST_CASE(generated__symbol__get_filters__returns_expected_value)
     BC_REQUIRE_EQUAL(get_filters::symbol(), "get-filters");
 }
 
+BC_AUTO_TEST_CASE(generated__symbol__hardware__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(hardware::symbol(), "hardware");
+}
+
 BC_AUTO_TEST_CASE(generated__symbol__hd_new__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(hd_new::symbol(), "hd-new");

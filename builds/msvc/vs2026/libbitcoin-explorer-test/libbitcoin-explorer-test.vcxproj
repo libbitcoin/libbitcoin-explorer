@@ -164,6 +164,7 @@
     <ClCompile Include="..\..\..\..\test\commands\get-filter-checkpoint.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\get-filter-headers.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\get-filters.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\hardware.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-private.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-public.cpp" />

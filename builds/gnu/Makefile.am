@@ -131,6 +131,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/get-filter-checkpoint.cpp \
     ${srcdir}/../../src/commands/get-filter-headers.cpp \
     ${srcdir}/../../src/commands/get-filters.cpp \
+    ${srcdir}/../../src/commands/hardware.cpp \
     ${srcdir}/../../src/commands/hd-new.cpp \
     ${srcdir}/../../src/commands/hd-private.cpp \
     ${srcdir}/../../src/commands/hd-public.cpp \
@@ -319,6 +320,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/get-filter-checkpoint.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/get-filter-headers.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/get-filters.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/hardware.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/hd-new.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/hd-private.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/hd-public.hpp \
@@ -515,6 +517,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/get-filter-checkpoint.cpp \
     ${srcdir}/../../test/commands/get-filter-headers.cpp \
     ${srcdir}/../../test/commands/get-filters.cpp \
+    ${srcdir}/../../test/commands/hardware.cpp \
     ${srcdir}/../../test/commands/hd-new.cpp \
     ${srcdir}/../../test/commands/hd-private.cpp \
     ${srcdir}/../../test/commands/hd-public.cpp \

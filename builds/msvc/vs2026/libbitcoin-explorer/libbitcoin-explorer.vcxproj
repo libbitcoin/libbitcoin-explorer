@@ -183,6 +183,7 @@
     <ClCompile Include="..\..\..\..\src\commands\get-filter-checkpoint.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\get-filter-headers.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\get-filters.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\hardware.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\hd-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\hd-private.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\hd-public.cpp" />
@@ -339,6 +340,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-filter-checkpoint.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-filter-headers.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-filters.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hardware.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hd-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hd-private.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hd-public.hpp" />

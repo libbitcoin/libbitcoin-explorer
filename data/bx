@@ -70,6 +70,7 @@ _bx()
         fetch-tx
         fetch-tx-index
         fetch-utxo
+        hardware
         hd-new
         hd-private
         hd-public

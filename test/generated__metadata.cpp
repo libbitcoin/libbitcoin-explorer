@@ -580,6 +580,14 @@ BC_AUTO_TEST_CASE(generated__metadata__get_filters__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__hardware__returns_expected_values)
+{
+    hardware command;
+    BC_REQUIRE_EQUAL(command.category(), "META");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__hd_new__returns_expected_values)
 {
     hd_new command;

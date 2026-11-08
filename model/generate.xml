@@ -475,6 +475,14 @@
     <define name="BX_FILTER_MATCH_SCRIPT_FAILURE" value="Script does not match filter." />
   </command>
 
+  <command symbol="hardware" output="string" category="META" description="Display hardware compatibility.">
+    <define name="BX_HARDWARE_HEADER_ARM64" value="Hardware configuration (arm64)..." />
+    <define name="BX_HARDWARE_HEADER_X64" value="Hardware configuration (x64)..." />
+    <define name="BX_HARDWARE_COMPILED" value="platform:{:d} compiled:{:d}." />
+    <define name="BX_HARDWARE_SHA_UNCOMPILED" value="Available SHA hardware acceleration is not compiled into this build." />
+    <define name="BX_HARDWARE_AVX2_UNCOMPILED" value="Available AVX2 hardware acceleration is not compiled into this build." />
+  </command>
+
   <command symbol="hd-new" formerly="hd-seed" output="hd_private" category="WALLET" description="Create a new HD (BIP32) private key from entropy.">
     <option name="version" type="uint32_t" configuration="wallet.hd_secret_version" description="The desired HD private key version, defaults to 76066276." />
     <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the entropy is read from STDIN." />

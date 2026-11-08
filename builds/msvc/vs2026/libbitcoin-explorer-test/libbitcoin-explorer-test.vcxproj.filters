@@ -231,6 +231,9 @@
     <ClCompile Include="..\..\..\..\test\commands\get-filters.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\hardware.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\hd-new.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

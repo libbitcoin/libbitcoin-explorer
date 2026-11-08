@@ -1253,6 +1253,22 @@ BC_AUTO_TEST_CASE(generated__parse__get_filters__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__hardware__okay)
+{
+    hardware command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "hardware",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 1, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__hd_new__okay)
 {
     hd_new command;
