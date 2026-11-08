@@ -46,10 +46,10 @@
 #include <bitcoin/explorer/commands/bitcoin256.hpp>
 #include <bitcoin/explorer/commands/broadcast-tx.hpp>
 #include <bitcoin/explorer/commands/btc-to-satoshi.hpp>
-#include <bitcoin/explorer/commands/cert-new.hpp>
-#include <bitcoin/explorer/commands/cert-public.hpp>
 #include <bitcoin/explorer/commands/checked-decode.hpp>
 #include <bitcoin/explorer/commands/checked-encode.hpp>
+#include <bitcoin/explorer/commands/curve-new.hpp>
+#include <bitcoin/explorer/commands/curve-public.hpp>
 #include <bitcoin/explorer/commands/dice-entropy.hpp>
 #include <bitcoin/explorer/commands/dice-rolls.hpp>
 #include <bitcoin/explorer/commands/ec-add-secrets.hpp>

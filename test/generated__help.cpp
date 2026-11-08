@@ -321,34 +321,6 @@ BC_AUTO_TEST_CASE(generated__help__btc_to_satoshi__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
-BC_AUTO_TEST_CASE(generated__help__cert_new__okay_output)
-{
-    cert_new command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "cert-new", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
-BC_AUTO_TEST_CASE(generated__help__cert_public__okay_output)
-{
-    cert_public command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "cert-public", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
 BC_AUTO_TEST_CASE(generated__help__checked_decode__okay_output)
 {
     checked_decode command;
@@ -369,6 +341,34 @@ BC_AUTO_TEST_CASE(generated__help__checked_encode__okay_output)
     std::string message;
     std::stringstream input, output;
     const char* argv[]{ "checked-encode", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__curve_new__okay_output)
+{
+    curve_new command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "curve-new", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__curve_public__okay_output)
+{
+    curve_public command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "curve-public", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());

@@ -62,6 +62,16 @@ BC_AUTO_TEST_CASE(generated__formerly__checked_encode_was_wrap_encode__returns_o
     BC_REQUIRE_EQUAL(formerly("wrap-encode"), checked_encode::symbol());
 }
 
+BC_AUTO_TEST_CASE(generated__formerly__curve_new_was_cert_new__returns_object)
+{
+    BC_REQUIRE_EQUAL(formerly("cert-new"), curve_new::symbol());
+}
+
+BC_AUTO_TEST_CASE(generated__formerly__curve_public_was_cert_public__returns_object)
+{
+    BC_REQUIRE_EQUAL(formerly("cert-public"), curve_public::symbol());
+}
+
 BC_AUTO_TEST_CASE(generated__formerly__ec_add_secrets_was_ec_add_modp__returns_object)
 {
     BC_REQUIRE_EQUAL(formerly("ec-add-modp"), ec_add_secrets::symbol());

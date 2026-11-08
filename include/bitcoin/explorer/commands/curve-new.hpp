@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_CERT_PUBLIC_HPP
-#define BX_CERT_PUBLIC_HPP
+#ifndef BX_CURVE_NEW_HPP
+#define BX_CURVE_NEW_HPP
 
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
@@ -48,13 +48,15 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_CERT_PUBLIC_INVALID \
-    "The private key is not valid."
+#define BX_CURVE_NEW_SHORT_ENTROPY \
+    "The entropy is less than 256 bits long."
+#define BX_CURVE_NEW_INVALID_KEY \
+    "The entropy produced an invalid key."
 
 /**
- * Class to implement the cert-public command.
+ * Class to implement the curve-new command.
  */
-class BCX_API cert_public
+class BCX_API curve_new
   : public command
 {
 public:
@@ -64,13 +66,21 @@ public:
      */
     static const char* symbol()
     {
-        return "cert-public";
+        return "curve-new";
+    }
+
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    static const char* formerly()
+    {
+        return "cert-new";
     }
 
     /**
      * Destructor.
      */
-    virtual ~cert_public()
+    virtual ~curve_new()
     {
     }
 
@@ -79,7 +89,7 @@ public:
      */
     virtual const char* name()
     {
-        return cert_public::symbol();
+        return curve_new::symbol();
     }
 
     /**
@@ -95,7 +105,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Derive a Base85 Curve ZMQ public key for use with a Libbitcoin server.";
+        return "Create a Base85 Curve ZMQ private key for use with a Libbitcoin server from entropy.";
     }
 
     /**
@@ -106,7 +116,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PRIVATE_KEY", 1);
+            .add("ENTROPY", 1);
     }
 
     /**
@@ -117,7 +127,7 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        load_input(get_private_key_argument(), "PRIVATE_KEY", variables, input);
+        load_input(get_entropy_argument(), "ENTROPY", variables, input);
     }
 
     /**
@@ -140,9 +150,9 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "PRIVATE_KEY",
-            value<system::config::base85>(&argument_.private_key),
-            "The private key from which to derive the public key."
+            "ENTROPY",
+            value<system::config::base16>(&argument_.entropy),
+            "The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN."
         );
 
         return options;
@@ -168,20 +178,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PRIVATE_KEY argument.
+     * Get the value of the ENTROPY argument.
      */
-    virtual system::config::base85& get_private_key_argument()
+    virtual system::config::base16& get_entropy_argument()
     {
-        return argument_.private_key;
+        return argument_.entropy;
     }
 
     /**
-     * Set the value of the PRIVATE_KEY argument.
+     * Set the value of the ENTROPY argument.
      */
-    virtual void set_private_key_argument(
-        const system::config::base85& value)
+    virtual void set_entropy_argument(
+        const system::config::base16& value)
     {
-        argument_.private_key = value;
+        argument_.entropy = value;
     }
 
 private:
@@ -194,11 +204,11 @@ private:
     struct argument
     {
         argument()
-          : private_key()
+          : entropy()
         {
         }
 
-        system::config::base85 private_key;
+        system::config::base16 entropy;
     } argument_;
 
     /**

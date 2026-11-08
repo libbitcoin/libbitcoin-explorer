@@ -224,24 +224,6 @@ BC_AUTO_TEST_CASE(generated__property__btc_to_satoshi__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_btc_argument()), serial(btc_argument));
 }
 
-BC_AUTO_TEST_CASE(generated__property__cert_new__round_trips)
-{
-    cert_new command;
-
-    const system::config::base16 entropy_argument{ "baadf00d" };
-    command.set_entropy_argument(entropy_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_entropy_argument()), serial(entropy_argument));
-}
-
-BC_AUTO_TEST_CASE(generated__property__cert_public__round_trips)
-{
-    cert_public command;
-
-    const system::config::base85 private_key_argument{ "HelloWorld" };
-    command.set_private_key_argument(private_key_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_private_key_argument()), serial(private_key_argument));
-}
-
 BC_AUTO_TEST_CASE(generated__property__checked_decode__round_trips)
 {
     checked_decode command;
@@ -262,6 +244,24 @@ BC_AUTO_TEST_CASE(generated__property__checked_encode__round_trips)
     const explorer::config::byte version_option{ 42 };
     command.set_version_option(version_option);
     BC_REQUIRE_EQUAL(serial(command.get_version_option()), serial(version_option));
+}
+
+BC_AUTO_TEST_CASE(generated__property__curve_new__round_trips)
+{
+    curve_new command;
+
+    const system::config::base16 entropy_argument{ "baadf00d" };
+    command.set_entropy_argument(entropy_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_entropy_argument()), serial(entropy_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__curve_public__round_trips)
+{
+    curve_public command;
+
+    const system::config::base85 private_key_argument{ "HelloWorld" };
+    command.set_private_key_argument(private_key_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_private_key_argument()), serial(private_key_argument));
 }
 
 BC_AUTO_TEST_CASE(generated__property__dice_entropy__round_trips)

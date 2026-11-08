@@ -386,40 +386,6 @@ BC_AUTO_TEST_CASE(generated__parse__btc_to_satoshi__okay)
     BC_REQUIRE(!metadata.help());
 }
 
-BC_AUTO_TEST_CASE(generated__parse__cert_new__okay)
-{
-    cert_new command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "cert-new",
-        "baadf00d",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
-BC_AUTO_TEST_CASE(generated__parse__cert_public__okay)
-{
-    cert_public command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "cert-public",
-        "HelloWorld",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
 BC_AUTO_TEST_CASE(generated__parse__checked_decode__okay)
 {
     checked_decode command;
@@ -451,6 +417,40 @@ BC_AUTO_TEST_CASE(generated__parse__checked_encode__okay)
 
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 4, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__curve_new__okay)
+{
+    curve_new command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "curve-new",
+        "baadf00d",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__curve_public__okay)
+{
+    curve_public command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "curve-public",
+        "HelloWorld",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }

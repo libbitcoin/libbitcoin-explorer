@@ -87,16 +87,16 @@
     <ClCompile Include="..\..\..\..\test\commands\btc-to-satoshi.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\cert-new.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\cert-public.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\checked-decode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\checked-encode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\curve-new.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\curve-public.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\dice-entropy.cpp">

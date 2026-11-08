@@ -22,22 +22,22 @@
 BX_USING_NAMESPACES()
 
 BC_AUTO_TEST_SUITE(offline)
-BC_AUTO_TEST_SUITE(cert_public__invoke)
+BC_AUTO_TEST_SUITE(curve_public__invoke)
 
-BC_AUTO_TEST_CASE(cert_public__invoke__private_key__okay_output)
+BC_AUTO_TEST_CASE(curve_public__invoke__private_key__okay_output)
 {
-    BX_DECLARE_COMMAND(cert_public);
+    BX_DECLARE_COMMAND(curve_public);
     command.set_private_key_argument({ "Cl.%(A#p:4jqL+Nql<!5?+kXU(+F]rV3l8w9L0ZJ" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("G=]<>I7>&bBC>O5V{aj/4zK}kco8}o(.HIuS*=:#\n");
 }
 
-BC_AUTO_TEST_CASE(cert_public__invoke__short_private_key__failure_error)
+BC_AUTO_TEST_CASE(curve_public__invoke__short_private_key__failure_error)
 {
-    BX_DECLARE_COMMAND(cert_public);
+    BX_DECLARE_COMMAND(curve_public);
     command.set_private_key_argument({ "HelloWorld" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_CERT_PUBLIC_INVALID "\n");
+    BX_REQUIRE_ERROR(BX_CURVE_PUBLIC_INVALID "\n");
 }
 
 BC_AUTO_TEST_SUITE_END()

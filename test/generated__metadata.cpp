@@ -196,22 +196,6 @@ BC_AUTO_TEST_CASE(generated__metadata__btc_to_satoshi__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
-BC_AUTO_TEST_CASE(generated__metadata__cert_new__returns_expected_values)
-{
-    cert_new command;
-    BC_REQUIRE_EQUAL(command.category(), "MATH");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
-BC_AUTO_TEST_CASE(generated__metadata__cert_public__returns_expected_values)
-{
-    cert_public command;
-    BC_REQUIRE_EQUAL(command.category(), "MATH");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
 BC_AUTO_TEST_CASE(generated__metadata__checked_decode__returns_expected_values)
 {
     checked_decode command;
@@ -224,6 +208,22 @@ BC_AUTO_TEST_CASE(generated__metadata__checked_encode__returns_expected_values)
 {
     checked_encode command;
     BC_REQUIRE_EQUAL(command.category(), "ENCODING");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__curve_new__returns_expected_values)
+{
+    curve_new command;
+    BC_REQUIRE_EQUAL(command.category(), "MATH");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__curve_public__returns_expected_values)
+{
+    curve_public command;
+    BC_REQUIRE_EQUAL(command.category(), "MATH");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
 }

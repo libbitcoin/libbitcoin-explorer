@@ -52,10 +52,10 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<bitcoin256>());
     func(make_shared<broadcast_tx>());
     func(make_shared<btc_to_satoshi>());
-    func(make_shared<cert_new>());
-    func(make_shared<cert_public>());
     func(make_shared<checked_decode>());
     func(make_shared<checked_encode>());
+    func(make_shared<curve_new>());
+    func(make_shared<curve_public>());
     func(make_shared<dice_entropy>());
     func(make_shared<dice_rolls>());
     func(make_shared<ec_add>());
@@ -203,14 +203,14 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<broadcast_tx>();
     if (symbol == btc_to_satoshi::symbol())
         return make_shared<btc_to_satoshi>();
-    if (symbol == cert_new::symbol())
-        return make_shared<cert_new>();
-    if (symbol == cert_public::symbol())
-        return make_shared<cert_public>();
     if (symbol == checked_decode::symbol())
         return make_shared<checked_decode>();
     if (symbol == checked_encode::symbol())
         return make_shared<checked_encode>();
+    if (symbol == curve_new::symbol())
+        return make_shared<curve_new>();
+    if (symbol == curve_public::symbol())
+        return make_shared<curve_public>();
     if (symbol == dice_entropy::symbol())
         return make_shared<dice_entropy>();
     if (symbol == dice_rolls::symbol())
@@ -433,6 +433,10 @@ std::string formerly(const string& former)
         return checked_decode::symbol();
     if (former == checked_encode::formerly())
         return checked_encode::symbol();
+    if (former == curve_new::formerly())
+        return curve_new::symbol();
+    if (former == curve_public::formerly())
+        return curve_public::symbol();
     if (former == ec_add_secrets::formerly())
         return ec_add_secrets::symbol();
     if (former == ec_multiply_secrets::formerly())

@@ -116,10 +116,10 @@
     <ClCompile Include="..\..\..\..\test\commands\bitcoin256.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\broadcast-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\btc-to-satoshi.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\cert-new.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\cert-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\checked-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\checked-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\curve-new.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\curve-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\dice-entropy.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\dice-rolls.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add-secrets.cpp" />

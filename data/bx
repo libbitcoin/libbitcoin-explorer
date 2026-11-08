@@ -25,10 +25,10 @@ _bx()
         bitcoin160
         bitcoin256
         btc-to-satoshi
-        cert-new
-        cert-public
         checked-decode
         checked-encode
+        curve-new
+        curve-public
         dice-entropy
         dice-rolls
         ec-add

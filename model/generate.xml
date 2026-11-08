@@ -162,17 +162,6 @@
     <argument name="BTC" stdin="true" type="btc" description="The number of BTC to convert. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="cert-new" output="base85" category="MATH" description="Create a Base85 Curve ZMQ private key for use with a Libbitcoin server from entropy.">
-    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN." />
-    <define name="BX_CERT_NEW_SHORT_ENTROPY" value="The entropy is less than 256 bits long." />
-    <define name="BX_CERT_NEW_INVALID_KEY" value="The entropy produced an invalid key." />
-  </command>
-
-  <command symbol="cert-public" output="base85" category="MATH" description="Derive a Base85 Curve ZMQ public key for use with a Libbitcoin server.">
-    <argument name="PRIVATE_KEY" stdin="true" type="base85" description="The private key from which to derive the public key." />
-    <define name="BX_CERT_PUBLIC_INVALID" value="The private key is not valid." />
-  </command>
-
   <command symbol="checked-decode" formerly="wrap-decode" output="base16" category="ENCODING" description="Validate the bitcoin checksum of Base16 data and recover its version and payload.">
     <argument name="CHECKED" stdin="true" type="base16" description="The checked Base16 data to decode. If not specified the value is read from STDIN." />
   </command>
@@ -180,6 +169,17 @@
   <command symbol="checked-encode" formerly="wrap-encode" output="base16" category="ENCODING" description="Add a version byte and bitcoin checksum to Base16 data.">
     <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
     <argument name="PAYLOAD" stdin="true" type="base16" description="The Base16 data to encode. If not specified the value is read from STDIN." />
+  </command>
+
+  <command symbol="curve-new" formerly="cert-new" output="base85" category="MATH" description="Create a Base85 Curve ZMQ private key for use with a Libbitcoin server from entropy.">
+    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN." />
+    <define name="BX_CURVE_NEW_SHORT_ENTROPY" value="The entropy is less than 256 bits long." />
+    <define name="BX_CURVE_NEW_INVALID_KEY" value="The entropy produced an invalid key." />
+  </command>
+
+  <command symbol="curve-public" formerly="cert-public" output="base85" category="MATH" description="Derive a Base85 Curve ZMQ public key for use with a Libbitcoin server.">
+    <argument name="PRIVATE_KEY" stdin="true" type="base85" description="The private key from which to derive the public key." />
+    <define name="BX_CURVE_PUBLIC_INVALID" value="The private key is not valid." />
   </command>
 
   <command symbol="dice-entropy" output="base16" category="WALLET" description="Convert a sequence of dice rolls to Base16 entropy. Each roll is one character, the face value 0 to 15 as a hexadecimal digit, so the rolls of a sixteen-sided die are their own Base16 encoding. Subtract one from each roll of a die with faces numbered from one, writing a six-sided roll of 1 to 6 as 0 to 5.">

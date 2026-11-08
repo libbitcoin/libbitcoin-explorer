@@ -132,16 +132,6 @@ BC_AUTO_TEST_CASE(generated__symbol__btc_to_satoshi__returns_expected_value)
     BC_REQUIRE_EQUAL(btc_to_satoshi::symbol(), "btc-to-satoshi");
 }
 
-BC_AUTO_TEST_CASE(generated__symbol__cert_new__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(cert_new::symbol(), "cert-new");
-}
-
-BC_AUTO_TEST_CASE(generated__symbol__cert_public__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(cert_public::symbol(), "cert-public");
-}
-
 BC_AUTO_TEST_CASE(generated__symbol__checked_decode__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(checked_decode::symbol(), "checked-decode");
@@ -150,6 +140,16 @@ BC_AUTO_TEST_CASE(generated__symbol__checked_decode__returns_expected_value)
 BC_AUTO_TEST_CASE(generated__symbol__checked_encode__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(checked_encode::symbol(), "checked-encode");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__curve_new__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(curve_new::symbol(), "curve-new");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__curve_public__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(curve_public::symbol(), "curve-public");
 }
 
 BC_AUTO_TEST_CASE(generated__symbol__dice_entropy__returns_expected_value)

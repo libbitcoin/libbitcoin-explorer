@@ -83,10 +83,10 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/bitcoin256.cpp \
     ${srcdir}/../../src/commands/broadcast-tx.cpp \
     ${srcdir}/../../src/commands/btc-to-satoshi.cpp \
-    ${srcdir}/../../src/commands/cert-new.cpp \
-    ${srcdir}/../../src/commands/cert-public.cpp \
     ${srcdir}/../../src/commands/checked-decode.cpp \
     ${srcdir}/../../src/commands/checked-encode.cpp \
+    ${srcdir}/../../src/commands/curve-new.cpp \
+    ${srcdir}/../../src/commands/curve-public.cpp \
     ${srcdir}/../../src/commands/dice-entropy.cpp \
     ${srcdir}/../../src/commands/dice-rolls.cpp \
     ${srcdir}/../../src/commands/ec-add-secrets.cpp \
@@ -267,10 +267,10 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/bitcoin256.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/broadcast-tx.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/btc-to-satoshi.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/commands/cert-new.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/commands/cert-public.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/checked-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/checked-encode.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/curve-new.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/curve-public.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/dice-entropy.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/dice-rolls.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/ec-add-secrets.hpp \
@@ -459,10 +459,10 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/bitcoin256.cpp \
     ${srcdir}/../../test/commands/broadcast-tx.cpp \
     ${srcdir}/../../test/commands/btc-to-satoshi.cpp \
-    ${srcdir}/../../test/commands/cert-new.cpp \
-    ${srcdir}/../../test/commands/cert-public.cpp \
     ${srcdir}/../../test/commands/checked-decode.cpp \
     ${srcdir}/../../test/commands/checked-encode.cpp \
+    ${srcdir}/../../test/commands/curve-new.cpp \
+    ${srcdir}/../../test/commands/curve-public.cpp \
     ${srcdir}/../../test/commands/dice-entropy.cpp \
     ${srcdir}/../../test/commands/dice-rolls.cpp \
     ${srcdir}/../../test/commands/ec-add-secrets.cpp \

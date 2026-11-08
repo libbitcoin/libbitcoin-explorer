@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/cert-public.hpp>
+#include <bitcoin/explorer/commands/curve-public.hpp>
 
 #include <algorithm>
 #include <string>
@@ -30,7 +30,7 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result cert_public::invoke(std::ostream& output,
+console_result curve_public::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
@@ -41,14 +41,14 @@ console_result cert_public::invoke(std::ostream& output,
     std::string public_key{};
     if (secret.size() != x25519::key_size)
     {
-        error << BX_CERT_PUBLIC_INVALID << std::endl;
+        error << BX_CURVE_PUBLIC_INVALID << std::endl;
         return console_result::failure;
     }
 
     std::copy_n(secret.begin(), x25519::key_size, scalar.begin());
     if (!x25519::multiply(point, scalar) || !encode_base85(public_key, point))
     {
-        error << BX_CERT_PUBLIC_INVALID << std::endl;
+        error << BX_CURVE_PUBLIC_INVALID << std::endl;
         return console_result::failure;
     }
 

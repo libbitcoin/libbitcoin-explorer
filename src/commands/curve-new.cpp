@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/cert-new.hpp>
+#include <bitcoin/explorer/commands/curve-new.hpp>
 
 #include <algorithm>
 #include <string>
@@ -36,14 +36,14 @@ static bool encode(std::string& out, const x25519::key& key) NOEXCEPT
     return encode_base85(out, key) && !contains(out, '#');
 }
 
-console_result cert_new::invoke(std::ostream& output, std::ostream& error)
+console_result curve_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const data_chunk& entropy = get_entropy_argument();
 
     if (entropy.size() < x25519::key_size)
     {
-        error << BX_CERT_NEW_SHORT_ENTROPY << std::endl;
+        error << BX_CURVE_NEW_SHORT_ENTROPY << std::endl;
         return console_result::failure;
     }
 
@@ -57,7 +57,7 @@ console_result cert_new::invoke(std::ostream& output, std::ostream& error)
         !encode(private_key, secret) ||
         !encode(public_key, point))
     {
-        error << BX_CERT_NEW_INVALID_KEY << std::endl;
+        error << BX_CURVE_NEW_INVALID_KEY << std::endl;
         return console_result::failure;
     }
 
