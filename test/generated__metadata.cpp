@@ -983,7 +983,7 @@ BC_AUTO_TEST_CASE(generated__metadata__validate_tx__returns_expected_values)
 BC_AUTO_TEST_CASE(generated__metadata__version__returns_expected_values)
 {
     version command;
-    BC_REQUIRE_EQUAL(command.category(), "ONLINE");
+    BC_REQUIRE_EQUAL(command.category(), "META");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
 }

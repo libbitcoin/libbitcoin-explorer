@@ -800,11 +800,8 @@
     <define name="BX_VALIDATE_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="version" stub="true" output="string" category="ONLINE" network="true" description="Fetch and display the libbitcoin server and client versions. Requires a Libbitcoin server connection.">
-    <define name="BX_VERSION_FAILED" value="Failed to retrieve server version: {}." />
-    <define name="BX_SERVER_VERSION" value="libbitcoin-server version: {}." />
-    <define name="BX_EXPLORER_VERSION" value="libbitcoin-explorer version: {}." />
-    <define name="BX_VERSION_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  <command symbol="version" output="string" category="META" description="Display version information.">
+    <define name="BX_VERSION_HEADER" value="Version Information..." />
   </command>
 
   <command symbol="watch-key" stub="true" formerly="monitor" output="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which a payment key participates. Requires a Libbitcoin server connection.">

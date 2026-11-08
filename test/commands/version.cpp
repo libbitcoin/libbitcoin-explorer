@@ -16,18 +16,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include "command.hpp"
 
 BX_USING_NAMESPACES()
 
-BC_AUTO_TEST_SUITE(stub)
+BC_AUTO_TEST_SUITE(offline)
 BC_AUTO_TEST_SUITE(version__invoke)
 
-BC_AUTO_TEST_CASE(version__invoke__always__failure_error)
+BC_AUTO_TEST_CASE(version__invoke__always__okay_output)
 {
     BX_DECLARE_COMMAND(commands::version);
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_VERSION_NOT_IMPLEMENTED "\n");
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BC_REQUIRE(output.str().starts_with(BX_VERSION_HEADER "\n"));
+    BC_REQUIRE(output.str().find("\nlibbitcoin-explorer.. ") != std::string::npos);
 }
 
 BC_AUTO_TEST_SUITE_END()
