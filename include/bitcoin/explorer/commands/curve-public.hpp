@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_CERT_PUBLIC_HPP
-#define BX_CERT_PUBLIC_HPP
+#ifndef BX_CURVE_PUBLIC_HPP
+#define BX_CURVE_PUBLIC_HPP
 
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
@@ -48,13 +48,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_CERT_PUBLIC_INVALID \
+#define BX_CURVE_PUBLIC_INVALID \
     "The private key is not valid."
 
 /**
- * Class to implement the cert-public command.
+ * Class to implement the curve-public command.
  */
-class BCX_API cert_public
+class BCX_API curve_public
   : public command
 {
 public:
@@ -64,13 +64,21 @@ public:
      */
     static const char* symbol()
     {
+        return "curve-public";
+    }
+
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    static const char* formerly()
+    {
         return "cert-public";
     }
 
     /**
      * Destructor.
      */
-    virtual ~cert_public()
+    virtual ~curve_public()
     {
     }
 
@@ -79,7 +87,7 @@ public:
      */
     virtual const char* name()
     {
-        return cert_public::symbol();
+        return curve_public::symbol();
     }
 
     /**

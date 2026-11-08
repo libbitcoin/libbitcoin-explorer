@@ -19,19 +19,32 @@
 
 #include <bitcoin/explorer/commands/version.hpp>
 
+#include <format>
+#include <bitcoin/network.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/version.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
-using namespace bc::system;
-
-console_result version::invoke(std::ostream&, std::ostream& error)
+template <typename Version>
+static std::string thumb(const Version& version) NOEXCEPT
 {
-    error << BX_VERSION_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    return std::format("{} {}{}", version.semantic,
+        version.commit_hash.substr(0, 8), version.dirty ? "-dirty" : "");
+}
+
+console_result version::invoke(std::ostream& output, std::ostream&)
+{
+    output << BX_VERSION_HEADER << std::endl;
+    output << "secp256k1............ " << system::secp256k1_library() << std::endl;
+    output << "tls.................. " << network::tls_library() << std::endl;
+    output << "libbitcoin-system.... " << thumb(system::build_version()) << std::endl;
+    output << "libbitcoin-network... " << thumb(network::build_version()) << std::endl;
+    output << "libbitcoin-explorer.. " << thumb(explorer::build_version()) << std::endl;
+    return console_result::okay;
 }
 
 } //namespace commands

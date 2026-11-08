@@ -48,14 +48,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_VERSION_FAILED \
-    "Failed to retrieve server version: {}."
-#define BX_SERVER_VERSION \
-    "libbitcoin-server version: {}."
-#define BX_EXPLORER_VERSION \
-    "libbitcoin-explorer version: {}."
-#define BX_VERSION_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_VERSION_HEADER \
+    "Version Information..."
 
 /**
  * Class to implement the version command.
@@ -93,7 +87,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ONLINE";
+        return "META";
     }
 
     /**
@@ -101,7 +95,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Fetch and display the libbitcoin server and client versions. Requires a Libbitcoin server connection.";
+        return "Display version information.";
     }
 
     /**

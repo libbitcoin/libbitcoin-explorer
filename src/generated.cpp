@@ -52,10 +52,10 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<bitcoin256>());
     func(make_shared<broadcast_tx>());
     func(make_shared<btc_to_satoshi>());
-    func(make_shared<cert_new>());
-    func(make_shared<cert_public>());
     func(make_shared<checked_decode>());
     func(make_shared<checked_encode>());
+    func(make_shared<curve_new>());
+    func(make_shared<curve_public>());
     func(make_shared<dice_entropy>());
     func(make_shared<dice_rolls>());
     func(make_shared<ec_add>());
@@ -100,6 +100,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<get_filter_checkpoint>());
     func(make_shared<get_filter_headers>());
     func(make_shared<get_filters>());
+    func(make_shared<hardware>());
     func(make_shared<hd_new>());
     func(make_shared<hd_private>());
     func(make_shared<hd_public>());
@@ -141,6 +142,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<stealth_shared>());
     func(make_shared<subscribe_block>());
     func(make_shared<subscribe_tx>());
+    func(make_shared<tls_cert>());
+    func(make_shared<tls_new>());
     func(make_shared<token_new>());
     func(make_shared<tx_decode>());
     func(make_shared<tx_encode>());
@@ -153,6 +156,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<watch_tx>());
     func(make_shared<wif_to_ec>());
     func(make_shared<wif_to_public>());
+    func(make_shared<witness_decode>());
+    func(make_shared<witness_encode>());
     func(make_shared<witness_to_key>());
     func(make_shared<witness_to_script>());
     func(make_shared<wrap_decode>());
@@ -203,14 +208,14 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<broadcast_tx>();
     if (symbol == btc_to_satoshi::symbol())
         return make_shared<btc_to_satoshi>();
-    if (symbol == cert_new::symbol())
-        return make_shared<cert_new>();
-    if (symbol == cert_public::symbol())
-        return make_shared<cert_public>();
     if (symbol == checked_decode::symbol())
         return make_shared<checked_decode>();
     if (symbol == checked_encode::symbol())
         return make_shared<checked_encode>();
+    if (symbol == curve_new::symbol())
+        return make_shared<curve_new>();
+    if (symbol == curve_public::symbol())
+        return make_shared<curve_public>();
     if (symbol == dice_entropy::symbol())
         return make_shared<dice_entropy>();
     if (symbol == dice_rolls::symbol())
@@ -299,6 +304,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<get_filter_headers>();
     if (symbol == get_filters::symbol())
         return make_shared<get_filters>();
+    if (symbol == hardware::symbol())
+        return make_shared<hardware>();
     if (symbol == hd_new::symbol())
         return make_shared<hd_new>();
     if (symbol == hd_private::symbol())
@@ -381,6 +388,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<subscribe_block>();
     if (symbol == subscribe_tx::symbol())
         return make_shared<subscribe_tx>();
+    if (symbol == tls_cert::symbol())
+        return make_shared<tls_cert>();
+    if (symbol == tls_new::symbol())
+        return make_shared<tls_new>();
     if (symbol == token_new::symbol())
         return make_shared<token_new>();
     if (symbol == tx_decode::symbol())
@@ -405,6 +416,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<wif_to_ec>();
     if (symbol == wif_to_public::symbol())
         return make_shared<wif_to_public>();
+    if (symbol == witness_decode::symbol())
+        return make_shared<witness_decode>();
+    if (symbol == witness_encode::symbol())
+        return make_shared<witness_encode>();
     if (symbol == witness_to_key::symbol())
         return make_shared<witness_to_key>();
     if (symbol == witness_to_script::symbol())
@@ -433,6 +448,10 @@ std::string formerly(const string& former)
         return checked_decode::symbol();
     if (former == checked_encode::formerly())
         return checked_encode::symbol();
+    if (former == curve_new::formerly())
+        return curve_new::symbol();
+    if (former == curve_public::formerly())
+        return curve_public::symbol();
     if (former == ec_add_secrets::formerly())
         return ec_add_secrets::symbol();
     if (former == ec_multiply_secrets::formerly())

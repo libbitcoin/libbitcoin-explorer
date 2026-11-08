@@ -321,34 +321,6 @@ BC_AUTO_TEST_CASE(generated__help__btc_to_satoshi__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
-BC_AUTO_TEST_CASE(generated__help__cert_new__okay_output)
-{
-    cert_new command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "cert-new", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
-BC_AUTO_TEST_CASE(generated__help__cert_public__okay_output)
-{
-    cert_public command;
-    std::string message;
-    std::stringstream input, output;
-    const char* argv[]{ "cert-public", "--help" };
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(metadata.help());
-    command.write_help(output);
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!output.str().empty());
-}
-
 BC_AUTO_TEST_CASE(generated__help__checked_decode__okay_output)
 {
     checked_decode command;
@@ -369,6 +341,34 @@ BC_AUTO_TEST_CASE(generated__help__checked_encode__okay_output)
     std::string message;
     std::stringstream input, output;
     const char* argv[]{ "checked-encode", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__curve_new__okay_output)
+{
+    curve_new command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "curve-new", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__curve_public__okay_output)
+{
+    curve_public command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "curve-public", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());
@@ -993,6 +993,20 @@ BC_AUTO_TEST_CASE(generated__help__get_filters__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
+BC_AUTO_TEST_CASE(generated__help__hardware__okay_output)
+{
+    hardware command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "hardware", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
 BC_AUTO_TEST_CASE(generated__help__hd_new__okay_output)
 {
     hd_new command;
@@ -1567,6 +1581,34 @@ BC_AUTO_TEST_CASE(generated__help__subscribe_tx__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
+BC_AUTO_TEST_CASE(generated__help__tls_cert__okay_output)
+{
+    tls_cert command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "tls-cert", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__tls_new__okay_output)
+{
+    tls_new command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "tls-new", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
 BC_AUTO_TEST_CASE(generated__help__token_new__okay_output)
 {
     token_new command;
@@ -1727,6 +1769,34 @@ BC_AUTO_TEST_CASE(generated__help__wif_to_public__okay_output)
     std::string message;
     std::stringstream input, output;
     const char* argv[]{ "wif-to-public", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__witness_decode__okay_output)
+{
+    witness_decode command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "witness-decode", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__witness_encode__okay_output)
+{
+    witness_encode command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "witness-encode", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());

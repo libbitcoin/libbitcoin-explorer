@@ -101,6 +101,20 @@ function global.value_semantic(is_file, is_option, type, required, unlimited, va
     return my.expression
 endfunction
 
+function global.setting_semantic(type, required, unlimited, variable, fallback)
+    define my.defaulted = !is_empty(my.fallback)
+    define my.norm_type = normalize_type(0, 0, my.type)
+    define my.quote_default = my.defaulted & is_quoted_type(my.norm_type)
+    define my.brace_default = my.defaulted & is_braced_type(my.norm_type)
+    define my.binding = pluralize("&$(my.variable)", my.unlimited)
+    define my.quoted_value = quote(if_else_empty(my.defaulted, my.fallback), my.quote_default)
+    define my.default_value = brace(my.quoted_value, my.brace_default)
+    define my.expression = "po::setting($(my.binding))"
+    my.expression += if_else_empty(my.required, "->required()")
+    my.expression += if_else_empty(my.defaulted, "->default_value($(my.default_value))")
+    return my.expression
+endfunction
+
 function global.left_token(text)
     define my.left = ""
     regexp.match("^(.*)\\\..*$", my.text, my.left)

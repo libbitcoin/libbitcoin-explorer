@@ -17,10 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/cert-new.hpp>
+#include <bitcoin/explorer/commands/tls-new.hpp>
 
-#include <algorithm>
-#include <string>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -30,38 +28,27 @@ namespace commands {
 
 using namespace bc::system;
 
-// A Base85 key encoding containing a hash sign cannot be used in a config file.
-static bool encode(std::string& out, const x25519::key& key) NOEXCEPT
-{
-    return encode_base85(out, key) && !contains(out, '#');
-}
-
-console_result cert_new::invoke(std::ostream& output, std::ostream& error)
+console_result tls_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const data_chunk& entropy = get_entropy_argument();
 
-    if (entropy.size() < x25519::key_size)
+    x509::secret secret{};
+    if (entropy.size() < secret.size())
     {
-        error << BX_CERT_NEW_SHORT_ENTROPY << std::endl;
+        error << BX_TLS_NEW_SHORT_ENTROPY << std::endl;
         return console_result::failure;
     }
 
-    x25519::key secret{};
-    x25519::key point{};
-    std::copy_n(entropy.begin(), x25519::key_size, secret.begin());
-
-    std::string private_key{};
-    std::string public_key{};
-    if (!x25519::multiply(point, secret) ||
-        !encode(private_key, secret) ||
-        !encode(public_key, point))
+    std::copy_n(entropy.begin(), secret.size(), secret.begin());
+    const auto key = x509::encode_private_key(secret);
+    if (key.empty())
     {
-        error << BX_CERT_NEW_INVALID_KEY << std::endl;
+        error << BX_TLS_NEW_INVALID_KEY << std::endl;
         return console_result::failure;
     }
 
-    output << private_key << std::endl;
+    output << key;
     return console_result::okay;
 }
 

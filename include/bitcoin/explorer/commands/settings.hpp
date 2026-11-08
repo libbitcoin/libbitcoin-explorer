@@ -46,6 +46,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_SETTINGS_MESSAGE \
+    "These are the configuration settings that can be set."
+
+/**
  * Class to implement the settings command.
  */
 class BCX_API settings
@@ -89,7 +95,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Display the loaded configuration settings.";
+        return "Display all configuration settings.";
     }
 
     /**

@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_CERT_NEW_HPP
-#define BX_CERT_NEW_HPP
+#ifndef BX_WITNESS_DECODE_HPP
+#define BX_WITNESS_DECODE_HPP
 
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
@@ -48,15 +48,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_CERT_NEW_SHORT_ENTROPY \
-    "The entropy is less than 256 bits long."
-#define BX_CERT_NEW_INVALID_KEY \
-    "The entropy produced an invalid key."
+#define BX_WITNESS_DECODE_INVALID \
+    "The witness is not valid."
 
 /**
- * Class to implement the cert-new command.
+ * Class to implement the witness-decode command.
  */
-class BCX_API cert_new
+class BCX_API witness_decode
   : public command
 {
 public:
@@ -66,13 +64,13 @@ public:
      */
     static const char* symbol()
     {
-        return "cert-new";
+        return "witness-decode";
     }
 
     /**
      * Destructor.
      */
-    virtual ~cert_new()
+    virtual ~witness_decode()
     {
     }
 
@@ -81,7 +79,7 @@ public:
      */
     virtual const char* name()
     {
-        return cert_new::symbol();
+        return witness_decode::symbol();
     }
 
     /**
@@ -89,7 +87,7 @@ public:
      */
     virtual const char* category()
     {
-        return "MATH";
+        return "TRANSACTION";
     }
 
     /**
@@ -97,7 +95,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a Base85 Curve ZMQ private key for use with a Libbitcoin server from entropy.";
+        return "Decode a witness to bracketed Base16 data tokens.";
     }
 
     /**
@@ -108,7 +106,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("ENTROPY", 1);
+            .add("BASE16", 1);
     }
 
     /**
@@ -119,7 +117,7 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        load_input(get_entropy_argument(), "ENTROPY", variables, input);
+        load_input(get_base16_argument(), "BASE16", variables, input);
     }
 
     /**
@@ -142,9 +140,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "ENTROPY",
-            value<system::config::base16>(&argument_.entropy),
-            "The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN."
+            "prefix,p",
+            value<bool>(&option_.prefix)->zero_tokens(),
+            "Decode a witness that has an element count prefix."
+        )
+        (
+            "BASE16",
+            value<system::config::base16>(&argument_.base16),
+            "The Base16 witness. If not specified the witness is read from STDIN."
         );
 
         return options;
@@ -170,20 +173,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the ENTROPY argument.
+     * Get the value of the BASE16 argument.
      */
-    virtual system::config::base16& get_entropy_argument()
+    virtual system::config::base16& get_base16_argument()
     {
-        return argument_.entropy;
+        return argument_.base16;
     }
 
     /**
-     * Set the value of the ENTROPY argument.
+     * Set the value of the BASE16 argument.
      */
-    virtual void set_entropy_argument(
+    virtual void set_base16_argument(
         const system::config::base16& value)
     {
-        argument_.entropy = value;
+        argument_.base16 = value;
+    }
+
+    /**
+     * Get the value of the prefix option.
+     */
+    virtual bool& get_prefix_option()
+    {
+        return option_.prefix;
+    }
+
+    /**
+     * Set the value of the prefix option.
+     */
+    virtual void set_prefix_option(
+        const bool& value)
+    {
+        option_.prefix = value;
     }
 
 private:
@@ -196,11 +216,11 @@ private:
     struct argument
     {
         argument()
-          : entropy()
+          : base16()
         {
         }
 
-        system::config::base16 entropy;
+        system::config::base16 base16;
     } argument_;
 
     /**
@@ -211,9 +231,11 @@ private:
     struct option
     {
         option()
+          : prefix()
         {
         }
 
+        bool prefix;
     } option_;
 };
 

@@ -22,22 +22,17 @@
 BX_USING_NAMESPACES()
 
 BC_AUTO_TEST_SUITE(offline)
-BC_AUTO_TEST_SUITE(cert_public__invoke)
+BC_AUTO_TEST_SUITE(hardware__invoke)
 
-BC_AUTO_TEST_CASE(cert_public__invoke__private_key__okay_output)
+BC_AUTO_TEST_CASE(hardware__invoke__always__okay_output)
 {
-    BX_DECLARE_COMMAND(cert_public);
-    command.set_private_key_argument({ "Cl.%(A#p:4jqL+Nql<!5?+kXU(+F]rV3l8w9L0ZJ" });
+    BX_DECLARE_COMMAND(hardware);
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("G=]<>I7>&bBC>O5V{aj/4zK}kco8}o(.HIuS*=:#\n");
-}
-
-BC_AUTO_TEST_CASE(cert_public__invoke__short_private_key__failure_error)
-{
-    BX_DECLARE_COMMAND(cert_public);
-    command.set_private_key_argument({ "HelloWorld" });
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_CERT_PUBLIC_INVALID "\n");
+#if defined(HAVE_ARM)
+    BC_REQUIRE(output.str().starts_with(BX_HARDWARE_HEADER_ARM64 "\n"));
+#else
+    BC_REQUIRE(output.str().starts_with(BX_HARDWARE_HEADER_X64 "\n"));
+#endif
 }
 
 BC_AUTO_TEST_SUITE_END()

@@ -196,22 +196,6 @@ BC_AUTO_TEST_CASE(generated__metadata__btc_to_satoshi__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
-BC_AUTO_TEST_CASE(generated__metadata__cert_new__returns_expected_values)
-{
-    cert_new command;
-    BC_REQUIRE_EQUAL(command.category(), "MATH");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
-BC_AUTO_TEST_CASE(generated__metadata__cert_public__returns_expected_values)
-{
-    cert_public command;
-    BC_REQUIRE_EQUAL(command.category(), "MATH");
-    BC_REQUIRE(!command.requires_raw_input());
-    BC_REQUIRE(!command.requires_raw_output());
-}
-
 BC_AUTO_TEST_CASE(generated__metadata__checked_decode__returns_expected_values)
 {
     checked_decode command;
@@ -224,6 +208,22 @@ BC_AUTO_TEST_CASE(generated__metadata__checked_encode__returns_expected_values)
 {
     checked_encode command;
     BC_REQUIRE_EQUAL(command.category(), "ENCODING");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__curve_new__returns_expected_values)
+{
+    curve_new command;
+    BC_REQUIRE_EQUAL(command.category(), "MATH");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__curve_public__returns_expected_values)
+{
+    curve_public command;
+    BC_REQUIRE_EQUAL(command.category(), "MATH");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
 }
@@ -580,6 +580,14 @@ BC_AUTO_TEST_CASE(generated__metadata__get_filters__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__hardware__returns_expected_values)
+{
+    hardware command;
+    BC_REQUIRE_EQUAL(command.category(), "META");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__hd_new__returns_expected_values)
 {
     hd_new command;
@@ -908,6 +916,22 @@ BC_AUTO_TEST_CASE(generated__metadata__subscribe_tx__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__tls_cert__returns_expected_values)
+{
+    tls_cert command;
+    BC_REQUIRE_EQUAL(command.category(), "MATH");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__tls_new__returns_expected_values)
+{
+    tls_new command;
+    BC_REQUIRE_EQUAL(command.category(), "MATH");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__token_new__returns_expected_values)
 {
     token_new command;
@@ -967,7 +991,7 @@ BC_AUTO_TEST_CASE(generated__metadata__validate_tx__returns_expected_values)
 BC_AUTO_TEST_CASE(generated__metadata__version__returns_expected_values)
 {
     version command;
-    BC_REQUIRE_EQUAL(command.category(), "ONLINE");
+    BC_REQUIRE_EQUAL(command.category(), "META");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
 }
@@ -1000,6 +1024,22 @@ BC_AUTO_TEST_CASE(generated__metadata__wif_to_public__returns_expected_values)
 {
     wif_to_public command;
     BC_REQUIRE_EQUAL(command.category(), "WALLET");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__witness_decode__returns_expected_values)
+{
+    witness_decode command;
+    BC_REQUIRE_EQUAL(command.category(), "TRANSACTION");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__witness_encode__returns_expected_values)
+{
+    witness_encode command;
+    BC_REQUIRE_EQUAL(command.category(), "TRANSACTION");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
 }

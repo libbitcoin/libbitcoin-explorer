@@ -24,9 +24,9 @@ BX_USING_NAMESPACES()
 BC_AUTO_TEST_SUITE(offline)
 BC_AUTO_TEST_SUITE(settings__invoke)
 
-#define BX_SETTINGS_EMPTY "{\"settings\":{\"server\":{\"connect_retries\":\"0\",\"connect_timeout_seconds\":\"0\",\"url\":\"localhost\"},\"wallet\":{\"hd_public_version\":\"0\",\"hd_secret_version\":\"0\",\"pay_to_public_key_hash_version\":\"0\",\"pay_to_script_hash_version\":\"0\",\"rule_fork_flags\":\"0\",\"transaction_version\":\"0\",\"wif_version\":\"0\"}}}\n"
+#define BX_SETTINGS_EMPTY "\nThese are the configuration settings that can be set.\n\n[server]\n# The number of times to retry contacting a server, defaults to 0.\nconnect_retries = 0\n# The time limit for connection establishment, defaults to 5.\nconnect_timeout_seconds = 0\n# The URL of the Libbitcoin server native interface.\nurl = localhost\n\n[wallet]\n# The hierarchical deterministic (HD) public key version, defaults to 76067358.\nhd_public_version = 0\n# The hierarchical deterministic (HD) private key version, defaults to 76066276.\nhd_secret_version = 0\n# The pay-to-public-key-hash address version, defaults to 0.\npay_to_public_key_hash_version = 0\n# The pay-to-script-hash address version, defaults to 5.\npay_to_script_hash_version = 0\n# The rule fork flags, defaults to all (4294967295).\nrule_fork_flags = 0\n# The transaction version, defaults to 1.\ntransaction_version = 0\n# The wallet import format (WIF) key version, defaults to 128.\nwif_version = 0\n# The witness address prefix, defaults to 'bc'.\nwitness_address_prefix =\n# The witness version, defaults to 0.\nwitness_version = 0\n"
 
-#define BX_SETTINGS_TEST_VALUES "{\"settings\":{\"server\":{\"connect_retries\":\"21\",\"connect_timeout_seconds\":\"22\",\"url\":\"https://mainnet.obelisk.net:42\"},\"wallet\":{\"hd_public_version\":\"2\",\"hd_secret_version\":\"3\",\"pay_to_public_key_hash_version\":\"4\",\"pay_to_script_hash_version\":\"5\",\"rule_fork_flags\":\"4294967295\",\"transaction_version\":\"6\",\"wif_version\":\"1\"}}}\n"
+#define BX_SETTINGS_TEST_VALUES "\nThese are the configuration settings that can be set.\n\n[server]\n# The number of times to retry contacting a server, defaults to 0.\nconnect_retries = 21\n# The time limit for connection establishment, defaults to 5.\nconnect_timeout_seconds = 22\n# The URL of the Libbitcoin server native interface.\nurl = https://mainnet.obelisk.net:42\n\n[wallet]\n# The hierarchical deterministic (HD) public key version, defaults to 76067358.\nhd_public_version = 2\n# The hierarchical deterministic (HD) private key version, defaults to 76066276.\nhd_secret_version = 3\n# The pay-to-public-key-hash address version, defaults to 0.\npay_to_public_key_hash_version = 4\n# The pay-to-script-hash address version, defaults to 5.\npay_to_script_hash_version = 5\n# The rule fork flags, defaults to all (4294967295).\nrule_fork_flags = 4294967295\n# The transaction version, defaults to 1.\ntransaction_version = 6\n# The wallet import format (WIF) key version, defaults to 128.\nwif_version = 1\n# The witness address prefix, defaults to 'bc'.\nwitness_address_prefix = tb\n# The witness version, defaults to 0.\nwitness_version = 7\n"
 
 BC_AUTO_TEST_CASE(settings__invoke__empty__okay_output)
 {
@@ -38,6 +38,8 @@ BC_AUTO_TEST_CASE(settings__invoke__empty__okay_output)
 BC_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
 {
     BX_DECLARE_COMMAND(commands::settings);
+    command.set_wallet_witness_version_setting(7);
+    command.set_wallet_witness_address_prefix_setting("tb");
     command.set_wallet_wif_version_setting(1);
     command.set_wallet_hd_public_version_setting(2);
     command.set_wallet_hd_secret_version_setting(3);

@@ -224,24 +224,6 @@ BC_AUTO_TEST_CASE(generated__property__btc_to_satoshi__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_btc_argument()), serial(btc_argument));
 }
 
-BC_AUTO_TEST_CASE(generated__property__cert_new__round_trips)
-{
-    cert_new command;
-
-    const system::config::base16 entropy_argument{ "baadf00d" };
-    command.set_entropy_argument(entropy_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_entropy_argument()), serial(entropy_argument));
-}
-
-BC_AUTO_TEST_CASE(generated__property__cert_public__round_trips)
-{
-    cert_public command;
-
-    const system::config::base85 private_key_argument{ "HelloWorld" };
-    command.set_private_key_argument(private_key_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_private_key_argument()), serial(private_key_argument));
-}
-
 BC_AUTO_TEST_CASE(generated__property__checked_decode__round_trips)
 {
     checked_decode command;
@@ -262,6 +244,24 @@ BC_AUTO_TEST_CASE(generated__property__checked_encode__round_trips)
     const explorer::config::byte version_option{ 42 };
     command.set_version_option(version_option);
     BC_REQUIRE_EQUAL(serial(command.get_version_option()), serial(version_option));
+}
+
+BC_AUTO_TEST_CASE(generated__property__curve_new__round_trips)
+{
+    curve_new command;
+
+    const system::config::base16 entropy_argument{ "baadf00d" };
+    command.set_entropy_argument(entropy_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_entropy_argument()), serial(entropy_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__curve_public__round_trips)
+{
+    curve_public command;
+
+    const system::config::base85 private_key_argument{ "HelloWorld" };
+    command.set_private_key_argument(private_key_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_private_key_argument()), serial(private_key_argument));
 }
 
 BC_AUTO_TEST_CASE(generated__property__dice_entropy__round_trips)
@@ -1409,6 +1409,44 @@ BC_AUTO_TEST_CASE(generated__property__subscribe_tx__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_duration_option()), serial(duration_option));
 }
 
+BC_AUTO_TEST_CASE(generated__property__tls_cert__round_trips)
+{
+    tls_cert command;
+
+    const std::string private_key_argument{ "string" };
+    command.set_private_key_argument(private_key_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_private_key_argument()), serial(private_key_argument));
+
+    const std::string name_option{ "string" };
+    command.set_name_option(name_option);
+    BC_REQUIRE_EQUAL(serial(command.get_name_option()), serial(name_option));
+
+    const std::vector<std::string> hosts_option{ { "string" } };
+    command.set_hosts_option(hosts_option);
+    BC_REQUIRE_EQUAL(serial(command.get_hosts_option()), serial(hosts_option));
+
+    const std::vector<std::string> ips_option{ { "string" } };
+    command.set_ips_option(ips_option);
+    BC_REQUIRE_EQUAL(serial(command.get_ips_option()), serial(ips_option));
+
+    const uint64_t not_before_option{ 42 };
+    command.set_not_before_option(not_before_option);
+    BC_REQUIRE_EQUAL(serial(command.get_not_before_option()), serial(not_before_option));
+
+    const uint32_t days_option{ 42 };
+    command.set_days_option(days_option);
+    BC_REQUIRE_EQUAL(serial(command.get_days_option()), serial(days_option));
+}
+
+BC_AUTO_TEST_CASE(generated__property__tls_new__round_trips)
+{
+    tls_new command;
+
+    const system::config::base16 entropy_argument{ "baadf00d" };
+    command.set_entropy_argument(entropy_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_entropy_argument()), serial(entropy_argument));
+}
+
 BC_AUTO_TEST_CASE(generated__property__token_new__round_trips)
 {
     token_new command;
@@ -1549,6 +1587,32 @@ BC_AUTO_TEST_CASE(generated__property__wif_to_public__round_trips)
     const system::wallet::ec_private wif_argument{ "KynK1v6fGwt2deK5axWUi4dStZzyuhrMbsYwk52kXM5LMivMMrQp" };
     command.set_wif_argument(wif_argument);
     BC_REQUIRE_EQUAL(serial(command.get_wif_argument()), serial(wif_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__witness_decode__round_trips)
+{
+    witness_decode command;
+
+    const system::config::base16 base16_argument{ "baadf00d" };
+    command.set_base16_argument(base16_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_base16_argument()), serial(base16_argument));
+
+    const bool prefix_option{ true };
+    command.set_prefix_option(prefix_option);
+    BC_REQUIRE_EQUAL(serial(command.get_prefix_option()), serial(prefix_option));
+}
+
+BC_AUTO_TEST_CASE(generated__property__witness_encode__round_trips)
+{
+    witness_encode command;
+
+    const system::config::witness witness_argument{ "[baadf00d] [beefcafe]" };
+    command.set_witness_argument(witness_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_witness_argument()), serial(witness_argument));
+
+    const bool prefix_option{ true };
+    command.set_prefix_option(prefix_option);
+    BC_REQUIRE_EQUAL(serial(command.get_prefix_option()), serial(prefix_option));
 }
 
 BC_AUTO_TEST_CASE(generated__property__witness_to_key__round_trips)

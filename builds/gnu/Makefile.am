@@ -83,10 +83,10 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/bitcoin256.cpp \
     ${srcdir}/../../src/commands/broadcast-tx.cpp \
     ${srcdir}/../../src/commands/btc-to-satoshi.cpp \
-    ${srcdir}/../../src/commands/cert-new.cpp \
-    ${srcdir}/../../src/commands/cert-public.cpp \
     ${srcdir}/../../src/commands/checked-decode.cpp \
     ${srcdir}/../../src/commands/checked-encode.cpp \
+    ${srcdir}/../../src/commands/curve-new.cpp \
+    ${srcdir}/../../src/commands/curve-public.cpp \
     ${srcdir}/../../src/commands/dice-entropy.cpp \
     ${srcdir}/../../src/commands/dice-rolls.cpp \
     ${srcdir}/../../src/commands/ec-add-secrets.cpp \
@@ -131,6 +131,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/get-filter-checkpoint.cpp \
     ${srcdir}/../../src/commands/get-filter-headers.cpp \
     ${srcdir}/../../src/commands/get-filters.cpp \
+    ${srcdir}/../../src/commands/hardware.cpp \
     ${srcdir}/../../src/commands/hd-new.cpp \
     ${srcdir}/../../src/commands/hd-private.cpp \
     ${srcdir}/../../src/commands/hd-public.cpp \
@@ -172,6 +173,8 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/stealth-shared.cpp \
     ${srcdir}/../../src/commands/subscribe-block.cpp \
     ${srcdir}/../../src/commands/subscribe-tx.cpp \
+    ${srcdir}/../../src/commands/tls-cert.cpp \
+    ${srcdir}/../../src/commands/tls-new.cpp \
     ${srcdir}/../../src/commands/token-new.cpp \
     ${srcdir}/../../src/commands/tx-decode.cpp \
     ${srcdir}/../../src/commands/tx-encode.cpp \
@@ -184,6 +187,8 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/watch-tx.cpp \
     ${srcdir}/../../src/commands/wif-to-ec.cpp \
     ${srcdir}/../../src/commands/wif-to-public.cpp \
+    ${srcdir}/../../src/commands/witness-decode.cpp \
+    ${srcdir}/../../src/commands/witness-encode.cpp \
     ${srcdir}/../../src/commands/witness-to-key.cpp \
     ${srcdir}/../../src/commands/witness-to-script.cpp \
     ${srcdir}/../../src/commands/wrap-decode.cpp \
@@ -267,10 +272,10 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/bitcoin256.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/broadcast-tx.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/btc-to-satoshi.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/commands/cert-new.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/commands/cert-public.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/checked-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/checked-encode.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/curve-new.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/curve-public.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/dice-entropy.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/dice-rolls.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/ec-add-secrets.hpp \
@@ -315,6 +320,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/get-filter-checkpoint.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/get-filter-headers.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/get-filters.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/hardware.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/hd-new.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/hd-private.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/hd-public.hpp \
@@ -356,6 +362,8 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/stealth-shared.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/subscribe-block.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/subscribe-tx.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/tls-cert.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/tls-new.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/token-new.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/tx-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/tx-encode.hpp \
@@ -368,6 +376,8 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/watch-tx.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/wif-to-ec.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/wif-to-public.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/witness-decode.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/witness-encode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/witness-to-key.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/witness-to-script.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/wrap-decode.hpp \
@@ -459,10 +469,10 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/bitcoin256.cpp \
     ${srcdir}/../../test/commands/broadcast-tx.cpp \
     ${srcdir}/../../test/commands/btc-to-satoshi.cpp \
-    ${srcdir}/../../test/commands/cert-new.cpp \
-    ${srcdir}/../../test/commands/cert-public.cpp \
     ${srcdir}/../../test/commands/checked-decode.cpp \
     ${srcdir}/../../test/commands/checked-encode.cpp \
+    ${srcdir}/../../test/commands/curve-new.cpp \
+    ${srcdir}/../../test/commands/curve-public.cpp \
     ${srcdir}/../../test/commands/dice-entropy.cpp \
     ${srcdir}/../../test/commands/dice-rolls.cpp \
     ${srcdir}/../../test/commands/ec-add-secrets.cpp \
@@ -507,6 +517,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/get-filter-checkpoint.cpp \
     ${srcdir}/../../test/commands/get-filter-headers.cpp \
     ${srcdir}/../../test/commands/get-filters.cpp \
+    ${srcdir}/../../test/commands/hardware.cpp \
     ${srcdir}/../../test/commands/hd-new.cpp \
     ${srcdir}/../../test/commands/hd-private.cpp \
     ${srcdir}/../../test/commands/hd-public.cpp \
@@ -548,6 +559,8 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/stealth-shared.cpp \
     ${srcdir}/../../test/commands/subscribe-block.cpp \
     ${srcdir}/../../test/commands/subscribe-tx.cpp \
+    ${srcdir}/../../test/commands/tls-cert.cpp \
+    ${srcdir}/../../test/commands/tls-new.cpp \
     ${srcdir}/../../test/commands/token-new.cpp \
     ${srcdir}/../../test/commands/tx-decode.cpp \
     ${srcdir}/../../test/commands/tx-encode.cpp \
@@ -560,6 +573,8 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/watch-tx.cpp \
     ${srcdir}/../../test/commands/wif-to-ec.cpp \
     ${srcdir}/../../test/commands/wif-to-public.cpp \
+    ${srcdir}/../../test/commands/witness-decode.cpp \
+    ${srcdir}/../../test/commands/witness-encode.cpp \
     ${srcdir}/../../test/commands/witness-to-key.cpp \
     ${srcdir}/../../test/commands/witness-to-script.cpp \
     ${srcdir}/../../test/commands/wrap-decode.cpp \

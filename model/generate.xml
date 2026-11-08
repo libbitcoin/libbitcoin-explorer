@@ -162,17 +162,6 @@
     <argument name="BTC" stdin="true" type="btc" description="The number of BTC to convert. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="cert-new" output="base85" category="MATH" description="Create a Base85 Curve ZMQ private key for use with a Libbitcoin server from entropy.">
-    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN." />
-    <define name="BX_CERT_NEW_SHORT_ENTROPY" value="The entropy is less than 256 bits long." />
-    <define name="BX_CERT_NEW_INVALID_KEY" value="The entropy produced an invalid key." />
-  </command>
-
-  <command symbol="cert-public" output="base85" category="MATH" description="Derive a Base85 Curve ZMQ public key for use with a Libbitcoin server.">
-    <argument name="PRIVATE_KEY" stdin="true" type="base85" description="The private key from which to derive the public key." />
-    <define name="BX_CERT_PUBLIC_INVALID" value="The private key is not valid." />
-  </command>
-
   <command symbol="checked-decode" formerly="wrap-decode" output="base16" category="ENCODING" description="Validate the bitcoin checksum of Base16 data and recover its version and payload.">
     <argument name="CHECKED" stdin="true" type="base16" description="The checked Base16 data to decode. If not specified the value is read from STDIN." />
   </command>
@@ -180,6 +169,17 @@
   <command symbol="checked-encode" formerly="wrap-encode" output="base16" category="ENCODING" description="Add a version byte and bitcoin checksum to Base16 data.">
     <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
     <argument name="PAYLOAD" stdin="true" type="base16" description="The Base16 data to encode. If not specified the value is read from STDIN." />
+  </command>
+
+  <command symbol="curve-new" formerly="cert-new" output="base85" category="MATH" description="Create a Base85 Curve ZMQ private key for use with a Libbitcoin server from entropy.">
+    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN." />
+    <define name="BX_CURVE_NEW_SHORT_ENTROPY" value="The entropy is less than 256 bits long." />
+    <define name="BX_CURVE_NEW_INVALID_KEY" value="The entropy produced an invalid key." />
+  </command>
+
+  <command symbol="curve-public" formerly="cert-public" output="base85" category="MATH" description="Derive a Base85 Curve ZMQ public key for use with a Libbitcoin server.">
+    <argument name="PRIVATE_KEY" stdin="true" type="base85" description="The private key from which to derive the public key." />
+    <define name="BX_CURVE_PUBLIC_INVALID" value="The private key is not valid." />
   </command>
 
   <command symbol="dice-entropy" output="base16" category="WALLET" description="Convert a sequence of dice rolls to Base16 entropy. Each roll is one character, the face value 0 to 15 as a hexadecimal digit, so the rolls of a sixteen-sided die are their own Base16 encoding. Subtract one from each roll of a die with faces numbered from one, writing a six-sided roll of 1 to 6 as 0 to 5.">
@@ -475,6 +475,18 @@
     <define name="BX_FILTER_MATCH_SCRIPT_FAILURE" value="Script does not match filter." />
   </command>
 
+  <command symbol="hardware" output="string" category="META" description="Display hardware compatibility.">
+    <define name="BX_HARDWARE_HEADER_ARM64" value="Hardware configuration (arm64)..." />
+    <define name="BX_HARDWARE_HEADER_X64" value="Hardware configuration (x64)..." />
+    <define name="BX_HARDWARE_COMPILED" value="platform:{:d} compiled:{:d}." />
+    <define name="BX_HARDWARE_ENABLED" value="platform:{:d} enabled:{:d}." />
+    <define name="BX_HARDWARE_INCOMPATIBLE" value="platform:{:d} compiled:{:d} (unsupported)." />
+    <define name="BX_HARDWARE_SHA_UNCOMPILED" value="Available SHA hardware acceleration is not compiled into this build." />
+    <define name="BX_HARDWARE_AVX2_UNCOMPILED" value="Available AVX2 hardware acceleration is not compiled into this build." />
+    <define name="BX_HARDWARE_GPU_UNCOMPILED" value="Available cuda hardware acceleration is not compiled into this build." />
+    <define name="BX_HARDWARE_UNSUPPORTED" value="A cuda device is present but unsupported by the compiled acceleration." />
+  </command>
+
   <command symbol="hd-new" formerly="hd-seed" output="hd_private" category="WALLET" description="Create a new HD (BIP32) private key from entropy.">
     <option name="version" type="uint32_t" configuration="wallet.hd_secret_version" description="The desired HD private key version, defaults to 76066276." />
     <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the entropy is read from STDIN." />
@@ -662,7 +674,8 @@
     <define name="BX_BROADCAST_TX_OBSOLETE" value="This command is obsolete. Use send-tx instead." />
   </command>
 
-  <command symbol="settings" output="string" multipleX="true" category="META" description="Display the loaded configuration settings.">
+  <command symbol="settings" output="string" category="META" description="Display all configuration settings.">
+    <define name="BX_SETTINGS_MESSAGE" value="These are the configuration settings that can be set." />
   </command>
 
   <command symbol="sha160" output="base16" category="HASH" description="Perform a SHA160 (also known as SHA-1) hash of Base16 data.">
@@ -732,6 +745,25 @@
     <option name="duration" type="uint32_t" default="600" description="The duration of the subscription in seconds, defaults to 600." />
   </command>
 
+  <command symbol="tls-cert" output="string" category="MATH" description="Create a self-signed PEM TLS certificate for a P-256 private key, for use with a Libbitcoin server.">
+    <option name="name" type="string" description="The subject common name of the certificate." />
+    <option name="host" multiple="true" type="string" description="A DNS host name of the server. Specify once for each name." />
+    <option name="ip" multiple="true" type="string" description="An IPv4 or IPv6 address of the server. Specify once for each address." />
+    <option name="not_before" type="uint64_t" description="The start of the validity period in Unix seconds, defaults to the current time." />
+    <option name="days" type="uint32_t" default="365" description="The length of the validity period in days, defaults to 365." />
+    <argument name="PRIVATE_KEY" stdin="true" type="string" description="The PEM P-256 private key of the certificate. If not specified the key is read from STDIN." />
+    <define name="BX_TLS_CERT_INVALID_KEY" value="The private key is not a valid PEM P-256 private key." />
+    <define name="BX_TLS_CERT_INVALID_IP" value="An IP address is not valid." />
+    <define name="BX_TLS_CERT_UNNAMED" value="The certificate requires a common name, a host name or an IP address." />
+    <define name="BX_TLS_CERT_INVALID_VALIDITY" value="The validity period ends after the year 9999." />
+  </command>
+
+  <command symbol="tls-new" output="string" category="MATH" description="Create a PEM P-256 TLS private key for use with a Libbitcoin server from entropy.">
+    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN." />
+    <define name="BX_TLS_NEW_SHORT_ENTROPY" value="The entropy is less than 256 bits long." />
+    <define name="BX_TLS_NEW_INVALID_KEY" value="The entropy produced an invalid key." />
+  </command>
+
   <command symbol="token-new" output="ek_token" category="KEY_ENCRYPTION" description="Create an intermediate passphrase token for deferred encrypted key generation (BIP38).">
     <option name="lot" type="uint32_t" description="An arbitrary lot number, limited to 1048575." />
     <option name="sequence" type="uint32_t" description="An arbitrary sequence number, limited to 4095." />
@@ -780,11 +812,8 @@
     <define name="BX_VALIDATE_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="version" stub="true" output="string" category="ONLINE" network="true" description="Fetch and display the libbitcoin server and client versions. Requires a Libbitcoin server connection.">
-    <define name="BX_VERSION_FAILED" value="Failed to retrieve server version: {}." />
-    <define name="BX_SERVER_VERSION" value="libbitcoin-server version: {}." />
-    <define name="BX_EXPLORER_VERSION" value="libbitcoin-explorer version: {}." />
-    <define name="BX_VERSION_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  <command symbol="version" output="string" category="META" description="Display version information.">
+    <define name="BX_VERSION_HEADER" value="Version Information..." />
   </command>
 
   <command symbol="watch-key" stub="true" formerly="monitor" output="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which a payment key participates. Requires a Libbitcoin server connection.">
@@ -807,6 +836,17 @@
 
   <command symbol="wif-to-public" output="ec_public" category="WALLET" description="Derive the EC public key from a WIF private key.">
     <argument name="WIF" stdin="true" type="wif" description="The WIF private key. If not specified the value is read from STDIN."/>
+  </command>
+
+  <command symbol="witness-decode" output="string" category="TRANSACTION" description="Decode a witness to bracketed Base16 data tokens.">
+    <option name="prefix" description="Decode a witness that has an element count prefix." />
+    <argument name="BASE16" stdin="true" type="base16" description="The Base16 witness. If not specified the witness is read from STDIN."/>
+    <define name="BX_WITNESS_DECODE_INVALID" value="The witness is not valid." />
+  </command>
+
+  <command symbol="witness-encode" output="base16" category="TRANSACTION" description="Base16 encode a witness of bracketed Base16 data tokens.">
+    <option name="prefix" description="Encode the witness with an element count prefix." />
+    <argument name="WITNESS" stdin="true" type="witness" description="The witness as bracketed Base16 data tokens. Multiple tokens must be quoted. If not specified the tokens are read from STDIN."/>
   </command>
 
   <command symbol="witness-to-key" output="base16" category="WALLET" description="Derive the payments search key of a witness address.">

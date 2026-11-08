@@ -87,16 +87,16 @@
     <ClCompile Include="..\..\..\..\test\commands\btc-to-satoshi.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\cert-new.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\cert-public.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\checked-decode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\checked-encode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\curve-new.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\curve-public.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\dice-entropy.cpp">
@@ -231,6 +231,9 @@
     <ClCompile Include="..\..\..\..\test\commands\get-filters.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\hardware.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\hd-new.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -354,6 +357,12 @@
     <ClCompile Include="..\..\..\..\test\commands\subscribe-tx.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\tls-cert.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\tls-new.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\token-new.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -388,6 +397,12 @@
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\wif-to-public.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\witness-decode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\witness-encode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\witness-to-key.cpp">

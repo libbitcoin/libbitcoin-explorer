@@ -386,40 +386,6 @@ BC_AUTO_TEST_CASE(generated__parse__btc_to_satoshi__okay)
     BC_REQUIRE(!metadata.help());
 }
 
-BC_AUTO_TEST_CASE(generated__parse__cert_new__okay)
-{
-    cert_new command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "cert-new",
-        "baadf00d",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
-BC_AUTO_TEST_CASE(generated__parse__cert_public__okay)
-{
-    cert_public command;
-    std::string message;
-    std::stringstream input;
-    const char* argv[]
-    {
-        "cert-public",
-        "HelloWorld",
-    };
-
-    parser metadata(command);
-    BC_REQUIRE(metadata.parse(message, input, 2, argv));
-    BC_REQUIRE(message.empty());
-    BC_REQUIRE(!metadata.help());
-}
-
 BC_AUTO_TEST_CASE(generated__parse__checked_decode__okay)
 {
     checked_decode command;
@@ -451,6 +417,40 @@ BC_AUTO_TEST_CASE(generated__parse__checked_encode__okay)
 
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 4, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__curve_new__okay)
+{
+    curve_new command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "curve-new",
+        "baadf00d",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__curve_public__okay)
+{
+    curve_public command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "curve-public",
+        "HelloWorld",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }
@@ -1253,6 +1253,22 @@ BC_AUTO_TEST_CASE(generated__parse__get_filters__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__hardware__okay)
+{
+    hardware command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "hardware",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 1, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__hd_new__okay)
 {
     hd_new command;
@@ -2005,6 +2021,45 @@ BC_AUTO_TEST_CASE(generated__parse__subscribe_tx__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__tls_cert__okay)
+{
+    tls_cert command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "tls-cert",
+        "--name", "string",
+        "--host", "string",
+        "--ip", "string",
+        "--not_before", "42",
+        "--days", "42",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 12, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__tls_new__okay)
+{
+    tls_new command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "tls-new",
+        "baadf00d",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__token_new__okay)
 {
     token_new command;
@@ -2216,6 +2271,42 @@ BC_AUTO_TEST_CASE(generated__parse__wif_to_public__okay)
 
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__witness_decode__okay)
+{
+    witness_decode command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "witness-decode",
+        "--prefix",
+        "baadf00d",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 3, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__witness_encode__okay)
+{
+    witness_encode command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "witness-encode",
+        "--prefix",
+        "[baadf00d] [beefcafe]",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 3, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }

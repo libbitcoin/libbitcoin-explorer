@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/cert-public.hpp>
+#include <bitcoin/explorer/commands/curve-new.hpp>
 
 #include <algorithm>
 #include <string>
@@ -30,29 +30,38 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result cert_public::invoke(std::ostream& output,
-    std::ostream& error)
+// A Base85 key encoding containing a hash sign cannot be used in a config file.
+static bool encode(std::string& out, const x25519::key& key) NOEXCEPT
+{
+    return encode_base85(out, key) && !contains(out, '#');
+}
+
+console_result curve_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const data_chunk& secret = get_private_key_argument();
+    const data_chunk& entropy = get_entropy_argument();
 
-    x25519::key scalar{};
+    if (entropy.size() < x25519::key_size)
+    {
+        error << BX_CURVE_NEW_SHORT_ENTROPY << std::endl;
+        return console_result::failure;
+    }
+
+    x25519::key secret{};
     x25519::key point{};
+    std::copy_n(entropy.begin(), x25519::key_size, secret.begin());
+
+    std::string private_key{};
     std::string public_key{};
-    if (secret.size() != x25519::key_size)
+    if (!x25519::multiply(point, secret) ||
+        !encode(private_key, secret) ||
+        !encode(public_key, point))
     {
-        error << BX_CERT_PUBLIC_INVALID << std::endl;
+        error << BX_CURVE_NEW_INVALID_KEY << std::endl;
         return console_result::failure;
     }
 
-    std::copy_n(secret.begin(), x25519::key_size, scalar.begin());
-    if (!x25519::multiply(point, scalar) || !encode_base85(public_key, point))
-    {
-        error << BX_CERT_PUBLIC_INVALID << std::endl;
-        return console_result::failure;
-    }
-
-    output << public_key << std::endl;
+    output << private_key << std::endl;
     return console_result::okay;
 }
 

@@ -135,10 +135,10 @@
     <ClCompile Include="..\..\..\..\src\commands\bitcoin256.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\broadcast-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\btc-to-satoshi.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\cert-new.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\cert-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\checked-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\checked-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\curve-new.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\curve-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\dice-entropy.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\dice-rolls.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-add-secrets.cpp" />
@@ -183,6 +183,7 @@
     <ClCompile Include="..\..\..\..\src\commands\get-filter-checkpoint.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\get-filter-headers.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\get-filters.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\hardware.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\hd-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\hd-private.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\hd-public.cpp" />
@@ -224,6 +225,8 @@
     <ClCompile Include="..\..\..\..\src\commands\stealth-shared.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\subscribe-block.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\subscribe-tx.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\tls-cert.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\tls-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\token-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\tx-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\tx-encode.cpp" />
@@ -236,6 +239,8 @@
     <ClCompile Include="..\..\..\..\src\commands\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wif-to-public.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\witness-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\witness-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\witness-to-key.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\witness-to-script.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wrap-decode.cpp" />
@@ -287,10 +292,10 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bitcoin256.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\broadcast-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\btc-to-satoshi.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\cert-new.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\cert-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\checked-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\checked-encode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\curve-new.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\curve-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\dice-entropy.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\dice-rolls.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-add-secrets.hpp" />
@@ -335,6 +340,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-filter-checkpoint.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-filter-headers.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-filters.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hardware.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hd-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hd-private.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hd-public.hpp" />
@@ -376,6 +382,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-shared.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\subscribe-block.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\subscribe-tx.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tls-cert.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tls-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\token-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-encode.hpp" />
@@ -388,6 +396,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wif-to-ec.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wif-to-public.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\witness-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\witness-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\witness-to-key.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\witness-to-script.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wrap-decode.hpp" />

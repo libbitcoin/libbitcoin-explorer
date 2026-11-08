@@ -132,16 +132,6 @@ BC_AUTO_TEST_CASE(generated__find__btc_to_satoshi__returns_object)
     BC_REQUIRE(find("btc-to-satoshi") != nullptr);
 }
 
-BC_AUTO_TEST_CASE(generated__find__cert_new__returns_object)
-{
-    BC_REQUIRE(find("cert-new") != nullptr);
-}
-
-BC_AUTO_TEST_CASE(generated__find__cert_public__returns_object)
-{
-    BC_REQUIRE(find("cert-public") != nullptr);
-}
-
 BC_AUTO_TEST_CASE(generated__find__checked_decode__returns_object)
 {
     BC_REQUIRE(find("checked-decode") != nullptr);
@@ -150,6 +140,16 @@ BC_AUTO_TEST_CASE(generated__find__checked_decode__returns_object)
 BC_AUTO_TEST_CASE(generated__find__checked_encode__returns_object)
 {
     BC_REQUIRE(find("checked-encode") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__curve_new__returns_object)
+{
+    BC_REQUIRE(find("curve-new") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__curve_public__returns_object)
+{
+    BC_REQUIRE(find("curve-public") != nullptr);
 }
 
 BC_AUTO_TEST_CASE(generated__find__dice_entropy__returns_object)
@@ -372,6 +372,11 @@ BC_AUTO_TEST_CASE(generated__find__get_filters__returns_object)
     BC_REQUIRE(find("get-filters") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__hardware__returns_object)
+{
+    BC_REQUIRE(find("hardware") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__hd_new__returns_object)
 {
     BC_REQUIRE(find("hd-new") != nullptr);
@@ -577,6 +582,16 @@ BC_AUTO_TEST_CASE(generated__find__subscribe_tx__returns_object)
     BC_REQUIRE(find("subscribe-tx") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__tls_cert__returns_object)
+{
+    BC_REQUIRE(find("tls-cert") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__tls_new__returns_object)
+{
+    BC_REQUIRE(find("tls-new") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__token_new__returns_object)
 {
     BC_REQUIRE(find("token-new") != nullptr);
@@ -635,6 +650,16 @@ BC_AUTO_TEST_CASE(generated__find__wif_to_ec__returns_object)
 BC_AUTO_TEST_CASE(generated__find__wif_to_public__returns_object)
 {
     BC_REQUIRE(find("wif-to-public") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__witness_decode__returns_object)
+{
+    BC_REQUIRE(find("witness-decode") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__witness_encode__returns_object)
+{
+    BC_REQUIRE(find("witness-encode") != nullptr);
 }
 
 BC_AUTO_TEST_CASE(generated__find__witness_to_key__returns_object)

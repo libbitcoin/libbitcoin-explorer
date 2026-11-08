@@ -116,10 +116,10 @@
     <ClCompile Include="..\..\..\..\test\commands\bitcoin256.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\broadcast-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\btc-to-satoshi.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\cert-new.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\cert-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\checked-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\checked-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\curve-new.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\curve-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\dice-entropy.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\dice-rolls.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add-secrets.cpp" />
@@ -164,6 +164,7 @@
     <ClCompile Include="..\..\..\..\test\commands\get-filter-checkpoint.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\get-filter-headers.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\get-filters.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\hardware.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-private.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-public.cpp" />
@@ -205,6 +206,8 @@
     <ClCompile Include="..\..\..\..\test\commands\stealth-shared.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\subscribe-block.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\subscribe-tx.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\tls-cert.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\tls-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\token-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\tx-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\tx-encode.cpp" />
@@ -217,6 +220,8 @@
     <ClCompile Include="..\..\..\..\test\commands\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wif-to-public.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\witness-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\witness-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\witness-to-key.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\witness-to-script.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wrap-decode.cpp" />

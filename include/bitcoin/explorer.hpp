@@ -46,10 +46,10 @@
 #include <bitcoin/explorer/commands/bitcoin256.hpp>
 #include <bitcoin/explorer/commands/broadcast-tx.hpp>
 #include <bitcoin/explorer/commands/btc-to-satoshi.hpp>
-#include <bitcoin/explorer/commands/cert-new.hpp>
-#include <bitcoin/explorer/commands/cert-public.hpp>
 #include <bitcoin/explorer/commands/checked-decode.hpp>
 #include <bitcoin/explorer/commands/checked-encode.hpp>
+#include <bitcoin/explorer/commands/curve-new.hpp>
+#include <bitcoin/explorer/commands/curve-public.hpp>
 #include <bitcoin/explorer/commands/dice-entropy.hpp>
 #include <bitcoin/explorer/commands/dice-rolls.hpp>
 #include <bitcoin/explorer/commands/ec-add-secrets.hpp>
@@ -94,6 +94,7 @@
 #include <bitcoin/explorer/commands/get-filter-checkpoint.hpp>
 #include <bitcoin/explorer/commands/get-filter-headers.hpp>
 #include <bitcoin/explorer/commands/get-filters.hpp>
+#include <bitcoin/explorer/commands/hardware.hpp>
 #include <bitcoin/explorer/commands/hd-new.hpp>
 #include <bitcoin/explorer/commands/hd-private.hpp>
 #include <bitcoin/explorer/commands/hd-public.hpp>
@@ -135,6 +136,8 @@
 #include <bitcoin/explorer/commands/stealth-shared.hpp>
 #include <bitcoin/explorer/commands/subscribe-block.hpp>
 #include <bitcoin/explorer/commands/subscribe-tx.hpp>
+#include <bitcoin/explorer/commands/tls-cert.hpp>
+#include <bitcoin/explorer/commands/tls-new.hpp>
 #include <bitcoin/explorer/commands/token-new.hpp>
 #include <bitcoin/explorer/commands/tx-decode.hpp>
 #include <bitcoin/explorer/commands/tx-encode.hpp>
@@ -147,6 +150,8 @@
 #include <bitcoin/explorer/commands/watch-tx.hpp>
 #include <bitcoin/explorer/commands/wif-to-ec.hpp>
 #include <bitcoin/explorer/commands/wif-to-public.hpp>
+#include <bitcoin/explorer/commands/witness-decode.hpp>
+#include <bitcoin/explorer/commands/witness-encode.hpp>
 #include <bitcoin/explorer/commands/witness-to-key.hpp>
 #include <bitcoin/explorer/commands/witness-to-script.hpp>
 #include <bitcoin/explorer/commands/wrap-decode.hpp>

@@ -132,16 +132,6 @@ BC_AUTO_TEST_CASE(generated__symbol__btc_to_satoshi__returns_expected_value)
     BC_REQUIRE_EQUAL(btc_to_satoshi::symbol(), "btc-to-satoshi");
 }
 
-BC_AUTO_TEST_CASE(generated__symbol__cert_new__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(cert_new::symbol(), "cert-new");
-}
-
-BC_AUTO_TEST_CASE(generated__symbol__cert_public__returns_expected_value)
-{
-    BC_REQUIRE_EQUAL(cert_public::symbol(), "cert-public");
-}
-
 BC_AUTO_TEST_CASE(generated__symbol__checked_decode__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(checked_decode::symbol(), "checked-decode");
@@ -150,6 +140,16 @@ BC_AUTO_TEST_CASE(generated__symbol__checked_decode__returns_expected_value)
 BC_AUTO_TEST_CASE(generated__symbol__checked_encode__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(checked_encode::symbol(), "checked-encode");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__curve_new__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(curve_new::symbol(), "curve-new");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__curve_public__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(curve_public::symbol(), "curve-public");
 }
 
 BC_AUTO_TEST_CASE(generated__symbol__dice_entropy__returns_expected_value)
@@ -372,6 +372,11 @@ BC_AUTO_TEST_CASE(generated__symbol__get_filters__returns_expected_value)
     BC_REQUIRE_EQUAL(get_filters::symbol(), "get-filters");
 }
 
+BC_AUTO_TEST_CASE(generated__symbol__hardware__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(hardware::symbol(), "hardware");
+}
+
 BC_AUTO_TEST_CASE(generated__symbol__hd_new__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(hd_new::symbol(), "hd-new");
@@ -577,6 +582,16 @@ BC_AUTO_TEST_CASE(generated__symbol__subscribe_tx__returns_expected_value)
     BC_REQUIRE_EQUAL(subscribe_tx::symbol(), "subscribe-tx");
 }
 
+BC_AUTO_TEST_CASE(generated__symbol__tls_cert__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(tls_cert::symbol(), "tls-cert");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__tls_new__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(tls_new::symbol(), "tls-new");
+}
+
 BC_AUTO_TEST_CASE(generated__symbol__token_new__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(token_new::symbol(), "token-new");
@@ -635,6 +650,16 @@ BC_AUTO_TEST_CASE(generated__symbol__wif_to_ec__returns_expected_value)
 BC_AUTO_TEST_CASE(generated__symbol__wif_to_public__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(wif_to_public::symbol(), "wif-to-public");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__witness_decode__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(witness_decode::symbol(), "witness-decode");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__witness_encode__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(witness_encode::symbol(), "witness-encode");
 }
 
 BC_AUTO_TEST_CASE(generated__symbol__witness_to_key__returns_expected_value)
