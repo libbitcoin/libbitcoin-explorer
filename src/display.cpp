@@ -19,6 +19,7 @@
 
 #include <bitcoin/explorer/display.hpp>
 
+#include <algorithm>
 #include <format>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/dispatch.hpp>
@@ -35,14 +36,39 @@ using namespace bc::system::config;
 
 void display_command_names(std::ostream& stream)
 {
-    const auto func = [&stream](std::shared_ptr<command> explorer_command)
+    constexpr size_t width = 73;
+    constexpr size_t gap = 2;
+
+    system::string_list names{};
+    const auto func = [&names](std::shared_ptr<command> explorer_command)
     {
         BC_ASSERT(explorer_command != nullptr);
         if (!explorer_command->obsolete())
-            stream << explorer_command->name() << std::endl;
+            names.push_back(explorer_command->name());
     };
 
     broadcast(func);
+
+    size_t longest{};
+    for (const auto& name: names)
+        longest = std::max(longest, name.length());
+
+    const auto column = longest + gap;
+    const auto columns = std::max(one, (width + gap) / column);
+    const auto rows = system::ceilinged_divide(names.size(), columns);
+
+    for (size_t row = 0; row < rows; ++row)
+    {
+        for (auto index = row; index < names.size(); index += rows)
+        {
+            if (index + rows < names.size())
+                stream << std::format("{:<{}}", names.at(index), column);
+            else
+                stream << names.at(index);
+        }
+
+        stream << std::endl;
+    }
 }
 
 void display_connection_failure(std::ostream& stream, const endpoint& url)
