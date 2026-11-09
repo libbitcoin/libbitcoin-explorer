@@ -33,10 +33,4 @@ BC_AUTO_TEST_CASE(define__environment_prefix__always__expected)
     BC_REQUIRE_EQUAL(std::string{ BX_ENVIRONMENT_VARIABLE_PREFIX }, "BX_");
 }
 
-BC_AUTO_TEST_CASE(define__settings_list__path_values__retained)
-{
-    const settings_list list{ { "wallet.version", "42" } };
-    BC_REQUIRE_EQUAL(list.at("wallet.version"), "42");
-}
-
 BC_AUTO_TEST_SUITE_END()

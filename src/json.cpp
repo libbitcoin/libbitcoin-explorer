@@ -27,36 +27,6 @@ namespace explorer {
 using namespace bc::system;
 using namespace bc::system::json;
 
-// Settings keys are dot-delimited section paths.
-static void put_path(object& out, const std::string& path,
-    const std::string& setting) NOEXCEPT
-{
-    const auto point = path.find('.');
-
-    if (point == std::string::npos)
-    {
-        out[path] = setting;
-        return;
-    }
-
-    auto& section = out[path.substr(zero, point)];
-
-    if (!section.is_object())
-        section.emplace_object();
-
-    put_path(section.get_object(), path.substr(add1(point)), setting);
-}
-
-value to_json(const settings_list& settings) NOEXCEPT
-{
-    object list;
-
-    for (const auto& setting: settings)
-        put_path(list, setting.first, setting.second);
-
-    return object{ { "settings", std::move(list) } };
-}
-
 value to_json(const wallet::bitcoin_uri& uri) NOEXCEPT
 {
     object properties;

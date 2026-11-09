@@ -26,20 +26,6 @@ using namespace bc::system;
 
 BC_AUTO_TEST_SUITE(json_tests)
 
-BC_AUTO_TEST_CASE(json__to_json__flat_setting__expected)
-{
-    const settings_list list{ { "version", "42" } };
-    const auto expected = "{\"settings\":{\"version\":\"42\"}}";
-    BC_REQUIRE_EQUAL(system::json::serialize(to_json(list)), expected);
-}
-
-BC_AUTO_TEST_CASE(json__to_json__sectioned_setting__nested)
-{
-    const settings_list list{ { "wallet.version", "42" } };
-    const auto expected = "{\"settings\":{\"wallet\":{\"version\":\"42\"}}}";
-    BC_REQUIRE_EQUAL(system::json::serialize(to_json(list)), expected);
-}
-
 BC_AUTO_TEST_CASE(json__to_json__empty_uri__scheme_only)
 {
     const auto expected = "{\"uri\":{\"scheme\":\"bitcoin\"}}";
