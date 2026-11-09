@@ -213,19 +213,15 @@ if "!libbitcoin_explorer_TAG!" == "" (
     if %ERRORLEVEL% neq 0 (
         exit /b %ERRORLEVEL%
     )
-    call :build_msbuild "libbitcoin-explorer" "builds\msvc\%proj_version%" "libbitcoin-explorer" "!REMAPPED_PARAMS!"
-    if %ERRORLEVEL% neq 0 (
-        exit /b %ERRORLEVEL%
-    )
-    call :build_msbuild "libbitcoin-explorer" "builds\msvc\%proj_version%" "bx" "!REMAPPED_PARAMS!"
-    if %ERRORLEVEL% neq 0 (
-        exit /b %ERRORLEVEL%
-    )
+    set "TARGETS="
+    set "TARGETS=!TARGETS!;libbitcoin-explorer"
+    set "TARGETS=!TARGETS!;bx"
     if not "!BUILD_SKIP_TESTS!" == "yes" (
-        call :build_msbuild "libbitcoin-explorer" "builds\msvc\%proj_version%" "libbitcoin-explorer-test" "!REMAPPED_PARAMS!"
-        if %ERRORLEVEL% neq 0 (
-            exit /b %ERRORLEVEL%
-        )
+        set "TARGETS=!TARGETS!;libbitcoin-explorer-test"
+    )
+    call :build_msbuild "libbitcoin-explorer" "builds\msvc\%proj_version%" "!TARGETS:~1!" "!REMAPPED_PARAMS!"
+    if %ERRORLEVEL% neq 0 (
+        exit /b %ERRORLEVEL%
     )
 
     call :pop_directory
@@ -474,7 +470,7 @@ if "!libbitcoin_explorer_TAG!" == "" (
 
     if not "%TARGET%" == "" (
         if not "!BUILD_MODE!" == "" (
-            set "TARGET_ARG=/target:%TARGET%:!BUILD_MODE!"
+            set "TARGET_ARG=/target:!TARGET:;=:%BUILD_MODE%;!:!BUILD_MODE!"
         ) else (
             set "TARGET_ARG=/target:%TARGET%"
         )
@@ -493,7 +489,12 @@ if "!libbitcoin_explorer_TAG!" == "" (
 
     set "COMPILER_ARG="
     if "!BUILD_COMPILER!" == "clang" (
-        set "COMPILER_ARG=/p:Option-clang=true "
+        set "COMPILER_ARG=/p:PlatformToolset=ClangCL "
+    )
+
+    set "TOOLS_ARG="
+    if "%PROCESSOR_ARCHITECTURE%" == "AMD64" (
+        set "TOOLS_ARG=/p:PreferredToolArchitecture=x64 "
     )
 
     call :push_directory "!BUILD_SRC_DIR!\%PROJECT%\%RELATIVE_PATH%\!BUILD_VERSION!"
@@ -506,10 +507,10 @@ if "!libbitcoin_explorer_TAG!" == "" (
         exit /b %ERRORLEVEL%
     )
 
-    !MSBUILD_EXE! /verbosity:!MSBUILD_VERBOSE! !SYMBOLS_ARG!!COMPILER_ARG!/p:Platform=!BUILD_PLATFORM! /p:Configuration=!BUILD_CONFIG! /p:PreferredToolArchitecture=x64 %TARGET_ARG% %PROJECT%.sln /p:PreBuildEventUseInBuild=false /p:PostBuildEventUseInBuild=false !UNHANDLED_ARGS! !ADDITIONAL_PARAMS!
+    !MSBUILD_EXE! /verbosity:!MSBUILD_VERBOSE! !SYMBOLS_ARG!!COMPILER_ARG!!TOOLS_ARG!/p:Platform=!BUILD_PLATFORM! /p:Configuration=!BUILD_CONFIG! %TARGET_ARG% %PROJECT%.sln /p:PreBuildEventUseInBuild=false /p:PostBuildEventUseInBuild=false !UNHANDLED_ARGS! !ADDITIONAL_PARAMS!
 
     if %ERRORLEVEL% neq 0 (
-        call :msg_error "!MSBUILD_EXE! /verbosity:!MSBUILD_VERBOSE! !SYMBOLS_ARG!!COMPILER_ARG!/p:Platform=!BUILD_PLATFORM! /p:Configuration=!BUILD_CONFIG! /p:PreferredToolArchitecture=x64 %TARGET_ARG% %PROJECT%.sln /p:PreBuildEventUseInBuild=false /p:PostBuildEventUseInBuild=false !UNHANDLED_ARGS! !ADDITIONAL_PARAMS!"
+        call :msg_error "!MSBUILD_EXE! /verbosity:!MSBUILD_VERBOSE! !SYMBOLS_ARG!!COMPILER_ARG!!TOOLS_ARG!/p:Platform=!BUILD_PLATFORM! /p:Configuration=!BUILD_CONFIG! %TARGET_ARG% %PROJECT%.sln /p:PreBuildEventUseInBuild=false /p:PostBuildEventUseInBuild=false !UNHANDLED_ARGS! !ADDITIONAL_PARAMS!"
         call :pop_directory
         exit /b 1
     )
