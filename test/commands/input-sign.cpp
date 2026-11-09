@@ -116,3 +116,40 @@ BC_AUTO_TEST_CASE(input_sign__invoke__segwit_p2sh_p2wpkh__okay_output)
 
 BC_AUTO_TEST_SUITE_END()
 BC_AUTO_TEST_SUITE_END()
+
+// Under valgrind the classified secret is undefined, so a branch or memory
+// address that depends on it is reported as an error.
+BC_AUTO_TEST_SUITE(ctime_tests)
+BC_AUTO_TEST_SUITE(input_sign__invoke)
+
+BC_AUTO_TEST_CASE(input_sign__invoke__undefined_secret_single_input_single_output__okay_output)
+{
+    BX_DECLARE_COMMAND(input_sign);
+    command.set_sign_type_option({ "all" });
+    command.set_transaction_argument({ INPUT_SIGN_TX_A });
+    command.set_contract_argument({ INPUT_SIGN_PREVOUT_A });
+    command.set_ec_private_key_argument({ INPUT_SIGN_PRIVATE_KEY_A });
+    const ec_secret& secret = command.get_ec_private_key_argument();
+    classify(secret);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(INPUT_SIGN_ENDORSEMENT_A "\n");
+}
+
+BC_AUTO_TEST_CASE(input_sign__invoke__undefined_secret_segwit_p2wpkh__okay_output)
+{
+    BX_DECLARE_COMMAND(input_sign);
+    command.set_index_option(1);
+    command.set_segwit_option(true);
+    command.set_value_option(600000000);
+    command.set_sign_type_option({ "all" });
+    command.set_transaction_argument({ INPUT_SIGN_P2WPKH_TX });
+    command.set_contract_argument({ INPUT_SIGN_P2WPKH_CODE });
+    command.set_ec_private_key_argument({ INPUT_SIGN_P2WPKH_KEY });
+    const ec_secret& secret = command.get_ec_private_key_argument();
+    classify(secret);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(INPUT_SIGN_P2WPKH_ENDORSEMENT "\n");
+}
+
+BC_AUTO_TEST_SUITE_END()
+BC_AUTO_TEST_SUITE_END()

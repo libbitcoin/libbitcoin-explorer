@@ -18,6 +18,9 @@
  */
 #include <bitcoin/explorer.hpp>
 
+BC_USE_HARDWARE_CHECK(
+    "This processor lacks instruction set extensions compiled into this build.")
+
 BC_USE_LIBBITCOIN_MAIN
 
 /**

@@ -19,7 +19,6 @@
 #ifndef BX_DEFINE_HPP
 #define BX_DEFINE_HPP
 
-#include <map>
 #include <bitcoin/system.hpp>
 
 // We use the generic helper definitions in libbitcoin to define BCX_API
@@ -61,7 +60,6 @@ namespace explorer {
 namespace ph = std::placeholders;
 namespace po = bc::system::options;
 
-typedef std::map<std::string, std::string> settings_list;
 typedef bc::system::chain::transaction tx_type;
 typedef bc::system::chain::input tx_input_type;
 typedef bc::system::chain::output tx_output_type;

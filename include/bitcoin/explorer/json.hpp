@@ -25,8 +25,6 @@
 namespace libbitcoin {
 namespace explorer {
 
-BCX_API system::json::value to_json(const settings_list& settings) NOEXCEPT;
-
 BCX_API system::json::value to_json(
     const system::wallet::bitcoin_uri& uri) NOEXCEPT;
 
