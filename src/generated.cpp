@@ -104,8 +104,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<input_set>());
     func(make_shared<input_sign>());
     func(make_shared<input_validate>());
-    func(make_shared<match_neutrino_address>());
-    func(make_shared<match_neutrino_script>());
+    func(make_shared<match_address>());
+    func(make_shared<match_script>());
     func(make_shared<message_sign>());
     func(make_shared<message_validate>());
     func(make_shared<mnemonic_decode>());
@@ -299,10 +299,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<input_sign>();
     if (symbol == input_validate::symbol())
         return make_shared<input_validate>();
-    if (symbol == match_neutrino_address::symbol())
-        return make_shared<match_neutrino_address>();
-    if (symbol == match_neutrino_script::symbol())
-        return make_shared<match_neutrino_script>();
+    if (symbol == match_address::symbol())
+        return make_shared<match_address>();
+    if (symbol == match_script::symbol())
+        return make_shared<match_script>();
     if (symbol == message_sign::symbol())
         return make_shared<message_sign>();
     if (symbol == message_validate::symbol())

@@ -1042,9 +1042,9 @@ BC_AUTO_TEST_CASE(generated__property__input_validate__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_value_option()), serial(value_option));
 }
 
-BC_AUTO_TEST_CASE(generated__property__match_neutrino_address__round_trips)
+BC_AUTO_TEST_CASE(generated__property__match_address__round_trips)
 {
-    match_neutrino_address command;
+    match_address command;
 
     const system::config::hash256 block_hash_argument{ "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f" };
     command.set_block_hash_argument(block_hash_argument);
@@ -1059,9 +1059,9 @@ BC_AUTO_TEST_CASE(generated__property__match_neutrino_address__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_address_argument()), serial(address_argument));
 }
 
-BC_AUTO_TEST_CASE(generated__property__match_neutrino_script__round_trips)
+BC_AUTO_TEST_CASE(generated__property__match_script__round_trips)
 {
-    match_neutrino_script command;
+    match_script command;
 
     const system::config::hash256 block_hash_argument{ "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f" };
     command.set_block_hash_argument(block_hash_argument);

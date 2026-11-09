@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_MATCH_NEUTRINO_ADDRESS_HPP
-#define BX_MATCH_NEUTRINO_ADDRESS_HPP
+#ifndef BX_MATCH_ADDRESS_HPP
+#define BX_MATCH_ADDRESS_HPP
 
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
@@ -54,9 +54,9 @@ namespace commands {
     "Address does not match filter."
 
 /**
- * Class to implement the match-neutrino-address command.
+ * Class to implement the match-address command.
  */
-class BCX_API match_neutrino_address
+class BCX_API match_address
   : public command
 {
 public:
@@ -66,13 +66,13 @@ public:
      */
     static const char* symbol()
     {
-        return "match-neutrino-address";
+        return "match-address";
     }
 
     /**
      * Destructor.
      */
-    virtual ~match_neutrino_address()
+    virtual ~match_address()
     {
     }
 
@@ -81,7 +81,7 @@ public:
      */
     virtual const char* name()
     {
-        return match_neutrino_address::symbol();
+        return match_address::symbol();
     }
 
     /**

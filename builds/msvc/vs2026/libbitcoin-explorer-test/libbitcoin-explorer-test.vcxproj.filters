@@ -243,10 +243,10 @@
     <ClCompile Include="..\..\..\..\test\commands\input-validate.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\match-neutrino-address.cpp">
+    <ClCompile Include="..\..\..\..\test\commands\match-address.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\match-neutrino-script.cpp">
+    <ClCompile Include="..\..\..\..\test\commands\match-script.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\message-sign.cpp">

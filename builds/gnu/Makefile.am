@@ -135,8 +135,8 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/input-set.cpp \
     ${srcdir}/../../src/commands/input-sign.cpp \
     ${srcdir}/../../src/commands/input-validate.cpp \
-    ${srcdir}/../../src/commands/match-neutrino-address.cpp \
-    ${srcdir}/../../src/commands/match-neutrino-script.cpp \
+    ${srcdir}/../../src/commands/match-address.cpp \
+    ${srcdir}/../../src/commands/match-script.cpp \
     ${srcdir}/../../src/commands/message-sign.cpp \
     ${srcdir}/../../src/commands/message-validate.cpp \
     ${srcdir}/../../src/commands/mnemonic-decode.cpp \
@@ -311,8 +311,8 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/input-set.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/input-sign.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/input-validate.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/commands/match-neutrino-address.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/commands/match-neutrino-script.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/match-address.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/match-script.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/message-sign.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/message-validate.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/mnemonic-decode.hpp \
@@ -495,8 +495,8 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/input-set.cpp \
     ${srcdir}/../../test/commands/input-sign.cpp \
     ${srcdir}/../../test/commands/input-validate.cpp \
-    ${srcdir}/../../test/commands/match-neutrino-address.cpp \
-    ${srcdir}/../../test/commands/match-neutrino-script.cpp \
+    ${srcdir}/../../test/commands/match-address.cpp \
+    ${srcdir}/../../test/commands/match-script.cpp \
     ${srcdir}/../../test/commands/message-sign.cpp \
     ${srcdir}/../../test/commands/message-validate.cpp \
     ${srcdir}/../../test/commands/mnemonic-decode.cpp \

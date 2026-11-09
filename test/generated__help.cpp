@@ -1049,12 +1049,12 @@ BC_AUTO_TEST_CASE(generated__help__input_validate__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
-BC_AUTO_TEST_CASE(generated__help__match_neutrino_address__okay_output)
+BC_AUTO_TEST_CASE(generated__help__match_address__okay_output)
 {
-    match_neutrino_address command;
+    match_address command;
     std::string message;
     std::stringstream input, output;
-    const char* argv[]{ "match-neutrino-address", "--help" };
+    const char* argv[]{ "match-address", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());
@@ -1063,12 +1063,12 @@ BC_AUTO_TEST_CASE(generated__help__match_neutrino_address__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
-BC_AUTO_TEST_CASE(generated__help__match_neutrino_script__okay_output)
+BC_AUTO_TEST_CASE(generated__help__match_script__okay_output)
 {
-    match_neutrino_script command;
+    match_script command;
     std::string message;
     std::stringstream input, output;
-    const char* argv[]{ "match-neutrino-script", "--help" };
+    const char* argv[]{ "match-script", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());

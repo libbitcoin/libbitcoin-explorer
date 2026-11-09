@@ -27,11 +27,11 @@ BX_USING_NAMESPACES()
 #define BX_NEUTRINO_CLIENT_FILTER "0db414c859a07e8205876354a210a75042d0463404913d61a8e068e58a3ae2aa080026"
 
 BC_AUTO_TEST_SUITE(offline)
-BC_AUTO_TEST_SUITE(match_neutrino_script__invoke)
+BC_AUTO_TEST_SUITE(match_script__invoke)
 
-BC_AUTO_TEST_CASE(match_neutrino_script__invoke__match)
+BC_AUTO_TEST_CASE(match_script__invoke__match)
 {
-    BX_DECLARE_COMMAND(match_neutrino_script);
+    BX_DECLARE_COMMAND(match_script);
     command.set_block_hash_argument({ BX_NEUTRINO_BLOCK_HASH });
     command.set_client_filter_argument({ BX_NEUTRINO_CLIENT_FILTER });
     command.set_script_argument({ "dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig" });
@@ -39,9 +39,9 @@ BC_AUTO_TEST_CASE(match_neutrino_script__invoke__match)
     BX_REQUIRE_OUTPUT(BX_FILTER_MATCH_SCRIPT_SUCCESS "\n");
 }
 
-BC_AUTO_TEST_CASE(match_neutrino_script__invoke__no_match)
+BC_AUTO_TEST_CASE(match_script__invoke__no_match)
 {
-    BX_DECLARE_COMMAND(match_neutrino_script);
+    BX_DECLARE_COMMAND(match_script);
     command.set_block_hash_argument({ BX_NEUTRINO_BLOCK_HASH });
     command.set_client_filter_argument({ BX_NEUTRINO_CLIENT_FILTER });
     command.set_script_argument({ "dup hash160 [001fa7459a6cfc64bdc100ba700a21003b005000] equalverify checksig" });

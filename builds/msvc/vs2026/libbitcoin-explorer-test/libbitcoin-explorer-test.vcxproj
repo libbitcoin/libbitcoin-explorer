@@ -168,8 +168,8 @@
     <ClCompile Include="..\..\..\..\test\commands\input-set.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-sign.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-validate.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\match-neutrino-address.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\match-neutrino-script.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\match-address.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\match-script.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\message-sign.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\message-validate.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp" />

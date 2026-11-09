@@ -80,8 +80,8 @@ _bx()
         input-set
         input-sign
         input-validate
-        match-neutrino-address
-        match-neutrino-script
+        match-address
+        match-script
         message-sign
         message-validate
         mnemonic-decode

@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_MATCH_NEUTRINO_SCRIPT_HPP
-#define BX_MATCH_NEUTRINO_SCRIPT_HPP
+#ifndef BX_MATCH_SCRIPT_HPP
+#define BX_MATCH_SCRIPT_HPP
 
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
@@ -54,9 +54,9 @@ namespace commands {
     "Script does not match filter."
 
 /**
- * Class to implement the match-neutrino-script command.
+ * Class to implement the match-script command.
  */
-class BCX_API match_neutrino_script
+class BCX_API match_script
   : public command
 {
 public:
@@ -66,13 +66,13 @@ public:
      */
     static const char* symbol()
     {
-        return "match-neutrino-script";
+        return "match-script";
     }
 
     /**
      * Destructor.
      */
-    virtual ~match_neutrino_script()
+    virtual ~match_script()
     {
     }
 
@@ -81,7 +81,7 @@ public:
      */
     virtual const char* name()
     {
-        return match_neutrino_script::symbol();
+        return match_script::symbol();
     }
 
     /**

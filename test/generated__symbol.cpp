@@ -392,14 +392,14 @@ BC_AUTO_TEST_CASE(generated__symbol__input_validate__returns_expected_value)
     BC_REQUIRE_EQUAL(input_validate::symbol(), "input-validate");
 }
 
-BC_AUTO_TEST_CASE(generated__symbol__match_neutrino_address__returns_expected_value)
+BC_AUTO_TEST_CASE(generated__symbol__match_address__returns_expected_value)
 {
-    BC_REQUIRE_EQUAL(match_neutrino_address::symbol(), "match-neutrino-address");
+    BC_REQUIRE_EQUAL(match_address::symbol(), "match-address");
 }
 
-BC_AUTO_TEST_CASE(generated__symbol__match_neutrino_script__returns_expected_value)
+BC_AUTO_TEST_CASE(generated__symbol__match_script__returns_expected_value)
 {
-    BC_REQUIRE_EQUAL(match_neutrino_script::symbol(), "match-neutrino-script");
+    BC_REQUIRE_EQUAL(match_script::symbol(), "match-script");
 }
 
 BC_AUTO_TEST_CASE(generated__symbol__message_sign__returns_expected_value)
