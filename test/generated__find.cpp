@@ -392,14 +392,14 @@ BC_AUTO_TEST_CASE(generated__find__input_validate__returns_object)
     BC_REQUIRE(find("input-validate") != nullptr);
 }
 
-BC_AUTO_TEST_CASE(generated__find__match_neutrino_address__returns_object)
+BC_AUTO_TEST_CASE(generated__find__match_address__returns_object)
 {
-    BC_REQUIRE(find("match-neutrino-address") != nullptr);
+    BC_REQUIRE(find("match-address") != nullptr);
 }
 
-BC_AUTO_TEST_CASE(generated__find__match_neutrino_script__returns_object)
+BC_AUTO_TEST_CASE(generated__find__match_script__returns_object)
 {
-    BC_REQUIRE(find("match-neutrino-script") != nullptr);
+    BC_REQUIRE(find("match-script") != nullptr);
 }
 
 BC_AUTO_TEST_CASE(generated__find__message_sign__returns_object)

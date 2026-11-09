@@ -27,11 +27,11 @@ BX_USING_NAMESPACES()
 #define BX_NEUTRINO_CLIENT_FILTER "0db414c859a07e8205876354a210a75042d0463404913d61a8e068e58a3ae2aa080026"
 
 BC_AUTO_TEST_SUITE(offline)
-BC_AUTO_TEST_SUITE(match_neutrino_address__invoke)
+BC_AUTO_TEST_SUITE(match_address__invoke)
 
-BC_AUTO_TEST_CASE(match_neutrino_address__invoke__match)
+BC_AUTO_TEST_CASE(match_address__invoke__match)
 {
-    BX_DECLARE_COMMAND(match_neutrino_address);
+    BX_DECLARE_COMMAND(match_address);
     command.set_wallet_pay_to_public_key_hash_version_setting(111);
     command.set_block_hash_argument({ BX_NEUTRINO_BLOCK_HASH });
     command.set_client_filter_argument({ BX_NEUTRINO_CLIENT_FILTER });
@@ -40,9 +40,9 @@ BC_AUTO_TEST_CASE(match_neutrino_address__invoke__match)
     BX_REQUIRE_OUTPUT(BX_FILTER_MATCH_ADDRESS_SUCCESS "\n");
 }
 
-BC_AUTO_TEST_CASE(match_neutrino_address__invoke__no_match)
+BC_AUTO_TEST_CASE(match_address__invoke__no_match)
 {
-    BX_DECLARE_COMMAND(match_neutrino_address);
+    BX_DECLARE_COMMAND(match_address);
     command.set_wallet_pay_to_public_key_hash_version_setting(111);
     command.set_block_hash_argument({ BX_NEUTRINO_BLOCK_HASH });
     command.set_client_filter_argument({ BX_NEUTRINO_CLIENT_FILTER });

@@ -1355,14 +1355,14 @@ BC_AUTO_TEST_CASE(generated__parse__input_validate__okay)
     BC_REQUIRE(!metadata.help());
 }
 
-BC_AUTO_TEST_CASE(generated__parse__match_neutrino_address__okay)
+BC_AUTO_TEST_CASE(generated__parse__match_address__okay)
 {
-    match_neutrino_address command;
+    match_address command;
     std::string message;
     std::stringstream input;
     const char* argv[]
     {
-        "match-neutrino-address",
+        "match-address",
         "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
         "baadf00d",
         "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
@@ -1374,14 +1374,14 @@ BC_AUTO_TEST_CASE(generated__parse__match_neutrino_address__okay)
     BC_REQUIRE(!metadata.help());
 }
 
-BC_AUTO_TEST_CASE(generated__parse__match_neutrino_script__okay)
+BC_AUTO_TEST_CASE(generated__parse__match_script__okay)
 {
-    match_neutrino_script command;
+    match_script command;
     std::string message;
     std::stringstream input;
     const char* argv[]
     {
-        "match-neutrino-script",
+        "match-script",
         "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
         "baadf00d",
         "dup hash160 [001fa7459a6cfc64bdc178ba7e7a21603bb2568f] equalverify checksig",

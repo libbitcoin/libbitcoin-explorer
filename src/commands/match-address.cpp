@@ -19,7 +19,7 @@
 
 // Sponsored in part by Digital Contract Design, LLC
 
-#include <bitcoin/explorer/commands/match-neutrino-address.hpp>
+#include <bitcoin/explorer/commands/match-address.hpp>
 
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -30,8 +30,7 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result match_neutrino_address::invoke(std::ostream& output,
-    std::ostream&)
+console_result match_address::invoke(std::ostream& output, std::ostream&)
 {
     // Bound parameters.
     const neutrino::block_filter filter

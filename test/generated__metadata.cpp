@@ -612,17 +612,17 @@ BC_AUTO_TEST_CASE(generated__metadata__input_validate__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
-BC_AUTO_TEST_CASE(generated__metadata__match_neutrino_address__returns_expected_values)
+BC_AUTO_TEST_CASE(generated__metadata__match_address__returns_expected_values)
 {
-    match_neutrino_address command;
+    match_address command;
     BC_REQUIRE_EQUAL(command.category(), "MATH");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
 }
 
-BC_AUTO_TEST_CASE(generated__metadata__match_neutrino_script__returns_expected_values)
+BC_AUTO_TEST_CASE(generated__metadata__match_script__returns_expected_values)
 {
-    match_neutrino_script command;
+    match_script command;
     BC_REQUIRE_EQUAL(command.category(), "MATH");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());
