@@ -119,7 +119,7 @@ BC_AUTO_TEST_SUITE_END()
 
 // Under valgrind the classified secret is undefined, so a branch or memory
 // address that depends on it is reported as an error.
-BC_AUTO_TEST_SUITE(ctime)
+BC_AUTO_TEST_SUITE(ctime_tests)
 BC_AUTO_TEST_SUITE(input_sign__invoke)
 
 BC_AUTO_TEST_CASE(input_sign__invoke__undefined_secret_single_input_single_output__okay_output)
@@ -132,8 +132,7 @@ BC_AUTO_TEST_CASE(input_sign__invoke__undefined_secret_single_input_single_outpu
     const ec_secret& secret = command.get_ec_private_key_argument();
     classify(secret);
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(INPUT_SIGN_ENDORSEMENT_A "
-");
+    BX_REQUIRE_OUTPUT(INPUT_SIGN_ENDORSEMENT_A "\n");
 }
 
 BC_AUTO_TEST_CASE(input_sign__invoke__undefined_secret_segwit_p2wpkh__okay_output)
@@ -149,8 +148,7 @@ BC_AUTO_TEST_CASE(input_sign__invoke__undefined_secret_segwit_p2wpkh__okay_outpu
     const ec_secret& secret = command.get_ec_private_key_argument();
     classify(secret);
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(INPUT_SIGN_P2WPKH_ENDORSEMENT "
-");
+    BX_REQUIRE_OUTPUT(INPUT_SIGN_P2WPKH_ENDORSEMENT "\n");
 }
 
 BC_AUTO_TEST_SUITE_END()

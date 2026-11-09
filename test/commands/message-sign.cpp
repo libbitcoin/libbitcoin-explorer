@@ -52,7 +52,7 @@ BC_AUTO_TEST_SUITE_END()
 
 // Under valgrind the classified secret is undefined, so a branch or memory
 // address that depends on it is reported as an error.
-BC_AUTO_TEST_SUITE(ctime)
+BC_AUTO_TEST_SUITE(ctime_tests)
 BC_AUTO_TEST_SUITE(message_sign__invoke)
 
 BC_AUTO_TEST_CASE(message_sign__invoke__undefined_secret_compressed__okay_output)
@@ -62,8 +62,7 @@ BC_AUTO_TEST_CASE(message_sign__invoke__undefined_secret_compressed__okay_output
     command.set_wif_argument({ MESSAGE_SIGN_WIF_COMPRESSED });
     classify(command.get_wif_argument().secret());
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(MESSAGE_SIGN_SIGNATURE_COMPRESSED "
-");
+    BX_REQUIRE_OUTPUT(MESSAGE_SIGN_SIGNATURE_COMPRESSED "\n");
 }
 
 BC_AUTO_TEST_CASE(message_sign__invoke__undefined_secret_uncompressed__okay_output)
@@ -73,8 +72,7 @@ BC_AUTO_TEST_CASE(message_sign__invoke__undefined_secret_uncompressed__okay_outp
     command.set_wif_argument({ MESSAGE_SIGN_WIF_UNCOMPRESSED });
     classify(command.get_wif_argument().secret());
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(MESSAGE_SIGN_SIGNATURE_UNCOMPRESSED "
-");
+    BX_REQUIRE_OUTPUT(MESSAGE_SIGN_SIGNATURE_UNCOMPRESSED "\n");
 }
 
 BC_AUTO_TEST_SUITE_END()
