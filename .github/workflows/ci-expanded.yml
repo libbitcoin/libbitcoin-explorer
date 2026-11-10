@@ -381,6 +381,26 @@ jobs:
             package: "gcc-14 g++-14"
             options: "--enable-isystem"
 
+          - image: ubuntu-24.04-arm
+            config: "release"
+            link: "static"
+            cc: "gcc-14"
+            cxx: "g++-14"
+            flags: ""
+            coverage: ""
+            package: "gcc-14 g++-14 valgrind"
+            options: "--enable-isystem --hardware-aes --hardware-sha2 --with-valgrind --build-valgrind=ctime_tests"
+
+          - image: ubuntu-24.04-arm
+            config: "release"
+            link: "static"
+            cc: "clang-18"
+            cxx: "clang++-18"
+            flags: ""
+            coverage: ""
+            package: "clang-18 valgrind"
+            options: "--enable-isystem --hardware-aes --hardware-sha2 --with-valgrind --build-valgrind=ctime_tests"
+
           - image: ubuntu-24.04
             config: "release"
             link: "static"
@@ -484,7 +504,7 @@ jobs:
         if: steps.checkout-libbitcoin-system.outcome == 'failure'
         shell: bash
         run: |
-          rm -rf ${{ github.workspace }}/libbitcoin-system
+          rm -rf "${{ github.workspace }}/libbitcoin-system"
 
 
       - name: Checkout repository [libbitcoin-network]
@@ -502,7 +522,7 @@ jobs:
         if: steps.checkout-libbitcoin-network.outcome == 'failure'
         shell: bash
         run: |
-          rm -rf ${{ github.workspace }}/libbitcoin-network
+          rm -rf "${{ github.workspace }}/libbitcoin-network"
 
 
       - name: Checkout repository [libbitcoin-explorer]
@@ -734,7 +754,7 @@ jobs:
         if: steps.checkout-libbitcoin-system.outcome == 'failure'
         shell: bash
         run: |
-          rm -rf ${{ github.workspace }}/libbitcoin-system
+          rm -rf "${{ github.workspace }}/libbitcoin-system"
 
 
       - name: Checkout repository [libbitcoin-network]
@@ -752,7 +772,7 @@ jobs:
         if: steps.checkout-libbitcoin-network.outcome == 'failure'
         shell: bash
         run: |
-          rm -rf ${{ github.workspace }}/libbitcoin-network
+          rm -rf "${{ github.workspace }}/libbitcoin-network"
 
 
       - name: Checkout repository [libbitcoin-explorer]
@@ -1187,7 +1207,7 @@ jobs:
         if: steps.checkout-libbitcoin-system.outcome == 'failure'
         shell: bash
         run: |
-          rm -rf ${{ github.workspace }}/libbitcoin-system
+          rm -rf "${{ github.workspace }}/libbitcoin-system"
 
 
       - name: Checkout repository [libbitcoin-network]
@@ -1205,7 +1225,7 @@ jobs:
         if: steps.checkout-libbitcoin-network.outcome == 'failure'
         shell: bash
         run: |
-          rm -rf ${{ github.workspace }}/libbitcoin-network
+          rm -rf "${{ github.workspace }}/libbitcoin-network"
 
 
       - name: Checkout repository [libbitcoin-explorer]
@@ -1612,7 +1632,7 @@ jobs:
         if: steps.checkout-libbitcoin-system.outcome == 'failure'
         shell: bash
         run: |
-          rm -rf ${{ github.workspace }}/libbitcoin-system
+          rm -rf "${{ github.workspace }}/libbitcoin-system"
 
 
       - name: Checkout repository [libbitcoin-network]
@@ -1630,7 +1650,7 @@ jobs:
         if: steps.checkout-libbitcoin-network.outcome == 'failure'
         shell: bash
         run: |
-          rm -rf ${{ github.workspace }}/libbitcoin-network
+          rm -rf "${{ github.workspace }}/libbitcoin-network"
 
 
       - name: Checkout repository [libbitcoin-explorer]
