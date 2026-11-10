@@ -39,8 +39,9 @@ public:
 
     operator const type&() const;
 
-    friend std::istream& operator>>(std::istream& input, ec_private& argument);
-    friend std::ostream& operator<<(std::ostream& output,
+    friend BCX_API std::istream& operator>>(std::istream& input,
+        ec_private& argument);
+    friend BCX_API std::ostream& operator<<(std::ostream& output,
         const ec_private& argument);
 
 private:
