@@ -34,22 +34,15 @@ console_result hardware::invoke(std::ostream& output, std::ostream&)
 {
 #if defined(HAVE_ARM)
     output << BX_HARDWARE_HEADER_ARM64 << std::endl;
-    output << std::format("aes......... " BX_HARDWARE_COMPILED, try_neon_aes(), have_neon_aes) << std::endl;
-    output << std::format("sha2........ " BX_HARDWARE_COMPILED, try_neon_sha2(), have_neon_sha) << std::endl;
-    output << std::format("sha3........ " BX_HARDWARE_COMPILED, try_neon_sha3(), have_neon_sha3) << std::endl;
-    output << std::format("neon........ " BX_HARDWARE_COMPILED, try_neon(), have_neon) << std::endl;
 #else
     output << BX_HARDWARE_HEADER_X64 << std::endl;
-    output << std::format("aesni....... " BX_HARDWARE_COMPILED, try_aesni(), have_aesni) << std::endl;
-    output << std::format("vaes........ " BX_HARDWARE_COMPILED, try_vaes(), have_vaes) << std::endl;
-    output << std::format("shani....... " BX_HARDWARE_COMPILED, try_shani(), have_shani) << std::endl;
-    output << std::format("sha512...... " BX_HARDWARE_COMPILED, try_sha512(), have_sha512) << std::endl;
-    output << std::format("sse41....... " BX_HARDWARE_COMPILED, try_sse41(), have_sse41) << std::endl;
-    output << std::format("avx2........ " BX_HARDWARE_COMPILED, try_avx2(), have_avx2) << std::endl;
-    output << std::format("avx512...... " BX_HARDWARE_COMPILED, try_avx512(), have_avx512) << std::endl;
-    output << std::format("avxifma..... " BX_HARDWARE_COMPILED, try_avxifma(), have_avxifma) << std::endl;
-    output << std::format("avx512ifma.. " BX_HARDWARE_COMPILED, try_avx512ifma(), have_avx512ifma) << std::endl;
 #endif
+    for (const auto& extension: extension_states())
+        output << std::format("{:.<12} " BX_HARDWARE_COMPILED, extension.name,
+            extension.platform, extension.compiled) << std::endl;
+
+    output << std::format(BX_HARDWARE_BUILD, build_name("bx", detected_tags()),
+        build_name("bx", compiled_tags())) << std::endl;
 
     const auto cuda = cuda_device();
     const auto compiled = batched::compiled();
