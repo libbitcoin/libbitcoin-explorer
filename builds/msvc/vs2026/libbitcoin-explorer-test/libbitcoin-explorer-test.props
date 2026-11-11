@@ -1,24 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ |  Copyright (c) 2014-2026 libbitcoin-explorer developers (see COPYING).
+ |
+ |         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
+ |
+ -->
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <_PropertySheetDisplayName>Libbitcoin Explorer Test Common Settings</_PropertySheetDisplayName>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <_PropertySheetDisplayName>libbitcoin-explorer-test Settings</_PropertySheetDisplayName>
   </PropertyGroup>
 
-  <!-- Configuration -->
+  <ItemGroup Label="BuildOptionsExtension">
+    <PropertyPageSchema Condition="Exists('$(MSBuildThisFileDirectory)libbitcoin-explorer-test.xml')" Include="$(MSBuildThisFileDirectory)libbitcoin-explorer-test.xml" />
+  </ItemGroup>
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <EnablePREfast>false</EnablePREfast>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
-    <PostBuildEvent Condition="'$(DebugOrRelease)' == 'release'">
+    <PostBuildEvent Condition="'$(DebugOrRelease)' == 'Release'">
       <Command>"$(TargetPath)" --log_level=warning --run_test=* --show_progress=no --build_info=yes</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-
-  <!-- Dependencies -->
 
   <ImportGroup Label="PropertySheets">
     <Import Project="$(SolutionDir)libbitcoin-system.import.props" />
@@ -26,32 +30,16 @@
     <Import Project="$(SolutionDir)libbitcoin-explorer.import.props" />
   </ImportGroup>
 
-  <PropertyGroup Condition="'$(NuGetPackageRoot)' == ''">
-    <NuGetPackageRoot>..\..\..\..\..\.nuget\packages\</NuGetPackageRoot>
+  <PropertyGroup>
+    <Linkage-libbitcoin-system>$(DefaultLinkage)</Linkage-libbitcoin-system>
+    <Linkage-libbitcoin-network>$(DefaultLinkage)</Linkage-libbitcoin-network>
+    <Linkage-libbitcoin-explorer>$(DefaultLinkage)</Linkage-libbitcoin-explorer>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
-    <Linkage-libbitcoin-system>dynamic</Linkage-libbitcoin-system>
-    <Linkage-libbitcoin-network>dynamic</Linkage-libbitcoin-network>
-    <Linkage-libbitcoin-explorer>dynamic</Linkage-libbitcoin-explorer>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
-    <Linkage-libbitcoin-system>ltcg</Linkage-libbitcoin-system>
-    <Linkage-libbitcoin-network>ltcg</Linkage-libbitcoin-network>
-    <Linkage-libbitcoin-explorer>ltcg</Linkage-libbitcoin-explorer>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(DefaultLinkage)' == 'static'">
-    <Linkage-libbitcoin-system>static</Linkage-libbitcoin-system>
-    <Linkage-libbitcoin-network>static</Linkage-libbitcoin-network>
-    <Linkage-libbitcoin-explorer>static</Linkage-libbitcoin-explorer>
-  </PropertyGroup>
-
-  <!-- Messages -->
 
   <Target Name="LinkageInfo" BeforeTargets="PrepareForBuild">
-    <Message Text="Linkage-_system   : $(Linkage-libbitcoin-system)" Importance="high"/>
-    <Message Text="Linkage-_network  : $(Linkage-libbitcoin-network)" Importance="high"/>
-    <Message Text="Linkage-_explorer : $(Linkage-libbitcoin-explorer)" Importance="high"/>
+    <Message Text="Linkage-libbitcoin-system   : $(Linkage-libbitcoin-system)" Importance="high"/>
+    <Message Text="Linkage-libbitcoin-network  : $(Linkage-libbitcoin-network)" Importance="high"/>
+    <Message Text="Linkage-libbitcoin-explorer : $(Linkage-libbitcoin-explorer)" Importance="high"/>
   </Target>
 
 </Project>
