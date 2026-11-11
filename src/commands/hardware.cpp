@@ -41,9 +41,6 @@ console_result hardware::invoke(std::ostream& output, std::ostream&)
         output << std::format("{:.<12} " BX_HARDWARE_COMPILED, extension.name,
             extension.platform, extension.compiled) << std::endl;
 
-    output << std::format(BX_HARDWARE_BUILD, build_name("bx", detected_tags()),
-        build_name("bx", compiled_tags())) << std::endl;
-
     const auto cuda = cuda_device();
     const auto compiled = batched::compiled();
     const auto unsupported = cuda && compiled && !batched::accelerated();
@@ -59,6 +56,12 @@ console_result hardware::invoke(std::ostream& output, std::ostream&)
         if (cuda)
             output << std::format("cuda ecc.... " BX_HARDWARE_ENABLED, cuda_ecc(), cuda_ecc_enabled()) << std::endl;
     }
+
+    const auto platform = build_name("bx", detected_tags());
+    const auto build = build_name("bx", compiled_tags());
+    output << std::format(BX_HARDWARE_BUILD, build) << std::endl;
+    if (build != platform)
+        output << std::format(BX_HARDWARE_PLATFORM, platform) << std::endl;
 
 #if defined(HAVE_ARM)
     if (try_neon_sha2() && !have_neon_sha)

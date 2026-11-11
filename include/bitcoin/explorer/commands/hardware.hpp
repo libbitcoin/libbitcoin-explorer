@@ -59,7 +59,9 @@ namespace commands {
 #define BX_HARDWARE_INCOMPATIBLE \
     "platform:{:d} compiled:{:d} (unsupported)."
 #define BX_HARDWARE_BUILD \
-    "build....... platform:{} compiled:{}."
+    "build....... {}"
+#define BX_HARDWARE_PLATFORM \
+    "platform.... {}"
 #define BX_HARDWARE_SHA_UNCOMPILED \
     "Available SHA hardware acceleration is not compiled into this build."
 #define BX_HARDWARE_AVX2_UNCOMPILED \

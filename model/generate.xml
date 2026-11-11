@@ -461,6 +461,8 @@
     <define name="BX_HARDWARE_COMPILED" value="platform:{:d} compiled:{:d}." />
     <define name="BX_HARDWARE_ENABLED" value="platform:{:d} enabled:{:d}." />
     <define name="BX_HARDWARE_INCOMPATIBLE" value="platform:{:d} compiled:{:d} (unsupported)." />
+    <define name="BX_HARDWARE_BUILD" value="build....... {}" />
+    <define name="BX_HARDWARE_PLATFORM" value="platform.... {}" />
     <define name="BX_HARDWARE_SHA_UNCOMPILED" value="Available SHA hardware acceleration is not compiled into this build." />
     <define name="BX_HARDWARE_AVX2_UNCOMPILED" value="Available AVX2 hardware acceleration is not compiled into this build." />
     <define name="BX_HARDWARE_GPU_UNCOMPILED" value="Available cuda hardware acceleration is not compiled into this build." />
