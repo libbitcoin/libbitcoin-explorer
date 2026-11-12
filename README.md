@@ -1,13 +1,24 @@
-[![Continuous Integration Build](https://github.com/libbitcoin/libbitcoin-explorer/actions/workflows/ci.yml/badge.svg?branch=master&event=push)](https://github.com/libbitcoin/libbitcoin-explorer/actions/workflows/ci.yml)
+[![Continuous Integration](https://github.com/libbitcoin/libbitcoin-explorer/actions/workflows/ci.yml/badge.svg?branch=master&event=push)](https://github.com/libbitcoin/libbitcoin-explorer/actions/workflows/ci.yml) [![Coverage](https://img.shields.io/coveralls/github/libbitcoin/libbitcoin-explorer/master)](https://coveralls.io/github/libbitcoin/libbitcoin-explorer?branch=master)
 
-[![Coverage Status](https://img.shields.io/coveralls/github/libbitcoin/libbitcoin-explorer/master)](https://coveralls.io/github/libbitcoin/libbitcoin-explorer?branch=master)
+# libbitcoin-explorer
 
-# Libbitcoin Explorer
+The commands of Bitcoin Explorer, and the `bx` executable.
 
-*The Bitcoin Development Library*
+Documentation is at [libbitcoin.org/lib/explorer](https://libbitcoin.org/lib/explorer.html).
 
-**License Overview**
+Download [Bitcoin Server (`bs`)](https://libbitcoin.org/download/index.html).
 
-All files in this repository fall under the license specified in [COPYING](COPYING). The project is licensed as [AGPL with a lesser clause](https://www.gnu.org/licenses/agpl-3.0.en.html). It may be used within a proprietary project, but the core library and any changes to it must be published online. Source code for this library must always remain free for everybody to access.
+| | |
+| - | - |
+| Depends on | [libbitcoin-system](https://github.com/libbitcoin/libbitcoin-system) |
+| Header | `<bitcoin/explorer.hpp>` |
+| Namespace | `libbitcoin::explorer` |
+| Package | `libbitcoin-explorer` (pkg-config) |
 
-This branch is not usable in its current state. Please see [version3](https://github.com/libbitcoin/libbitcoin-explorer/tree/version3) for the latest functional branch.
+To use `bx`, see [Bitcoin Explorer commands](https://libbitcoin.org/client/commands.html).
+
+Libbitcoin is a set of cross-platform C++20 libraries for building Bitcoin applications. See [all libraries](https://libbitcoin.org/lib/index.html) and [building from source](https://libbitcoin.org/building/index.html).
+
+## License
+
+[AGPL with a lesser clause](COPYING). The library may be used within a proprietary project, but the library and any changes to it must be published.
