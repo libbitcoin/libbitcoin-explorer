@@ -458,7 +458,7 @@ std::string block_path(const system::hash_digest& hash,
     uint32_t height) NOEXCEPT
 {
     return hash == system::null_hash ?
-        "block/height/" + system::serialize(height) :
+        "block/confirmed/" + system::serialize(height) :
         "block/hash/" + system::encode_hash(hash);
 }
 

@@ -35,7 +35,7 @@ BC_AUTO_TEST_CASE(client__get__served_value__true_expected)
     client instance{ { server.url() }, 0, 10 };
     json::value out{};
     std::string error{};
-    BC_REQUIRE(instance.get(out, error, "top"));
+    BC_REQUIRE(instance.get(out, error, "top/confirmed/height"));
     BC_REQUIRE(error.empty());
     BC_REQUIRE_EQUAL(json::value_to<uint32_t>(out), 42u);
 }
@@ -56,7 +56,7 @@ BC_AUTO_TEST_CASE(client__get__served_not_found__false_error)
     client instance{ { server.url() }, 0, 10 };
     json::value out{};
     std::string error{};
-    BC_REQUIRE(!instance.get(out, error, "top"));
+    BC_REQUIRE(!instance.get(out, error, "top/confirmed/height"));
     BC_REQUIRE(!error.empty());
 }
 
@@ -66,7 +66,7 @@ BC_AUTO_TEST_CASE(client__get__served_invalid_json__false_error)
     client instance{ { server.url() }, 0, 10 };
     json::value out{};
     std::string error{};
-    BC_REQUIRE(!instance.get(out, error, "top"));
+    BC_REQUIRE(!instance.get(out, error, "top/confirmed/height"));
     BC_REQUIRE(!error.empty());
 }
 
@@ -75,7 +75,7 @@ BC_AUTO_TEST_CASE(client__get__unreachable__false_error)
     client instance{ { "http://127.0.0.1:65002" }, 0, 10 };
     json::value out{};
     std::string error{};
-    BC_REQUIRE(!instance.get(out, error, "top"));
+    BC_REQUIRE(!instance.get(out, error, "top/confirmed/height"));
     BC_REQUIRE(!error.empty());
 }
 
@@ -85,7 +85,7 @@ BC_AUTO_TEST_CASE(client__get__split_response__true_expected)
     client instance{ { server.url() }, 0, 10 };
     json::value out{};
     std::string error{};
-    BC_REQUIRE(instance.get(out, error, "top"));
+    BC_REQUIRE(instance.get(out, error, "top/confirmed/height"));
     BC_REQUIRE_EQUAL(json::value_to<uint32_t>(out), 42u);
 }
 
@@ -95,7 +95,7 @@ BC_AUTO_TEST_CASE(client__get__eof_delimited_response__true_expected)
     client instance{ { server.url() }, 0, 10 };
     json::value out{};
     std::string error{};
-    BC_REQUIRE(instance.get(out, error, "top"));
+    BC_REQUIRE(instance.get(out, error, "top/confirmed/height"));
     BC_REQUIRE_EQUAL(json::value_to<uint32_t>(out), 42u);
 }
 
@@ -108,7 +108,7 @@ BC_AUTO_TEST_CASE(client__construct__command_argument_with_port__argument_server
     client instance{ command, { server.url() } };
     json::value out{};
     std::string error{};
-    BC_REQUIRE(instance.get(out, error, "top"));
+    BC_REQUIRE(instance.get(out, error, "top/confirmed/height"));
     BC_REQUIRE_EQUAL(json::value_to<uint32_t>(out), 42u);
 }
 
@@ -121,7 +121,7 @@ BC_AUTO_TEST_CASE(client__construct__command_argument_without_port__setting_serv
     client instance{ command, {} };
     json::value out{};
     std::string error{};
-    BC_REQUIRE(instance.get(out, error, "top"));
+    BC_REQUIRE(instance.get(out, error, "top/confirmed/height"));
     BC_REQUIRE_EQUAL(json::value_to<uint32_t>(out), 42u);
 }
 
@@ -131,7 +131,7 @@ BC_AUTO_TEST_CASE(client__fetch__served_value__true_no_error)
     client instance{ { server.url() }, 0, 10 };
     json::value out{};
     std::stringstream error{};
-    BC_REQUIRE(instance.fetch(out, error, "top"));
+    BC_REQUIRE(instance.fetch(out, error, "top/confirmed/height"));
     BC_REQUIRE(error.str().empty());
     BC_REQUIRE_EQUAL(json::value_to<uint32_t>(out), 42u);
 }
@@ -142,13 +142,13 @@ BC_AUTO_TEST_CASE(client__fetch__served_not_found__false_error)
     client instance{ { server.url() }, 0, 10 };
     json::value out{};
     std::stringstream error{};
-    BC_REQUIRE(!instance.fetch(out, error, "top"));
+    BC_REQUIRE(!instance.fetch(out, error, "top/confirmed/height"));
     BC_REQUIRE_EQUAL(error.str(), "Server query failed: 404 Not Found.\n");
 }
 
-BC_AUTO_TEST_CASE(client__block_path__null_hash__height_path)
+BC_AUTO_TEST_CASE(client__block_path__null_hash__confirmed_path)
 {
-    BC_REQUIRE_EQUAL(block_path(null_hash, 42), "block/height/42");
+    BC_REQUIRE_EQUAL(block_path(null_hash, 42), "block/confirmed/42");
 }
 
 BC_AUTO_TEST_CASE(client__block_path__hash__hash_path)
