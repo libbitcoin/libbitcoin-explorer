@@ -34,7 +34,7 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
     client server(*this, get_server_url_argument());
 
     json::value response{};
-    if (!server.fetch(response, error, "top"))
+    if (!server.fetch(response, error, "top/confirmed/height"))
         return console_result::failure;
 
     output << json::value_to<uint32_t>(response) << std::endl;

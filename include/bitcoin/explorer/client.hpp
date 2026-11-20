@@ -45,7 +45,7 @@ public:
         const system::config::url& argument) NOEXCEPT;
 
     /// Get the json response for a native interface path, such as
-    /// "block/height/42". The version prefix and format are supplied here,
+    /// "block/confirmed/42". The version prefix and format are supplied here,
     /// and query is appended to the format parameter, such as "witness=false".
     /// Returns false and sets error on transport, status or decode failure.
     bool get(system::json::value& out, std::string& error,
@@ -68,7 +68,7 @@ private:
 };
 
 /// The native interface path of a block, by hash unless the hash is null
-/// and otherwise by height, such as "block/height/42".
+/// and otherwise by confirmed height, such as "block/confirmed/42".
 BCX_API std::string block_path(const system::hash_digest& hash,
     uint32_t height) NOEXCEPT;
 
