@@ -35,8 +35,8 @@ struct test_vector
 
 const std::vector<test_vector> test_vectors
 {
-    { "tb1qr47dd36u96r0fjle36hdygdnp0v6pwfgqe6jxg", "31923086d7a16098a89b512c541c0bdea1f249b2bb3e9817382f7fbc087d5062\n" },
-    { "tb1qq82ajthl5mlm50h6x70esvxs7atp3vfnjwp8z5kjdepsjqqw3zcsj5rufw", "edd374bd7ae9fe2c2cb9f20adbc675724fbb20b6f40b995ad7c9deb617d09d7b\n" }
+    { "tb1qr47dd36u96r0fjle36hdygdnp0v6pwfgqe6jxg", "62507d08bc7f2f3817983ebbb249f2a1de0b1c542c519ba89860a1d786309231\n" },
+    { "tb1qq82ajthl5mlm50h6x70esvxs7atp3vfnjwp8z5kjdepsjqqw3zcsj5rufw", "7b9dd017b6dec9d75a990bf4b620bb4f7275c6db0af2b92c2cfee97abd74d3ed\n" }
 };
 
 BC_AUTO_TEST_CASE(witness_to_key__invoke__test_list__valid_expected)

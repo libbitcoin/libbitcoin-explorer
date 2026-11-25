@@ -34,7 +34,7 @@ console_result witness_to_key::invoke(std::ostream& output, std::ostream&)
 
     auto key = sha256_hash(address.script().to_data(false));
 
-    output << base16(key) << std::endl;
+    output << encode_hash(key) << std::endl;
     return console_result::okay;
 }
 
