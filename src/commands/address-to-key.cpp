@@ -34,7 +34,7 @@ console_result address_to_key::invoke(std::ostream& output, std::ostream&)
         get_wallet_pay_to_public_key_hash_version_setting(),
         get_wallet_pay_to_script_hash_version_setting()).to_data(false));
 
-    output << base16(key) << std::endl;
+    output << encode_hash(key) << std::endl;
     return console_result::okay;
 }
 
