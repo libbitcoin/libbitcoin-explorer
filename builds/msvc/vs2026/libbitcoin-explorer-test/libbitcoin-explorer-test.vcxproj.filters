@@ -10,14 +10,26 @@
     <Filter Include="src">
       <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000000}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\commands">
+    <Filter Include="src\.deps">
       <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000001}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\config">
+    <Filter Include="src\commands">
       <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000002}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\fixture">
+    <Filter Include="src\commands\.deps">
       <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000003}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\config">
+      <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\config\.deps">
+      <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\fixture">
+      <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\fixture\.deps">
+      <UniqueIdentifier>{1A0E5EDD-E803-4268-0000-000000000007}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +190,9 @@
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\fetch-block-height.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\fetch-block-tx-input.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\fetch-block.cpp">

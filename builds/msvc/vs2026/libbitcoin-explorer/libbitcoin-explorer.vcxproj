@@ -166,6 +166,7 @@
     <ClCompile Include="..\..\..\..\src\commands\fetch-balance.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block-hashes.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block-height.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\fetch-block-tx-input.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-block.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-filter-checkpoint.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-filter-headers.cpp" />
@@ -310,6 +311,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-balance.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-hashes.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-height.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block-tx-input.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-block.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-filter-checkpoint.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-filter-headers.hpp" />
