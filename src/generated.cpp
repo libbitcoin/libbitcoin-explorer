@@ -84,6 +84,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<fetch_block>());
     func(make_shared<fetch_block_hashes>());
     func(make_shared<fetch_block_height>());
+    func(make_shared<fetch_block_tx_input>());
     func(make_shared<fetch_filter>());
     func(make_shared<fetch_filter_checkpoint>());
     func(make_shared<fetch_filter_headers>());
@@ -259,6 +260,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_block_hashes>();
     if (symbol == fetch_block_height::symbol())
         return make_shared<fetch_block_height>();
+    if (symbol == fetch_block_tx_input::symbol())
+        return make_shared<fetch_block_tx_input>();
     if (symbol == fetch_filter::symbol())
         return make_shared<fetch_filter>();
     if (symbol == fetch_filter_checkpoint::symbol())

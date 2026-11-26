@@ -73,6 +73,7 @@
 #include <bitcoin/explorer/commands/fetch-block.hpp>
 #include <bitcoin/explorer/commands/fetch-block-hashes.hpp>
 #include <bitcoin/explorer/commands/fetch-block-height.hpp>
+#include <bitcoin/explorer/commands/fetch-block-tx-input.hpp>
 #include <bitcoin/explorer/commands/fetch-filter.hpp>
 #include <bitcoin/explorer/commands/fetch-filter-checkpoint.hpp>
 #include <bitcoin/explorer/commands/fetch-filter-headers.hpp>

@@ -699,6 +699,27 @@ BC_AUTO_TEST_CASE(generated__property__fetch_block_height__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_server_url_argument()), serial(server_url_argument));
 }
 
+BC_AUTO_TEST_CASE(generated__property__fetch_block_tx_input__round_trips)
+{
+    fetch_block_tx_input command;
+
+    const uint32_t height_argument{ 42 };
+    command.set_height_argument(height_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_height_argument()), serial(height_argument));
+
+    const uint32_t tx_index_argument{ 42 };
+    command.set_tx_index_argument(tx_index_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_tx_index_argument()), serial(tx_index_argument));
+
+    const uint32_t input_index_argument{ 42 };
+    command.set_input_index_argument(input_index_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_input_index_argument()), serial(input_index_argument));
+
+    const system::config::url server_url_argument{ "http://127.0.0.1:1" };
+    command.set_server_url_argument(server_url_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_server_url_argument()), serial(server_url_argument));
+}
+
 BC_AUTO_TEST_CASE(generated__property__fetch_filter__round_trips)
 {
     fetch_filter command;

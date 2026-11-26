@@ -973,6 +973,26 @@ BC_AUTO_TEST_CASE(generated__parse__fetch_block_height__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__fetch_block_tx_input__okay)
+{
+    fetch_block_tx_input command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "fetch-block-tx-input",
+        "42",
+        "42",
+        "42",
+        "http://127.0.0.1:1",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 5, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__fetch_filter__okay)
 {
     fetch_filter command;
