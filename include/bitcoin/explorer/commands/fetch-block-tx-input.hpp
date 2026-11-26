@@ -143,17 +143,17 @@ public:
         )
         (
             "height",
-            value<uint32_t>(&argument_.height),
+            value<uint32_t>(&argument_.height)->required(),
             "The block height."
         )
         (
             "tx-index",
-            value<uint32_t>(&argument_.tx_index)->required(),
+            value<uint32_t>(&argument_.tx_index),
             "The transaction position index in the block, defaults to 0."
         )
         (
             "input-index",
-            value<uint32_t>(&argument_.input_index)->required(),
+            value<uint32_t>(&argument_.input_index),
             "The input position index in the transaction, defaults to 0."
         )
         (

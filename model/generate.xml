@@ -432,9 +432,9 @@
   </command>
 
   <command symbol="fetch-block-tx-input" output="string" multipleX="true" category="ONLINE" network="true" description="Get the script of an input of the transaction at a position in the block. Requires a Libbitcoin server connection.">
-    <argument name="height" shortcut="t" type="uint32_t" description="The block height."/>
-    <argument name="tx-index" type="uint32_t" required="true" description="The transaction position index in the block, defaults to 0." />
-    <argument name="input-index" type="uint32_t" required="true" description="The input position index in the transaction, defaults to 0." />
+    <argument name="height" shortcut="t" type="uint32_t" required="true" description="The block height."/>
+    <argument name="tx-index" type="uint32_t" description="The transaction position index in the block, defaults to 0." />
+    <argument name="input-index" type="uint32_t" description="The input position index in the transaction, defaults to 0." />
     <argument name="server-url" type="url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <define name="BX_FETCH_TX_INDEX_UNCONFIRMED" value="The transaction is not confirmed." />
   </command>
