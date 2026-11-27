@@ -155,7 +155,7 @@ public:
         )
         (
             "prefix",
-            value<std::string>(&argument_.prefix),
+            value<std::string>(&argument_.prefix)->default_value("bc"),
             "The desired witness address prefix, defaults to 'bc'."
         )
         (
@@ -178,6 +178,13 @@ public:
         if (option_version.defaulted() && !option_version_config.defaulted())
         {
             option_.version = option_version_config.as<explorer::config::byte>();
+        }
+
+        const auto& argument_prefix = variables["prefix"];
+        const auto& argument_prefix_config = variables["wallet.witness_address_prefix"];
+        if (argument_prefix.defaulted() && !argument_prefix_config.defaulted())
+        {
+            argument_.prefix = argument_prefix_config.as<std::string>();
         }
     }
 
