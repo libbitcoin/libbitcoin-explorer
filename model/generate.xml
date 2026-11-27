@@ -458,6 +458,117 @@
     <define name="BX_FILTER_MATCH_SCRIPT_FAILURE" value="Script does not match filter." />
   </command>
 
+  <command symbol="get-address" property="address" output="string" category="JSON" description="Get the address of a decoded URI.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-amount" property="amount" output="string" category="JSON" description="Get the amount of a decoded URI.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-bits" property="bits" output="string" category="JSON" description="Get the bits of a block header.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-checksum" property="checksum" output="string" category="JSON" description="Get the checksum of a decoded address or checked value.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-hash" property="hash" output="string" category="JSON" description="Get the hash of a block header, transaction or point.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-header" property="header" output="string" category="JSON" description="Get the header of a block.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-index" property="index" output="string" category="JSON" description="Get the index of a point.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-input" property="inputs" output="string" category="JSON" description="Get an input of a transaction.">
+    <argument name="INDEX" type="uint32_t" required="true" description="The zero-based position of the input in the transaction." />
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-label" property="label" output="string" category="JSON" description="Get the label of a decoded URI.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-locktime" property="locktime" output="string" category="JSON" description="Get the locktime of a transaction.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-merkle-root" property="merkle_root" output="string" category="JSON" description="Get the merkle root of a block header.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-message" property="message" output="string" category="JSON" description="Get the message of a decoded URI.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-nonce" property="nonce" output="string" category="JSON" description="Get the nonce of a block header.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-output" property="outputs" output="string" category="JSON" description="Get an output of a transaction.">
+    <argument name="INDEX" type="uint32_t" required="true" description="The zero-based position of the output in the transaction." />
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-payload" property="payload" output="string" category="JSON" description="Get the payload of a decoded address or checked value.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-point" property="point" output="string" category="JSON" description="Get the previous output point of an input.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-prefix" property="prefix" output="string" category="JSON" description="Get the prefix of a decoded bech32 address.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-previous" property="previous" output="string" category="JSON" description="Get the previous block hash of a block header.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-program" property="program" output="string" category="JSON" description="Get the program of a decoded bech32 address.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-scheme" property="scheme" output="string" category="JSON" description="Get the scheme of a decoded URI.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-script" property="script" output="string" category="JSON" description="Get the script of an input or output.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-sequence" property="sequence" output="string" category="JSON" description="Get the sequence of an input.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-timestamp" property="timestamp" output="string" category="JSON" description="Get the timestamp of a block header.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-tx" property="transactions" output="string" category="JSON" description="Get a transaction of a block.">
+    <argument name="INDEX" type="uint32_t" required="true" description="The zero-based position of the transaction in the block." />
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-value" property="value" output="string" category="JSON" description="Get the value in satoshi of an output.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-version" property="version" output="string" category="JSON" description="Get the version of a block header, transaction, decoded address, checked value or bech32 address.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-witness" property="witness" output="string" category="JSON" description="Get the witness of an input.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
   <command symbol="hardware" output="string" category="META" description="Display hardware compatibility.">
     <define name="BX_HARDWARE_HEADER_ARM64" value="Hardware configuration (arm64)..." />
     <define name="BX_HARDWARE_HEADER_X64" value="Hardware configuration (x64)..." />

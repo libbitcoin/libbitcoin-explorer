@@ -532,6 +532,222 @@ BC_AUTO_TEST_CASE(generated__metadata__fetch_utxo__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__get_address__returns_expected_values)
+{
+    get_address command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_amount__returns_expected_values)
+{
+    get_amount command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_bits__returns_expected_values)
+{
+    get_bits command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_checksum__returns_expected_values)
+{
+    get_checksum command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_hash__returns_expected_values)
+{
+    get_hash command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_header__returns_expected_values)
+{
+    get_header command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_index__returns_expected_values)
+{
+    get_index command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_input__returns_expected_values)
+{
+    get_input command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_label__returns_expected_values)
+{
+    get_label command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_locktime__returns_expected_values)
+{
+    get_locktime command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_merkle_root__returns_expected_values)
+{
+    get_merkle_root command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_message__returns_expected_values)
+{
+    get_message command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_nonce__returns_expected_values)
+{
+    get_nonce command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_output__returns_expected_values)
+{
+    get_output command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_payload__returns_expected_values)
+{
+    get_payload command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_point__returns_expected_values)
+{
+    get_point command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_prefix__returns_expected_values)
+{
+    get_prefix command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_previous__returns_expected_values)
+{
+    get_previous command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_program__returns_expected_values)
+{
+    get_program command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_scheme__returns_expected_values)
+{
+    get_scheme command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_script__returns_expected_values)
+{
+    get_script command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_sequence__returns_expected_values)
+{
+    get_sequence command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_timestamp__returns_expected_values)
+{
+    get_timestamp command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_tx__returns_expected_values)
+{
+    get_tx command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_value__returns_expected_values)
+{
+    get_value command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_version__returns_expected_values)
+{
+    get_version command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__get_witness__returns_expected_values)
+{
+    get_witness command;
+    BC_REQUIRE_EQUAL(command.category(), "JSON");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__hardware__returns_expected_values)
 {
     hardware command;

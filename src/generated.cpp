@@ -94,6 +94,33 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<fetch_tx>());
     func(make_shared<fetch_tx_index>());
     func(make_shared<fetch_utxo>());
+    func(make_shared<get_address>());
+    func(make_shared<get_amount>());
+    func(make_shared<get_bits>());
+    func(make_shared<get_checksum>());
+    func(make_shared<get_hash>());
+    func(make_shared<get_header>());
+    func(make_shared<get_index>());
+    func(make_shared<get_input>());
+    func(make_shared<get_label>());
+    func(make_shared<get_locktime>());
+    func(make_shared<get_merkle_root>());
+    func(make_shared<get_message>());
+    func(make_shared<get_nonce>());
+    func(make_shared<get_output>());
+    func(make_shared<get_payload>());
+    func(make_shared<get_point>());
+    func(make_shared<get_prefix>());
+    func(make_shared<get_previous>());
+    func(make_shared<get_program>());
+    func(make_shared<get_scheme>());
+    func(make_shared<get_script>());
+    func(make_shared<get_sequence>());
+    func(make_shared<get_timestamp>());
+    func(make_shared<get_tx>());
+    func(make_shared<get_value>());
+    func(make_shared<get_version>());
+    func(make_shared<get_witness>());
     func(make_shared<hardware>());
     func(make_shared<hd_new>());
     func(make_shared<hd_private>());
@@ -281,6 +308,60 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_tx_index>();
     if (symbol == fetch_utxo::symbol())
         return make_shared<fetch_utxo>();
+    if (symbol == get_address::symbol())
+        return make_shared<get_address>();
+    if (symbol == get_amount::symbol())
+        return make_shared<get_amount>();
+    if (symbol == get_bits::symbol())
+        return make_shared<get_bits>();
+    if (symbol == get_checksum::symbol())
+        return make_shared<get_checksum>();
+    if (symbol == get_hash::symbol())
+        return make_shared<get_hash>();
+    if (symbol == get_header::symbol())
+        return make_shared<get_header>();
+    if (symbol == get_index::symbol())
+        return make_shared<get_index>();
+    if (symbol == get_input::symbol())
+        return make_shared<get_input>();
+    if (symbol == get_label::symbol())
+        return make_shared<get_label>();
+    if (symbol == get_locktime::symbol())
+        return make_shared<get_locktime>();
+    if (symbol == get_merkle_root::symbol())
+        return make_shared<get_merkle_root>();
+    if (symbol == get_message::symbol())
+        return make_shared<get_message>();
+    if (symbol == get_nonce::symbol())
+        return make_shared<get_nonce>();
+    if (symbol == get_output::symbol())
+        return make_shared<get_output>();
+    if (symbol == get_payload::symbol())
+        return make_shared<get_payload>();
+    if (symbol == get_point::symbol())
+        return make_shared<get_point>();
+    if (symbol == get_prefix::symbol())
+        return make_shared<get_prefix>();
+    if (symbol == get_previous::symbol())
+        return make_shared<get_previous>();
+    if (symbol == get_program::symbol())
+        return make_shared<get_program>();
+    if (symbol == get_scheme::symbol())
+        return make_shared<get_scheme>();
+    if (symbol == get_script::symbol())
+        return make_shared<get_script>();
+    if (symbol == get_sequence::symbol())
+        return make_shared<get_sequence>();
+    if (symbol == get_timestamp::symbol())
+        return make_shared<get_timestamp>();
+    if (symbol == get_tx::symbol())
+        return make_shared<get_tx>();
+    if (symbol == get_value::symbol())
+        return make_shared<get_value>();
+    if (symbol == get_version::symbol())
+        return make_shared<get_version>();
+    if (symbol == get_witness::symbol())
+        return make_shared<get_witness>();
     if (symbol == hardware::symbol())
         return make_shared<hardware>();
     if (symbol == hd_new::symbol())

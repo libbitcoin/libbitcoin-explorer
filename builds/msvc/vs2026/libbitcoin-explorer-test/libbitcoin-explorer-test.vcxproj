@@ -158,6 +158,7 @@
     <ClCompile Include="..\..\..\..\test\commands\fetch-tx-index.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-utxo.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\get.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hardware.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-private.cpp" />

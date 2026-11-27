@@ -48,6 +48,91 @@ value checked_to_json(const data_chunk& checked) NOEXCEPT
     };
 }
 
+// A property is found in the object or, failing that, within its only member.
+static const value* find_property(const value& json,
+    const std::string& name) NOEXCEPT
+{
+    auto object = json.if_object();
+    while (!is_null(object))
+    {
+        if (const auto property = object->if_contains(name))
+            return property;
+
+        if (object->size() != one)
+            return nullptr;
+
+        object = object->begin()->value().if_object();
+    }
+
+    return nullptr;
+}
+
+static bool read_property(value& out, std::ostream& error,
+    const std::string& json, const std::string& name)
+{
+    code ec{};
+    const auto document = parse(json, ec);
+    if (ec)
+    {
+        error << BX_JSON_INVALID << std::endl;
+        return false;
+    }
+
+    const auto property = find_property(document, name);
+    if (is_null(property))
+    {
+        error << BX_JSON_MISSING << std::endl;
+        return false;
+    }
+
+    out = *property;
+    return true;
+}
+
+static console_result write_value(std::ostream& output, const value& property)
+{
+    if (const auto text = property.if_string())
+        output << *text << std::endl;
+    else
+        output << serialize(property) << std::endl;
+
+    return console_result::okay;
+}
+
+console_result write_property(std::ostream& output, std::ostream& error,
+    const std::string& json, const std::string& name)
+{
+    value property{};
+    if (!read_property(property, error, json, name))
+        return console_result::failure;
+
+    return write_value(output, property);
+}
+
+console_result write_element(std::ostream& output, std::ostream& error,
+    const std::string& json, const std::string& name, uint32_t index)
+{
+    value property{};
+    if (!read_property(property, error, json, name))
+        return console_result::failure;
+
+    const auto list = property.if_array();
+    if (is_null(list))
+    {
+        error << BX_JSON_NOT_LIST << std::endl;
+        return console_result::failure;
+    }
+
+    const auto element = list->if_contains(possible_wide_cast<size_t>(index));
+    if (is_null(element))
+    {
+        error << BX_JSON_OUT_OF_RANGE << std::endl;
+        return console_result::failure;
+    }
+
+    return write_value(output, *element);
+}
+
 value to_json(const wallet::bitcoin_uri& uri) NOEXCEPT
 {
     object properties;

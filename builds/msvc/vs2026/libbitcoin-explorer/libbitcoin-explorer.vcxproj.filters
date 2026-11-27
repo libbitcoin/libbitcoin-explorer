@@ -662,6 +662,87 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-utxo.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-address.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-amount.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-bits.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-checksum.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-hash.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-header.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-index.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-input.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-label.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-locktime.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-merkle-root.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-message.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-nonce.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-output.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-payload.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-point.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-prefix.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-previous.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-program.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-scheme.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-script.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-sequence.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-timestamp.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-tx.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-value.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-version.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\get-witness.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hardware.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>

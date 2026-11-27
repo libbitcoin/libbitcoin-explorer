@@ -21,6 +21,9 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 .primitives()
+.if defined(command.property)
+#include <bitcoin/explorer/json.hpp>
+.endif
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -290,8 +293,26 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
+.if defined(command.property)
+.   define is_element = 0
+.   for argument where name = "INDEX"
+.       is_element = 1
+.   endfor
+    virtual console_result invoke(std::ostream& output,
+        std::ostream& error)
+    {
+.   if is_element
+        return write_element(output, error, get_json_argument(),
+            "$(command.property)", get_index_argument());
+.   else
+        return write_property(output, error, get_json_argument(),
+            "$(command.property)");
+.   endif
+    }
+.else
     virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
+.endif
 
     /* Properties */
 

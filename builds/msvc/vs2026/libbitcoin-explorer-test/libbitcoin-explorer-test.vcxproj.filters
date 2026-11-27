@@ -213,6 +213,9 @@
     <ClCompile Include="..\..\..\..\test\commands\fetch-utxo.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\get.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\hardware.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

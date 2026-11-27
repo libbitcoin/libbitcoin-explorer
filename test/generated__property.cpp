@@ -845,6 +845,261 @@ BC_AUTO_TEST_CASE(generated__property__fetch_utxo__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_algorithm_option()), serial(algorithm_option));
 }
 
+BC_AUTO_TEST_CASE(generated__property__get_address__round_trips)
+{
+    get_address command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_amount__round_trips)
+{
+    get_amount command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_bits__round_trips)
+{
+    get_bits command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_checksum__round_trips)
+{
+    get_checksum command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_hash__round_trips)
+{
+    get_hash command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_header__round_trips)
+{
+    get_header command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_index__round_trips)
+{
+    get_index command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_input__round_trips)
+{
+    get_input command;
+
+    const uint32_t index_argument{ 42 };
+    command.set_index_argument(index_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_index_argument()), serial(index_argument));
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_label__round_trips)
+{
+    get_label command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_locktime__round_trips)
+{
+    get_locktime command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_merkle_root__round_trips)
+{
+    get_merkle_root command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_message__round_trips)
+{
+    get_message command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_nonce__round_trips)
+{
+    get_nonce command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_output__round_trips)
+{
+    get_output command;
+
+    const uint32_t index_argument{ 42 };
+    command.set_index_argument(index_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_index_argument()), serial(index_argument));
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_payload__round_trips)
+{
+    get_payload command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_point__round_trips)
+{
+    get_point command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_prefix__round_trips)
+{
+    get_prefix command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_previous__round_trips)
+{
+    get_previous command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_program__round_trips)
+{
+    get_program command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_scheme__round_trips)
+{
+    get_scheme command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_script__round_trips)
+{
+    get_script command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_sequence__round_trips)
+{
+    get_sequence command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_timestamp__round_trips)
+{
+    get_timestamp command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_tx__round_trips)
+{
+    get_tx command;
+
+    const uint32_t index_argument{ 42 };
+    command.set_index_argument(index_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_index_argument()), serial(index_argument));
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_value__round_trips)
+{
+    get_value command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_version__round_trips)
+{
+    get_version command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_witness__round_trips)
+{
+    get_witness command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
 BC_AUTO_TEST_CASE(generated__property__hd_new__round_trips)
 {
     hd_new command;

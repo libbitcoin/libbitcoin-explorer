@@ -70,6 +70,33 @@ _bx()
         fetch-tx
         fetch-tx-index
         fetch-utxo
+        get-address
+        get-amount
+        get-bits
+        get-checksum
+        get-hash
+        get-header
+        get-index
+        get-input
+        get-label
+        get-locktime
+        get-merkle-root
+        get-message
+        get-nonce
+        get-output
+        get-payload
+        get-point
+        get-prefix
+        get-previous
+        get-program
+        get-scheme
+        get-script
+        get-sequence
+        get-timestamp
+        get-tx
+        get-value
+        get-version
+        get-witness
         hardware
         hd-new
         hd-private
