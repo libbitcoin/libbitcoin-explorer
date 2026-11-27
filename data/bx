@@ -87,6 +87,8 @@ _bx()
         mnemonic-decode
         mnemonic-encode
         mnemonic-to-seed
+        noise-cert
+        noise-public
         qrcode
         ripemd160
         satoshi-to-btc
@@ -247,6 +249,9 @@ _bx()
             ;;
         mnemonic-to-seed)
             options="--language -l --passphrase -p"
+            ;;
+        noise-cert)
+            options="--valid_from -v --days -d --auxiliary -a"
             ;;
         qrcode)
             options="--margin -m --pixels -p --version -v"

@@ -1485,6 +1485,44 @@ BC_AUTO_TEST_CASE(generated__parse__mnemonic_to_seed__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__noise_cert__okay)
+{
+    noise_cert command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "noise-cert",
+        "--valid_from", "42",
+        "--days", "42",
+        "--auxiliary", "baadf00d",
+        "03ac9e60013853128b42a1324609bac2ccff6a0b4844b6301f1f552e15ee14c7a5",
+        "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 9, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__noise_public__okay)
+{
+    noise_public command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "noise-public",
+        "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__qrcode__okay)
 {
     qrcode command;

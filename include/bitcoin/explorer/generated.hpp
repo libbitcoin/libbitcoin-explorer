@@ -100,6 +100,8 @@
 #include <bitcoin/explorer/commands/mnemonic-decode.hpp>
 #include <bitcoin/explorer/commands/mnemonic-encode.hpp>
 #include <bitcoin/explorer/commands/mnemonic-to-seed.hpp>
+#include <bitcoin/explorer/commands/noise-cert.hpp>
+#include <bitcoin/explorer/commands/noise-public.hpp>
 #include <bitcoin/explorer/commands/qrcode.hpp>
 #include <bitcoin/explorer/commands/ripemd160.hpp>
 #include <bitcoin/explorer/commands/satoshi-to-btc.hpp>

@@ -585,6 +585,22 @@
     <define name="BX_MNEMONIC_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
   </command>
 
+  <command symbol="noise-cert" output="base16" category="MATH" description="Create a Base16 Stratum v2 Noise authority certificate for a server static public key, for use with a Libbitcoin server.">
+    <option name="valid_from" type="uint32_t" description="The start of the validity period in Unix seconds, defaults to the current time." />
+    <option name="days" type="uint32_t" default="365" description="The length of the validity period in days, defaults to 365." />
+    <option name="auxiliary" type="base16" description="The Base16 32 byte auxiliary random data of the signature, defaults to zero." />
+    <argument name="SERVER_PUBLIC_KEY" required="true" type="ec_public" description="The Base16 EC public key of the server static key." />
+    <argument name="AUTHORITY_PRIVATE_KEY" stdin="true" type="ec_private" description="The Base16 EC private key of the authority. If not specified the key is read from STDIN." />
+    <define name="BX_NOISE_CERT_INVALID_AUXILIARY" value="The auxiliary data is not 32 bytes." />
+    <define name="BX_NOISE_CERT_INVALID_KEY" value="The authority private key is not valid." />
+    <define name="BX_NOISE_CERT_INVALID_VALIDITY" value="The validity period ends after the year 2106." />
+  </command>
+
+  <command symbol="noise-public" output="string" category="MATH" description="Derive the Base58Check Stratum v2 Noise authority public key of an EC private key, for use by Stratum v2 miners.">
+    <argument name="EC_PRIVATE_KEY" stdin="true" type="ec_private" description="The Base16 EC private key of the authority. If not specified the key is read from STDIN." />
+    <define name="BX_NOISE_PUBLIC_INVALID_KEY" value="The private key is not valid." />
+  </command>
+
   <command symbol="qrcode" category="WALLET" output="bytes" description="Create a square QRCODE PNG file for text, such as a Bitcoin URI, an address or a key.">
     <option name="margin" type="uint16_t" default="2" description="The pixel width of the QRCODE margin, defaults to 2." />
     <option name="pixels" type="uint16_t" default="8" description="The pixel width of the QRCODE modules, defaults to 8." />

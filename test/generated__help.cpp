@@ -1147,6 +1147,34 @@ BC_AUTO_TEST_CASE(generated__help__mnemonic_to_seed__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
+BC_AUTO_TEST_CASE(generated__help__noise_cert__okay_output)
+{
+    noise_cert command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "noise-cert", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
+BC_AUTO_TEST_CASE(generated__help__noise_public__okay_output)
+{
+    noise_public command;
+    std::string message;
+    std::stringstream input, output;
+    const char* argv[]{ "noise-public", "--help" };
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(metadata.help());
+    command.write_help(output);
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!output.str().empty());
+}
+
 BC_AUTO_TEST_CASE(generated__help__qrcode__okay_output)
 {
     qrcode command;

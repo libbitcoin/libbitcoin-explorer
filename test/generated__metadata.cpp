@@ -668,6 +668,22 @@ BC_AUTO_TEST_CASE(generated__metadata__mnemonic_to_seed__returns_expected_values
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__noise_cert__returns_expected_values)
+{
+    noise_cert command;
+    BC_REQUIRE_EQUAL(command.category(), "MATH");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
+BC_AUTO_TEST_CASE(generated__metadata__noise_public__returns_expected_values)
+{
+    noise_public command;
+    BC_REQUIRE_EQUAL(command.category(), "MATH");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__qrcode__returns_expected_values)
 {
     qrcode command;

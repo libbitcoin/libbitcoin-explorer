@@ -427,6 +427,16 @@ BC_AUTO_TEST_CASE(generated__find__mnemonic_to_seed__returns_object)
     BC_REQUIRE(find("mnemonic-to-seed") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__noise_cert__returns_object)
+{
+    BC_REQUIRE(find("noise-cert") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__noise_public__returns_object)
+{
+    BC_REQUIRE(find("noise-public") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__qrcode__returns_object)
 {
     BC_REQUIRE(find("qrcode") != nullptr);
