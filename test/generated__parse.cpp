@@ -1958,8 +1958,8 @@ BC_AUTO_TEST_CASE(generated__parse__noise_cert__okay)
         "--valid_from", "42",
         "--days", "42",
         "--auxiliary", "baadf00d",
-        "03ac9e60013853128b42a1324609bac2ccff6a0b4844b6301f1f552e15ee14c7a5",
-        "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475",
+        "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi",
+        "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi",
     };
 
     parser metadata(command);
@@ -1976,7 +1976,7 @@ BC_AUTO_TEST_CASE(generated__parse__noise_public__okay)
     const char* argv[]
     {
         "noise-public",
-        "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475",
+        "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi",
     };
 
     parser metadata(command);

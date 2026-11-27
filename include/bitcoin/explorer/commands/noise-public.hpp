@@ -95,7 +95,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Derive the Base58Check Stratum v2 Noise authority public key of an EC private key, for use by Stratum v2 miners.";
+        return "Derive the Base58Check Stratum v2 Noise public key of a Noise private key, of a server static key or of an authority key for use by Stratum v2 miners.";
     }
 
     /**
@@ -106,7 +106,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("EC_PRIVATE_KEY", 1);
+            .add("PRIVATE_KEY", 1);
     }
 
     /**
@@ -117,7 +117,7 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        load_input(get_ec_private_key_argument(), "EC_PRIVATE_KEY", variables, input);
+        load_input(get_private_key_argument(), "PRIVATE_KEY", variables, input);
     }
 
     /**
@@ -140,9 +140,9 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "EC_PRIVATE_KEY",
-            value<explorer::config::ec_private>(&argument_.ec_private_key),
-            "The Base16 EC private key of the authority. If not specified the key is read from STDIN."
+            "PRIVATE_KEY",
+            value<system::config::base58check>(&argument_.private_key),
+            "The Base58Check Noise private key. If not specified the key is read from STDIN."
         );
 
         return options;
@@ -168,20 +168,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the EC_PRIVATE_KEY argument.
+     * Get the value of the PRIVATE_KEY argument.
      */
-    virtual explorer::config::ec_private& get_ec_private_key_argument()
+    virtual system::config::base58check& get_private_key_argument()
     {
-        return argument_.ec_private_key;
+        return argument_.private_key;
     }
 
     /**
-     * Set the value of the EC_PRIVATE_KEY argument.
+     * Set the value of the PRIVATE_KEY argument.
      */
-    virtual void set_ec_private_key_argument(
-        const explorer::config::ec_private& value)
+    virtual void set_private_key_argument(
+        const system::config::base58check& value)
     {
-        argument_.ec_private_key = value;
+        argument_.private_key = value;
     }
 
 private:
@@ -194,11 +194,11 @@ private:
     struct argument
     {
         argument()
-          : ec_private_key()
+          : private_key()
         {
         }
 
-        explorer::config::ec_private ec_private_key;
+        system::config::base58check private_key;
     } argument_;
 
     /**

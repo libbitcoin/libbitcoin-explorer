@@ -1408,11 +1408,11 @@ BC_AUTO_TEST_CASE(generated__property__noise_cert__round_trips)
 {
     noise_cert command;
 
-    const system::wallet::ec_public server_public_key_argument{ "03ac9e60013853128b42a1324609bac2ccff6a0b4844b6301f1f552e15ee14c7a5" };
+    const system::config::base58check server_public_key_argument{ "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi" };
     command.set_server_public_key_argument(server_public_key_argument);
     BC_REQUIRE_EQUAL(serial(command.get_server_public_key_argument()), serial(server_public_key_argument));
 
-    const explorer::config::ec_private authority_private_key_argument{ "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475" };
+    const system::config::base58check authority_private_key_argument{ "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi" };
     command.set_authority_private_key_argument(authority_private_key_argument);
     BC_REQUIRE_EQUAL(serial(command.get_authority_private_key_argument()), serial(authority_private_key_argument));
 
@@ -1433,9 +1433,9 @@ BC_AUTO_TEST_CASE(generated__property__noise_public__round_trips)
 {
     noise_public command;
 
-    const explorer::config::ec_private ec_private_key_argument{ "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475" };
-    command.set_ec_private_key_argument(ec_private_key_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_ec_private_key_argument()), serial(ec_private_key_argument));
+    const system::config::base58check private_key_argument{ "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi" };
+    command.set_private_key_argument(private_key_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_private_key_argument()), serial(private_key_argument));
 }
 
 BC_AUTO_TEST_CASE(generated__property__qrcode__round_trips)

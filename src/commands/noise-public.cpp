@@ -31,16 +31,17 @@ using namespace bc::system;
 
 console_result noise_public::invoke(std::ostream& output, std::ostream& error)
 {
-    const ec_secret& secret = get_ec_private_key_argument();
+    const data_chunk& secret = get_private_key_argument();
 
-    ec_xonly authority{};
-    if (!certificate::to_xonly(authority, secret))
+    ec_xonly key{};
+    if (secret.size() != ec_secret_size || !certificate::to_xonly(key,
+        data_slice{ secret }.to_array<ec_secret_size>()))
     {
         error << BX_NOISE_PUBLIC_INVALID_KEY << std::endl;
         return console_result::failure;
     }
 
-    output << certificate::encode_authority(authority) << std::endl;
+    output << certificate::encode_authority(key) << std::endl;
     return console_result::okay;
 }
 

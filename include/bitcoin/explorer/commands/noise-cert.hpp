@@ -52,6 +52,8 @@ namespace commands {
     "The auxiliary data is not 32 bytes."
 #define BX_NOISE_CERT_INVALID_KEY \
     "The authority private key is not valid."
+#define BX_NOISE_CERT_INVALID_SERVER \
+    "The server public key is not valid."
 #define BX_NOISE_CERT_INVALID_VALIDITY \
     "The validity period ends after the year 2106."
 
@@ -99,7 +101,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a Base16 Stratum v2 Noise authority certificate for a server static public key, for use with a Libbitcoin server.";
+        return "Create a Base58Check Stratum v2 Noise authority certificate for a server static public key, for use with a Libbitcoin server.";
     }
 
     /**
@@ -161,13 +163,13 @@ public:
         )
         (
             "SERVER_PUBLIC_KEY",
-            value<system::wallet::ec_public>(&argument_.server_public_key)->required(),
-            "The Base16 EC public key of the server static key."
+            value<system::config::base58check>(&argument_.server_public_key)->required(),
+            "The Base58Check Noise public key of the server static key, as from noise-public."
         )
         (
             "AUTHORITY_PRIVATE_KEY",
-            value<explorer::config::ec_private>(&argument_.authority_private_key),
-            "The Base16 EC private key of the authority. If not specified the key is read from STDIN."
+            value<system::config::base58check>(&argument_.authority_private_key),
+            "The Base58Check Noise private key of the authority. If not specified the key is read from STDIN."
         );
 
         return options;
@@ -195,7 +197,7 @@ public:
     /**
      * Get the value of the SERVER_PUBLIC_KEY argument.
      */
-    virtual system::wallet::ec_public& get_server_public_key_argument()
+    virtual system::config::base58check& get_server_public_key_argument()
     {
         return argument_.server_public_key;
     }
@@ -204,7 +206,7 @@ public:
      * Set the value of the SERVER_PUBLIC_KEY argument.
      */
     virtual void set_server_public_key_argument(
-        const system::wallet::ec_public& value)
+        const system::config::base58check& value)
     {
         argument_.server_public_key = value;
     }
@@ -212,7 +214,7 @@ public:
     /**
      * Get the value of the AUTHORITY_PRIVATE_KEY argument.
      */
-    virtual explorer::config::ec_private& get_authority_private_key_argument()
+    virtual system::config::base58check& get_authority_private_key_argument()
     {
         return argument_.authority_private_key;
     }
@@ -221,7 +223,7 @@ public:
      * Set the value of the AUTHORITY_PRIVATE_KEY argument.
      */
     virtual void set_authority_private_key_argument(
-        const explorer::config::ec_private& value)
+        const system::config::base58check& value)
     {
         argument_.authority_private_key = value;
     }
@@ -292,8 +294,8 @@ private:
         {
         }
 
-        system::wallet::ec_public server_public_key;
-        explorer::config::ec_private authority_private_key;
+        system::config::base58check server_public_key;
+        system::config::base58check authority_private_key;
     } argument_;
 
     /**

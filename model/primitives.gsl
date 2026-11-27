@@ -22,6 +22,7 @@ function global.map_type(type)
     my.type_base16 = "base16"
     my.type_base32 = "base32"
     my.type_base58 = "base58"
+    my.type_base58check = "base58check"
     my.type_base64 = "base64"
     my.type_base85 = "base85"
     my.type_btc = "btc"
@@ -68,6 +69,7 @@ function global.map_type(type)
     my.type_base16_bx = "system::config::base16"
     my.type_base32_bx = "system::config::base32"
     my.type_base58_bx = "system::config::base58"
+    my.type_base58check_bx = "system::config::base58check"
     my.type_base64_bx = "system::config::base64"
     my.type_base85_bx = "system::config::base85"
     my.type_btc_bx = "explorer::config::btc"
@@ -121,6 +123,8 @@ function global.map_type(type)
         return my.type_base32_bx
     elsif my.type = my.type_base58
         return my.type_base58_bx
+    elsif my.type = my.type_base58check
+        return my.type_base58check_bx
     elsif my.type = my.type_base64
         return my.type_base64_bx
     elsif my.type = my.type_base85
@@ -296,6 +300,8 @@ function global.sample_value(type)
         return "MJQWCZDGGAYGI==="
     elsif (my.type = "system::config::base58")
         return "5mm7zk"
+    elsif (my.type = "system::config::base58check")
+        return "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi"
     elsif (my.type = "system::config::base64")
         return "YmFhZGYwMGQ="
     elsif (my.type = "system::config::base85")

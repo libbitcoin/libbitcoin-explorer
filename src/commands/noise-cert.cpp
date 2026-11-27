@@ -42,8 +42,8 @@ static uint64_t now() NOEXCEPT
 console_result noise_cert::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const ec_secret& authority = get_authority_private_key_argument();
-    const auto& server = get_server_public_key_argument();
+    const data_chunk& authority = get_authority_private_key_argument();
+    const data_chunk& server = get_server_public_key_argument();
     const auto valid_from = get_valid_from_option();
     const auto days = get_days_option();
     const data_chunk& auxiliary = get_auxiliary_option();
@@ -60,6 +60,19 @@ console_result noise_cert::invoke(std::ostream& output, std::ostream& error)
         std::copy(auxiliary.begin(), auxiliary.end(), entropy.begin());
     }
 
+    ec_xonly server_key{};
+    if (!certificate::to_authority(server_key, server))
+    {
+        error << BX_NOISE_CERT_INVALID_SERVER << std::endl;
+        return console_result::failure;
+    }
+
+    if (authority.size() != ec_secret_size)
+    {
+        error << BX_NOISE_CERT_INVALID_KEY << std::endl;
+        return console_result::failure;
+    }
+
     const uint64_t from = is_zero(valid_from) ? now() : valid_from;
     const auto until = from + days * seconds_per_day;
     if (until > max_uint32)
@@ -69,8 +82,8 @@ console_result noise_cert::invoke(std::ostream& output, std::ostream& error)
     }
 
     certificate::data out{};
-    if (!certificate::sign(out, authority,
-        certificate::to_xonly(server.point()),
+    if (!certificate::sign(out,
+        data_slice{ authority }.to_array<ec_secret_size>(), server_key,
         possible_narrow_cast<uint32_t>(from),
         possible_narrow_cast<uint32_t>(until), entropy))
     {
@@ -78,7 +91,7 @@ console_result noise_cert::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    output << encode_base16(out) << std::endl;
+    output << system::config::base58check{ to_chunk(out) } << std::endl;
     return console_result::okay;
 }
 

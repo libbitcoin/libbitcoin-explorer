@@ -24,18 +24,34 @@ BX_USING_NAMESPACES()
 BC_AUTO_TEST_SUITE(offline)
 BC_AUTO_TEST_SUITE(noise_public__invoke)
 
-BC_AUTO_TEST_CASE(noise_public__invoke__private_key__okay_output)
+BC_AUTO_TEST_CASE(noise_public__invoke__sri_secret__okay_output)
 {
     BX_DECLARE_COMMAND(noise_public);
-    command.set_ec_private_key_argument({ "8db036afbf4962033bf40ab365acbff06ff97557748ec0bfcc73bdaa9f93c10f" });
+    command.set_private_key_argument({ "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("9bDuixKmZqAJnrmP746n8zU1wyAQRrus7th9dxnkPg6RzQvCnan\n");
+}
+
+BC_AUTO_TEST_CASE(noise_public__invoke__authority_secret__okay_output)
+{
+    BX_DECLARE_COMMAND(noise_public);
+    command.set_private_key_argument({ "25QEpmYFaFWYQjKgNAWXYx1kbRTedtf5vHjDME7odqyYC8H6ND" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("9br3pDEyhsQoXmojoXVRsNGBa8xNw1F35npYzXM5yWDfZaxjaEo\n");
+}
+
+BC_AUTO_TEST_CASE(noise_public__invoke__short_secret__failure_error)
+{
+    BX_DECLARE_COMMAND(noise_public);
+    command.set_private_key_argument({ "F8z47vJMDoZwmUo5LpvbRhVufAfS8AzJWcr1xXzh4r6bhyNZ" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_NOISE_PUBLIC_INVALID_KEY "\n");
 }
 
 BC_AUTO_TEST_CASE(noise_public__invoke__zero_secret__failure_error)
 {
     BX_DECLARE_COMMAND(noise_public);
-    command.set_ec_private_key_argument(explorer::config::ec_private{ ec_secret{} });
+    command.set_private_key_argument({ "11111111111111111111111111111111273Yts" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_NOISE_PUBLIC_INVALID_KEY "\n");
 }
