@@ -1429,6 +1429,15 @@ BC_AUTO_TEST_CASE(generated__property__noise_cert__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_auxiliary_option()), serial(auxiliary_option));
 }
 
+BC_AUTO_TEST_CASE(generated__property__noise_new__round_trips)
+{
+    noise_new command;
+
+    const system::config::base16 entropy_argument{ "baadf00d" };
+    command.set_entropy_argument(entropy_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_entropy_argument()), serial(entropy_argument));
+}
+
 BC_AUTO_TEST_CASE(generated__property__noise_public__round_trips)
 {
     noise_public command;

@@ -567,6 +567,11 @@ BC_AUTO_TEST_CASE(generated__symbol__noise_cert__returns_expected_value)
     BC_REQUIRE_EQUAL(noise_cert::symbol(), "noise-cert");
 }
 
+BC_AUTO_TEST_CASE(generated__symbol__noise_new__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(noise_new::symbol(), "noise-new");
+}
+
 BC_AUTO_TEST_CASE(generated__symbol__noise_public__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(noise_public::symbol(), "noise-public");

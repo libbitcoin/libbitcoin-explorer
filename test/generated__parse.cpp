@@ -1968,6 +1968,23 @@ BC_AUTO_TEST_CASE(generated__parse__noise_cert__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__noise_new__okay)
+{
+    noise_new command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "noise-new",
+        "baadf00d",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__noise_public__okay)
 {
     noise_public command;

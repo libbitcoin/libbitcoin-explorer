@@ -143,6 +143,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/mnemonic-encode.cpp \
     ${srcdir}/../../src/commands/mnemonic-to-seed.cpp \
     ${srcdir}/../../src/commands/noise-cert.cpp \
+    ${srcdir}/../../src/commands/noise-new.cpp \
     ${srcdir}/../../src/commands/noise-public.cpp \
     ${srcdir}/../../src/commands/qrcode.cpp \
     ${srcdir}/../../src/commands/ripemd160.cpp \
@@ -348,6 +349,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/mnemonic-encode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/mnemonic-to-seed.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/noise-cert.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/noise-new.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/noise-public.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/qrcode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/ripemd160.hpp \
@@ -535,6 +537,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/mnemonic-encode.cpp \
     ${srcdir}/../../test/commands/mnemonic-to-seed.cpp \
     ${srcdir}/../../test/commands/noise-cert.cpp \
+    ${srcdir}/../../test/commands/noise-new.cpp \
     ${srcdir}/../../test/commands/noise-public.cpp \
     ${srcdir}/../../test/commands/qrcode.cpp \
     ${srcdir}/../../test/commands/ripemd160.cpp \

@@ -115,6 +115,7 @@ _bx()
         mnemonic-encode
         mnemonic-to-seed
         noise-cert
+        noise-new
         noise-public
         qrcode
         ripemd160

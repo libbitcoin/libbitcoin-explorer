@@ -139,6 +139,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<mnemonic_encode>());
     func(make_shared<mnemonic_to_seed>());
     func(make_shared<noise_cert>());
+    func(make_shared<noise_new>());
     func(make_shared<noise_public>());
     func(make_shared<qrcode>());
     func(make_shared<ripemd160>());
@@ -398,6 +399,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<mnemonic_to_seed>();
     if (symbol == noise_cert::symbol())
         return make_shared<noise_cert>();
+    if (symbol == noise_new::symbol())
+        return make_shared<noise_new>();
     if (symbol == noise_public::symbol())
         return make_shared<noise_public>();
     if (symbol == qrcode::symbol())

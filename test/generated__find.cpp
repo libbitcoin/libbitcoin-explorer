@@ -567,6 +567,11 @@ BC_AUTO_TEST_CASE(generated__find__noise_cert__returns_object)
     BC_REQUIRE(find("noise-cert") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__noise_new__returns_object)
+{
+    BC_REQUIRE(find("noise-new") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__noise_public__returns_object)
 {
     BC_REQUIRE(find("noise-public") != nullptr);

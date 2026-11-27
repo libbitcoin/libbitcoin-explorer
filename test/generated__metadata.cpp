@@ -892,6 +892,14 @@ BC_AUTO_TEST_CASE(generated__metadata__noise_cert__returns_expected_values)
     BC_REQUIRE(!command.requires_raw_output());
 }
 
+BC_AUTO_TEST_CASE(generated__metadata__noise_new__returns_expected_values)
+{
+    noise_new command;
+    BC_REQUIRE_EQUAL(command.category(), "MATH");
+    BC_REQUIRE(!command.requires_raw_input());
+    BC_REQUIRE(!command.requires_raw_output());
+}
+
 BC_AUTO_TEST_CASE(generated__metadata__noise_public__returns_expected_values)
 {
     noise_public command;

@@ -177,6 +177,7 @@
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\noise-cert.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\noise-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\noise-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\qrcode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ripemd160.cpp" />

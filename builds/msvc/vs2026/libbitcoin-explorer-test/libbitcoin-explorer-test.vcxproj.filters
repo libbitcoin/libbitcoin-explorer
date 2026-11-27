@@ -270,6 +270,9 @@
     <ClCompile Include="..\..\..\..\test\commands\noise-cert.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\noise-new.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\noise-public.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

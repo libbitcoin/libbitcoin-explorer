@@ -711,6 +711,12 @@
     <define name="BX_NOISE_CERT_INVALID_VALIDITY" value="The validity period ends after the year 2106." />
   </command>
 
+  <command symbol="noise-new" output="base58check" category="MATH" description="Create a Base58Check Stratum v2 Noise private key from entropy, for a server static key or an authority key.">
+    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN." />
+    <define name="BX_NOISE_NEW_SHORT_ENTROPY" value="The entropy is less than 256 bits long." />
+    <define name="BX_NOISE_NEW_INVALID_KEY" value="The entropy produced an invalid key." />
+  </command>
+
   <command symbol="noise-public" output="base58check" category="MATH" description="Derive the Base58Check Stratum v2 Noise public key of a Noise private key, of a server static key or of an authority key for use by Stratum v2 miners.">
     <argument name="PRIVATE_KEY" stdin="true" type="base58check" description="The Base58Check Noise private key. If not specified the key is read from STDIN." />
     <define name="BX_NOISE_PUBLIC_INVALID_KEY" value="The private key is not valid." />

@@ -195,6 +195,7 @@
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\noise-cert.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\noise-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\noise-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\qrcode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ripemd160.cpp" />
@@ -368,6 +369,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-to-seed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\noise-cert.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\noise-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\noise-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\qrcode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ripemd160.hpp" />
