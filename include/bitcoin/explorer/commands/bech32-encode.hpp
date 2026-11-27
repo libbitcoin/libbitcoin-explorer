@@ -56,6 +56,8 @@ namespace commands {
     "The prefix is invalid."
 #define BX_BECH32_ENCODE_INVALID_VERSION \
     "The version is invalid."
+#define BX_BECH32_ENCODE_INVALID_PROGRAM \
+    "The program is invalid for the version."
 
 /**
  * Class to implement the bech32-encode command.
@@ -101,7 +103,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Add a prefix, version byte and checksum to a Base32 witness program.";
+        return "Encode a Base16 witness program with a prefix and version as a bech32 witness address, bech32m for version 1 and above.";
     }
 
     /**

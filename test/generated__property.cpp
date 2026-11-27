@@ -175,9 +175,9 @@ BC_AUTO_TEST_CASE(generated__property__bech32_decode__round_trips)
 {
     bech32_decode command;
 
-    const system::config::base16 checked_argument{ "baadf00d" };
-    command.set_checked_argument(checked_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_checked_argument()), serial(checked_argument));
+    const std::string address_argument{ "string" };
+    command.set_address_argument(address_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_address_argument()), serial(address_argument));
 }
 
 BC_AUTO_TEST_CASE(generated__property__bech32_encode__round_trips)

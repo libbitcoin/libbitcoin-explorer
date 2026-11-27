@@ -28,6 +28,10 @@ namespace explorer {
 BCX_API system::json::value to_json(
     const system::wallet::bitcoin_uri& uri) NOEXCEPT;
 
+/// The version, payload and checksum of bitcoin checked data.
+BCX_API system::json::value checked_to_json(
+    const system::data_chunk& checked) NOEXCEPT;
+
 } // namespace explorer
 } // namespace libbitcoin
 

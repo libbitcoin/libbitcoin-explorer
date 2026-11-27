@@ -135,12 +135,13 @@
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the data is read from STDIN."/>
   </command>
 
-  <command symbol="bech32-decode" output="base16" category="ENCODING" description="Validate the bech32 checksum of Base16 data and recover its witness prefix, version and program.">
-    <argument name="CHECKED" stdin="true" type="base16" description="The bech32 checked Base16 data to decode. If not specified the value is read from STDIN." />
+  <command symbol="bech32-decode" output="string" category="ENCODING" description="Validate the checksum of a bech32 witness address and recover its prefix, version and Base16 program.">
+    <argument name="ADDRESS" stdin="true" type="string" description="The bech32 witness address to decode. If not specified the address is read from STDIN." />
     <define name="BX_BECH32_DECODE_INVALID_CHECKSUM" value="The bech32 checksum is invalid." />
+    <define name="BX_BECH32_DECODE_INVALID" value="The bech32 witness address is invalid." />
   </command>
 
-  <command symbol="bech32-encode" output="base16" category="ENCODING" description="Add a prefix, version byte and checksum to a Base32 witness program.">
+  <command symbol="bech32-encode" output="witness_address" category="ENCODING" description="Encode a Base16 witness program with a prefix and version as a bech32 witness address, bech32m for version 1 and above.">
     <option name="version" type="byte" configuration="wallet.witness_version" description="The desired witness version, between 0 and 16, defaults to 0." />
     <argument name="prefix" type="string" configuration="wallet.witness_address_prefix" description="The desired witness address prefix, defaults to 'bc'." />
     <argument name="PROGRAM" stdin="true" type="base16" description="The Base16 witness program to encode. If not specified the value is read from STDIN." />
@@ -148,14 +149,16 @@
     <define name="BX_BECH32_ENCODE_LONG_PROGRAM" value="The program is too long." />
     <define name="BX_BECH32_ENCODE_INVALID_PREFIX" value="The prefix is invalid." />
     <define name="BX_BECH32_ENCODE_INVALID_VERSION" value="The version is invalid." />
+    <define name="BX_BECH32_ENCODE_INVALID_PROGRAM" value="The program is invalid for the version." />
   </command>
 
   <command symbol="btc-to-satoshi" formerly="satoshi" output="uint64_t" category="MATH" description="Convert BTC to satoshi.">
     <argument name="BTC" stdin="true" type="btc" description="The number of BTC to convert. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="checked-decode" formerly="wrap-decode" output="base16" category="ENCODING" description="Validate the bitcoin checksum of Base16 data and recover its version and payload.">
+  <command symbol="checked-decode" formerly="wrap-decode" output="wrapper" category="ENCODING" description="Validate the bitcoin checksum of Base16 data and recover its version and payload.">
     <argument name="CHECKED" stdin="true" type="base16" description="The checked Base16 data to decode. If not specified the value is read from STDIN." />
+    <define name="BX_CHECKED_DECODE_INVALID_CHECKSUM" value="The checksum is invalid." />
   </command>
 
   <command symbol="checked-encode" formerly="wrap-encode" output="base16" category="ENCODING" description="Add a version byte and bitcoin checksum to Base16 data.">

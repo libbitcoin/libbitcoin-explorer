@@ -27,6 +27,27 @@ namespace explorer {
 using namespace bc::system;
 using namespace bc::system::json;
 
+value checked_to_json(const data_chunk& checked) NOEXCEPT
+{
+    BC_ASSERT(checked.size() > checksum_default_size);
+
+    const auto payload = std::next(checked.begin());
+    const auto tail = std::prev(checked.end(), checksum_default_size);
+    data_array<checksum_default_size> checksum{};
+    std::copy(tail, checked.end(), checksum.begin());
+
+    return object
+    {
+        { "wrapper", object
+            {
+                { "checksum", from_little<uint32_t>(checksum) },
+                { "payload", encode_base16(data_chunk{ payload, tail }) },
+                { "version", checked.front() }
+            }
+        }
+    };
+}
+
 value to_json(const wallet::bitcoin_uri& uri) NOEXCEPT
 {
     object properties;

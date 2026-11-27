@@ -259,7 +259,7 @@ BC_AUTO_TEST_CASE(generated__parse__bech32_decode__okay)
     const char* argv[]
     {
         "bech32-decode",
-        "baadf00d",
+        "string",
     };
 
     parser metadata(command);

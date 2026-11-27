@@ -18,16 +18,30 @@
  */
 #include <bitcoin/explorer/commands/checked-decode.hpp>
 
+#include <bitcoin/system.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/json.hpp>
+#include <bitcoin/explorer/utility.hpp>
+
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
 using namespace bc::system;
 
-console_result checked_decode::invoke(std::ostream&,
-    std::ostream&)
+console_result checked_decode::invoke(std::ostream& output,
+    std::ostream& error)
 {
-    return console_result::failure;
+    const data_chunk& checked = get_checked_argument();
+
+    if (checked.size() <= checksum_default_size || !verify_checksum(checked))
+    {
+        error << BX_CHECKED_DECODE_INVALID_CHECKSUM << std::endl;
+        return console_result::failure;
+    }
+
+    write_stream(output, checked_to_json(checked));
+    return console_result::okay;
 }
 
 } //namespace commands
