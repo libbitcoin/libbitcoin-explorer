@@ -46,6 +46,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_CHECKED_DECODE_INVALID_CHECKSUM \
+    "The checksum is invalid."
+
+/**
  * Class to implement the checked-decode command.
  */
 class BCX_API checked_decode

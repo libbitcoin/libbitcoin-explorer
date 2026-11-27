@@ -18,16 +18,24 @@
  */
 #include <bitcoin/explorer/commands/checked-encode.hpp>
 
+#include <bitcoin/system.hpp>
+#include <bitcoin/explorer/define.hpp>
+
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
 using namespace bc::system;
 
-console_result checked_encode::invoke(std::ostream&,
-    std::ostream&)
+console_result checked_encode::invoke(std::ostream& output, std::ostream&)
 {
-    return console_result::failure;
+    // Bound parameters.
+    const uint8_t version = get_version_option();
+    const data_chunk& payload = get_payload_argument();
+
+    output << encode_base16(append_checksum({ to_array(version), payload }))
+        << std::endl;
+    return console_result::okay;
 }
 
 } //namespace commands

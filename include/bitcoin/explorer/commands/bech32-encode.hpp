@@ -56,6 +56,8 @@ namespace commands {
     "The prefix is invalid."
 #define BX_BECH32_ENCODE_INVALID_VERSION \
     "The version is invalid."
+#define BX_BECH32_ENCODE_INVALID_PROGRAM \
+    "The program is invalid for the version."
 
 /**
  * Class to implement the bech32-encode command.
@@ -101,7 +103,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Add a prefix, version byte and checksum to a Base32 witness program.";
+        return "Encode a Base16 witness program with a prefix and version as a bech32 witness address, bech32m for version 1 and above.";
     }
 
     /**
@@ -153,7 +155,7 @@ public:
         )
         (
             "prefix",
-            value<std::string>(&argument_.prefix),
+            value<std::string>(&argument_.prefix)->default_value("bc"),
             "The desired witness address prefix, defaults to 'bc'."
         )
         (
@@ -176,6 +178,13 @@ public:
         if (option_version.defaulted() && !option_version_config.defaulted())
         {
             option_.version = option_version_config.as<explorer::config::byte>();
+        }
+
+        const auto& argument_prefix = variables["prefix"];
+        const auto& argument_prefix_config = variables["wallet.witness_address_prefix"];
+        if (argument_prefix.defaulted() && !argument_prefix_config.defaulted())
+        {
+            argument_.prefix = argument_prefix_config.as<std::string>();
         }
     }
 

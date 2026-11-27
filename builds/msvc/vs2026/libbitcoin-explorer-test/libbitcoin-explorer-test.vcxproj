@@ -158,6 +158,7 @@
     <ClCompile Include="..\..\..\..\test\commands\fetch-tx-index.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-utxo.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\get.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hardware.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-private.cpp" />
@@ -175,6 +176,9 @@
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-to-seed.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\noise-cert.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\noise-new.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\noise-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\qrcode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ripemd160.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\satoshi-to-btc.cpp" />

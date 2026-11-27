@@ -342,6 +342,141 @@ BC_AUTO_TEST_CASE(generated__symbol__fetch_utxo__returns_expected_value)
     BC_REQUIRE_EQUAL(fetch_utxo::symbol(), "fetch-utxo");
 }
 
+BC_AUTO_TEST_CASE(generated__symbol__get_address__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_address::symbol(), "get-address");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_amount__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_amount::symbol(), "get-amount");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_bits__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_bits::symbol(), "get-bits");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_checksum__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_checksum::symbol(), "get-checksum");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_hash__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_hash::symbol(), "get-hash");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_header__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_header::symbol(), "get-header");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_index__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_index::symbol(), "get-index");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_input__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_input::symbol(), "get-input");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_label__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_label::symbol(), "get-label");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_locktime__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_locktime::symbol(), "get-locktime");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_merkle_root__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_merkle_root::symbol(), "get-merkle-root");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_message__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_message::symbol(), "get-message");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_nonce__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_nonce::symbol(), "get-nonce");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_output__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_output::symbol(), "get-output");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_payload__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_payload::symbol(), "get-payload");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_point__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_point::symbol(), "get-point");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_prefix__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_prefix::symbol(), "get-prefix");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_previous__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_previous::symbol(), "get-previous");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_program__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_program::symbol(), "get-program");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_scheme__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_scheme::symbol(), "get-scheme");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_script__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_script::symbol(), "get-script");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_sequence__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_sequence::symbol(), "get-sequence");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_timestamp__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_timestamp::symbol(), "get-timestamp");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_tx__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_tx::symbol(), "get-tx");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_value__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_value::symbol(), "get-value");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_version__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_version::symbol(), "get-version");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__get_witness__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(get_witness::symbol(), "get-witness");
+}
+
 BC_AUTO_TEST_CASE(generated__symbol__hardware__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(hardware::symbol(), "hardware");
@@ -425,6 +560,21 @@ BC_AUTO_TEST_CASE(generated__symbol__mnemonic_encode__returns_expected_value)
 BC_AUTO_TEST_CASE(generated__symbol__mnemonic_to_seed__returns_expected_value)
 {
     BC_REQUIRE_EQUAL(mnemonic_to_seed::symbol(), "mnemonic-to-seed");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__noise_cert__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(noise_cert::symbol(), "noise-cert");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__noise_new__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(noise_new::symbol(), "noise-new");
+}
+
+BC_AUTO_TEST_CASE(generated__symbol__noise_public__returns_expected_value)
+{
+    BC_REQUIRE_EQUAL(noise_public::symbol(), "noise-public");
 }
 
 BC_AUTO_TEST_CASE(generated__symbol__qrcode__returns_expected_value)

@@ -175,9 +175,9 @@ BC_AUTO_TEST_CASE(generated__property__bech32_decode__round_trips)
 {
     bech32_decode command;
 
-    const system::config::base16 checked_argument{ "baadf00d" };
-    command.set_checked_argument(checked_argument);
-    BC_REQUIRE_EQUAL(serial(command.get_checked_argument()), serial(checked_argument));
+    const std::string address_argument{ "string" };
+    command.set_address_argument(address_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_address_argument()), serial(address_argument));
 }
 
 BC_AUTO_TEST_CASE(generated__property__bech32_encode__round_trips)
@@ -845,6 +845,261 @@ BC_AUTO_TEST_CASE(generated__property__fetch_utxo__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_algorithm_option()), serial(algorithm_option));
 }
 
+BC_AUTO_TEST_CASE(generated__property__get_address__round_trips)
+{
+    get_address command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_amount__round_trips)
+{
+    get_amount command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_bits__round_trips)
+{
+    get_bits command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_checksum__round_trips)
+{
+    get_checksum command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_hash__round_trips)
+{
+    get_hash command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_header__round_trips)
+{
+    get_header command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_index__round_trips)
+{
+    get_index command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_input__round_trips)
+{
+    get_input command;
+
+    const uint32_t index_argument{ 42 };
+    command.set_index_argument(index_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_index_argument()), serial(index_argument));
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_label__round_trips)
+{
+    get_label command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_locktime__round_trips)
+{
+    get_locktime command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_merkle_root__round_trips)
+{
+    get_merkle_root command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_message__round_trips)
+{
+    get_message command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_nonce__round_trips)
+{
+    get_nonce command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_output__round_trips)
+{
+    get_output command;
+
+    const uint32_t index_argument{ 42 };
+    command.set_index_argument(index_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_index_argument()), serial(index_argument));
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_payload__round_trips)
+{
+    get_payload command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_point__round_trips)
+{
+    get_point command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_prefix__round_trips)
+{
+    get_prefix command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_previous__round_trips)
+{
+    get_previous command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_program__round_trips)
+{
+    get_program command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_scheme__round_trips)
+{
+    get_scheme command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_script__round_trips)
+{
+    get_script command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_sequence__round_trips)
+{
+    get_sequence command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_timestamp__round_trips)
+{
+    get_timestamp command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_tx__round_trips)
+{
+    get_tx command;
+
+    const uint32_t index_argument{ 42 };
+    command.set_index_argument(index_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_index_argument()), serial(index_argument));
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_value__round_trips)
+{
+    get_value command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_version__round_trips)
+{
+    get_version command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__get_witness__round_trips)
+{
+    get_witness command;
+
+    const std::string json_argument{ "string" };
+    command.set_json_argument(json_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_json_argument()), serial(json_argument));
+}
+
 BC_AUTO_TEST_CASE(generated__property__hd_new__round_trips)
 {
     hd_new command;
@@ -1147,6 +1402,49 @@ BC_AUTO_TEST_CASE(generated__property__mnemonic_to_seed__round_trips)
     const std::string passphrase_option{ "string" };
     command.set_passphrase_option(passphrase_option);
     BC_REQUIRE_EQUAL(serial(command.get_passphrase_option()), serial(passphrase_option));
+}
+
+BC_AUTO_TEST_CASE(generated__property__noise_cert__round_trips)
+{
+    noise_cert command;
+
+    const system::config::base58check server_public_key_argument{ "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi" };
+    command.set_server_public_key_argument(server_public_key_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_server_public_key_argument()), serial(server_public_key_argument));
+
+    const system::config::base58check authority_private_key_argument{ "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi" };
+    command.set_authority_private_key_argument(authority_private_key_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_authority_private_key_argument()), serial(authority_private_key_argument));
+
+    const uint32_t valid_from_option{ 42 };
+    command.set_valid_from_option(valid_from_option);
+    BC_REQUIRE_EQUAL(serial(command.get_valid_from_option()), serial(valid_from_option));
+
+    const uint32_t days_option{ 42 };
+    command.set_days_option(days_option);
+    BC_REQUIRE_EQUAL(serial(command.get_days_option()), serial(days_option));
+
+    const system::config::base16 auxiliary_option{ "baadf00d" };
+    command.set_auxiliary_option(auxiliary_option);
+    BC_REQUIRE_EQUAL(serial(command.get_auxiliary_option()), serial(auxiliary_option));
+}
+
+BC_AUTO_TEST_CASE(generated__property__noise_new__round_trips)
+{
+    noise_new command;
+
+    const system::config::base16 entropy_argument{ "baadf00d" };
+    command.set_entropy_argument(entropy_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_entropy_argument()), serial(entropy_argument));
+}
+
+BC_AUTO_TEST_CASE(generated__property__noise_public__round_trips)
+{
+    noise_public command;
+
+    const system::config::base58check private_key_argument{ "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi" };
+    command.set_private_key_argument(private_key_argument);
+    BC_REQUIRE_EQUAL(serial(command.get_private_key_argument()), serial(private_key_argument));
 }
 
 BC_AUTO_TEST_CASE(generated__property__qrcode__round_trips)

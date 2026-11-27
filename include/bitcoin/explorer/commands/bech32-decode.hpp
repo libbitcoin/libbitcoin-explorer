@@ -50,6 +50,8 @@ namespace commands {
  */
 #define BX_BECH32_DECODE_INVALID_CHECKSUM \
     "The bech32 checksum is invalid."
+#define BX_BECH32_DECODE_INVALID \
+    "The bech32 witness address is invalid."
 
 /**
  * Class to implement the bech32-decode command.
@@ -95,7 +97,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Validate the bech32 checksum of Base16 data and recover its witness prefix, version and program.";
+        return "Validate the checksum of a bech32 witness address and recover its prefix, version and Base16 program.";
     }
 
     /**
@@ -106,7 +108,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("CHECKED", 1);
+            .add("ADDRESS", 1);
     }
 
     /**
@@ -117,7 +119,7 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        load_input(get_checked_argument(), "CHECKED", variables, input);
+        load_input(get_address_argument(), "ADDRESS", variables, input);
     }
 
     /**
@@ -140,9 +142,9 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "CHECKED",
-            value<system::config::base16>(&argument_.checked),
-            "The bech32 checked Base16 data to decode. If not specified the value is read from STDIN."
+            "ADDRESS",
+            value<std::string>(&argument_.address),
+            "The bech32 witness address to decode. If not specified the address is read from STDIN."
         );
 
         return options;
@@ -168,20 +170,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the CHECKED argument.
+     * Get the value of the ADDRESS argument.
      */
-    virtual system::config::base16& get_checked_argument()
+    virtual std::string& get_address_argument()
     {
-        return argument_.checked;
+        return argument_.address;
     }
 
     /**
-     * Set the value of the CHECKED argument.
+     * Set the value of the ADDRESS argument.
      */
-    virtual void set_checked_argument(
-        const system::config::base16& value)
+    virtual void set_address_argument(
+        const std::string& value)
     {
-        argument_.checked = value;
+        argument_.address = value;
     }
 
 private:
@@ -194,11 +196,11 @@ private:
     struct argument
     {
         argument()
-          : checked()
+          : address()
         {
         }
 
-        system::config::base16 checked;
+        std::string address;
     } argument_;
 
     /**

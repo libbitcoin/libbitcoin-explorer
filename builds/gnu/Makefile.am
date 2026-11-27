@@ -142,6 +142,9 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/mnemonic-decode.cpp \
     ${srcdir}/../../src/commands/mnemonic-encode.cpp \
     ${srcdir}/../../src/commands/mnemonic-to-seed.cpp \
+    ${srcdir}/../../src/commands/noise-cert.cpp \
+    ${srcdir}/../../src/commands/noise-new.cpp \
+    ${srcdir}/../../src/commands/noise-public.cpp \
     ${srcdir}/../../src/commands/qrcode.cpp \
     ${srcdir}/../../src/commands/ripemd160.cpp \
     ${srcdir}/../../src/commands/satoshi-to-btc.cpp \
@@ -301,6 +304,33 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/fetch-tx-index.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/fetch-tx.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/fetch-utxo.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-address.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-amount.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-bits.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-checksum.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-hash.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-header.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-index.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-input.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-label.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-locktime.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-merkle-root.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-message.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-nonce.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-output.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-payload.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-point.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-prefix.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-previous.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-program.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-scheme.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-script.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-sequence.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-timestamp.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-tx.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-value.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-version.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/get-witness.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/hardware.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/hd-new.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/hd-private.hpp \
@@ -318,6 +348,9 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/mnemonic-decode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/mnemonic-encode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/mnemonic-to-seed.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/noise-cert.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/noise-new.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/noise-public.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/qrcode.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/ripemd160.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/satoshi-to-btc.hpp \
@@ -485,6 +518,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/fetch-tx-index.cpp \
     ${srcdir}/../../test/commands/fetch-tx.cpp \
     ${srcdir}/../../test/commands/fetch-utxo.cpp \
+    ${srcdir}/../../test/commands/get.cpp \
     ${srcdir}/../../test/commands/hardware.cpp \
     ${srcdir}/../../test/commands/hd-new.cpp \
     ${srcdir}/../../test/commands/hd-private.cpp \
@@ -502,6 +536,9 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/mnemonic-decode.cpp \
     ${srcdir}/../../test/commands/mnemonic-encode.cpp \
     ${srcdir}/../../test/commands/mnemonic-to-seed.cpp \
+    ${srcdir}/../../test/commands/noise-cert.cpp \
+    ${srcdir}/../../test/commands/noise-new.cpp \
+    ${srcdir}/../../test/commands/noise-public.cpp \
     ${srcdir}/../../test/commands/qrcode.cpp \
     ${srcdir}/../../test/commands/ripemd160.cpp \
     ${srcdir}/../../test/commands/satoshi-to-btc.cpp \

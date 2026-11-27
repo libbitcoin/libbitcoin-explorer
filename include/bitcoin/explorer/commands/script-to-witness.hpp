@@ -142,7 +142,7 @@ public:
         )
         (
             "prefix",
-            value<std::string>(&argument_.prefix),
+            value<std::string>(&argument_.prefix)->default_value("bc"),
             "The desired witness address prefix, defaults to 'bc'."
         )
         (
@@ -158,8 +158,14 @@ public:
      * Set variable defaults from configuration variable values.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void set_defaults_from_config(po::variables_map&)
+    virtual void set_defaults_from_config(po::variables_map& variables)
     {
+        const auto& argument_prefix = variables["prefix"];
+        const auto& argument_prefix_config = variables["wallet.witness_address_prefix"];
+        if (argument_prefix.defaulted() && !argument_prefix_config.defaulted())
+        {
+            argument_.prefix = argument_prefix_config.as<std::string>();
+        }
     }
 
     /**

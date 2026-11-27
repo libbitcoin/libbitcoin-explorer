@@ -259,7 +259,7 @@ BC_AUTO_TEST_CASE(generated__parse__bech32_decode__okay)
     const char* argv[]
     {
         "bech32-decode",
-        "baadf00d",
+        "string",
     };
 
     parser metadata(command);
@@ -1157,6 +1157,468 @@ BC_AUTO_TEST_CASE(generated__parse__fetch_utxo__okay)
     BC_REQUIRE(!metadata.help());
 }
 
+BC_AUTO_TEST_CASE(generated__parse__get_address__okay)
+{
+    get_address command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-address",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_amount__okay)
+{
+    get_amount command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-amount",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_bits__okay)
+{
+    get_bits command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-bits",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_checksum__okay)
+{
+    get_checksum command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-checksum",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_hash__okay)
+{
+    get_hash command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-hash",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_header__okay)
+{
+    get_header command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-header",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_index__okay)
+{
+    get_index command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-index",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_input__okay)
+{
+    get_input command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-input",
+        "42",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 3, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_label__okay)
+{
+    get_label command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-label",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_locktime__okay)
+{
+    get_locktime command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-locktime",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_merkle_root__okay)
+{
+    get_merkle_root command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-merkle-root",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_message__okay)
+{
+    get_message command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-message",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_nonce__okay)
+{
+    get_nonce command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-nonce",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_output__okay)
+{
+    get_output command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-output",
+        "42",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 3, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_payload__okay)
+{
+    get_payload command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-payload",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_point__okay)
+{
+    get_point command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-point",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_prefix__okay)
+{
+    get_prefix command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-prefix",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_previous__okay)
+{
+    get_previous command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-previous",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_program__okay)
+{
+    get_program command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-program",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_scheme__okay)
+{
+    get_scheme command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-scheme",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_script__okay)
+{
+    get_script command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-script",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_sequence__okay)
+{
+    get_sequence command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-sequence",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_timestamp__okay)
+{
+    get_timestamp command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-timestamp",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_tx__okay)
+{
+    get_tx command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-tx",
+        "42",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 3, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_value__okay)
+{
+    get_value command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-value",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_version__okay)
+{
+    get_version command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-version",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__get_witness__okay)
+{
+    get_witness command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "get-witness",
+        "string",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
 BC_AUTO_TEST_CASE(generated__parse__hardware__okay)
 {
     hardware command;
@@ -1481,6 +1943,61 @@ BC_AUTO_TEST_CASE(generated__parse__mnemonic_to_seed__okay)
 
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 6, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__noise_cert__okay)
+{
+    noise_cert command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "noise-cert",
+        "--valid_from", "42",
+        "--days", "42",
+        "--auxiliary", "baadf00d",
+        "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi",
+        "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 9, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__noise_new__okay)
+{
+    noise_new command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "noise-new",
+        "baadf00d",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
+    BC_REQUIRE(message.empty());
+    BC_REQUIRE(!metadata.help());
+}
+
+BC_AUTO_TEST_CASE(generated__parse__noise_public__okay)
+{
+    noise_public command;
+    std::string message;
+    std::stringstream input;
+    const char* argv[]
+    {
+        "noise-public",
+        "zmBEmPhqo3A92FkiLVvyCz6htc3e53ph3ZbD4ASqGaLjwnFLi",
+    };
+
+    parser metadata(command);
+    BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(message.empty());
     BC_REQUIRE(!metadata.help());
 }

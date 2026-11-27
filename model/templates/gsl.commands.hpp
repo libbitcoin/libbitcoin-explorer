@@ -21,6 +21,9 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 .primitives()
+.if defined(command.property)
+#include <bitcoin/explorer/json.hpp>
+.endif
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -219,9 +222,10 @@ public:
         )$((last() & !has_arguments) ?? ";")
 .endfor
 .for argument
+.   define default_value = get_option_default(argument, generate)?
 .   variable = "argument_.$(name:lower,c)"
 .   expression = value_semantic(is_xml_true(argument.file), !true(), type,\
-        is_xml_true(required), !is_default(limit, 1), variable)
+        is_xml_true(required), !is_default(limit, 1), variable, default_value)
         (
             "$(name)",
             $(expression),
@@ -236,13 +240,21 @@ public:
 .for option where defined(option.configuration)
 .   has_config_options = 1
 .endfor
+.for argument where defined(argument.configuration)
+.   has_config_options = 1
+.endfor
     /**
      * Set variable defaults from configuration variable values.
      * @param[in]  variables  The loaded variables.
      */
     virtual void set_defaults_from_config(po::variables_map&$(if_else_empty(has_config_options, " variables")))
     {
+.define config_blocks = 0
 .for option where defined(option.configuration)
+.   if (config_blocks > 0)
+
+.   endif
+.   config_blocks = config_blocks + 1
 .   is_vector = is_xml_true(multiple)
 .   option_type = normalize_type(true(), !true(), type)
 .   vtype = vectored_type(option_type, is_vector)
@@ -255,9 +267,23 @@ public:
         {
             option_.$(option_variable) = $(option_name)_config.as<$(vtype)>();
         }
-.   if (!last())
+.endfor
+.for argument where defined(argument.configuration)
+.   if (config_blocks > 0)
 
 .   endif
+.   config_blocks = config_blocks + 1
+.   is_vector = !is_default(limit, 1)
+.   argument_type = normalize_type(!true(), is_xml_true(argument.file), type)
+.   vtype = vectored_type(argument_type, is_vector)
+.   argument_variable = "$(name:lower,c)"
+.   argument_name = "argument_$(argument_variable)"
+        const auto& $(argument_name) = variables["$(name)"];
+        const auto& $(argument_name)_config = variables["$(configuration)"];
+        if ($(argument_name).defaulted() && !$(argument_name)_config.defaulted())
+        {
+            argument_.$(argument_variable) = $(argument_name)_config.as<$(vtype)>();
+        }
 .endfor
     }
 
@@ -267,8 +293,26 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
+.if defined(command.property)
+.   define is_element = 0
+.   for argument where name = "INDEX"
+.       is_element = 1
+.   endfor
+    virtual console_result invoke(std::ostream& output,
+        std::ostream& error)
+    {
+.   if is_element
+        return write_element(output, error, get_json_argument(),
+            "$(command.property)", get_index_argument());
+.   else
+        return write_property(output, error, get_json_argument(),
+            "$(command.property)");
+.   endif
+    }
+.else
     virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
+.endif
 
     /* Properties */
 

@@ -70,6 +70,33 @@ _bx()
         fetch-tx
         fetch-tx-index
         fetch-utxo
+        get-address
+        get-amount
+        get-bits
+        get-checksum
+        get-hash
+        get-header
+        get-index
+        get-input
+        get-label
+        get-locktime
+        get-merkle-root
+        get-message
+        get-nonce
+        get-output
+        get-payload
+        get-point
+        get-prefix
+        get-previous
+        get-program
+        get-scheme
+        get-script
+        get-sequence
+        get-timestamp
+        get-tx
+        get-value
+        get-version
+        get-witness
         hardware
         hd-new
         hd-private
@@ -87,6 +114,9 @@ _bx()
         mnemonic-decode
         mnemonic-encode
         mnemonic-to-seed
+        noise-cert
+        noise-new
+        noise-public
         qrcode
         ripemd160
         satoshi-to-btc
@@ -247,6 +277,9 @@ _bx()
             ;;
         mnemonic-to-seed)
             options="--language -l --passphrase -p"
+            ;;
+        noise-cert)
+            options="--valid_from -v --days -d --auxiliary -a"
             ;;
         qrcode)
             options="--margin -m --pixels -p --version -v"

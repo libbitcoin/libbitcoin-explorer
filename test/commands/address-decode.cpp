@@ -24,10 +24,20 @@ BX_USING_NAMESPACES()
 BC_AUTO_TEST_SUITE(offline)
 BC_AUTO_TEST_SUITE(address_decode__invoke)
 
-BC_AUTO_TEST_CASE(address_decode__invoke__always__failure_error)
+BC_AUTO_TEST_CASE(address_decode__invoke__mainnet__okay_output)
 {
     BX_DECLARE_COMMAND(address_decode);
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    command.set_payment_address_argument({ "1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("{\"wrapper\":{\"checksum\":2743498322,\"payload\":\"b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\",\"version\":0}}\n");
+}
+
+BC_AUTO_TEST_CASE(address_decode__invoke__testnet__okay_output)
+{
+    BX_DECLARE_COMMAND(address_decode);
+    command.set_payment_address_argument({ "mwy5FX7MVgDutKYbXBxQG5q7EL6pmhHT58" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("{\"wrapper\":{\"checksum\":1475514977,\"payload\":\"b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\",\"version\":111}}\n");
 }
 
 BC_AUTO_TEST_SUITE_END()

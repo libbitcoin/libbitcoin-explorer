@@ -342,6 +342,141 @@ BC_AUTO_TEST_CASE(generated__find__fetch_utxo__returns_object)
     BC_REQUIRE(find("fetch-utxo") != nullptr);
 }
 
+BC_AUTO_TEST_CASE(generated__find__get_address__returns_object)
+{
+    BC_REQUIRE(find("get-address") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_amount__returns_object)
+{
+    BC_REQUIRE(find("get-amount") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_bits__returns_object)
+{
+    BC_REQUIRE(find("get-bits") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_checksum__returns_object)
+{
+    BC_REQUIRE(find("get-checksum") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_hash__returns_object)
+{
+    BC_REQUIRE(find("get-hash") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_header__returns_object)
+{
+    BC_REQUIRE(find("get-header") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_index__returns_object)
+{
+    BC_REQUIRE(find("get-index") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_input__returns_object)
+{
+    BC_REQUIRE(find("get-input") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_label__returns_object)
+{
+    BC_REQUIRE(find("get-label") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_locktime__returns_object)
+{
+    BC_REQUIRE(find("get-locktime") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_merkle_root__returns_object)
+{
+    BC_REQUIRE(find("get-merkle-root") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_message__returns_object)
+{
+    BC_REQUIRE(find("get-message") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_nonce__returns_object)
+{
+    BC_REQUIRE(find("get-nonce") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_output__returns_object)
+{
+    BC_REQUIRE(find("get-output") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_payload__returns_object)
+{
+    BC_REQUIRE(find("get-payload") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_point__returns_object)
+{
+    BC_REQUIRE(find("get-point") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_prefix__returns_object)
+{
+    BC_REQUIRE(find("get-prefix") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_previous__returns_object)
+{
+    BC_REQUIRE(find("get-previous") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_program__returns_object)
+{
+    BC_REQUIRE(find("get-program") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_scheme__returns_object)
+{
+    BC_REQUIRE(find("get-scheme") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_script__returns_object)
+{
+    BC_REQUIRE(find("get-script") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_sequence__returns_object)
+{
+    BC_REQUIRE(find("get-sequence") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_timestamp__returns_object)
+{
+    BC_REQUIRE(find("get-timestamp") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_tx__returns_object)
+{
+    BC_REQUIRE(find("get-tx") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_value__returns_object)
+{
+    BC_REQUIRE(find("get-value") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_version__returns_object)
+{
+    BC_REQUIRE(find("get-version") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__get_witness__returns_object)
+{
+    BC_REQUIRE(find("get-witness") != nullptr);
+}
+
 BC_AUTO_TEST_CASE(generated__find__hardware__returns_object)
 {
     BC_REQUIRE(find("hardware") != nullptr);
@@ -425,6 +560,21 @@ BC_AUTO_TEST_CASE(generated__find__mnemonic_encode__returns_object)
 BC_AUTO_TEST_CASE(generated__find__mnemonic_to_seed__returns_object)
 {
     BC_REQUIRE(find("mnemonic-to-seed") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__noise_cert__returns_object)
+{
+    BC_REQUIRE(find("noise-cert") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__noise_new__returns_object)
+{
+    BC_REQUIRE(find("noise-new") != nullptr);
+}
+
+BC_AUTO_TEST_CASE(generated__find__noise_public__returns_object)
+{
+    BC_REQUIRE(find("noise-public") != nullptr);
 }
 
 BC_AUTO_TEST_CASE(generated__find__qrcode__returns_object)

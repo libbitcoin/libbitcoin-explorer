@@ -135,12 +135,13 @@
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the data is read from STDIN."/>
   </command>
 
-  <command symbol="bech32-decode" output="base16" category="ENCODING" description="Validate the bech32 checksum of Base16 data and recover its witness prefix, version and program.">
-    <argument name="CHECKED" stdin="true" type="base16" description="The bech32 checked Base16 data to decode. If not specified the value is read from STDIN." />
+  <command symbol="bech32-decode" output="string" category="ENCODING" description="Validate the checksum of a bech32 witness address and recover its prefix, version and Base16 program.">
+    <argument name="ADDRESS" stdin="true" type="string" description="The bech32 witness address to decode. If not specified the address is read from STDIN." />
     <define name="BX_BECH32_DECODE_INVALID_CHECKSUM" value="The bech32 checksum is invalid." />
+    <define name="BX_BECH32_DECODE_INVALID" value="The bech32 witness address is invalid." />
   </command>
 
-  <command symbol="bech32-encode" output="base16" category="ENCODING" description="Add a prefix, version byte and checksum to a Base32 witness program.">
+  <command symbol="bech32-encode" output="witness_address" category="ENCODING" description="Encode a Base16 witness program with a prefix and version as a bech32 witness address, bech32m for version 1 and above.">
     <option name="version" type="byte" configuration="wallet.witness_version" description="The desired witness version, between 0 and 16, defaults to 0." />
     <argument name="prefix" type="string" configuration="wallet.witness_address_prefix" description="The desired witness address prefix, defaults to 'bc'." />
     <argument name="PROGRAM" stdin="true" type="base16" description="The Base16 witness program to encode. If not specified the value is read from STDIN." />
@@ -148,14 +149,16 @@
     <define name="BX_BECH32_ENCODE_LONG_PROGRAM" value="The program is too long." />
     <define name="BX_BECH32_ENCODE_INVALID_PREFIX" value="The prefix is invalid." />
     <define name="BX_BECH32_ENCODE_INVALID_VERSION" value="The version is invalid." />
+    <define name="BX_BECH32_ENCODE_INVALID_PROGRAM" value="The program is invalid for the version." />
   </command>
 
   <command symbol="btc-to-satoshi" formerly="satoshi" output="uint64_t" category="MATH" description="Convert BTC to satoshi.">
     <argument name="BTC" stdin="true" type="btc" description="The number of BTC to convert. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="checked-decode" formerly="wrap-decode" output="base16" category="ENCODING" description="Validate the bitcoin checksum of Base16 data and recover its version and payload.">
+  <command symbol="checked-decode" formerly="wrap-decode" output="wrapper" category="ENCODING" description="Validate the bitcoin checksum of Base16 data and recover its version and payload.">
     <argument name="CHECKED" stdin="true" type="base16" description="The checked Base16 data to decode. If not specified the value is read from STDIN." />
+    <define name="BX_CHECKED_DECODE_INVALID_CHECKSUM" value="The checksum is invalid." />
   </command>
 
   <command symbol="checked-encode" formerly="wrap-encode" output="base16" category="ENCODING" description="Add a version byte and bitcoin checksum to Base16 data.">
@@ -455,6 +458,117 @@
     <define name="BX_FILTER_MATCH_SCRIPT_FAILURE" value="Script does not match filter." />
   </command>
 
+  <command symbol="get-address" property="address" output="string" category="JSON" description="Get the address of a decoded URI.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-amount" property="amount" output="string" category="JSON" description="Get the amount of a decoded URI.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-bits" property="bits" output="string" category="JSON" description="Get the bits of a block header.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-checksum" property="checksum" output="string" category="JSON" description="Get the checksum of a decoded address or checked value.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-hash" property="hash" output="string" category="JSON" description="Get the hash of a block header, transaction or point.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-header" property="header" output="string" category="JSON" description="Get the header of a block.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-index" property="index" output="string" category="JSON" description="Get the index of a point.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-input" property="inputs" output="string" category="JSON" description="Get an input of a transaction.">
+    <argument name="INDEX" type="uint32_t" required="true" description="The zero-based position of the input in the transaction." />
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-label" property="label" output="string" category="JSON" description="Get the label of a decoded URI.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-locktime" property="locktime" output="string" category="JSON" description="Get the locktime of a transaction.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-merkle-root" property="merkle_root" output="string" category="JSON" description="Get the merkle root of a block header.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-message" property="message" output="string" category="JSON" description="Get the message of a decoded URI.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-nonce" property="nonce" output="string" category="JSON" description="Get the nonce of a block header.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-output" property="outputs" output="string" category="JSON" description="Get an output of a transaction.">
+    <argument name="INDEX" type="uint32_t" required="true" description="The zero-based position of the output in the transaction." />
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-payload" property="payload" output="string" category="JSON" description="Get the payload of a decoded address or checked value.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-point" property="point" output="string" category="JSON" description="Get the previous output point of an input.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-prefix" property="prefix" output="string" category="JSON" description="Get the prefix of a decoded bech32 address.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-previous" property="previous" output="string" category="JSON" description="Get the previous block hash of a block header.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-program" property="program" output="string" category="JSON" description="Get the program of a decoded bech32 address.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-scheme" property="scheme" output="string" category="JSON" description="Get the scheme of a decoded URI.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-script" property="script" output="string" category="JSON" description="Get the script of an input or output.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-sequence" property="sequence" output="string" category="JSON" description="Get the sequence of an input.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-timestamp" property="timestamp" output="string" category="JSON" description="Get the timestamp of a block header.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-tx" property="transactions" output="string" category="JSON" description="Get a transaction of a block.">
+    <argument name="INDEX" type="uint32_t" required="true" description="The zero-based position of the transaction in the block." />
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-value" property="value" output="string" category="JSON" description="Get the value in satoshi of an output.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-version" property="version" output="string" category="JSON" description="Get the version of a block header, transaction, decoded address, checked value or bech32 address.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
+  <command symbol="get-witness" property="witness" output="string" category="JSON" description="Get the witness of an input.">
+    <argument name="JSON" stdin="true" type="string" description="The JSON object. If not specified the object is read from STDIN." />
+  </command>
+
   <command symbol="hardware" output="string" category="META" description="Display hardware compatibility.">
     <define name="BX_HARDWARE_HEADER_ARM64" value="Hardware configuration (arm64)..." />
     <define name="BX_HARDWARE_HEADER_X64" value="Hardware configuration (x64)..." />
@@ -583,6 +697,29 @@
     <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of 12, 15, 18, 21, or 24 words that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_MNEMONIC_TO_SEED_INVALID_WORD_COUNT" value="The word count is not 12, 15, 18, 21, or 24." />
     <define name="BX_MNEMONIC_TO_SEED_INVALID_WORDS" value="The mnemonic is not from the specified dictionary. Non-dictionary mnemonics are not supported." />
+  </command>
+
+  <command symbol="noise-cert" output="base58check" category="MATH" description="Create a Base58Check Stratum v2 Noise authority certificate for a server static public key, for use with a Libbitcoin server.">
+    <option name="valid_from" type="uint32_t" description="The start of the validity period in Unix seconds, defaults to the current time." />
+    <option name="days" type="uint32_t" default="365" description="The length of the validity period in days, defaults to 365." />
+    <option name="auxiliary" type="base16" description="The Base16 32 byte auxiliary random data of the signature, defaults to zero." />
+    <argument name="SERVER_PUBLIC_KEY" required="true" type="base58check" description="The Base58Check Noise public key of the server static key, as from noise-public." />
+    <argument name="AUTHORITY_PRIVATE_KEY" stdin="true" type="base58check" description="The Base58Check Noise private key of the authority. If not specified the key is read from STDIN." />
+    <define name="BX_NOISE_CERT_INVALID_AUXILIARY" value="The auxiliary data is not 32 bytes." />
+    <define name="BX_NOISE_CERT_INVALID_KEY" value="The authority private key is not valid." />
+    <define name="BX_NOISE_CERT_INVALID_SERVER" value="The server public key is not valid." />
+    <define name="BX_NOISE_CERT_INVALID_VALIDITY" value="The validity period ends after the year 2106." />
+  </command>
+
+  <command symbol="noise-new" output="base58check" category="MATH" description="Create a Base58Check Stratum v2 Noise private key from entropy, for a server static key or an authority key.">
+    <argument name="ENTROPY" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 256 bits in length (only the first 256 bits are used). If not specified the entropy is read from STDIN." />
+    <define name="BX_NOISE_NEW_SHORT_ENTROPY" value="The entropy is less than 256 bits long." />
+    <define name="BX_NOISE_NEW_INVALID_KEY" value="The entropy produced an invalid key." />
+  </command>
+
+  <command symbol="noise-public" output="base58check" category="MATH" description="Derive the Base58Check Stratum v2 Noise public key of a Noise private key, of a server static key or of an authority key for use by Stratum v2 miners.">
+    <argument name="PRIVATE_KEY" stdin="true" type="base58check" description="The Base58Check Noise private key. If not specified the key is read from STDIN." />
+    <define name="BX_NOISE_PUBLIC_INVALID_KEY" value="The private key is not valid." />
   </command>
 
   <command symbol="qrcode" category="WALLET" output="bytes" description="Create a square QRCODE PNG file for text, such as a Bitcoin URI, an address or a key.">

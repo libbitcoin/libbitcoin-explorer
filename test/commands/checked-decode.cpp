@@ -24,10 +24,36 @@ BX_USING_NAMESPACES()
 BC_AUTO_TEST_SUITE(offline)
 BC_AUTO_TEST_SUITE(checked_decode__invoke)
 
-BC_AUTO_TEST_CASE(checked_decode__invoke__always__failure_error)
+BC_AUTO_TEST_CASE(checked_decode__invoke__version_0__okay_output)
 {
     BX_DECLARE_COMMAND(checked_decode);
+    command.set_checked_argument({ "00b472a266d0bd89c13706a4132ccfb16f7c3b9fcb527686a3" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("{\"wrapper\":{\"checksum\":2743498322,\"payload\":\"b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\",\"version\":0}}\n");
+}
+
+BC_AUTO_TEST_CASE(checked_decode__invoke__version_111__okay_output)
+{
+    BX_DECLARE_COMMAND(checked_decode);
+    command.set_checked_argument({ "6fb472a266d0bd89c13706a4132ccfb16f7c3b9fcb6192f257" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("{\"wrapper\":{\"checksum\":1475514977,\"payload\":\"b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\",\"version\":111}}\n");
+}
+
+BC_AUTO_TEST_CASE(checked_decode__invoke__bad_checksum__failure_error)
+{
+    BX_DECLARE_COMMAND(checked_decode);
+    command.set_checked_argument({ "00b472a266d0bd89c13706a4132ccfb16f7c3b9fcb527686a4" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_CHECKED_DECODE_INVALID_CHECKSUM "\n");
+}
+
+BC_AUTO_TEST_CASE(checked_decode__invoke__checksum_only__failure_error)
+{
+    BX_DECLARE_COMMAND(checked_decode);
+    command.set_checked_argument({ "527686a3" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_CHECKED_DECODE_INVALID_CHECKSUM "\n");
 }
 
 BC_AUTO_TEST_SUITE_END()
