@@ -60,7 +60,7 @@ _bx()
         fetch-block
         fetch-block-hashes
         fetch-block-height
-        fetch-block-tx-input
+        fetch-block-tx-input-script
         fetch-filter
         fetch-filter-checkpoint
         fetch-filter-headers

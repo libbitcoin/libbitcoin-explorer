@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/fetch-block-tx-input.hpp>
+#include <bitcoin/explorer/commands/fetch-block-tx-input-script.hpp>
 
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/client.hpp>
@@ -30,7 +30,7 @@ namespace commands {
 
 using namespace bc::system;
 
-console_result fetch_block_tx_input::invoke(std::ostream& output,
+console_result fetch_block_tx_input_script::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
@@ -43,7 +43,7 @@ console_result fetch_block_tx_input::invoke(std::ostream& output,
     client server(*this, get_server_url_argument());
 
     json::value response{};
-    if (!server.fetch(response, error, path, ""))
+    if (!server.fetch(response, error, path))
         return console_result::failure;
 
     write_stream(output, response);

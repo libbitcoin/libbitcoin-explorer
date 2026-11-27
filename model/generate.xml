@@ -431,7 +431,7 @@
     <define name="BX_FETCH_TX_INDEX_UNCONFIRMED" value="The transaction is not confirmed." />
   </command>
 
-  <command symbol="fetch-block-tx-input" output="string" multipleX="true" category="ONLINE" network="true" description="Get the script of an input of the transaction at a position in the block. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-block-tx-input-script" output="string" multipleX="true" category="ONLINE" network="true" description="Get the script of an input of the transaction at a position in the block. Requires a Libbitcoin server connection.">
     <argument name="height" shortcut="t" type="uint32_t" required="true" description="The block height."/>
     <argument name="tx-index" type="uint32_t" description="The transaction position index in the block, defaults to 0." />
     <argument name="input-index" type="uint32_t" description="The input position index in the transaction, defaults to 0." />

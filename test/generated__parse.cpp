@@ -973,14 +973,14 @@ BC_AUTO_TEST_CASE(generated__parse__fetch_block_height__okay)
     BC_REQUIRE(!metadata.help());
 }
 
-BC_AUTO_TEST_CASE(generated__parse__fetch_block_tx_input__okay)
+BC_AUTO_TEST_CASE(generated__parse__fetch_block_tx_input_script__okay)
 {
-    fetch_block_tx_input command;
+    fetch_block_tx_input_script command;
     std::string message;
     std::stringstream input;
     const char* argv[]
     {
-        "fetch-block-tx-input",
+        "fetch-block-tx-input-script",
         "42",
         "42",
         "42",

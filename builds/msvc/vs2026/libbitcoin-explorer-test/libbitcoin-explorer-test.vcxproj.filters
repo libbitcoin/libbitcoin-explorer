@@ -192,7 +192,7 @@
     <ClCompile Include="..\..\..\..\test\commands\fetch-block-height.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\fetch-block-tx-input.cpp">
+    <ClCompile Include="..\..\..\..\test\commands\fetch-block-tx-input-script.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\fetch-block.cpp">

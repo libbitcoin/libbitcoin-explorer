@@ -769,12 +769,12 @@ BC_AUTO_TEST_CASE(generated__help__fetch_block_height__okay_output)
     BC_REQUIRE(!output.str().empty());
 }
 
-BC_AUTO_TEST_CASE(generated__help__fetch_block_tx_input__okay_output)
+BC_AUTO_TEST_CASE(generated__help__fetch_block_tx_input_script__okay_output)
 {
-    fetch_block_tx_input command;
+    fetch_block_tx_input_script command;
     std::string message;
     std::stringstream input, output;
-    const char* argv[]{ "fetch-block-tx-input", "--help" };
+    const char* argv[]{ "fetch-block-tx-input-script", "--help" };
     parser metadata(command);
     BC_REQUIRE(metadata.parse(message, input, 2, argv));
     BC_REQUIRE(metadata.help());

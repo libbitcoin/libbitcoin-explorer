@@ -699,9 +699,9 @@ BC_AUTO_TEST_CASE(generated__property__fetch_block_height__round_trips)
     BC_REQUIRE_EQUAL(serial(command.get_server_url_argument()), serial(server_url_argument));
 }
 
-BC_AUTO_TEST_CASE(generated__property__fetch_block_tx_input__round_trips)
+BC_AUTO_TEST_CASE(generated__property__fetch_block_tx_input_script__round_trips)
 {
-    fetch_block_tx_input command;
+    fetch_block_tx_input_script command;
 
     const uint32_t height_argument{ 42 };
     command.set_height_argument(height_argument);

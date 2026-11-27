@@ -292,9 +292,9 @@ BC_AUTO_TEST_CASE(generated__find__fetch_block_height__returns_object)
     BC_REQUIRE(find("fetch-block-height") != nullptr);
 }
 
-BC_AUTO_TEST_CASE(generated__find__fetch_block_tx_input__returns_object)
+BC_AUTO_TEST_CASE(generated__find__fetch_block_tx_input_script__returns_object)
 {
-    BC_REQUIRE(find("fetch-block-tx-input") != nullptr);
+    BC_REQUIRE(find("fetch-block-tx-input-script") != nullptr);
 }
 
 BC_AUTO_TEST_CASE(generated__find__fetch_filter__returns_object)

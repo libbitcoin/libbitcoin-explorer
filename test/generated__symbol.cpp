@@ -292,9 +292,9 @@ BC_AUTO_TEST_CASE(generated__symbol__fetch_block_height__returns_expected_value)
     BC_REQUIRE_EQUAL(fetch_block_height::symbol(), "fetch-block-height");
 }
 
-BC_AUTO_TEST_CASE(generated__symbol__fetch_block_tx_input__returns_expected_value)
+BC_AUTO_TEST_CASE(generated__symbol__fetch_block_tx_input_script__returns_expected_value)
 {
-    BC_REQUIRE_EQUAL(fetch_block_tx_input::symbol(), "fetch-block-tx-input");
+    BC_REQUIRE_EQUAL(fetch_block_tx_input_script::symbol(), "fetch-block-tx-input-script");
 }
 
 BC_AUTO_TEST_CASE(generated__symbol__fetch_filter__returns_expected_value)

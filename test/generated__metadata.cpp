@@ -452,9 +452,9 @@ BC_AUTO_TEST_CASE(generated__metadata__fetch_block_height__returns_expected_valu
     BC_REQUIRE(!command.requires_raw_output());
 }
 
-BC_AUTO_TEST_CASE(generated__metadata__fetch_block_tx_input__returns_expected_values)
+BC_AUTO_TEST_CASE(generated__metadata__fetch_block_tx_input_script__returns_expected_values)
 {
-    fetch_block_tx_input command;
+    fetch_block_tx_input_script command;
     BC_REQUIRE_EQUAL(command.category(), "ONLINE");
     BC_REQUIRE(!command.requires_raw_input());
     BC_REQUIRE(!command.requires_raw_output());

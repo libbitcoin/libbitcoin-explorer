@@ -114,7 +114,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     ${srcdir}/../../src/commands/fetch-balance.cpp \
     ${srcdir}/../../src/commands/fetch-block-hashes.cpp \
     ${srcdir}/../../src/commands/fetch-block-height.cpp \
-    ${srcdir}/../../src/commands/fetch-block-tx-input.cpp \
+    ${srcdir}/../../src/commands/fetch-block-tx-input-script.cpp \
     ${srcdir}/../../src/commands/fetch-block.cpp \
     ${srcdir}/../../src/commands/fetch-filter-checkpoint.cpp \
     ${srcdir}/../../src/commands/fetch-filter-headers.cpp \
@@ -291,7 +291,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     ${srcdir}/../../include/bitcoin/explorer/commands/fetch-balance.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/fetch-block-hashes.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/fetch-block-height.hpp \
-    ${srcdir}/../../include/bitcoin/explorer/commands/fetch-block-tx-input.hpp \
+    ${srcdir}/../../include/bitcoin/explorer/commands/fetch-block-tx-input-script.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/fetch-block.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/fetch-filter-checkpoint.hpp \
     ${srcdir}/../../include/bitcoin/explorer/commands/fetch-filter-headers.hpp \
@@ -476,7 +476,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     ${srcdir}/../../test/commands/fetch-balance.cpp \
     ${srcdir}/../../test/commands/fetch-block-hashes.cpp \
     ${srcdir}/../../test/commands/fetch-block-height.cpp \
-    ${srcdir}/../../test/commands/fetch-block-tx-input.cpp \
+    ${srcdir}/../../test/commands/fetch-block-tx-input-script.cpp \
     ${srcdir}/../../test/commands/fetch-block.cpp \
     ${srcdir}/../../test/commands/fetch-filter-checkpoint.cpp \
     ${srcdir}/../../test/commands/fetch-filter-headers.cpp \

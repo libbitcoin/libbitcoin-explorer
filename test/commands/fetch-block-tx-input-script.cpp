@@ -23,24 +23,24 @@
 BX_USING_NAMESPACES()
 
 BC_AUTO_TEST_SUITE(online)
-BC_AUTO_TEST_SUITE(fetch_block_tx_input__invoke)
+BC_AUTO_TEST_SUITE(fetch_block_tx_input_script__invoke)
 
-BC_AUTO_TEST_CASE(fetch_block_tx_input__invoke__unreachable__failure_error)
+BC_AUTO_TEST_CASE(fetch_block_tx_input_script__invoke__unreachable__failure_error)
 {
-    BX_DECLARE_COMMAND(fetch_block);
+    BX_DECLARE_COMMAND(fetch_block_tx_input_script);
     command.set_server_url_setting({ "http://127.0.0.1:1" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BC_REQUIRE(!error.str().empty());
 }
 
-BC_AUTO_TEST_CASE(fetch_block_tx_input__invoke__served_confirmed__okay_output)
+BC_AUTO_TEST_CASE(fetch_block_tx_input_script__invoke__served_confirmed__okay_output)
 {
     // Modeled from the output of this command against testnet5
     // bx fetch-block-tx-input 8352 0 0
     const http_server server{ network::http::status::ok,
         "\"[a020] [2f4d696e65642077697468204c6962626974636f696e205b7463665d2f] [5ea4010089b50000]\""
     };
-    BX_DECLARE_COMMAND(fetch_block_tx_input);
+    BX_DECLARE_COMMAND(fetch_block_tx_input_script);
     command.set_server_connect_timeout_seconds_setting(10);
     command.set_server_url_argument({ server.url() });
     command.set_height_argument({ 8352 });

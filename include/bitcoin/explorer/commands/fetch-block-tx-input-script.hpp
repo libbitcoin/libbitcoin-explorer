@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_FETCH_BLOCK_TX_INPUT_HPP
-#define BX_FETCH_BLOCK_TX_INPUT_HPP
+#ifndef BX_FETCH_BLOCK_TX_INPUT_SCRIPT_HPP
+#define BX_FETCH_BLOCK_TX_INPUT_SCRIPT_HPP
 
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
@@ -52,9 +52,9 @@ namespace commands {
     "The transaction is not confirmed."
 
 /**
- * Class to implement the fetch-block-tx-input command.
+ * Class to implement the fetch-block-tx-input-script command.
  */
-class BCX_API fetch_block_tx_input
+class BCX_API fetch_block_tx_input_script
   : public command
 {
 public:
@@ -64,13 +64,13 @@ public:
      */
     static const char* symbol()
     {
-        return "fetch-block-tx-input";
+        return "fetch-block-tx-input-script";
     }
 
     /**
      * Destructor.
      */
-    virtual ~fetch_block_tx_input()
+    virtual ~fetch_block_tx_input_script()
     {
     }
 
@@ -79,7 +79,7 @@ public:
      */
     virtual const char* name()
     {
-        return fetch_block_tx_input::symbol();
+        return fetch_block_tx_input_script::symbol();
     }
 
     /**
